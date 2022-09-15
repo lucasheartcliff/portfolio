@@ -259,7 +259,20 @@ module.exports = function (webpackEnv) {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
-
+{
+        test: /\.(less)$/,
+        use: [{
+            loader: 'style-loader' // creates style nodes from JS strings
+        }, {
+            loader: 'css-loader' // translates CSS into CommonJS
+        }, {
+            loader: 'less-loader', // compiles Less to CSS
+        options: {
+      lessOptions: { // If you are using less-loader@5 please spread the lessOptions to options directly
+         javascriptEnabled: true,
+       },
+     },}]
+    },
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
@@ -419,7 +432,7 @@ module.exports = function (webpackEnv) {
             },
             {
               loader: require.resolve('file-loader'),
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.(less|config|variables|overrides)$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
