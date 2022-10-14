@@ -1,4 +1,5 @@
 
+import {QueryKey, useQuery, UseQueryOptions, UseQueryResult} from "react-query"
 const jsonHeaders: RequestInit = {
     credentials: 'same-origin',
     headers: {
@@ -7,8 +8,9 @@ const jsonHeaders: RequestInit = {
 }
 
 
-export const apiFetch = (url: string) => {
+const apiFetch = (url: string) => {
     const headers = jsonHeaders
+    
     return {
         get: () =>
             fetch(url, {
@@ -39,4 +41,9 @@ export const apiFetch = (url: string) => {
                 ...headers
             })
     }
+}
+
+export function useGetRequest<TData, TError=any>(url: string, options?: Omit<UseQueryOptions<TData, TError, TData, QueryKey>, 'queryKey' | 'queryFn'>) {
+    const fn = ()=> apiFetch(url).get().then(r=> r.json())
+    return useQuery<TData,TError>(url, fn, options)
 }
