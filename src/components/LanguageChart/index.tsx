@@ -2,52 +2,68 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart, { Props as ApexProps } from "react-apexcharts";
 
 interface Props {
-  data: number[];
-  labels: string[];
+  data: any;
 }
 
-export default function LanguageChart(props: Props) {
-    const [state, setState] = useState<ApexProps>({});
-    
-    const Apex:any = ReactApexChart as any
-
-  useEffect(() => {
-    const newState: ApexProps = {
-      series: [
-        {
-          data: props.data,
-        },
-      ],
-      options: {
-        chart: {
-          type: "bar",
-          height: 350,
-        },
-        plotOptions: {
-          bar: {
-            borderRadius: 4,
-            horizontal: true,
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        xaxis: {
-          categories: props.labels,
-        },
+const buildState = (data: any[] = [],colors:any[]=[], labels: any[] = []): ApexProps => ({
+  series: [
+    {
+      data,
+    },
+  ],
+  options: {
+    chart: {
+      type: "bar",
+      height: 550,
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        horizontal: true,
       },
-    };
+    },
+    colors,
+    dataLabels: {
+      enabled: false,
+    },
+    xaxis: {
+      categories: labels,
+      labels: {
+        formatter: function (value: string) {
+          return `${value}%`
+        }
+      }
+    },
+  },
+});
+
+export default function LanguageChart(props: Props) {
+  const [state, setState] = useState<ApexProps>(buildState());
+
+  const Apex: any = ReactApexChart as any;
+
+  console.log(props);
+  useEffect(() => {
+    const data = [];
+    const labels = [];
+    const colors =[]
+    for (const v of props.data.data) {
+      if (!v.percent) continue;
+      data.push(v.percent);
+      labels.push(v.name);
+      colors.push(v.color)
+    }
+    const newState = buildState(data,colors ,labels);
     setState(newState);
-  }, [props.data, props.labels]);
-    
-    
+  }, [props.data]);
+
   return (
     <div id="chart">
       <Apex
         options={state.options}
         series={state.series}
         type="bar"
-        height={350}
+        height={550}
       />
     </div>
   );
