@@ -1,31 +1,18 @@
-import { ThemeProvider } from 'styled-components'
-import themeSchema from './style/theme'
+import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import App from "./App";
 
-import React from 'react'
-import Router from './Router'
-import { useTheme } from './style/themes/use-theme'
-import { Switch } from 'antd'
-import { QueryClient, QueryClientProvider } from 'react-query'
-
-const theme = 'light'
 
 const Init: React.FC = () => {
-  const [darkMode, setDarkMode] = useTheme()
-  const queryClient = new QueryClient()
-  console.log(darkMode)
+  const queryClient = new QueryClient();
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-          <div className='container'>
-        <Switch checked={darkMode} onChange={setDarkMode} />
-      </div>
+        <App />
       </QueryClientProvider>
-    
-      {/* <Router /> */}
-        </>
-          
-        
-  )
-}
+    </>
+  );
+};
 
-export default Init
+export default Init;

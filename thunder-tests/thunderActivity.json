@@ -227,12 +227,23 @@
     "colId": "history",
     "containerId": "",
     "name": "https://wakatime.com/share/@lucasheartcliff/aa27a39b-9077-4411-8569-2887ac7d3cfb.json",
-    "url": "https://wakatime.com/share/@lucasheartcliff/aa27a39b-9077-4411-8569-2887ac7d3cfb.json",
+    "url": "wakatime.com/api/v1/users/@lucasheartcliff/insights/languages/all_time",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-14T21:54:34.151Z",
-    "modified": "2022-10-14T21:54:35.083Z",
-    "headers": [],
+    "modified": "2022-10-17T05:42:47.909Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "*/*",
+        "isDisabled": true
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
+      }
+    ],
     "params": [],
     "tests": []
   }
