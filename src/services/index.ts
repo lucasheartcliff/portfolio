@@ -1,5 +1,4 @@
 import { QueryKey, useQuery, UseQueryOptions } from "react-query";
-import { WAKATIME_LANGUAGES } from "../utils/url";
 
 import fj from "fetch-jsonp"
 
@@ -48,15 +47,6 @@ const apiFetch = (url: string) => {
   };
 };
 
-const xhrFetch = (url: string, callback: any) => {
-  const xhr = new XMLHttpRequest();
-  xhr.responseType = "json";
-  xhr.open("GET", url, true);
-  xhr.onload = () => {
-    callback(xhr.response);
-  };
-  xhr.send();
-};
 
 export function useGetRequest<TData, TError = any>(
   url: string,

@@ -246,5 +246,30 @@
     ],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "9c97423e-8578-4af1-b65b-9460e166d9d0",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://wakatime.com/share/@lucasheartcliff/aa27a39b-9077-4411-8569-2887ac7d3cfb.json",
+    "url": "https://wakatime.com/share/@lucasheartcliff/aa27a39b-9077-4411-8569-2887ac7d3cfb.json",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-10-17T06:08:22.154Z",
+    "modified": "2022-10-17T06:08:23.004Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "*/*",
+        "isDisabled": true
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "tests": []
   }
 ]
