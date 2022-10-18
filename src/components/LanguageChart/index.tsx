@@ -5,7 +5,11 @@ interface Props {
   data: any;
 }
 
-const buildState = (data: any[] = [],colors:any[]=[], labels: any[] = []): ApexProps => ({
+const buildState = (
+  data: any[] = [],
+  colors: any[] = [],
+  labels: any[] = []
+): ApexProps => ({
   series: [
     {
       data,
@@ -18,21 +22,31 @@ const buildState = (data: any[] = [],colors:any[]=[], labels: any[] = []): ApexP
     },
     plotOptions: {
       bar: {
-        borderRadius: 4,
+        distributed: true,
         horizontal: true,
+        dataLabels: {
+          maxItems: -1,
+        },
       },
+    },
+    legend: {
+      show: false,
     },
     colors,
     dataLabels: {
       enabled: false,
     },
+    tooltip: {
+      enabled: false,
+    },
     xaxis: {
       categories: labels,
       labels: {
+        show: false,
         formatter: function (value: string) {
-          return `${value}%`
-        }
-      }
+          return `${value}%`;
+        },
+      },
     },
   },
 });
@@ -46,14 +60,14 @@ export default function LanguageChart(props: Props) {
   useEffect(() => {
     const data = [];
     const labels = [];
-    const colors =[]
+    const colors = [];
     for (const v of props.data.data) {
       if (!v.percent) continue;
       data.push(v.percent);
       labels.push(v.name);
-      colors.push(v.color)
+      colors.push(v.color);
     }
-    const newState = buildState(data,colors ,labels);
+    const newState = buildState(data, colors, labels);
     setState(newState);
   }, [props.data]);
 

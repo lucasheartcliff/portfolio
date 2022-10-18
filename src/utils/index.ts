@@ -1,0 +1,1 @@
+export const secondToHours = (value:number)=> value * (1/3600) 
