@@ -206,7 +206,7 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-14T21:53:07.679Z",
-    "modified": "2022-10-14T21:53:08.714Z",
+    "modified": "2022-10-18T22:59:55.178Z",
     "headers": [
       {
         "name": "Accept",
@@ -231,7 +231,7 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-14T21:54:34.151Z",
-    "modified": "2022-10-17T05:42:47.909Z",
+    "modified": "2022-10-18T22:51:50.560Z",
     "headers": [
       {
         "name": "Accept",
@@ -256,7 +256,7 @@
     "method": "GET",
     "sortNum": 0,
     "created": "2022-10-17T06:08:22.154Z",
-    "modified": "2022-10-17T06:08:23.004Z",
+    "modified": "2022-10-18T22:52:02.003Z",
     "headers": [
       {
         "name": "Accept",
@@ -269,6 +269,45 @@
         "isDisabled": true
       }
     ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b2702310-411b-49e2-9a1b-7d2019bc5fe5",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://wakatime.com/api/v1/users/@lucasheartcliff/all_time_since_today",
+    "url": "https://wakatime.com/api/v1/users/@lucasheartcliff/all_time_since_today",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-10-18T22:53:21.814Z",
+    "modified": "2022-10-18T22:53:35.287Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "*/*",
+        "isDisabled": true
+      },
+      {
+        "name": "User-Agent",
+        "value": "Thunder Client (https://www.thunderclient.com)",
+        "isDisabled": true
+      }
+    ],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "39f7d006-77fd-4fd8-9d6b-c23b346e430a",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://wakatime.com/share/@lucasheartcliff/1d8d3574-4f80-426c-9929-8213f089a012.json",
+    "url": "https://wakatime.com/share/@lucasheartcliff/1d8d3574-4f80-426c-9929-8213f089a012.json",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-10-18T23:01:57.072Z",
+    "modified": "2022-10-18T23:01:57.990Z",
+    "headers": [],
     "params": [],
     "tests": []
   }
