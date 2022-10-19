@@ -5,7 +5,7 @@ import Init from './init';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from './style/themes/theme-provider';
 
-require('antd/dist/antd.less')
+require('./style/index.less')
 
 ReactDOM.render(
   <React.StrictMode>
