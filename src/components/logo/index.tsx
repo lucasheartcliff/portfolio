@@ -3,7 +3,7 @@ import { CloseTag, Container, LogoName, OpenTag } from "./style";
 
 interface Props {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export default function Logo({ title, onClick }: Props) {
