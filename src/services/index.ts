@@ -12,7 +12,7 @@ const jsonHeaders: RequestInit = {
   },
 };
 
-const apiFetch = (url: string) => {
+export const apiFetch = (url: string) => {
   const headers = jsonHeaders;
 
   return {
