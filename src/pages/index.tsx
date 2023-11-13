@@ -1,23 +1,26 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { Meta } from "@/layouts/Meta";
+import { apiFetch } from "@/services";
 import { Main } from "@/templates/Main";
-import LanguageChart from "@/components/LanguageChart";
-import { useEffect, useState } from "react";
 import { WAKATIME_LANGUAGES } from "@/utils/url";
-import { CACHE_TIME,apiFetch, useGetRequest } from "@/services";
+import CertificateCard from "@/components/CertificateCard";
 
 const Index = () => {
   const router = useRouter();
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
 
-  useEffect(()=>{
-    apiFetch(WAKATIME_LANGUAGES).get().then(r=>r.json()).then(d=>{
-      setData(d)
-    }).catch(e=>console.error(e))
-  },[])
+  useEffect(() => {
+    apiFetch(WAKATIME_LANGUAGES)
+      .get()
+      .then((r) => r.json())
+      .then((d) => {
+        setData(d);
+      })
+      .catch((e) => console.error(e));
+  }, []);
 
-  
   return (
     <Main
       meta={
@@ -27,13 +30,11 @@ const Index = () => {
         />
       }
     >
-      <LanguageChart data={data} />
-      <a href="https://github.com/ixartz/Next-js-Boilerplate">
-        <img
-          src={`${router.basePath}/assets/images/nextjs-starter-banner.png`}
-          alt="Nextjs starter banner"
-        />
-      </a>
+      <CertificateCard
+        name={"Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        platform={"udemy"}
+        url={"https://google.com"}
+      />
       <h2 className="text-2xl font-bold">
         Boilerplate code for your Nextjs project with Tailwind CSS
       </h2>
