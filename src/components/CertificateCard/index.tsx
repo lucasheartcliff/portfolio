@@ -32,7 +32,7 @@ export default function CertificateCard({ name, platform, url }: Props) {
       </div>
 
       <div className=" ml-5 items-end justify-center text-bold ">
-        <a href={url}>
+        <a target="_blank" href={url}>
           <ExportOutlined className="font-extrabold text-black  text-base" />
         </a>
       </div>
