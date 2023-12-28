@@ -1,11 +1,12 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-import { Meta } from "@/layouts/Meta";
-import { apiFetch } from "@/services";
-import { Main } from "@/templates/Main";
-import { WAKATIME_LANGUAGES } from "@/utils/url";
-import CertificateCard from "@/components/CertificateCard";
+import CertificateCard from '@/components/CertificateCard';
+import Item from '@/components/Timeline/Item';
+import { Meta } from '@/layouts/Meta';
+import { apiFetch } from '@/services';
+import { Main } from '@/templates/Main';
+import { WAKATIME_LANGUAGES } from '@/utils/url';
 
 const Index = () => {
   const router = useRouter();
@@ -31,22 +32,28 @@ const Index = () => {
       }
     >
       <CertificateCard
-        name={"Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
-        platform={"udemy"}
-        url={"https://google.com"}
+        name={'Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
+        platform={'udemy'}
+        url={'https://google.com'}
       />
+      <Item title={'Test ltda'} startTime={'2020-01-01'} hasChildren />
+      <Item
+        title={'Test ltda'}
+        startTime={'2020-01-01'}
+        endTime={'2023-01-01'}
+      />{' '}
       <h2 className="text-2xl font-bold">
         Boilerplate code for your Nextjs project with Tailwind CSS
       </h2>
       <p>
         <span role="img" aria-label="rocket">
           🚀
-        </span>{" "}
+        </span>{' '}
         Next.js Boilerplate is a starter code for your Next js project by
-        putting developer experience first .{" "}
+        putting developer experience first .{' '}
         <span role="img" aria-label="zap">
           ⚡️
-        </span>{" "}
+        </span>{' '}
         Made with Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged,
         VSCode, Netlify, PostCSS, Tailwind CSS.
       </p>
@@ -56,17 +63,17 @@ const Index = () => {
         <li>
           <span role="img" aria-label="fire">
             🔥
-          </span>{" "}
+          </span>{' '}
           <a href="https://nextjs.org" rel="nofollow">
             Next.js
-          </a>{" "}
+          </a>{' '}
           for Static Site Generator
         </li>
         <li>
           <span role="img" aria-label="art">
             🎨
-          </span>{" "}
-          Integrate with{" "}
+          </span>{' '}
+          Integrate with{' '}
           <a href="https://tailwindcss.com" rel="nofollow">
             Tailwind CSS
           </a>
@@ -74,20 +81,20 @@ const Index = () => {
         <li>
           <span role="img" aria-label="nail_care">
             💅
-          </span>{" "}
+          </span>{' '}
           PostCSS for processing Tailwind CSS
         </li>
         <li>
           <span role="img" aria-label="tada">
             🎉
-          </span>{" "}
+          </span>{' '}
           Type checking Typescript
         </li>
         <li>
           <span role="img" aria-label="pencil2">
             ✏️
-          </span>{" "}
-          Linter with{" "}
+          </span>{' '}
+          Linter with{' '}
           <a href="https://eslint.org" rel="nofollow">
             ESLint
           </a>
@@ -95,8 +102,8 @@ const Index = () => {
         <li>
           <span role="img" aria-label="hammer_and_wrench">
             🛠
-          </span>{" "}
-          Code Formatter with{" "}
+          </span>{' '}
+          Code Formatter with{' '}
           <a href="https://prettier.io" rel="nofollow">
             Prettier
           </a>
@@ -104,32 +111,32 @@ const Index = () => {
         <li>
           <span role="img" aria-label="fox_face">
             🦊
-          </span>{" "}
+          </span>{' '}
           Husky for Git Hooks
         </li>
         <li>
           <span role="img" aria-label="no_entry_sign">
             🚫
-          </span>{" "}
+          </span>{' '}
           Lint-staged for running linters on Git staged files
         </li>
         <li>
           <span role="img" aria-label="no_entry_sign">
             🗂
-          </span>{" "}
+          </span>{' '}
           VSCode configuration: Debug, Settings, Tasks and extension for
           PostCSS, ESLint, Prettier, TypeScript
         </li>
         <li>
           <span role="img" aria-label="robot">
             🤖
-          </span>{" "}
+          </span>{' '}
           SEO metadata, JSON-LD and Open Graph tags with Next SEO
         </li>
         <li>
           <span role="img" aria-label="robot">
             ⚙️
-          </span>{" "}
+          </span>{' '}
           <a
             href="https://www.npmjs.com/package/@next/bundle-analyzer"
             rel="nofollow"
@@ -140,13 +147,13 @@ const Index = () => {
         <li>
           <span role="img" aria-label="rainbow">
             🌈
-          </span>{" "}
+          </span>{' '}
           Include a FREE minimalist theme
         </li>
         <li>
           <span role="img" aria-label="hundred">
             💯
-          </span>{" "}
+          </span>{' '}
           Maximize lighthouse score
         </li>
       </ul>
@@ -155,19 +162,19 @@ const Index = () => {
         <li>
           <span role="img" aria-label="coffee">
             ☕
-          </span>{" "}
+          </span>{' '}
           Minify HTML &amp; CSS
         </li>
         <li>
           <span role="img" aria-label="dash">
             💨
-          </span>{" "}
+          </span>{' '}
           Live reload
         </li>
         <li>
           <span role="img" aria-label="white_check_mark">
             ✅
-          </span>{" "}
+          </span>{' '}
           Cache busting
         </li>
       </ul>
@@ -178,19 +185,19 @@ const Index = () => {
         <li>
           <span role="img" aria-label="rocket">
             🚀
-          </span>{" "}
+          </span>{' '}
           Production-ready
         </li>
       </ul>
       <p>
-        Check our GitHub project for more information about{" "}
+        Check our GitHub project for more information about{' '}
         <a href="https://github.com/ixartz/Next-js-Boilerplate">
           Nextjs Boilerplate
         </a>
-        . You can also browse our{" "}
+        . You can also browse our{' '}
         <a href="https://creativedesignsguru.com/category/nextjs/">
           Premium NextJS Templates
-        </a>{" "}
+        </a>{' '}
         on our website to support this project.
       </p>
     </Main>
