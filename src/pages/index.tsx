@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import CertificateCard from '@/components/CertificateCard';
+import Timeline from '@/components/Timeline';
 import Item from '@/components/Timeline/Item';
 import { Meta } from '@/layouts/Meta';
 import { apiFetch } from '@/services';
@@ -21,7 +22,110 @@ const Index = () => {
       })
       .catch((e) => console.error(e));
   }, []);
-
+  const randomDataArray = [
+    {
+      title: 'Node1',
+      startTime: '2022-01-01',
+      endTime: '2022-03-15',
+      children: [
+        {
+          title: 'Node1.1',
+          startTime: '2022-02-01',
+          endTime: '2022-02-28',
+        },
+        {
+          title: 'Node1.2',
+          startTime: '2022-03-01',
+          endTime: '2022-03-15',
+        },
+      ],
+    },
+    {
+      title: 'Node2',
+      startTime: '2021-11-01',
+      endTime: '2022-01-15',
+    },
+    {
+      title: 'Node3',
+      startTime: '2023-04-01',
+    },
+    {
+      title: 'Node4',
+      startTime: '2023-01-01',
+      endTime: '2023-02-15',
+      children: [
+        {
+          title: 'Node4.1',
+          startTime: '2023-02-01',
+          endTime: '2023-02-15',
+        },
+      ],
+    },
+    {
+      title: 'Node5',
+      startTime: '2022-09-01',
+      endTime: '2022-12-31',
+      children: [
+        {
+          title: 'Node5.1',
+          startTime: '2022-10-01',
+          endTime: '2022-11-30',
+        },
+        {
+          title: 'Node5.2',
+          startTime: '2022-12-01',
+          endTime: '2022-12-31',
+        },
+      ],
+    },
+    {
+      title: 'Node6',
+      startTime: '2023-03-01',
+    },
+    {
+      title: 'Node7',
+      startTime: '2022-05-01',
+      endTime: '2022-07-15',
+      children: [
+        {
+          title: 'Node7.1',
+          startTime: '2022-06-01',
+          endTime: '2022-06-30',
+        },
+        {
+          title: 'Node7.2',
+          startTime: '2022-07-01',
+          endTime: '2022-07-15',
+        },
+      ],
+    },
+    {
+      title: 'Node8',
+      startTime: '2021-12-01',
+      endTime: '2022-02-28',
+    },
+    {
+      title: 'Node9',
+      startTime: '2023-01-01',
+    },
+    {
+      title: 'Node10',
+      startTime: '2023-02-01',
+      endTime: '2023-04-15',
+      children: [
+        {
+          title: 'Node10.1',
+          startTime: '2023-03-01',
+          endTime: '2023-03-15',
+        },
+        {
+          title: 'Node10.2',
+          startTime: '2023-04-01',
+          endTime: '2023-04-15',
+        },
+      ],
+    },
+  ];
   return (
     <Main
       meta={
@@ -42,6 +146,7 @@ const Index = () => {
         startTime={'2020-01-01'}
         endTime={'2023-01-01'}
       />{' '}
+      <Timeline data={randomDataArray} />
       <h2 className="text-2xl font-bold">
         Boilerplate code for your Nextjs project with Tailwind CSS
       </h2>
