@@ -20,7 +20,6 @@ export default function Item(props: Props) {
     const v = !open;
     onClickToOpen && onClickToOpen(v);
   }
-
   function formatDuration() {
     const start = moment(startTime);
     const end = moment(endTime);
@@ -29,6 +28,7 @@ export default function Item(props: Props) {
 
     const years = duration.years();
     const months = duration.months();
+    const days = duration.days();
 
     let formattedString = '';
 
@@ -40,7 +40,11 @@ export default function Item(props: Props) {
       formattedString += ` ${months} ${months === 1 ? 'month' : 'months'}`;
     }
 
-    return `(${formattedString.trim()})`;
+    if (days > 0) {
+      formattedString += ` ${days} ${days === 1 ? 'day' : 'days'}`;
+    }
+    formattedString = formattedString.trim();
+    return !formattedString ? '' : `(${formattedString.trim()})`;
   }
 
   const period = `${moment(startTime).format(DATE_FORMAT)} - ${
@@ -50,11 +54,12 @@ export default function Item(props: Props) {
   return (
     <div className="flex h-20 w-7/12 flex-row items-center  justify-center p-4">
       <div className="w-full">
-        <Tooltip title={title}>
-          <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
-            {title}
-          </div>
-        </Tooltip>
+        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
+          <Tooltip title={title}>
+            <span>{title}</span>
+          </Tooltip>
+        </div>
+
         <div
           className={`w-full overflow-hidden text-ellipsis whitespace-nowrap text-base text-gray-600`}
         >
