@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import CertificateCard from '@/components/CertificateCard';
+import ProjectCard from '@/components/ProjectCard';
 import Timeline from '@/components/Timeline';
 import Item from '@/components/Timeline/Item';
 import { Meta } from '@/layouts/Meta';
@@ -78,53 +79,6 @@ const Index = () => {
         },
       ],
     },
-    {
-      title: 'Node6',
-      startTime: '2023-03-01',
-    },
-    {
-      title: 'Node7',
-      startTime: '2022-05-01',
-      endTime: '2022-07-15',
-      children: [
-        {
-          title: 'Node7.1',
-          startTime: '2022-06-01',
-          endTime: '2022-06-30',
-        },
-        {
-          title: 'Node7.2',
-          startTime: '2022-07-01',
-          endTime: '2022-07-15',
-        },
-      ],
-    },
-    {
-      title: 'Node8',
-      startTime: '2021-12-01',
-      endTime: '2022-02-28',
-    },
-    {
-      title: 'Node9',
-      startTime: '2023-01-01',
-    },
-    {
-      title: 'Node10',
-      startTime: '2023-02-01',
-      endTime: '2023-04-15',
-      children: [
-        {
-          title: 'Node10.1',
-          startTime: '2023-03-01',
-          endTime: '2023-03-15',
-        },
-        {
-          title: 'Node10.2',
-          startTime: '2023-04-01',
-          endTime: '2023-04-15',
-        },
-      ],
-    },
   ];
   return (
     <Main
@@ -139,6 +93,13 @@ const Index = () => {
         name={'Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
         platform={'udemy'}
         url={'https://google.com'}
+      />
+      <ProjectCard
+        language="typescript"
+        stars={5}
+        forks={1}
+        name={'Crypt Image'}
+        url={''}
       />
       <Item title={'Test ltda'} startTime={'2020-01-01'} hasChildren />
       <Item
