@@ -1,5 +1,4 @@
 import React from "react";
-import { CloseTag, Container, LogoName, OpenTag } from "./style";
 
 interface Props {
   title: string;
@@ -8,10 +7,18 @@ interface Props {
 
 export default function Logo({ title, onClick }: Props) {
   return (
-    <Container onClick={onClick}>
-      <OpenTag>{"<"}</OpenTag>
-      <LogoName>{title}</LogoName>
-      <CloseTag>{"/>"}</CloseTag>
-    </Container>
+    <div
+      className="flex flex-row align-middle text-2xl no-underline"
+      onClick={onClick}
+    >
+      <span className="text-2xl">{"<"}</span>
+      <div
+        className="px-2 font-agustina font-bold"
+        style={{ fontVariantLigatures: "no-common-ligatures" }}
+      >
+        {title}
+      </div>
+      <span className="text-2xl">{"/>"}</span>
+    </div>
   );
 }
