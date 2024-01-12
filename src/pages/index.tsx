@@ -1,13 +1,15 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
-import CertificateCard from "@/components/CertificateCard";
-import ProjectCard from "@/components/ProjectCard";
-import Timeline from "@/components/Timeline";
-import { Meta } from "@/layouts/Meta";
-import { apiFetch } from "@/services";
-import { Main } from "@/templates/Main";
-import { WAKATIME_LANGUAGES } from "@/utils/url";
+import CertificateCard from '@/components/CertificateCard';
+import ProjectCard from '@/components/ProjectCard';
+import Timeline from '@/components/Timeline';
+import Block from '@/layouts/Block';
+import { Meta } from '@/layouts/Meta';
+import Row from '@/layouts/Row';
+import { apiFetch } from '@/services';
+import { Main } from '@/templates/Main';
+import { WAKATIME_LANGUAGES } from '@/utils/url';
 
 const Index = () => {
   const router = useRouter();
@@ -24,57 +26,57 @@ const Index = () => {
   }, []);
   const randomDataArray = [
     {
-      title: "Node1",
-      startTime: "2022-01-01",
-      endTime: "2022-03-15",
+      title: 'Node1',
+      startTime: '2022-01-01',
+      endTime: '2022-03-15',
       children: [
         {
-          title: "Node1.1",
-          startTime: "2022-02-01",
-          endTime: "2022-02-28",
+          title: 'Node1.1',
+          startTime: '2022-02-01',
+          endTime: '2022-02-28',
         },
         {
-          title: "Node1.2",
-          startTime: "2022-03-01",
-          endTime: "2022-03-15",
+          title: 'Node1.2',
+          startTime: '2022-03-01',
+          endTime: '2022-03-15',
         },
       ],
     },
     {
-      title: "Node2",
-      startTime: "2021-11-01",
-      endTime: "2022-01-15",
+      title: 'Node2',
+      startTime: '2021-11-01',
+      endTime: '2022-01-15',
     },
     {
-      title: "Node3",
-      startTime: "2023-04-01",
+      title: 'Node3',
+      startTime: '2023-04-01',
     },
     {
-      title: "Node4",
-      startTime: "2023-01-01",
-      endTime: "2023-02-15",
+      title: 'Node4',
+      startTime: '2023-01-01',
+      endTime: '2023-02-15',
       children: [
         {
-          title: "Node4.1",
-          startTime: "2023-02-01",
-          endTime: "2023-02-15",
+          title: 'Node4.1',
+          startTime: '2023-02-01',
+          endTime: '2023-02-15',
         },
       ],
     },
     {
-      title: "Node5",
-      startTime: "2022-09-01",
-      endTime: "2022-12-31",
+      title: 'Node5',
+      startTime: '2022-09-01',
+      endTime: '2022-12-31',
       children: [
         {
-          title: "Node5.1",
-          startTime: "2022-10-01",
-          endTime: "2022-11-30",
+          title: 'Node5.1',
+          startTime: '2022-10-01',
+          endTime: '2022-11-30',
         },
         {
-          title: "Node5.2",
-          startTime: "2022-12-01",
-          endTime: "2022-12-31",
+          title: 'Node5.2',
+          startTime: '2022-12-01',
+          endTime: '2022-12-31',
         },
       ],
     },
@@ -89,18 +91,55 @@ const Index = () => {
           />
         }
       >
+        <Row>
+          <Block>
+            <div className="flex flex-col">
+              <span className="text-6xl font-bold text-black">
+                {'Lucas Morais'}
+              </span>
+              <span className="text-4xl font-semibold italic text-black ">
+                {'@lucasheartcliff'}
+              </span>
+              <span className="text-2xl">
+                {
+                  'Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.'
+                }
+              </span>
+            </div>
+          </Block>
+          <Block></Block>
+        </Row>
+        <Row>
+          <Block>
+            {' '}
+            <div className="flex flex-col">
+              <span></span> <span></span>
+            </div>
+          </Block>
+        </Row>
+        <Row>
+          <Block></Block>
+          <Block></Block>
+        </Row>
+        <Row>
+          <Block></Block>
+          <Block></Block>
+        </Row>
+        <Row>
+          <Block></Block>
+        </Row>
         <div className="mx-12">
           <CertificateCard
-            name={"Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
-            platform={"udemy"}
-            url={"https://google.com"}
+            name={'Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
+            platform={'udemy'}
+            url={'https://google.com'}
           />
           <ProjectCard
             language="typescript"
             stars={5}
             forks={1}
-            name={"Crypt Image"}
-            url={""}
+            name={'Crypt Image'}
+            url={''}
           />
           <Timeline data={randomDataArray} />
         </div>
