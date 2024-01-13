@@ -1,11 +1,11 @@
-import BranchesOutlined from "@ant-design/icons/BranchesOutlined";
-import ExportOutlined from "@ant-design/icons/ExportOutlined";
-import StarOutlined from "@ant-design/icons/StarOutlined";
-import Badge from "antd/lib/badge";
-import Tooltip from "antd/lib/tooltip";
-import React from "react";
+import BranchesOutlined from '@ant-design/icons/BranchesOutlined';
+import ExportOutlined from '@ant-design/icons/ExportOutlined';
+import StarOutlined from '@ant-design/icons/StarOutlined';
+import Badge from 'antd/lib/badge';
+import Tooltip from 'antd/lib/tooltip';
+import React from 'react';
 
-interface Props {
+export interface Props {
   name: string;
   language: string;
   forks: number;
@@ -21,7 +21,7 @@ export default function ProjectCard({
   url,
 }: Props) {
   return (
-    <div className="flex h-28 w-5/12 flex-row items-center  justify-center p-4 shadow-lg">
+    <div className="w-46 flex h-28 flex-row items-center justify-center  border p-4 shadow-lg">
       <div className="w-full">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
           <Tooltip title={name}>

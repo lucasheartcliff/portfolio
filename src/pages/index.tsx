@@ -1,17 +1,18 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-import CertificateCard from '@/components/CertificateCard';
-import ProjectCard from '@/components/ProjectCard';
-import Scroll from '@/components/Scroll';
-import Timeline from '@/components/Timeline';
-import Block from '@/layouts/Block';
-import { Meta } from '@/layouts/Meta';
-import Row from '@/layouts/Row';
-import profile from '@/public/assets/jsons/profile.json';
-import { apiFetch } from '@/services';
-import { Main } from '@/templates/Main';
-import { WAKATIME_LANGUAGES } from '@/utils/url';
+import CertificateCard from "@/components/CertificateCard";
+import ProjectCard from "@/components/ProjectCard";
+import ProjectGrid from "@/components/ProjectGrid";
+import Scroll from "@/components/Scroll";
+import Timeline from "@/components/Timeline";
+import Block from "@/layouts/Block";
+import { Meta } from "@/layouts/Meta";
+import Row from "@/layouts/Row";
+import profile from "@/public/assets/jsons/profile.json";
+import { apiFetch } from "@/services";
+import { Main } from "@/templates/Main";
+import { WAKATIME_LANGUAGES } from "@/utils/url";
 
 const Index = () => {
   const router = useRouter();
@@ -42,14 +43,14 @@ const Index = () => {
           <Block>
             <div className="flex flex-col">
               <span className="text-6xl font-bold text-black">
-                {'Lucas Morais'}
+                {"Lucas Morais"}
               </span>
               <span className="text-4xl font-semibold italic text-black ">
-                {'@lucasheartcliff'}
+                {"@lucasheartcliff"}
               </span>
               <span className="text-2xl">
                 {
-                  'Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.'
+                  "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
                 }
               </span>
             </div>
@@ -75,7 +76,7 @@ const Index = () => {
                 id="experience"
                 className="mb-3 text-4xl font-semibold text-black "
               >
-                {'Experience'}
+                {"Experience"}
               </span>
               <Timeline data={experience} />
             </div>
@@ -88,7 +89,7 @@ const Index = () => {
                 id="education"
                 className="mb-3 text-4xl font-semibold text-black "
               >
-                {'Education'}
+                {"Education"}
               </span>
               <Timeline data={education} />
             </div>
@@ -103,7 +104,7 @@ const Index = () => {
                 id="certification"
                 className="mb-3 text-4xl font-semibold text-black "
               >
-                {'Certification'}
+                {"Certification"}
               </span>
               <Scroll style={{ height: 400 }}>
                 {certification?.map((v, key) => (
@@ -116,25 +117,111 @@ const Index = () => {
           </Block>
         </Row>
         <Row>
-          <Block></Block>
+          <Block>
+            {" "}
+            <div className="flex flex-1 flex-col">
+              <span
+                id="projects"
+                className="mb-3 text-4xl font-semibold text-black "
+              >
+                {"Open Source Projects"}
+              </span>
+              <ProjectGrid
+                initialItemsCount={8}
+                itemsToAdd={8}
+                items={[
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                  {
+                    language: "typescript",
+                    name: "Crypt Image",
+                    stars: 5,
+                    forks: 1,
+                    url: "",
+                  },
+                ]}
+              />
+            </div>
+          </Block>
         </Row>
         <Row>
           <Block></Block>
         </Row>
-        <div className="flex flex-col">
-          <CertificateCard
-            name={'Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
-            platform={'udemy'}
-            url={'https://google.com'}
-          />
-          <ProjectCard
-            language="typescript"
-            stars={5}
-            forks={1}
-            name={'Crypt Image'}
-            url={''}
-          />
-        </div>
       </Main>
     </>
   );
