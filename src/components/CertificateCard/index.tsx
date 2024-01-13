@@ -1,6 +1,6 @@
-import ExportOutlined from '@ant-design/icons/ExportOutlined';
-import Tooltip from 'antd/lib/tooltip';
-import React from 'react';
+import ExportOutlined from "@ant-design/icons/ExportOutlined";
+import Tooltip from "antd/lib/tooltip";
+import React from "react";
 
 interface Props {
   name: string;
@@ -10,14 +10,14 @@ interface Props {
 
 export default function CertificateCard({ name, platform, url }: Props) {
   const colors: { [k: string]: string } = {
-    udemy: 'purple',
-    alura: 'blue',
+    udemy: "purple",
+    alura: "blue",
   };
 
-  const color: string = 'gray';
+  const color: string = "gray";
 
   return (
-    <div className="flex h-20 w-9/12 flex-row items-center  justify-center p-4 shadow-lg">
+    <div className="flex h-20 w-11/12 flex-row items-center  justify-center border p-4 ">
       <div className="w-11/12">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
           <Tooltip title={name}>
