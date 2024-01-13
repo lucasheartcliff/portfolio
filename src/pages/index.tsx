@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import CertificateCard from "@/components/CertificateCard";
-import ProjectCard from "@/components/ProjectCard";
 import ProjectGrid from "@/components/ProjectGrid";
 import Scroll from "@/components/Scroll";
 import Timeline from "@/components/Timeline";
@@ -12,19 +11,51 @@ import Row from "@/layouts/Row";
 import profile from "@/public/assets/jsons/profile.json";
 import { apiFetch } from "@/services";
 import { Main } from "@/templates/Main";
-import { WAKATIME_LANGUAGES } from "@/utils/url";
+import { capitalize } from "@/utils";
+import {
+  GITHUB_PINNED_REPO,
+  GITHUB_PROFILE,
+  WAKATIME_LANGUAGES,
+} from "@/utils/url";
 
 const Index = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [githubProfile, setGithubProfile] = useState<any>({});
+  const [pinnedRepos, setPinnedRepos] = useState([]);
 
   const { username, email, experience, education, certification } = profile;
   useEffect(() => {
     apiFetch(WAKATIME_LANGUAGES)
+      .getJsonP()
+      .then((r) => r.json())
+      .then((d) => {
+        console.log("wakatime", d);
+        setData(d);
+      })
+      .catch((e) => console.error(e));
+
+    apiFetch(GITHUB_PROFILE(username))
+      .getJsonP()
+      .then((r) => r.json())
+      .then((d) => {
+        console.log("profile", d.data);
+        setGithubProfile(d.data);
+      })
+      .catch((e) => console.error(e));
+
+    apiFetch(GITHUB_PINNED_REPO(username))
       .get()
       .then((r) => r.json())
       .then((d) => {
-        setData(d);
+        console.log("repos", d);
+        setPinnedRepos(
+          d.map((v: any) => ({
+            ...v,
+            url: `https://github.com/${username}/${v.name}`,
+            name: capitalize(v.name?.replace(/-/g, " ")),
+          }))
+        );
       })
       .catch((e) => console.error(e));
   }, []);
@@ -43,10 +74,10 @@ const Index = () => {
           <Block>
             <div className="flex flex-col">
               <span className="text-6xl font-bold text-black">
-                {"Lucas Morais"}
+                {githubProfile.name}
               </span>
               <span className="text-4xl font-semibold italic text-black ">
-                {"@lucasheartcliff"}
+                {`@${username}`}
               </span>
               <span className="text-2xl">
                 {
@@ -59,8 +90,14 @@ const Index = () => {
         </Row>
         <Row>
           <Block>
-            <div className="flex flex-col">
-              <span></span> <span></span>
+            <div className="flex flex-1 flex-col">
+              <span
+                id="about"
+                className="mb-3 text-4xl font-semibold text-black "
+              >
+                {"About Me"}
+              </span>
+              <span>{githubProfile.bio}</span>
             </div>
           </Block>
         </Row>
@@ -129,92 +166,7 @@ const Index = () => {
               <ProjectGrid
                 initialItemsCount={8}
                 itemsToAdd={8}
-                items={[
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                  {
-                    language: "typescript",
-                    name: "Crypt Image",
-                    stars: 5,
-                    forks: 1,
-                    url: "",
-                  },
-                ]}
+                items={pinnedRepos}
               />
             </div>
           </Block>
