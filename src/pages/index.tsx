@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 
 import CertificateCard from '@/components/CertificateCard';
 import ProjectCard from '@/components/ProjectCard';
+import Scroll from '@/components/Scroll';
 import Timeline from '@/components/Timeline';
 import Block from '@/layouts/Block';
 import { Meta } from '@/layouts/Meta';
 import Row from '@/layouts/Row';
+import profile from '@/public/assets/jsons/profile.json';
 import { apiFetch } from '@/services';
 import { Main } from '@/templates/Main';
 import { WAKATIME_LANGUAGES } from '@/utils/url';
@@ -15,6 +17,7 @@ const Index = () => {
   const router = useRouter();
   const [data, setData] = useState([]);
 
+  const { username, email, experience, education, certification } = profile;
   useEffect(() => {
     apiFetch(WAKATIME_LANGUAGES)
       .get()
@@ -24,63 +27,7 @@ const Index = () => {
       })
       .catch((e) => console.error(e));
   }, []);
-  const randomDataArray = [
-    {
-      title: 'Node1',
-      startTime: '2022-01-01',
-      endTime: '2022-03-15',
-      children: [
-        {
-          title: 'Node1.1',
-          startTime: '2022-02-01',
-          endTime: '2022-02-28',
-        },
-        {
-          title: 'Node1.2',
-          startTime: '2022-03-01',
-          endTime: '2022-03-15',
-        },
-      ],
-    },
-    {
-      title: 'Node2',
-      startTime: '2021-11-01',
-      endTime: '2022-01-15',
-    },
-    {
-      title: 'Node3',
-      startTime: '2023-04-01',
-    },
-    {
-      title: 'Node4',
-      startTime: '2023-01-01',
-      endTime: '2023-02-15',
-      children: [
-        {
-          title: 'Node4.1',
-          startTime: '2023-02-01',
-          endTime: '2023-02-15',
-        },
-      ],
-    },
-    {
-      title: 'Node5',
-      startTime: '2022-09-01',
-      endTime: '2022-12-31',
-      children: [
-        {
-          title: 'Node5.1',
-          startTime: '2022-10-01',
-          endTime: '2022-11-30',
-        },
-        {
-          title: 'Node5.2',
-          startTime: '2022-12-01',
-          endTime: '2022-12-31',
-        },
-      ],
-    },
-  ];
+
   return (
     <>
       <Main
@@ -111,7 +58,6 @@ const Index = () => {
         </Row>
         <Row>
           <Block>
-            {' '}
             <div className="flex flex-col">
               <span></span> <span></span>
             </div>
@@ -123,12 +69,59 @@ const Index = () => {
         </Row>
         <Row>
           <Block></Block>
+          <Block>
+            <div className="flex flex-1 flex-col ">
+              <span
+                id="experience"
+                className="mb-3 text-4xl font-semibold text-black "
+              >
+                {'Experience'}
+              </span>
+              <Timeline data={experience} />
+            </div>
+          </Block>
+        </Row>
+        <Row>
+          <Block>
+            <div className="flex flex-1 flex-col">
+              <span
+                id="education"
+                className="mb-3 text-4xl font-semibold text-black "
+              >
+                {'Education'}
+              </span>
+              <Timeline data={education} />
+            </div>
+          </Block>
+          <Block></Block>
+        </Row>
+        <Row>
+          <Block></Block>
+          <Block>
+            <div className="flex flex-1 flex-col">
+              <span
+                id="certification"
+                className="mb-3 text-4xl font-semibold text-black "
+              >
+                {'Certification'}
+              </span>
+              <Scroll style={{ height: 400 }}>
+                {certification?.map((v, key) => (
+                  <div key={key} className="">
+                    <CertificateCard key={key} {...v} />
+                  </div>
+                ))}
+              </Scroll>
+            </div>
+          </Block>
+        </Row>
+        <Row>
           <Block></Block>
         </Row>
         <Row>
           <Block></Block>
         </Row>
-        <div className="mx-12">
+        <div className="flex flex-col">
           <CertificateCard
             name={'Course 123aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
             platform={'udemy'}
@@ -141,7 +134,6 @@ const Index = () => {
             name={'Crypt Image'}
             url={''}
           />
-          <Timeline data={randomDataArray} />
         </div>
       </Main>
     </>

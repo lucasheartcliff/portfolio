@@ -1,14 +1,14 @@
-import type { TimelineItemProps } from "antd/lib/timeline";
-import AntdTimeline from "antd/lib/timeline";
-import React, { useEffect, useState } from "react";
+import type { TimelineItemProps } from 'antd/lib/timeline';
+import AntdTimeline from 'antd/lib/timeline';
+import React, { useEffect, useState } from 'react';
 
-import Item from "./Item";
+import Item from './Item';
 
 interface ItemNode {
   key: string;
   title: string;
-  startTime: string;
-  endTime?: string;
+  startDate: string;
+  endDate?: string;
   hasChildren?: boolean;
   isChild?: boolean;
   order: number;
@@ -17,8 +17,8 @@ interface ItemNode {
 
 type Node = {
   title: string;
-  startTime: string;
-  endTime?: string;
+  startDate: string;
+  endDate?: string;
   children?: Node[];
 };
 
@@ -95,7 +95,7 @@ export default function Timeline({ data }: Props) {
 
   const renderItem = (item: ItemNode) => {
     return (
-      <div className={item.isChild ? "ml-5" : ""}>
+      <div className={item.isChild ? 'ml-5' : ''}>
         <Item
           {...item}
           onClickToOpen={() => {
@@ -109,9 +109,9 @@ export default function Timeline({ data }: Props) {
   const items = nodes.map((n) => {
     const result: TimelineItemProps = {
       children: renderItem(n),
-      position: "right",
+      position: 'right',
     };
-    if (n.isChild) result.color = "gray";
+    if (n.isChild) result.color = 'gray';
     return result;
   });
 

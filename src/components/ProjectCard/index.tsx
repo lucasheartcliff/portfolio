@@ -1,9 +1,9 @@
-import BranchesOutlined from '@ant-design/icons/BranchesOutlined';
-import ExportOutlined from '@ant-design/icons/ExportOutlined';
-import StarOutlined from '@ant-design/icons/StarOutlined';
-import Badge from 'antd/lib/badge';
-import Tooltip from 'antd/lib/tooltip';
-import React from 'react';
+import BranchesOutlined from "@ant-design/icons/BranchesOutlined";
+import ExportOutlined from "@ant-design/icons/ExportOutlined";
+import StarOutlined from "@ant-design/icons/StarOutlined";
+import Badge from "antd/lib/badge";
+import Tooltip from "antd/lib/tooltip";
+import React from "react";
 
 interface Props {
   name: string;
@@ -44,7 +44,7 @@ export default function ProjectCard({
 
       <div className="ml-5 items-end justify-center">
         <a target="_blank" href={url}>
-          <ExportOutlined className="text-base font-extrabold  text-black" />
+          <ExportOutlined className="text-base font-extrabold text-black" />
         </a>
       </div>
     </div>
