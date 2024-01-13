@@ -1,7 +1,15 @@
+import {
+  GithubOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+  MailOutlined,
+  TwitterOutlined,
+} from "@ant-design/icons";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import CertificateCard from "@/components/CertificateCard";
+import Link, { SocialLink } from "@/components/Link";
 import ProjectGrid from "@/components/ProjectGrid";
 import Scroll from "@/components/Scroll";
 import Timeline from "@/components/Timeline";
@@ -12,11 +20,7 @@ import profile from "@/public/assets/jsons/profile.json";
 import { apiFetch } from "@/services";
 import { Main } from "@/templates/Main";
 import { capitalize } from "@/utils";
-import {
-  GITHUB_PINNED_REPO,
-  GITHUB_PROFILE,
-  WAKATIME_LANGUAGES,
-} from "@/utils/url";
+import { GITHUB_PINNED_REPO, WAKATIME_LANGUAGES } from "@/utils/url";
 
 const Index = () => {
   const router = useRouter();
@@ -34,16 +38,16 @@ const Index = () => {
         setData(d);
       })
       .catch((e) => console.error(e));
-
+    /*
     apiFetch(GITHUB_PROFILE(username))
       .getJsonP()
       .then((r) => r.json())
       .then((d) => {
-        console.log("profile", d.data);
+        console.log('profile', d.data);
         setGithubProfile(d.data);
       })
       .catch((e) => console.error(e));
-
+*/
     apiFetch(GITHUB_PINNED_REPO(username))
       .get()
       .then((r) => r.json())
@@ -64,10 +68,7 @@ const Index = () => {
     <>
       <Main
         meta={
-          <Meta
-            title="Next.js Boilerplate Presentation"
-            description="Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework."
-          />
+          <Meta title={githubProfile.name} description={githubProfile.bio} />
         }
       >
         <Row>
@@ -79,11 +80,23 @@ const Index = () => {
               <span className="text-4xl font-semibold italic text-black ">
                 {`@${username}`}
               </span>
-              <span className="text-2xl">
-                {
-                  "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
-                }
-              </span>
+              <div className="flex flex-1 flex-row items-center justify-between text-2xl text-black hover:no-underline">
+                <SocialLink href={`https://github.com/${username}`}>
+                  <GithubOutlined />
+                </SocialLink>
+                <SocialLink href={`https://x.com/${username}`}>
+                  <TwitterOutlined />
+                </SocialLink>
+                <SocialLink href={`https://linkedin.com/in/${username}`}>
+                  <LinkedinOutlined />
+                </SocialLink>
+                <SocialLink href={`https://instagram.com/${username}`}>
+                  <InstagramOutlined />
+                </SocialLink>
+                <SocialLink href={`mailto:${email}`}>
+                  <MailOutlined />
+                </SocialLink>
+              </div>
             </div>
           </Block>
           <Block></Block>

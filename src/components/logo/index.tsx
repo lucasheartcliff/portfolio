@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   title: string;
@@ -11,14 +11,14 @@ export default function Logo({ title, onClick }: Props) {
       className="flex flex-row align-middle text-2xl no-underline"
       onClick={onClick}
     >
-      <span className="text-2xl">{"<"}</span>
+      <span className="text-3xl text-gray-500">{'<'}</span>
       <div
-        className="px-2 font-agustina font-bold"
-        style={{ fontVariantLigatures: "no-common-ligatures" }}
+        className="mt-2 pl-1 pr-2 font-agustina font-bold text-blue-700"
+        style={{ fontVariantLigatures: 'no-common-ligatures' }}
       >
         {title}
       </div>
-      <span className="text-2xl">{"/>"}</span>
+      <span className="text-3xl text-gray-500">{'/>'}</span>
     </div>
   );
 }
