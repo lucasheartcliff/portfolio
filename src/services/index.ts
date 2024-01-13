@@ -1,14 +1,14 @@
-import { QueryKey, useQuery, UseQueryOptions } from "react-query";
-
-import fj from "fetch-jsonp"
+import fj from 'fetch-jsonp';
+import type { QueryKey, UseQueryOptions } from 'react-query';
+import { useQuery } from 'react-query';
 
 const jsonHeaders: RequestInit = {
   headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers":
-      "Origin, X-Requested-With, Content-Type, Accept",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers':
+      'Origin, X-Requested-With, Content-Type, Accept',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
   },
 };
 
@@ -17,42 +17,46 @@ export const apiFetch = (url: string) => {
 
   return {
     get: () =>
+      fetch(url, {
+        method: 'GET',
+        ...headers,
+      }),
+    getJsonP: () =>
       fj(url, {
-        method: "GET",
+        method: 'GET',
         ...headers,
       }),
     post: (body: any) =>
       fetch(url, {
-        method: "POST",
+        method: 'POST',
         ...headers,
         body,
       }),
     patch: (body: any) =>
       fetch(url, {
-        method: "PATCH",
+        method: 'PATCH',
         ...headers,
         body,
       }),
     put: (body: any) =>
       fetch(url, {
-        method: "PUT",
+        method: 'PUT',
         ...headers,
         body,
       }),
     delete: () =>
       fetch(url, {
-        method: "DELETE",
+        method: 'DELETE',
         ...headers,
       }),
   };
 };
 
-
 export function useGetRequest<TData, TError = any>(
   url: string,
   options?: Omit<
     UseQueryOptions<TData, TError, TData, QueryKey>,
-    "queryKey" | "queryFn"
+    'queryKey' | 'queryFn'
   >
 ) {
   const fn = () => {
