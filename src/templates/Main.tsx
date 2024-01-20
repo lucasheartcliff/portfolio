@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import Navbar from '@/components/Navbar';
-import Scroll from '@/components/Scroll';
+import Navbar from "@/components/Navbar";
+import Scroll from "@/components/Scroll";
 
 type IMainProps = {
   meta: ReactNode;
@@ -13,7 +13,7 @@ const Main = (props: IMainProps) => (
     {props.meta}
     <Navbar logoTitle="LucasHeartcliff" />
     <div
-      style={{ height: 'calc(100% - 68px)' }}
+      style={{ height: "calc(100% - 77px)" }}
       className="max-h-screen w-full text-gray-700 antialiased"
     >
       <div className="h-full text-xl">
