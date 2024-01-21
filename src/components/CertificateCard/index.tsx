@@ -10,13 +10,6 @@ interface Props {
 }
 
 export default function CertificateCard({ name, platform, url }: Props) {
-  const colors: { [k: string]: string } = {
-    udemy: "purple",
-    alura: "blue",
-  };
-
-  const color: string = "gray";
-
   return (
     <div className="flex h-20 w-full flex-row items-center  justify-center border p-4 ">
       <div className="w-11/12">
