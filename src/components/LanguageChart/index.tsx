@@ -41,7 +41,7 @@ const buildState = (
       textAnchor: 'end',
       offsetX: 0,
       offsetY: 0,
-      formatter(v) {
+      formatter(v: number) {
         return `${v.toFixed(0)} h`;
       },
       dropShadow: {
@@ -59,7 +59,7 @@ const buildState = (
           return `${val.toFixed(0)} hours worked`;
         },
         title: {
-          formatter(s) {
+          formatter() {
             return '';
           },
         },

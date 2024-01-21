@@ -32,7 +32,7 @@ export default function Timeline({ data }: Props) {
   function nodesMapToList(map: Map<string, ItemNode>): ItemNode[] {
     const result: { [k: number]: ItemNode } = {};
 
-    for (const item of map.values()) {
+    for (const item of Array.from(map.values())) {
       result[item.order] = item;
     }
     return Object.values(result);
@@ -71,9 +71,9 @@ export default function Timeline({ data }: Props) {
         order: count,
         open: true,
       });
-      count++;
+      count += 1;
 
-      if (hasChildren) {
+      if (hasChildren && parent.children?.length) {
         for (const child of parent.children) {
           key = `${i}.${j}`;
           newNodeMap.set(key, {
@@ -83,11 +83,11 @@ export default function Timeline({ data }: Props) {
             hasChildren: false,
             isChild: true,
           });
-          j++;
-          count++;
+          j += 1;
+          count += 1;
         }
       }
-      i++;
+      i += 1;
     }
     setNodeMap(newNodeMap);
     setNodes(nodesMapToList(newNodeMap));

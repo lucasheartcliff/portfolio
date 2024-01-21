@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import type { Props as CardProps } from "@/components/ProjectCard";
-import ProjectCard from "@/components/ProjectCard";
+import type { Props as CardProps } from '@/components/ProjectCard';
+import ProjectCard from '@/components/ProjectCard';
 
 interface Props {
   items: CardProps[];
@@ -22,7 +22,7 @@ export default function ProjectGrid({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-wrap justify-items-start gap-1.5 w-full">
+      <div className="flex w-full flex-wrap justify-items-start gap-1.5">
         {items.slice(0, visibleItems).map((item, index) => (
           <ProjectCard key={index} {...item} />
         ))}
@@ -30,9 +30,9 @@ export default function ProjectGrid({
       {visibleItems < items.length && (
         <button
           onClick={handleShowMore}
-          className="mt-4 rounded bg-blue-500 px-4 py-4 text-white"
+          className="mt-4 rounded bg-blue-500 p-4 text-white"
         >
-          {"Show more projects..."}
+          {'Show more projects...'}
         </button>
       )}
     </div>
