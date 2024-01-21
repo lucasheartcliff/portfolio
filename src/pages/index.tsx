@@ -4,24 +4,24 @@ import {
   LinkedinOutlined,
   MailOutlined,
   TwitterOutlined,
-} from '@ant-design/icons';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+} from "@ant-design/icons";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
-import CertificateCard from '@/components/CertificateCard';
-import Icon from '@/components/Icon';
-import { SocialLink } from '@/components/Link';
-import ProjectGrid from '@/components/ProjectGrid';
-import Scroll from '@/components/Scroll';
-import Timeline from '@/components/Timeline';
-import Block from '@/layouts/Block';
-import { Meta } from '@/layouts/Meta';
-import Row from '@/layouts/Row';
-import profile from '@/public/assets/jsons/profile.json';
-import { apiFetch } from '@/services';
-import { Main } from '@/templates/Main';
-import { capitalize } from '@/utils';
-import { GITHUB_PINNED_REPO, WAKATIME_LANGUAGES } from '@/utils/url';
+import CertificateCard from "@/components/CertificateCard";
+import Icon from "@/components/Icon";
+import { SocialLink } from "@/components/Link";
+import ProjectGrid from "@/components/ProjectGrid";
+import Scroll from "@/components/Scroll";
+import Timeline from "@/components/Timeline";
+import Block from "@/layouts/Block";
+import { Meta } from "@/layouts/Meta";
+import Row from "@/layouts/Row";
+import profile from "@/public/assets/jsons/profile.json";
+import { apiFetch } from "@/services";
+import { Main } from "@/templates/Main";
+import { capitalize } from "@/utils";
+import { GITHUB_PINNED_REPO, WAKATIME_LANGUAGES } from "@/utils/url";
 
 const Index = () => {
   const router = useRouter();
@@ -30,8 +30,10 @@ const Index = () => {
   const [pinnedRepos, setPinnedRepos] = useState([]);
 
   const {
+    name,
     username,
     introductionBio,
+    bio,
     email,
     experience,
     education,
@@ -42,7 +44,7 @@ const Index = () => {
       .getJsonP()
       .then((r) => r.json())
       .then((d) => {
-        console.log('wakatime', d);
+        console.log("wakatime", d);
         setData(d);
       })
       .catch((e) => console.error(e));
@@ -60,12 +62,12 @@ const Index = () => {
       .get()
       .then((r) => r.json())
       .then((d) => {
-        console.log('repos', d);
+        console.log("repos", d);
         setPinnedRepos(
           d.map((v: any) => ({
             ...v,
             url: `https://github.com/${username}/${v.name}`,
-            name: capitalize(v.name?.replace(/-/g, ' ')),
+            name: capitalize(v.name?.replace(/-/g, " ")),
           }))
         );
       })
@@ -74,45 +76,39 @@ const Index = () => {
 
   return (
     <>
-      <Main
-        meta={
-          <Meta title={githubProfile.name} description={githubProfile.bio} />
-        }
-      >
+      <Main meta={<Meta title={name} description={introductionBio} />}>
         <div className="mx-14">
           <Row>
             <Block>
               <div className="flex flex-col">
-                <h1 className="text-7xl font-bold text-black">
-                  {githubProfile.name || 'Lucas Morais'}
-                </h1>
+                <h1 className="text-7xl font-bold text-black">{name}</h1>
                 <h2 className="text-4xl font-semibold italic text-black ">
                   {`@${username}`}
                 </h2>
-                <p className="my-5 text-3xl text-gray-600">{introductionBio}</p>
+                <p className="mt-5 text-3xl text-gray-600">{introductionBio}</p>
                 <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
                   <SocialLink href={`https://github.com/${username}`}>
-                    <Icon color={'#000000'}>
+                    <Icon color={"#000000"}>
                       <GithubOutlined />
                     </Icon>
                   </SocialLink>
                   <SocialLink href={`https://x.com/${username}`}>
-                    <Icon color={'#00acee'}>
+                    <Icon color={"#00acee"}>
                       <TwitterOutlined />
                     </Icon>
                   </SocialLink>
                   <SocialLink href={`https://linkedin.com/in/${username}`}>
-                    <Icon color={'#0e76a8'}>
+                    <Icon color={"#0e76a8"}>
                       <LinkedinOutlined />
                     </Icon>
                   </SocialLink>
                   <SocialLink href={`https://instagram.com/${username}`}>
-                    <Icon color={'#dd2a7b'}>
+                    <Icon color={"#dd2a7b"}>
                       <InstagramOutlined />
                     </Icon>
                   </SocialLink>
                   <SocialLink href={`mailto:${email}`}>
-                    <Icon color={'#d44638'}>
+                    <Icon color={"#d44638"}>
                       <MailOutlined />
                     </Icon>
                   </SocialLink>
@@ -121,9 +117,23 @@ const Index = () => {
             </Block>
             <Block>
               <div className="flex w-full items-center justify-center">
+                <div
+                  className=" border-0 bg-cover"
+                  style={{
+                    height: "30rem",
+                    width: "32rem",
+                    backgroundImage: `url(${router.basePath}/assets/images/cover.png)`,
+                  }}
+                />
+              </div>
+            </Block>
+          </Row>
+          <Row>
+            <Block>
+              <div className="flex w-full items-center justify-center">
                 <div>
-                  <img
-                    className="h-64 w-64 rounded-full bg-cover"
+                  <div
+                    className="h-72 w-72 rounded-full bg-cover"
                     style={{
                       backgroundImage: `url(${router.basePath}/assets/images/profile.jpeg)`,
                     }}
@@ -131,21 +141,23 @@ const Index = () => {
                 </div>
               </div>
             </Block>
-          </Row>
-          <Row>
             <Block>
               <div className="flex flex-1 flex-col">
                 <span
                   id="about"
                   className="mb-3 text-4xl font-semibold text-black "
                 >
-                  {'About Me'}
+                  {"About Me"}
                 </span>
-                <span>{githubProfile.bio}</span>
-              </div>
-            </Block>
-          </Row>
+                <p className=" text-2xl text-gray-600">
+                  {" "}
+                  {bio || introductionBio}{" "}
+                </p>{" "}
+              </div>{" "}
+            </Block>{" "}
+          </Row>{" "}
           <Row>
+            {" "}
             <Block></Block>
             <Block></Block>
           </Row>
@@ -157,7 +169,7 @@ const Index = () => {
                   id="experience"
                   className="mb-3 text-4xl font-semibold text-black "
                 >
-                  {'Experience'}
+                  {"Experience"}
                 </span>
                 <Timeline data={experience} />
               </div>
@@ -170,7 +182,7 @@ const Index = () => {
                   id="education"
                   className="mb-3 text-4xl font-semibold text-black "
                 >
-                  {'Education'}
+                  {"Education"}
                 </span>
                 <Timeline data={education} />
               </div>
@@ -185,7 +197,7 @@ const Index = () => {
                   id="certification"
                   className="mb-3 text-4xl font-semibold text-black "
                 >
-                  {'Certification'}
+                  {"Certification"}
                 </span>
                 <Scroll style={{ height: 400 }}>
                   {certification?.map((v, key) => (
@@ -199,13 +211,12 @@ const Index = () => {
           </Row>
           <Row>
             <Block>
-              {' '}
               <div className="flex flex-1 flex-col">
                 <span
                   id="projects"
                   className="mb-3 text-4xl font-semibold text-black "
                 >
-                  {'Open Source Projects'}
+                  {"Open Source Projects"}
                 </span>
                 <ProjectGrid
                   initialItemsCount={8}
