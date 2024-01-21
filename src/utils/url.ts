@@ -7,3 +7,5 @@ export const GITHUB_PROFILE = (username: string) =>
   `https://api.github.com/users/${username}`;
 export const GITHUB_PINNED_REPO = (username: string) =>
   `https://pinned.berrysauce.me/get/${username}`;
+export const GITHUB_REPO = (username: string, repo: string) =>
+  `https://github.com/${username}/${repo}`;
