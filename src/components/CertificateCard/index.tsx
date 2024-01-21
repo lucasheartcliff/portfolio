@@ -1,7 +1,8 @@
-import ExportOutlined from "@ant-design/icons/ExportOutlined";
-import Tooltip from "antd/lib/tooltip";
-import React from "react";
-import Link from "../Link";
+import ExportOutlined from '@ant-design/icons/ExportOutlined';
+import Tooltip from 'antd/lib/tooltip';
+import React from 'react';
+
+import Link from '../Link';
 
 interface Props {
   name: string;

@@ -35,9 +35,8 @@ const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
 
 const Index = () => {
   const router = useRouter();
-  const [data, setData] = useState([]);
-  const [githubProfile, setGithubProfile] = useState<any>({});
-  const [pinnedRepos, setPinnedRepos] = useState([]);
+  const [data, setData] = useState<any[]>([]);
+  const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
 
   const {
     name,
@@ -58,30 +57,30 @@ const Index = () => {
       .then((responses) => {
         return responses.map((r) => r.json());
       })
-      .then(async ([repos, codingTime, languages]) => {
-        repos = await repos;
-        codingTime = await codingTime;
-        languages = await languages;
+      .then(async ([repos, codingTime, languages]: any[]) => {
+        const r = (await repos) as any;
+        const c = (await codingTime) as any;
+        const lang = (await languages) as any;
         setPinnedRepos(
-          repos.map((v: any) => ({
+          r.map((v: any) => ({
             ...v,
             url: GITHUB_REPO(username, v.name),
             name: capitalize(v.name?.replace(/-/g, ' ')),
           }))
         );
         const totalSeconds =
-          codingTime.data?.grand_total
-            ?.total_seconds_including_other_language || 0;
+          c.data?.grand_total?.total_seconds_including_other_language || 0;
 
         // Fixing data percentage
         const totalPercentage =
-          languages.data?.reduce((acc: number, curr: any) => {
-            if (isProgrammingLanguage(curr.name)) acc += curr.percent;
-            return acc;
+          lang.data?.reduce((acc: number, curr: any) => {
+            let a = acc;
+            if (isProgrammingLanguage(curr.name)) a = curr.percent;
+            return a;
           }, 0) || 100;
 
         const langData = [];
-        for (const l of languages.data || []) {
+        for (const l of lang.data || []) {
           if (!isProgrammingLanguage(l.name) || !l.percent) continue;
           langData.push({
             ...l,
@@ -96,7 +95,6 @@ const Index = () => {
       .getJsonP()
       .then((r) => r.json())
       .then((d) => {
-        console.log('profile', d.data);
         setGithubProfile(d.data);
       })
       .catch((e) => console.error(e));
@@ -253,9 +251,6 @@ const Index = () => {
                 />
               </div>
             </Block>
-          </Row>
-          <Row>
-            <Block></Block>
           </Row>
         </div>
       </Main>
