@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
-import ReactApexChart, { Props as ApexProps } from "react-apexcharts";
+import React, { useEffect, useState } from 'react';
+import type { Props as ApexProps } from 'react-apexcharts';
+import ReactApexChart from 'react-apexcharts';
+
+import { secondToHours } from '@/utils';
 
 interface Props {
   data: any;
@@ -17,16 +20,16 @@ const buildState = (
   ],
   options: {
     chart: {
-      type: "bar",
+      type: 'bar',
       height: 550,
+      toolbar: {
+        show: false,
+      },
     },
     plotOptions: {
       bar: {
         distributed: true,
         horizontal: true,
-        dataLabels: {
-          maxItems: -1,
-        },
       },
     },
     legend: {
@@ -35,16 +38,42 @@ const buildState = (
     colors,
     dataLabels: {
       enabled: false,
+      textAnchor: 'end',
+      offsetX: 0,
+      offsetY: 0,
+      formatter(v: number) {
+        return `${v.toFixed(0)} h`;
+      },
+      dropShadow: {
+        enabled: true,
+      },
     },
     tooltip: {
-      enabled: false,
+      enabled: true,
+      followCursor: true,
+      onDatasetHover: {
+        highlightDataSeries: true,
+      },
+      y: {
+        formatter(val) {
+          return `${val.toFixed(0)} hours worked`;
+        },
+        title: {
+          formatter() {
+            return '';
+          },
+        },
+      },
     },
+
     xaxis: {
       categories: labels,
+      title: { text: 'Time worked (h)' },
+
       labels: {
-        show: false,
-        formatter: function (value: string) {
-          return `${value}%`;
+        show: true,
+        formatter(value: any) {
+          return `${value} h`;
         },
       },
     },
@@ -56,14 +85,12 @@ export default function LanguageChart(props: Props) {
 
   const Apex: any = ReactApexChart as any;
 
-  console.log(props);
   useEffect(() => {
     const data = [];
     const labels = [];
     const colors = [];
-    for (const v of props.data.data) {
-      if (!v.percent) continue;
-      data.push(v.percent);
+    for (const v of props.data) {
+      data.push(secondToHours(v.value));
       labels.push(v.name);
       colors.push(v.color);
     }
