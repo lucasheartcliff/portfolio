@@ -1,0 +1,93 @@
+{
+  "name": "Lucas Morais",
+  "username": "lucasheartcliff",
+  "introductionBio": "A full-stack developer focused on results, with strong skills in performance optimization and efficiency. Committed to delivering pragmatic solutions that delivers what the customer needs with etichal and responsability.",
+  "bio": "In recent years, my journey in development has been marked by a challenging narrative, filled with achievements and significant learnings. When I embarked on this journey, I faced a steep learning curve, delving into the complexities of both front-end and back-end. Every line of code was an accomplishment, and every challenge was an opportunity for growth. Crafting intuitive interfaces and architecting robust solutions became my daily mantra.\n\nHowever, the true essence of development goes beyond the code. I found myself consistently challenged to translate customer needs into tangible solutions. Additionally, the importance of data security and respect for user privacy became integral aspects of my daily work.\n\nThese years in development are not just a chapter but the foundation for what lies ahead. I am excited to embrace future opportunities, apply the knowledge gained, and contribute to shaping the ever-evolving technological landscape.",
+  "email": "lucascdemorais@gmail.com",
+  "experience": [
+    {
+      "title": "Intelie by Viasat",
+      "startDate": "2020-02-03T00:00:00.000Z",
+      "children": [
+        {
+          "title": "Mid-level Software Developer",
+          "startDate": "2021-12-15T00:00:00.000Z"
+        },
+        {
+          "title": "Junior Software Developer",
+          "startDate": "2020-08-01T00:00:00.000Z",
+          "endDate": "2021-12-15T00:00:00.000Z"
+        },
+        {
+          "title": "Software Developer Trainee",
+          "startDate": "2020-02-03T00:00:00.000Z",
+          "endDate": "2020-08-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "title": "Freelancer - Grupo Fratelli",
+      "startDate": "2017-01-01T00:00:00.000Z",
+      "endDate": "2019-12-31T00:00:00.000Z"
+    }
+  ],
+  "education": [
+    {
+      "title": "Computer Science BS - UERJ",
+      "endDate": "2024-07-31T00:00:00.000Z",
+      "startDate": "2018-08-01T00:00:00.000Z"
+    },
+    {
+      "title": "IT Techinical Education - IEPB",
+      "startDate": "2015-01-01T00:00:00.000Z",
+      "endDate": "2016-12-31T00:00:00.000Z"
+    }
+  ],
+  "certification": [
+    {
+      "name": "Communication: How to express yourself effectively and be understood",
+      "platform": "alura",
+      "url": "https://drive.google.com/file/d/1lb9--_-vwpZNklir4pwYfIo6MGkTw3LA/view?usp=drive_link"
+    },
+    {
+      "name": "Oratory 1",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1-xO2iCHy1QAQ2jxdm-DPEGbtI2fVzYoh/view?usp=drive_link"
+    },
+    {
+      "name": "Oratory 2",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1F9X91iltGermd9h77ancso5yEt6LOnb0/view?usp=drive_link"
+    },
+    {
+      "name": "Unit Tests in Java - JUnit, Mockito and TDD",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1jcsSWgYbuA4NqEl2T9VDHI_9iBiEX9Ot/view?usp=drive_link"
+    },
+    {
+      "name": "Vim Masterclass",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1rVoa4G9G3IxdyCvSaqxp9A0vJeFiFf8e/view?usp=sharing"
+    },
+    {
+      "name": "Cisco CCNA",
+      "platform": "cisco",
+      "url": "https://drive.google.com/file/d/1dvorRUO1l6y60xVyrFAH0MU_-FdDCGYQ/view?usp=drive_link"
+    },
+    {
+      "name": "Domain Driven Design",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1igd3cGl0IChS9m8RLg1ICfJIeKeTMfwK/view?usp=drive_link"
+    },
+    {
+      "name": "Java Persistence API and Hibernate",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1nV6ZsPt1TylT1UfyUd8vzufSVAeljdK7/view?usp=drive_link"
+    },
+    {
+      "name": "Python 3 Basics",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1vakzehvHjj-1IWqDAmqGXcFAi62fFsy5/view?usp=drive_link"
+    }
+  ]
+}
