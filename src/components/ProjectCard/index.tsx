@@ -21,7 +21,7 @@ export default function ProjectCard({
   url,
 }: Props) {
   return (
-    <div className="flex h-28 flex-row items-center justify-center  border p-4 shadow-lg">
+    <div className="flex h-28 w-full flex-row items-center justify-center border  p-4 shadow-md md:w-fit">
       <div className="w-full">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
           <Tooltip title={name}>

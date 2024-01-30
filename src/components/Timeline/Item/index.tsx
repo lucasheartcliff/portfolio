@@ -49,7 +49,7 @@ export default function Item(props: Props) {
   } ${formatDuration()}`;
 
   return (
-    <div className="flex h-20 w-7/12 flex-row items-center  justify-center px-4 pb-4">
+    <div className="flex h-20 w-full flex-row items-center justify-center  px-4 pb-4 md:w-8/12">
       <div className="w-full">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
           <Tooltip title={title}>
