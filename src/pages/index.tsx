@@ -115,7 +115,7 @@ const Index = () => {
                 <h2 className="text-xl font-semibold italic text-black md:text-4xl ">
                   {`@${username}`}
                 </h2>
-                <p className="my-5 text-xl text-gray-600 md:text-3xl">
+                <p className="my-5 text-xl text-gray-600 md:text-3xl text-pretty">
                   {introductionBio}
                 </p>
                 <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
@@ -188,7 +188,7 @@ const Index = () => {
                 >
                   {'About Me'}
                 </span>
-                <p className="text-lg text-gray-600 md:text-2xl">{bio}</p>
+                <p className="text-lg text-gray-600 md:text-2xl text-pretty">{bio}</p>
               </div>
             </Block>
           </Row>
