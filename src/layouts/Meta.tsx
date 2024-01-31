@@ -23,6 +23,10 @@ const Meta = (props: IMetaProps) => {
           content="width=device-width,initial-scale=1"
           key="viewport"
         />
+        <meta
+          name="google-site-verification"
+          content="AqA2PFJsSI2vsJBWU9RQRB1imOf8x-fbVKJhOGDMz84"
+        />
         <link
           rel="stylesheet"
           href={`${router.basePath}/assets/css/index.css`}
