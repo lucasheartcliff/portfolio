@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 
 import profile from '@/public/assets/jsons/profile.json';
-import { AppConfig } from '@/utils/AppConfig';
 
 type IMetaProps = {
   title: string;
@@ -69,8 +68,8 @@ const Meta = (props: IMetaProps) => {
           title: props.title,
           description: props.description,
           url: props.canonical,
-          locale: AppConfig.locale,
-          site_name: AppConfig.site_name,
+          locale: 'en_US',
+          site_name: props.title,
         }}
       />
     </>
