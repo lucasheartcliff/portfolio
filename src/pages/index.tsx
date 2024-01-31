@@ -40,7 +40,7 @@ const Index = () => {
 
   const {
     firstName,
-    lastName
+    lastName,
     username,
     phone,
     introductionBio,
@@ -50,7 +50,7 @@ const Index = () => {
     education,
     certification,
   } = profile;
-  const name = `${firstName} ${lastName}`.trim()
+  const name = `${firstName} ${lastName}`.trim();
   useEffect(() => {
     Promise.all([
       apiFetch(GITHUB_PINNED_REPO(username)).get(),
