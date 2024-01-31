@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 
+import profile from '@/public/assets/jsons/profile.json';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IMetaProps = {
@@ -56,6 +57,11 @@ const Meta = (props: IMetaProps) => {
         description={props.description}
         canonical={props.canonical}
         openGraph={{
+          profile: {
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            username: profile.username,
+          },
           title: props.title,
           description: props.description,
           url: props.canonical,
