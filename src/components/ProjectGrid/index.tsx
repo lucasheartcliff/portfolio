@@ -22,7 +22,7 @@ export default function ProjectGrid({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex w-full flex-wrap justify-items-start gap-1.5">
+      <div className="my-2 flex w-full flex-wrap justify-items-start gap-1.5">
         {items.slice(0, visibleItems).map((item, index) => (
           <ProjectCard key={index} {...item} />
         ))}
