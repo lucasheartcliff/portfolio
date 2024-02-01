@@ -5,6 +5,8 @@ import Badge from "antd/lib/badge";
 import Tooltip from "antd/lib/tooltip";
 import React from "react";
 
+import { getLanguageColor } from "@/utils";
+
 export interface Props {
   name: string;
   language: string;
@@ -29,7 +31,7 @@ export default function ProjectCard({
           </Tooltip>
         </div>
         <div className="mt-1 w-full items-center capitalize">
-          <Badge status="success" text={language} />
+          <Badge color={getLanguageColor(language)} text={language} />
 
           <div className={`ml-3 inline-flex justify-start text-sm`}>
             <BranchesOutlined />

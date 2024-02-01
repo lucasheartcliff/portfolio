@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Scroll from '@/components/Scroll';
 
 type IMainProps = {
+  title: string;
   meta: ReactNode;
   children: ReactNode;
 };
@@ -11,7 +12,7 @@ type IMainProps = {
 const Main = (props: IMainProps) => (
   <div className="h-screen w-full">
     {props.meta}
-    <Navbar logoTitle="LucasHeartcliff" />
+    <Navbar logoTitle={props.title} />
     <div
       style={{ height: 'calc(100% - 77px)' }}
       className="max-h-screen w-full text-gray-700 antialiased"

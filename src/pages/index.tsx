@@ -42,6 +42,7 @@ const Index = () => {
     firstName,
     lastName,
     username,
+    logoTitle,
     phone,
     introductionBio,
     bio,
@@ -107,6 +108,7 @@ const Index = () => {
   return (
     <>
       <Main
+        title={logoTitle}
         meta={
           <Meta
             title={name}
