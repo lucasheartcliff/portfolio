@@ -13,7 +13,7 @@ export default function Logo({ title, onClick }: Props) {
     >
       <span className="text-3xl text-gray-500">{'<'}</span>
       <div
-        className="mt-2 pl-1 pr-2 font-agustina font-bold text-blue-700"
+        className="mt-2 pl-0.5 pr-1.5 font-agustina font-bold text-primary"
         style={{ fontVariantLigatures: 'no-common-ligatures' }}
       >
         {title}

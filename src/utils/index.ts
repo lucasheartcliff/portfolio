@@ -14,29 +14,32 @@ export const capitalize = (text: string) => {
     .join(' ');
 };
 
-const languagesSet = new Set<string>([
-  'C',
-  'C++',
-  'JAVA',
-  'PYTHON',
-  'JAVASCRIPT',
-  'HTML',
-  'CSS',
-  'RUBY',
-  'SWIFT',
-  'KOTLIN',
-  'GO',
-  'TYPESCRIPT',
-  'PHP',
-  'MATLAB',
-  'PERL',
-  'R',
-  'SHELL',
-  'SQL',
-  'RUST',
-  'LUA',
-]);
+const languageColors: { [key: string]: string } = {
+  C: '#555555',
+  'C++': '#f34b7d',
+  JAVA: '#b07219',
+  PYTHON: '#3572A5',
+  JAVASCRIPT: '#f1e05a',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  RUBY: '#701516',
+  SWIFT: '#ffac45',
+  KOTLIN: '#F18E33',
+  GO: '#00ADD8',
+  TYPESCRIPT: '#2b7489',
+  PHP: '#4F5D95',
+  MATLAB: '#e16737',
+  PERL: '#0298c3',
+  R: '#198ce7',
+  SHELL: '#89e051',
+  SQL: '#e38c33',
+  RUST: '#dea584',
+  LUA: '#000080',
+};
+
+export const getLanguageColor = (lang: string) =>
+  languageColors[lang?.toUpperCase()] || '#000000';
 
 export const isProgrammingLanguage = (lang: string) => {
-  return lang ? languagesSet.has(lang.toUpperCase()) : false;
+  return lang ? lang.toUpperCase() in languageColors : false;
 };
