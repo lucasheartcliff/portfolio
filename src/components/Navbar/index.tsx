@@ -20,9 +20,9 @@ export default function Navbar({ logoTitle }: Props) {
           </Link>
           <div className="hidden space-x-4 md:flex md:text-xl">
             <Link href="#about">{'About'}</Link>
-            <Link href="#experience">{'Experience'}</Link>
-            <Link href="#education">{'Education'}</Link>
-            <Link href="#certification">{'Certification'}</Link>
+            <Link href="#experience">{'Experiences'}</Link>
+            <Link href="#education">{'Educations'}</Link>
+            <Link href="#certification">{'Certifications'}</Link>
             <Link href="#projects">{'Projects'}</Link>
           </div>
           <button
@@ -47,9 +47,9 @@ export default function Navbar({ logoTitle }: Props) {
           <div className="mt-4 md:hidden">
             <div className="flex flex-col space-y-4 text-lg">
               <Link href="#about">{'About'}</Link>
-              <Link href="#experience">{'Experience'}</Link>
-              <Link href="#education">{'Education'}</Link>
-              <Link href="#certification">{'Certification'}</Link>
+              <Link href="#experience">{'Experiences'}</Link>
+              <Link href="#education">{'Educations'}</Link>
+              <Link href="#certification">{'Certifications'}</Link>
               <Link href="#projects">{'Projects'}</Link>
             </div>
           </div>

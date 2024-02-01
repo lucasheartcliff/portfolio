@@ -7,6 +7,8 @@ import React from "react";
 
 import { getLanguageColor } from "@/utils";
 
+import Link from "../Link";
+
 export interface Props {
   name: string;
   language: string;
@@ -45,9 +47,9 @@ export default function ProjectCard({
       </div>
 
       <div className="ml-5 items-end justify-center">
-        <a target="_blank" href={url}>
+        <Link target="_blank" href={url}>
           <ExportOutlined className="text-base font-extrabold text-black" />
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -225,7 +225,7 @@ const Index = () => {
                   id="experience"
                   className="mb-3 text-xl font-semibold text-black md:text-4xl "
                 >
-                  {'Experience'}
+                  {'Experiences'}
                 </span>
                 <Timeline data={experience} />
               </div>
@@ -238,7 +238,7 @@ const Index = () => {
                   id="education"
                   className="mb-3 text-xl font-semibold text-black md:text-4xl "
                 >
-                  {'Education'}
+                  {'Educations'}
                 </span>
                 <Timeline data={education} />
               </div>
@@ -249,7 +249,7 @@ const Index = () => {
                   id="certification"
                   className="mb-3 text-xl font-semibold text-black md:text-4xl "
                 >
-                  {'Certification'}
+                  {'Certifications'}
                 </span>
                 <Scroll style={{ height: 400 }}>
                   {certification?.map((v, key) => (
@@ -268,7 +268,7 @@ const Index = () => {
                   id="projects"
                   className="mb-3 text-xl font-semibold text-black md:text-4xl "
                 >
-                  {'Open Source Projects'}
+                  {'Projects'}
                 </span>
                 <ProjectGrid
                   initialItemsCount={8}
