@@ -32,7 +32,10 @@ export const getStaticProps: GetStaticProps<IBlogUrl, IBlogUrl> = async ({
 
 const Blog = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <Main meta={<Meta title={props.slug} description="Lorem ipsum" />}>
+    <Main
+      title={'lorem ipsum'}
+      meta={<Meta title={props.slug} description="Lorem ipsum" />}
+    >
       <h1 className="capitalize">{props.slug}</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore eos
