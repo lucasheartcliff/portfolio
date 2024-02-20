@@ -67,13 +67,27 @@ const buildState = (
         },
       },
     },
+    yaxis: {
+      labels: {
+        offsetX: 5,
+        style: {
+          cssClass: 'text-sm',
+        },
+      },
+    },
 
     xaxis: {
       categories: labels,
-      title: { text: 'Time worked (h)' },
+      title: {
+        text: 'Time worked (h)',
+        style: { cssClass: 'text-base' },
+      },
 
       labels: {
         show: true,
+        style: {
+          cssClass: 'text-sm',
+        },
         formatter(value: any) {
           return `${value} h`;
         },
