@@ -2,6 +2,8 @@ import ExportOutlined from '@ant-design/icons/ExportOutlined';
 import Tooltip from 'antd/lib/tooltip';
 import React from 'react';
 
+import { getPlatformColor } from '@/utils';
+
 import Link from '../Link';
 
 interface Props {
@@ -20,7 +22,8 @@ export default function CertificateCard({ name, platform, url }: Props) {
           </Tooltip>
         </div>
         <div
-          className={`inline-flex items-center rounded-md bg-blue-100 px-2 py-1 text-xs font-semibold capitalize text-blue-700 ring-1 ring-inset ring-blue-700/10`}
+          style={{ backgroundColor: getPlatformColor(platform) }}
+          className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-semibold capitalize text-white `}
         >
           {platform}
         </div>
