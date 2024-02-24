@@ -17,6 +17,7 @@ export default function Item(props: Props) {
 
   const { title, open, startDate, endDate, hasChildren, onClickToOpen } = props;
   const { t } = useTranslation(['common']);
+
   function onClick() {
     const v = !open;
     if (onClickToOpen) onClickToOpen(v);
@@ -34,11 +35,13 @@ export default function Item(props: Props) {
     let formattedString = '';
 
     if (years > 0) {
-      formattedString += `${years} ${years === 1 ? 'year' : 'years'}`;
+      formattedString += `${years} ${years === 1 ? t('year') : t('years')}`;
     }
 
     if (months > 0) {
-      formattedString += ` ${months} ${months === 1 ? 'month' : 'months'}`;
+      formattedString += ` ${months} ${
+        months === 1 ? t('month') : t('months')
+      }`;
     }
 
     formattedString = formattedString.trim();
@@ -46,9 +49,8 @@ export default function Item(props: Props) {
   }
 
   const period = `${moment(startDate).format(DATE_FORMAT)} - ${
-    endDate ? moment(endDate).format(DATE_FORMAT) : 'Now'
+    endDate ? moment(endDate).format(DATE_FORMAT) : t('Now')
   } ${formatDuration()}`;
-
   return (
     <div className="flex h-20 w-full flex-row items-center justify-center  px-4 pb-4 md:w-8/12">
       <div className="w-full">
@@ -66,7 +68,7 @@ export default function Item(props: Props) {
       </div>
 
       <div
-        className={` ml-5 items-end justify-center ${
+        className={`ml-5 items-end justify-center ${
           !hasChildren ? 'hidden' : ''
         }`}
         onClick={onClick}
