@@ -1,3 +1,5 @@
+import 'moment/locale/pt-br';
+
 import {
   GithubOutlined,
   LinkedinOutlined,
@@ -22,7 +24,7 @@ import Row from '@/layouts/Row';
 import profile from '@/public/assets/jsons/profile.json';
 import { apiFetch } from '@/services';
 import { Main } from '@/templates/Main';
-import { capitalize, isProgrammingLanguage } from '@/utils';
+import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
 import {
   GITHUB_PINNED_REPO,
@@ -41,6 +43,12 @@ const Index = () => {
   const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
 
   const { t } = useTranslation('common');
+  const currentLocale = router.query.locale;
+
+  useEffect(() => {
+    setLocale(currentLocale as string);
+  }, [currentLocale]);
+
   const {
     firstName,
     lastName,
@@ -161,7 +169,7 @@ const Index = () => {
                       <InstagramOutlined />
                     </Icon>
                   </SocialLink> */}
-                  <SocialLink href={`mailto:${email}`}>
+                  <SocialLink href={`mailto:${email}`} skipLocaleHandling>
                     <Icon color={'#d44638'}>
                       <MailOutlined />
                     </Icon>

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const secondToHours = (value: number) => value * (1 / 3600);
 export const formatTime = (seconds: number) => {
   const days = Math.floor(seconds / (24 * 60 * 60));
@@ -55,3 +57,33 @@ export const getPlatformColor = (platform: string) => {
   const p = platform.toUpperCase();
   return p in platformsColor ? platformsColor[p] : platformsColor.OTHERS;
 };
+
+export function mapLocaleToMoment(i18nLocale: string | undefined) {
+  const localeMap = {
+    pt: 'pt-br',
+    en: 'en',
+    fr: 'fr',
+    es: 'es',
+    ko: 'ko',
+    ja: 'ja',
+    de: 'de',
+    it: 'it',
+    zh: 'zh-cn',
+    ar: 'ar-sa',
+  };
+  const i = i18nLocale || 'en';
+
+  return i in localeMap ? localeMap[i] : localeMap.en; // Default to English if no matching locale found
+}
+
+export async function setLocale(locale?: string) {
+  const momentLocale = mapLocaleToMoment(locale);
+  if (!locale || locale === 'en') {
+    moment.locale(locale);
+  } else {
+    const localeData = (await import(`moment/locale/${momentLocale}`)).default;
+    // Set the locale for Moment.js
+    // moment.updateLocale(momentLocale, localeData);
+    moment.locale(momentLocale);
+  }
+}
