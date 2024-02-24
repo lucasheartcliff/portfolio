@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const theme = require('./src/styles/themes');
+
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -43,7 +45,7 @@ module.exports = {
           800: '#2c5282',
           900: '#2a4365',
         },
-        primary: '#0052ff',
+        primary: theme.primary,
       },
     },
   },
