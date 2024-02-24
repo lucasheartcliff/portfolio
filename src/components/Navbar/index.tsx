@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 
 import Link from '@/components/Link';
@@ -11,6 +12,7 @@ interface Props {
 export default function Navbar({ logoTitle }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const { t } = useTranslation('common');
   return (
     <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md md:px-16">
       <div className="container mx-auto">
@@ -19,11 +21,11 @@ export default function Navbar({ logoTitle }: Props) {
             <Logo title={logoTitle} />
           </Link>
           <div className="hidden space-x-4 md:flex md:text-xl">
-            <Link href="#about">{'About'}</Link>
-            <Link href="#experience">{'Experiences'}</Link>
-            <Link href="#education">{'Educations'}</Link>
-            <Link href="#certification">{'Certifications'}</Link>
-            <Link href="#projects">{'Projects'}</Link>
+            <Link href="#about">{t('About')}</Link>
+            <Link href="#experience">{t('Experiences')}</Link>
+            <Link href="#education">{t('Educations')}</Link>
+            <Link href="#certification">{t('Certifications')}</Link>
+            <Link href="#projects">{t('Projects')}</Link>
           </div>
           <button
             className="md:hidden"
@@ -46,11 +48,11 @@ export default function Navbar({ logoTitle }: Props) {
         {menuOpen && (
           <div className="mt-4 md:hidden">
             <div className="flex flex-col space-y-4 text-lg">
-              <Link href="#about">{'About'}</Link>
-              <Link href="#experience">{'Experiences'}</Link>
-              <Link href="#education">{'Educations'}</Link>
-              <Link href="#certification">{'Certifications'}</Link>
-              <Link href="#projects">{'Projects'}</Link>
+              <Link href="#about">{t('About')}</Link>
+              <Link href="#experience">{t('Experiences')}</Link>
+              <Link href="#education">{t('Educations')}</Link>
+              <Link href="#certification">{t('Certifications')}</Link>
+              <Link href="#projects">{t('Projects')}</Link>
             </div>
           </div>
         )}

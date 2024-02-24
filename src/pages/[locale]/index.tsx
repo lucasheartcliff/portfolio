@@ -201,7 +201,7 @@ const Index = () => {
                   id="about"
                   className="mb-3 text-xl font-semibold text-black md:text-4xl "
                 >
-                  {t('About Me')}
+                  {t('About')}
                 </span>
                 <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
                   {t(bio)}
