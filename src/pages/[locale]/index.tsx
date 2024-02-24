@@ -1,5 +1,3 @@
-import 'moment/locale/pt-br';
-
 import {
   GithubOutlined,
   LinkedinOutlined,
