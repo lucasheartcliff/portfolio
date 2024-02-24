@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import Item from './Item';
 
+const theme = require('@/styles/themes');
+
 interface ItemNode {
   key: string;
   title: string;
@@ -110,6 +112,7 @@ export default function Timeline({ data }: Props) {
     const result: TimelineItemProps = {
       children: renderItem(n),
       position: 'right',
+      color: theme.primary,
     };
     if (n.isChild) result.color = 'gray';
     return result;
