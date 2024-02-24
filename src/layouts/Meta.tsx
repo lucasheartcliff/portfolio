@@ -68,7 +68,7 @@ const Meta = (props: IMetaProps) => {
           title: props.title,
           description: props.description,
           url: props.canonical,
-          locale: 'en_US',
+          locale: 'pt-br',
           site_name: props.title,
         }}
       />
