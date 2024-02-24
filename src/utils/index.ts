@@ -43,3 +43,15 @@ export const getLanguageColor = (lang: string) =>
 export const isProgrammingLanguage = (lang: string) => {
   return lang ? lang.toUpperCase() in languageColors : false;
 };
+
+const platformsColor: { [k: string]: string } = {
+  ALURA: '#5ea3d0',
+  UDEMY: '#A435F0',
+  CISCO: '#049fd9',
+  OTHERS: '#049fd9',
+};
+
+export const getPlatformColor = (platform: string) => {
+  const p = platform.toUpperCase();
+  return p in platformsColor ? platformsColor[p] : platformsColor.OTHERS;
+};
