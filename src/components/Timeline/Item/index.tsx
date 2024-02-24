@@ -1,6 +1,7 @@
 import CaretRightOutlined from '@ant-design/icons/CaretRightOutlined';
 import Tooltip from 'antd/lib/tooltip';
 import moment from 'moment';
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 interface Props {
@@ -15,7 +16,7 @@ export default function Item(props: Props) {
   const DATE_FORMAT = 'MMM YYYY';
 
   const { title, open, startDate, endDate, hasChildren, onClickToOpen } = props;
-
+  const { t } = useTranslation(['common']);
   function onClick() {
     const v = !open;
     if (onClickToOpen) onClickToOpen(v);
@@ -52,8 +53,8 @@ export default function Item(props: Props) {
     <div className="flex h-20 w-full flex-row items-center justify-center  px-4 pb-4 md:w-8/12">
       <div className="w-full">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
-          <Tooltip title={title}>
-            <span>{title}</span>
+          <Tooltip title={t(title)}>
+            <span>{t(title)}</span>
           </Tooltip>
         </div>
 

@@ -1,5 +1,6 @@
 import ExportOutlined from '@ant-design/icons/ExportOutlined';
 import Tooltip from 'antd/lib/tooltip';
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 import { getPlatformColor } from '@/utils';
@@ -13,12 +14,13 @@ interface Props {
 }
 
 export default function CertificateCard({ name, platform, url }: Props) {
+  const { t } = useTranslation('common');
   return (
     <div className="flex h-20 w-full flex-row items-center  justify-center border p-4 ">
       <div className="w-11/12">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
-          <Tooltip title={name}>
-            <span>{name}</span>
+          <Tooltip title={t(name)}>
+            <span>{t(name)}</span>
           </Tooltip>
         </div>
         <div
