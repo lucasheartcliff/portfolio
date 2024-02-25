@@ -25,6 +25,7 @@
     "antd": "5.11.1",
     "apexcharts": "3.28.1",
     "fetch-jsonp": "1.2.3",
+    "flag-icons": "^7.1.0",
     "i18next": "^23.10.0",
     "moment": "^2.30.1",
     "next": "^13.3.0",

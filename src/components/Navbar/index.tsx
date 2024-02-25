@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import Link from '@/components/Link';
 
+import LanguageSelector from '../LanguageSelector';
 import Logo from '../logo';
 
 interface Props {
@@ -13,6 +14,7 @@ export default function Navbar({ logoTitle }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { t } = useTranslation('common');
+
   return (
     <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md md:px-16">
       <div className="container mx-auto">
@@ -26,6 +28,7 @@ export default function Navbar({ logoTitle }: Props) {
             <Link href="#education">{t('Educations')}</Link>
             <Link href="#certification">{t('Certifications')}</Link>
             <Link href="#projects">{t('Projects')}</Link>
+            <LanguageSelector />
           </div>
           <button
             className="md:hidden"
