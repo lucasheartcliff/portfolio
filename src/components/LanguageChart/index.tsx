@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { Props as ApexProps } from 'react-apexcharts';
@@ -100,20 +101,21 @@ const buildState = (
 
 export default function LanguageChart(props: Props) {
   const [state, setState] = useState<ApexProps>(buildState());
-
+  const router = useRouter();
+  const { locale } = router.query;
   const { t } = useTranslation('common');
 
   const Apex: any = ReactApexChart as any;
-
-  const messages = {
-    timeWorked: t('Time worked'),
-    hoursWorked: t('hours worked'),
-  };
 
   useEffect(() => {
     const data = [];
     const labels = [];
     const colors = [];
+    const messages = {
+      timeWorked: t('Time worked'),
+      hoursWorked: t('hours worked'),
+    };
+
     for (const v of props.data) {
       data.push(secondToHours(v.value));
       labels.push(v.name);
@@ -121,7 +123,7 @@ export default function LanguageChart(props: Props) {
     }
     const newState = buildState(data, colors, labels, messages);
     setState(newState);
-  }, [props.data]);
+  }, [props.data, locale]);
 
   return (
     <div id="chart">

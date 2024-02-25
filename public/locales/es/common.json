@@ -47,5 +47,11 @@
   "German": "Alemán",
   "Italian": "Italiano",
   "Chinese": "Chino",
-  "Arabic": "Arábica"
+  "Arabic": "Arábica",
+  "year": "año",
+  "years": "años",
+  "month": "mes",
+  "months": "meses",
+  "day": "día",
+  "days": "días"
 }

@@ -47,6 +47,11 @@
   "German": "德语",
   "Italian": "意大利语",
   "Chinese": "中文",
-  "Arabic": "阿拉伯语"
-  
+  "Arabic": "阿拉伯语",
+  "year": "年",
+  "years": "年",
+  "month": "个月",
+  "months": "个月",
+  "day": "天",
+  "days": "天"
 }

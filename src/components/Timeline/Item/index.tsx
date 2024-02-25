@@ -51,6 +51,7 @@ export default function Item(props: Props) {
   const period = `${moment(startDate).format(DATE_FORMAT)} - ${
     endDate ? moment(endDate).format(DATE_FORMAT) : t('Now')
   } ${formatDuration()}`;
+
   return (
     <div className="flex h-20 w-full flex-row items-center justify-center  px-4 pb-4 md:w-8/12">
       <div className="w-full">
@@ -59,12 +60,13 @@ export default function Item(props: Props) {
             <span>{t(title)}</span>
           </Tooltip>
         </div>
-
-        <div
-          className={`w-full overflow-hidden text-ellipsis whitespace-nowrap text-base text-gray-600`}
-        >
-          {period}
-        </div>
+        <Tooltip title={period}>
+          <div
+            className={`w-full overflow-hidden text-ellipsis whitespace-nowrap text-base text-gray-600`}
+          >
+            {period}
+          </div>
+        </Tooltip>
       </div>
 
       <div

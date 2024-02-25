@@ -1,13 +1,13 @@
-import BranchesOutlined from "@ant-design/icons/BranchesOutlined";
-import ExportOutlined from "@ant-design/icons/ExportOutlined";
-import StarOutlined from "@ant-design/icons/StarOutlined";
-import Badge from "antd/lib/badge";
-import Tooltip from "antd/lib/tooltip";
-import React from "react";
+import BranchesOutlined from '@ant-design/icons/BranchesOutlined';
+import ExportOutlined from '@ant-design/icons/ExportOutlined';
+import StarOutlined from '@ant-design/icons/StarOutlined';
+import Badge from 'antd/lib/badge';
+import Tooltip from 'antd/lib/tooltip';
+import React from 'react';
 
-import { getLanguageColor } from "@/utils";
+import { getLanguageColor } from '@/utils';
 
-import Link from "../Link";
+import Link from '../Link';
 
 export interface Props {
   name: string;
