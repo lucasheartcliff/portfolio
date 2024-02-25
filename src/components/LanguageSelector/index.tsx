@@ -1,6 +1,7 @@
+import { Tooltip } from 'antd';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Link from '../Link';
 
@@ -12,7 +13,7 @@ function FlagIcon({ countryCode = '' }: FlagIconProps) {
   const clazz = `fi-${countryCode}`;
   return (
     <span
-      className={`fi fis ${clazz} mr-2 inline-block h-6 w-6 rounded-full text-2xl`}
+      className={`fi fis ${clazz} inline-block h-6 w-6 rounded-full text-2xl`}
     />
   );
 }
@@ -44,17 +45,10 @@ export default function LanguageSelector() {
   const { locale } = router.query;
   const { t } = useTranslation();
 
-  const languages: Language[] = useMemo(
-    () => locales.map((c) => ({ ...c, name: t(c.name) })),
+  const languages: Language[] = locales.map((c) => ({ ...c, name: t(c.name) }));
 
-    [locale]
-  );
-  console.log(languages, locale);
+  const selectedLanguage = languages.find((l) => l.locale === locale);
 
-  const selectedLanguage = useMemo(
-    () => languages.find((l) => l.locale === locale),
-    [locale]
-  );
   useEffect(() => {
     const handleWindowClick = (event: any) => {
       const target = event.target.closest('button');
@@ -76,46 +70,51 @@ export default function LanguageSelector() {
   return (
     <>
       <div className="z-40 flex items-center">
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-center">
           <div>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex w-full items-center justify-center rounded-md  bg-white px-4 py-2 text-sm font-medium text-gray-700"
-              id={LANGUAGE_SELECTOR_ID}
-              aria-haspopup="true"
-              aria-expanded={isOpen}
-            >
-              <FlagIcon countryCode={selectedLanguage.key} />
-            </button>
+            <Tooltip title={selectedLanguage.name}>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                type="button"
+                className="inline-flex w-full items-center justify-center rounded-md  bg-white px-4 py-2 text-sm font-medium text-gray-700"
+                id={LANGUAGE_SELECTOR_ID}
+                aria-haspopup="true"
+                aria-expanded={isOpen}
+              >
+                <FlagIcon countryCode={selectedLanguage.key} />
+              </button>
+            </Tooltip>
           </div>
           {isOpen && (
             <div
-              className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+              className="absolute right-0 mt-2 w-44 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="language-selector"
             >
-              <div className="grid grid-cols-1 py-1" role="none">
+              <div className="grid w-full grid-cols-1 py-1" role="none">
                 {languages.map((language, index) => {
                   return (
-                    <button
+                    <Link
                       key={language.key}
-                      // onClick={() => setIsOpen(false)}
-                      className={`${
-                        selectedLanguage.key === language.key
-                          ? 'bg-gray-100 text-gray-900'
-                          : 'text-gray-700'
-                      } inline-flex items-center px-4 py-2 text-left text-sm hover:bg-gray-100 ${
-                        index % 2 === 0 ? 'rounded-r' : 'rounded-l'
-                      }`}
-                      role="menuitem"
+                      href={`/${language.locale}`}
+                      skipLocaleHandling
                     >
-                      <Link href={`/${language.locale}`} skipLocaleHandling>
+                      <button
+                        key={language.key}
+                        className={`${
+                          selectedLanguage.key === language.key
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-700'
+                        } inline-flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100 ${
+                          index % 2 === 0 ? 'rounded-r' : 'rounded-l'
+                        }`}
+                        role="menuitem"
+                      >
                         <FlagIcon countryCode={language.key} />
-                        <span className="truncate">{language.name}</span>
-                      </Link>
-                    </button>
+                        <span className="ml-2 truncate">{language.name}</span>
+                      </button>
+                    </Link>
                   );
                 })}
               </div>

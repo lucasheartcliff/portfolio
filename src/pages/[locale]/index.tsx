@@ -43,9 +43,7 @@ const Index = () => {
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
-  useEffect(() => {
-    setLocale(currentLocale as string);
-  }, [currentLocale]);
+  setLocale(currentLocale as string);
 
   const {
     firstName,
