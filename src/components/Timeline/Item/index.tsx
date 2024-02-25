@@ -57,7 +57,9 @@ export default function Item(props: Props) {
       <div className="w-full">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
           <Tooltip title={t(title)}>
-            <span>{t(title)}</span>
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap ">
+              {t(title)}
+            </span>
           </Tooltip>
         </div>
         <Tooltip title={period}>
