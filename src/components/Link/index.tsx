@@ -45,12 +45,17 @@ export default function Link({ children, ...props }: Props) {
   );
 }
 
-export function SocialLink(props: Props) {
+export function SocialLink({ children, ...rest }: Props) {
   return (
     <Link
-      className={'text-gray-500 hover:border-0 hover:text-black'}
+      className={'text-gray-500 hover:border-0'}
       target={'_blank'}
-      {...props}
-    />
+      {...rest}
+    >
+      <div className="relative">
+        <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-300 hover:opacity-40"></div>
+        {children}
+      </div>
+    </Link>
   );
 }
