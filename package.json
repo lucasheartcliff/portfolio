@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "4.0.0",
-    "antd": "5.11.1",
+    "antd": "5.11.5",
     "apexcharts": "3.28.1",
     "fetch-jsonp": "1.2.3",
     "flag-icons": "^7.1.0",
