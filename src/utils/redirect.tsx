@@ -7,7 +7,6 @@ export const useRedirect = (to?: string) => {
   const router = useRouter();
   to = to || router.asPath;
 
-  // language detection
   useEffect(() => {
     const detectedLng = languageDetector.detect();
     if (to.startsWith(`/${detectedLng}`) && router.route === "/404") {

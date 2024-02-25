@@ -29,7 +29,7 @@
   "Now": "Now",
   "hours worked": "hours worked",
   "Brazil": "Brazil",
-  "United States": "United States",
+  "United States of America": "United States of America",
   "France": "France",
   "Spain": "Spain",
   "South Korea": "South Korea",
@@ -37,5 +37,15 @@
   "Germany": "Germany",
   "Italy": "Italy",
   "China": "China",
-  "Saudi Arabia": "Saudi Arabia"
+  "Saudi Arabia": "Saudi Arabia",
+  "Portuguese": "Portuguese",
+  "English": "English",
+  "French": "French",
+  "Spanish": "Spanish",
+  "Korean": "Korean",
+  "Japanese": "Japanese",
+  "German": "German",
+  "Italian": "Italian",
+  "Chinese": "Chinese",
+  "Arabic": "Arabic"
 }
