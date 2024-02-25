@@ -50,12 +50,15 @@ export default function Navbar({ logoTitle }: Props) {
         </div>
         {menuOpen && (
           <div className="mt-4 md:hidden">
-            <div className="flex flex-col space-y-4 text-lg">
+            <div className="flex flex-col justify-center space-y-4 text-center align-middle text-lg">
               <Link href="#about">{t('About')}</Link>
               <Link href="#experience">{t('Experiences')}</Link>
               <Link href="#education">{t('Educations')}</Link>
               <Link href="#certification">{t('Certifications')}</Link>
               <Link href="#projects">{t('Projects')}</Link>
+              <div className="flex w-full justify-center">
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         )}
