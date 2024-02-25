@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { Props as ApexProps } from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
@@ -11,7 +13,8 @@ interface Props {
 const buildState = (
   data: any[] = [],
   colors: any[] = [],
-  labels: any[] = []
+  labels: any[] = [],
+  messages: { [k: string]: string } = {}
 ): ApexProps => ({
   series: [
     {
@@ -58,7 +61,7 @@ const buildState = (
       },
       y: {
         formatter(val) {
-          return `${val.toFixed(0)} hours worked`;
+          return `${val.toFixed(0)} ${messages.hoursWorked}`;
         },
         title: {
           formatter() {
@@ -79,7 +82,7 @@ const buildState = (
     xaxis: {
       categories: labels,
       title: {
-        text: 'Time worked (h)',
+        text: `${messages.timeWorked} (h)`,
         style: { cssClass: 'text-base' },
       },
 
@@ -98,6 +101,9 @@ const buildState = (
 
 export default function LanguageChart(props: Props) {
   const [state, setState] = useState<ApexProps>(buildState());
+  const router = useRouter();
+  const { locale } = router.query;
+  const { t } = useTranslation('common');
 
   const Apex: any = ReactApexChart as any;
 
@@ -105,14 +111,19 @@ export default function LanguageChart(props: Props) {
     const data = [];
     const labels = [];
     const colors = [];
+    const messages = {
+      timeWorked: t('Time worked'),
+      hoursWorked: t('hours worked'),
+    };
+
     for (const v of props.data) {
       data.push(secondToHours(v.value));
       labels.push(v.name);
       colors.push(v.color);
     }
-    const newState = buildState(data, colors, labels);
+    const newState = buildState(data, colors, labels, messages);
     setState(newState);
-  }, [props.data]);
+  }, [props.data, locale]);
 
   return (
     <div id="chart">
