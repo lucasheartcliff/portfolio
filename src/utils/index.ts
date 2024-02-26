@@ -59,7 +59,7 @@ export const getPlatformColor = (platform: string) => {
 };
 
 export function mapLocaleToMoment(i18nLocale: string | undefined) {
-  const localeMap = {
+  const localeMap: { [k: string]: string } = {
     pt: 'pt-br',
     en: 'en',
     fr: 'fr',
@@ -81,7 +81,7 @@ export async function setLocale(locale?: string) {
   if (!locale || locale === 'en') {
     moment.locale(locale);
   } else {
-    const localeData = (await import(`moment/locale/${momentLocale}`)).default;
+    // const localeData = (await import(`moment/locale/${momentLocale}`)).default;
     // Set the locale for Moment.js
     // moment.updateLocale(momentLocale, localeData);
     moment.locale(momentLocale);
