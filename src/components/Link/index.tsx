@@ -18,11 +18,12 @@ const LinkComponent = ({
   ...rest
 }: Props) => {
   const router = useRouter();
-  const locale = rest.locale || router.query.locale;
+  const locale: any = rest.locale || router.query.locale;
+  let skip = !!skipLocaleHandling;
 
-  let href = propsHref || router.asPath;
-  if (href.indexOf('http') === 0) skipLocaleHandling = true;
-  if (locale && !skipLocaleHandling) {
+  let href: any = propsHref || router.asPath;
+  if (href.indexOf('http') === 0) skip = true;
+  if (locale && !skip) {
     href = href
       ? `/${locale}${href}`
       : router.pathname.replace('[locale]', locale);
