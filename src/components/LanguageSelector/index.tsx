@@ -1,15 +1,15 @@
-import { Tooltip } from "antd";
-import { useRouter } from "next/router";
-import { useTranslation } from "next-i18next";
-import React, { useEffect, useState } from "react";
+import { Tooltip } from 'antd';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import React, { useEffect, useState } from 'react';
 
-import Link from "../Link";
+import Link from '../Link';
 
 interface FlagIconProps {
   countryCode: string;
 }
 
-function FlagIcon({ countryCode = "" }: FlagIconProps) {
+function FlagIcon({ countryCode = '' }: FlagIconProps) {
   const clazz = `fi-${countryCode}`;
   return (
     <span
@@ -24,19 +24,19 @@ export interface Language {
   locale: string;
 }
 
-const LANGUAGE_SELECTOR_ID = "language-selector";
+const LANGUAGE_SELECTOR_ID = 'language-selector';
 
 const locales = [
-  { name: "Portuguese", key: "br", locale: "pt" }, // Portuguese (Brazil)
-  { name: "English", key: "us", locale: "en" }, // English (USA)
-  { name: "French", key: "fr", locale: "fr" }, // French (France)
-  { name: "Spanish", key: "es", locale: "es" }, // Spanish (Spain)
-  { name: "Korean", key: "kr", locale: "ko" }, // Korean (South Korea)
-  { name: "Japanese", key: "jp", locale: "ja" }, // Japanese (Japan)
-  { name: "German", key: "de", locale: "de" }, // German (Germany)
-  { name: "Italian", key: "it", locale: "it" }, // Italian (Italy)
-  { name: "Chinese", key: "cn", locale: "zh" }, // Chinese (Simplified, Mainland China)
-  { name: "Arabic", key: "sa", locale: "ar" }, // Arabic (Saudi Arabia)
+  { name: 'Portuguese', key: 'br', locale: 'pt' }, // Portuguese (Brazil)
+  { name: 'English', key: 'us', locale: 'en' }, // English (USA)
+  { name: 'French', key: 'fr', locale: 'fr' }, // French (France)
+  { name: 'Spanish', key: 'es', locale: 'es' }, // Spanish (Spain)
+  { name: 'Korean', key: 'kr', locale: 'ko' }, // Korean (South Korea)
+  { name: 'Japanese', key: 'jp', locale: 'ja' }, // Japanese (Japan)
+  { name: 'German', key: 'de', locale: 'de' }, // German (Germany)
+  { name: 'Italian', key: 'it', locale: 'it' }, // Italian (Italy)
+  { name: 'Chinese', key: 'cn', locale: 'zh' }, // Chinese (Simplified, Mainland China)
+  { name: 'Arabic', key: 'sa', locale: 'ar' }, // Arabic (Saudi Arabia)
 ];
 
 export default function LanguageSelector() {
@@ -51,15 +51,15 @@ export default function LanguageSelector() {
 
   useEffect(() => {
     const handleWindowClick = (event: any) => {
-      const target = event.target.closest("button");
+      const target = event.target.closest('button');
       if (target && target.id === LANGUAGE_SELECTOR_ID) {
         return;
       }
       setIsOpen(false);
     };
-    window.addEventListener("click", handleWindowClick);
+    window.addEventListener('click', handleWindowClick);
     return () => {
-      window.removeEventListener("click", handleWindowClick);
+      window.removeEventListener('click', handleWindowClick);
     };
   }, []);
 
@@ -107,10 +107,10 @@ export default function LanguageSelector() {
                         key={language.key}
                         className={`${
                           selectedLanguage.key === language.key
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700"
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-700'
                         } inline-flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100 ${
-                          index % 2 === 0 ? "rounded-r" : "rounded-l"
+                          index % 2 === 0 ? 'rounded-r' : 'rounded-l'
                         }`}
                         role="menuitem"
                       >

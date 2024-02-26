@@ -1,21 +1,22 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
-import languageDetector from "./languageDetector";
+import languageDetector from './languageDetector';
 
-export const useRedirect = (to?: string) => {
+export const useRedirect = (url: string = '') => {
   const router = useRouter();
-  to = to || router.asPath;
+  const to = url || router.asPath;
 
   useEffect(() => {
-    const detectedLng = languageDetector.detect();
-    if (to.startsWith(`/${detectedLng}`) && router.route === "/404") {
+    const detectedLng = languageDetector.detect() || '';
+    if (to.startsWith(`/${detectedLng}`) && router.route === '/404') {
       // prevent endless loop
       router.replace(`/${detectedLng}${router.route}`);
       return;
     }
+    const { cache } = languageDetector;
 
-    languageDetector.cache(detectedLng);
+    if (cache) cache(detectedLng);
     router.replace(`/${detectedLng}${to}`);
   });
 
