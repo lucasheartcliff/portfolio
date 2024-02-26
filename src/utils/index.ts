@@ -81,7 +81,8 @@ export async function setLocale(locale?: string) {
   if (!locale || locale === 'en') {
     moment.locale(locale);
   } else {
-    (await import(`moment/locale/${momentLocale}`)).default;
+    let l =(await import(`moment/locale/${momentLocale}`)).default;
+    l=l
     // Set the locale for Moment.js
     // moment.updateLocale(momentLocale, localeData);
     moment.locale(momentLocale);
