@@ -77,14 +77,13 @@ export function mapLocaleToMoment(i18nLocale: string | undefined) {
 }
 
 export async function setLocale(locale?: string) {
-  const momentLocale = mapLocaleToMoment(locale);
+  const momentLocale = mapLocaleToMoment(locale) as string;
   if (!locale || locale === 'en') {
     moment.locale(locale);
   } else {
-    let l =(await import(`moment/locale/${momentLocale}`)).default;
-    l=l
+    const localeData =(await import(`moment/locale/${momentLocale}`)).default;
     // Set the locale for Moment.js
-    // moment.updateLocale(momentLocale, localeData);
+    moment.updateLocale(momentLocale, localeData);
     moment.locale(momentLocale);
   }
 }
