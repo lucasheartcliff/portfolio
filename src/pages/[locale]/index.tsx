@@ -38,12 +38,23 @@ const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
 const Index = () => {
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
+  const [, setLang] = useState<string>();
   const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
 
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
-  setLocale(currentLocale as string);
+  useEffect(() => {
+    const l = currentLocale as string;
+    setLocale(
+      l,
+      () => {
+        console.info(`Change locale to '${l}'`);
+        setLang(l);
+      },
+      () => {}
+    );
+  }, [currentLocale]);
 
   const {
     firstName,
@@ -111,7 +122,7 @@ const Index = () => {
       .catch((e) => console.error(e));
 */
   }, []);
-
+  console.log('loaded');
   return (
     <>
       <Main
