@@ -38,7 +38,7 @@ const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
 const Index = () => {
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
-  const [, setLang] = useState<string>();
+  const [language, setLanguage] = useState<string>('en');
   const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
 
   const { t } = useTranslation('common');
@@ -50,7 +50,7 @@ const Index = () => {
       l,
       () => {
         console.info(`Change locale to '${l}'`);
-        setLang(l);
+        setLanguage(l);
       },
       () => {}
     );
@@ -82,7 +82,7 @@ const Index = () => {
       .then(async ([repos, codingTime, languages]: any[]) => {
         const r = (await repos) as any;
         const c = (await codingTime) as any;
-        const lang = (await languages) as any;
+        const langs = (await languages) as any;
         setPinnedRepos(
           r.map((v: any) => ({
             ...v,
@@ -95,14 +95,14 @@ const Index = () => {
 
         // Fixing data percentage
         const totalPercentage =
-          lang.data?.reduce((acc: number, curr: any) => {
+          langs.data?.reduce((acc: number, curr: any) => {
             let a = acc;
             if (isProgrammingLanguage(curr.name)) a += curr.percent;
             return a;
           }, 0) || 100;
 
         const langData = [];
-        for (const l of lang.data || []) {
+        for (const l of langs.data || []) {
           if (!isProgrammingLanguage(l.name) || !l.percent) continue;
           langData.push({
             ...l,
@@ -122,7 +122,6 @@ const Index = () => {
       .catch((e) => console.error(e));
 */
   }, []);
-  console.log('loaded');
   return (
     <>
       <Main
@@ -131,7 +130,7 @@ const Index = () => {
           <Meta
             title={name}
             description={t(introductionBio)}
-            canonical={'https://lucasheartcliff.netlify.app/'}
+            locale={language}
           />
         }
       >
