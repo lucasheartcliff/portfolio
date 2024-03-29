@@ -3,15 +3,17 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 
 import profile from '@/public/assets/jsons/profile.json';
+import { getEnvProperties } from '@/utils';
 
 type IMetaProps = {
   title: string;
   description: string;
-  canonical?: string;
+  locale: string;
 };
 
 const Meta = (props: IMetaProps) => {
   const router = useRouter();
+  const { url } = getEnvProperties();
 
   return (
     <>
@@ -21,10 +23,6 @@ const Meta = (props: IMetaProps) => {
           name="viewport"
           content="width=device-width,initial-scale=1"
           key="viewport"
-        />
-        <meta
-          name="google-site-verification"
-          content="AqA2PFJsSI2vsJBWU9RQRB1imOf8x-fbVKJhOGDMz84"
         />
         <link
           rel="stylesheet"
@@ -58,7 +56,7 @@ const Meta = (props: IMetaProps) => {
       <NextSeo
         title={props.title}
         description={props.description}
-        canonical={props.canonical}
+        canonical={url}
         openGraph={{
           profile: {
             firstName: profile.firstName,
@@ -67,8 +65,8 @@ const Meta = (props: IMetaProps) => {
           },
           title: props.title,
           description: props.description,
-          url: props.canonical,
-          locale: 'pt-br',
+          url,
+          locale: props.locale,
           site_name: props.title,
         }}
       />

@@ -95,3 +95,8 @@ export async function setLocale(
       onError(e);
     });
 }
+
+export const getEnvProperties = () => ({
+  url: process.env.NEXT_PUBLIC_URL || '',
+  googleAnalytics: process.env.NEXT_PUBLIC_ANALYTICS_ID || '',
+});
