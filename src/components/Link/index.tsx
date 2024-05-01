@@ -1,25 +1,62 @@
+import type { LinkProps } from 'next/link';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
-interface Props
-  extends React.DetailedHTMLProps<
-    React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    HTMLAnchorElement
-  > {}
+interface Props extends LinkProps {
+  skipLocaleHandling?: boolean;
+  locale?: string;
+  target?: string;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+const LinkComponent = ({
+  children,
+  skipLocaleHandling,
+  href: propsHref,
+  ...rest
+}: Props) => {
+  const router = useRouter();
+  const locale: any = rest.locale || router.query.locale;
+  let skip = !!skipLocaleHandling;
+
+  let href: any = propsHref || router.asPath;
+  if (href.indexOf('http') === 0) skip = true;
+  if (locale && !skip) {
+    href = href
+      ? `/${locale}${href}`
+      : router.pathname.replace('[locale]', locale);
+  }
+
+  return (
+    <>
+      <NextLink href={href} {...rest}>
+        {children}
+      </NextLink>
+    </>
+  );
+};
 
 export default function Link({ children, ...props }: Props) {
   return (
-    <a className="text-black hover:border-0" {...props}>
+    <LinkComponent className="text-black hover:border-0" {...props}>
       {children}
-    </a>
+    </LinkComponent>
   );
 }
 
-export function SocialLink(props: Props) {
+export function SocialLink({ children, ...rest }: Props) {
   return (
     <Link
-      className={'text-gray-500 hover:border-0 hover:text-black'}
+      className={'text-gray-500 hover:border-0'}
       target={'_blank'}
-      {...props}
-    />
+      {...rest}
+    >
+      <div className="relative">
+        <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-300 hover:opacity-40"></div>
+        {children}
+      </div>
+    </Link>
   );
 }

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { useTranslation } from 'next-i18next';
+import React, { useState } from 'react';
 
-import Link from "@/components/Link";
+import Link from '@/components/Link';
 
-import Logo from "../logo";
+import LanguageSelector from '../LanguageSelector';
+import Logo from '../logo';
 
 interface Props {
   logoTitle: string;
@@ -11,19 +13,23 @@ interface Props {
 export default function Navbar({ logoTitle }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const { t } = useTranslation('common');
+
   return (
     <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md md:px-16">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
-          <Link href="/" className={"text-primary hover:border-0"}>
+          <Link href="/" className={'text-primary hover:border-0'}>
             <Logo title={logoTitle} />
           </Link>
-          <div className="hidden space-x-4 md:flex">
-            <Link href="#about">{"About"}</Link>
-            <Link href="#experience">{"Experience"}</Link>
-            <Link href="#education">{"Education"}</Link>
-            <Link href="#certification">{"Certification"}</Link>
-            <Link href="#projects">{"Projects"}</Link>
+          <div className="hidden space-x-4 md:flex md:text-2xl">
+            <Link href="#about">{t('About')}</Link>
+            <Link href="#languages">{t('Languages')}</Link>
+            <Link href="#experience">{t('Experiences')}</Link>
+            <Link href="#education">{t('Educations')}</Link>
+            <Link href="#certification">{t('Certifications')}</Link>
+            <Link href="#projects">{t('Projects')}</Link>
+            <LanguageSelector />
           </div>
           <button
             className="md:hidden"
@@ -45,12 +51,16 @@ export default function Navbar({ logoTitle }: Props) {
         </div>
         {menuOpen && (
           <div className="mt-4 md:hidden">
-            <div className="flex flex-col space-y-4">
-              <Link href="#about">{"About"}</Link>
-              <Link href="#experience">{"Experience"}</Link>
-              <Link href="#education">{"Education"}</Link>
-              <Link href="#certification">{"Certification"}</Link>
-              <Link href="#projects">{"Projects"}</Link>
+            <div className="flex flex-col justify-center space-y-4 text-center align-middle text-lg">
+              <Link href="#about">{t('About')}</Link>
+              <Link href="#languages">{t('Languages')}</Link>
+              <Link href="#experience">{t('Experiences')}</Link>
+              <Link href="#education">{t('Educations')}</Link>
+              <Link href="#certification">{t('Certifications')}</Link>
+              <Link href="#projects">{t('Projects')}</Link>
+              <div className="flex w-full justify-center">
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         )}
