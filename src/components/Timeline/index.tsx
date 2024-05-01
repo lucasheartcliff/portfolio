@@ -1,10 +1,10 @@
-import type { TimelineItemProps } from 'antd/lib/timeline';
-import AntdTimeline from 'antd/lib/timeline';
-import React, { useEffect, useState } from 'react';
+import type { TimelineItemProps } from "antd/lib/timeline";
+import AntdTimeline from "antd/lib/timeline";
+import React, { useEffect, useState } from "react";
 
-import Item from './Item';
+import Item from "./Item";
 
-const theme = require('@/styles/themes');
+const theme = require("@/styles/themes");
 
 interface ItemNode {
   key: string;
@@ -21,6 +21,7 @@ type Node = {
   title: string;
   startDate: string;
   endDate?: string;
+  open?: boolean;
   children?: Node[];
 };
 
@@ -30,6 +31,7 @@ interface Props {
 export default function Timeline({ data }: Props) {
   const [nodeMap, setNodeMap] = useState<Map<string, ItemNode>>(new Map());
   const [nodes, setNodes] = useState<ItemNode[]>([]);
+  const [closedNodes, setClosedNodes] = useState<Set<string>>(new Set());
 
   function nodesMapToList(map: Map<string, ItemNode>): ItemNode[] {
     const result: { [k: number]: ItemNode } = {};
@@ -40,24 +42,22 @@ export default function Timeline({ data }: Props) {
     return Object.values(result);
   }
   function toggleChildNodes(key: string) {
-    if (!nodeMap.has(key)) return;
+    const newClosedNodes = new Set<string>(closedNodes);
+    if (!newClosedNodes.has(key)) {
+      newClosedNodes.add(key);
+      nodeMap.get(key).open = false;
+    } else {
+      newClosedNodes.delete(key);
 
-    const open = !nodeMap.get(key)?.open;
-    const nodesList = nodesMapToList(nodeMap);
-    const filteredNodes = open
-      ? nodesList
-      : nodesList.filter((n) => !n.key.includes(`${key}.`));
-    const newNodeMap = new Map(nodeMap);
-    const node = newNodeMap.get(key);
-    if (node) node.open = open;
-
-    setNodeMap(newNodeMap);
-    setNodes(filteredNodes);
+      nodeMap.get(key).open = true;
+    }
+    setClosedNodes(newClosedNodes);
   }
 
   useEffect(() => {
     if (!data) return;
     const newNodeMap = new Map();
+    const newClosedNodes = new Set<string>();
 
     let i = 0;
     let count = 0;
@@ -66,13 +66,16 @@ export default function Timeline({ data }: Props) {
       const hasChildren = !!parent.children?.length;
 
       let key = `${i}`;
-      newNodeMap.set(key, {
+      const p = {
         ...parent,
         key,
         hasChildren,
         order: count,
-        open: true,
-      });
+        open: parent.open !== undefined ? parent.open : true,
+      };
+      if (!p.open) newClosedNodes.add(p.key);
+      newNodeMap.set(key, p);
+
       count += 1;
 
       if (hasChildren && parent.children?.length) {
@@ -84,6 +87,7 @@ export default function Timeline({ data }: Props) {
             order: count,
             hasChildren: false,
             isChild: true,
+            open: false,
           });
           j += 1;
           count += 1;
@@ -92,12 +96,13 @@ export default function Timeline({ data }: Props) {
       i += 1;
     }
     setNodeMap(newNodeMap);
+    setClosedNodes(newClosedNodes);
     setNodes(nodesMapToList(newNodeMap));
   }, [data]);
 
   const renderItem = (item: ItemNode) => {
     return (
-      <div className={item.isChild ? 'ml-5' : ''}>
+      <div className={item.isChild ? "ml-5" : ""}>
         <Item
           {...item}
           onClickToOpen={() => {
@@ -108,15 +113,25 @@ export default function Timeline({ data }: Props) {
     );
   };
 
-  const items = nodes.map((n) => {
+  const items = nodes.reduce((acc, curr) => {
+    if (curr.isChild) {
+      const parentKey = curr.key.split(".")[0] as string;
+      if (closedNodes.has(parentKey)) {
+        return acc;
+      }
+    }
+
     const result: TimelineItemProps = {
-      children: renderItem(n),
-      position: 'right',
+      children: renderItem(curr),
+      position: "right",
       color: theme.primary,
     };
-    if (n.isChild) result.color = 'gray';
-    return result;
-  });
+
+    if (curr.isChild) result.color = "gray";
+
+    acc.push(result);
+    return acc;
+  }, [] as TimelineItemProps[]);
 
   return (
     <div>

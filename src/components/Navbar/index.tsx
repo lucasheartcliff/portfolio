@@ -24,6 +24,7 @@ export default function Navbar({ logoTitle }: Props) {
           </Link>
           <div className="hidden space-x-4 md:flex md:text-xl">
             <Link href="#about">{t('About')}</Link>
+            <Link href="#languages">{t('Languages')}</Link>
             <Link href="#experience">{t('Experiences')}</Link>
             <Link href="#education">{t('Educations')}</Link>
             <Link href="#certification">{t('Certifications')}</Link>
@@ -52,6 +53,7 @@ export default function Navbar({ logoTitle }: Props) {
           <div className="mt-4 md:hidden">
             <div className="flex flex-col justify-center space-y-4 text-center align-middle text-lg">
               <Link href="#about">{t('About')}</Link>
+              <Link href="#languages">{t('Languages')}</Link>
               <Link href="#experience">{t('Experiences')}</Link>
               <Link href="#education">{t('Educations')}</Link>
               <Link href="#certification">{t('Certifications')}</Link>
