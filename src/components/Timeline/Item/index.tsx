@@ -54,11 +54,11 @@ export default function Item(props: Props) {
 
   return (
     <div
-      className="flex h-20 w-full flex-row items-center justify-center px-4 pb-4"
+      className="flex h-20 w-full flex-row items-center justify-center p-4 text-base md:text-xl"
       onClick={onClick}
     >
       <div className="w-full">
-        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
           <Tooltip title={t(title)}>
             <span className="overflow-hidden text-ellipsis whitespace-nowrap ">
               {t(title)}
@@ -66,7 +66,7 @@ export default function Item(props: Props) {
           </Tooltip>
         </div>
         <Tooltip title={period}>
-          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-base text-gray-600 ">
+          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-600 ">
             {period}
           </span>
         </Tooltip>
