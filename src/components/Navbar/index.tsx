@@ -22,7 +22,7 @@ export default function Navbar({ logoTitle }: Props) {
           <Link href="/" className={'text-primary hover:border-0'}>
             <Logo title={logoTitle} />
           </Link>
-          <div className="hidden space-x-4 md:flex md:text-xl">
+          <div className="hidden space-x-4 md:flex md:text-2xl">
             <Link href="#about">{t('About')}</Link>
             <Link href="#languages">{t('Languages')}</Link>
             <Link href="#experience">{t('Experiences')}</Link>
