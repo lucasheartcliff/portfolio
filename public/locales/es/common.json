@@ -17,7 +17,7 @@
   "Domain Driven Design": "Diseño impulsado por dominios",
   "Java Persistence API and Hibernate": "API de persistencia de Java y Hibernate",
   "Python 3 Basics": "Conceptos básicos de Python 3",
-  "Languages": "Idiomas",
+  "Languages": "Lenguajes",
   "Experiences": "Experiencias",
   "Certifications": "Certificaciones",
   "Projects": "Proyectos",
@@ -53,5 +53,12 @@
   "month": "mes",
   "months": "meses",
   "day": "día",
-  "days": "días"
+  "days": "días",
+  "High School": "Escuela Secundaria",
+  "Instituto de Educação Pereira Batista": "Instituto de Educación Pereira Batista",
+  "Colégio Casimiro de Abreu": "Colegio Casimiro de Abreu",
+  "Primary School": "Escuela Primaria",
+  "Centro Educacional Vilar Novo": "Centro Educacional Vilar Novo",
+  "Fundação Pestalozzi": "Fundación Pestalozzi",
+  "Colégio Soberano": "Colegio Soberano"
 }

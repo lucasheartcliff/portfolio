@@ -112,15 +112,6 @@ const Index = () => {
         setData(langData);
       })
       .catch((err) => console.error(err));
-    /*
-    apiFetch(GITHUB_PROFILE(username))
-      .getJsonP()
-      .then((r) => r.json())
-      .then((d) => {
-        setGithubProfile(d.data);
-      })
-      .catch((e) => console.error(e));
-*/
   }, []);
   return (
     <>
@@ -201,7 +192,7 @@ const Index = () => {
               <div className="mt-5 flex w-full items-center justify-center md:mt-0">
                 <div>
                   <div
-                    className="h-72 w-72 rounded-full bg-cover"
+                    className="h-80 w-80 rounded-full bg-cover"
                     style={{
                       backgroundImage: `url(${router.basePath}/assets/images/profile.jpeg)`,
                     }}
@@ -237,6 +228,32 @@ const Index = () => {
               </div>
             </Block>
             <Block>
+              <div className="hidden w-full items-center justify-center md:flex ">
+                <div
+                  className=" border-0 bg-cover"
+                  style={{
+                    height: '36rem',
+                    width: '36rem',
+                    backgroundImage: `url(${router.basePath}/assets/images/languages.png)`,
+                  }}
+                />
+              </div>
+            </Block>
+          </Row>
+          <Row>
+            <Block>
+              <div className="hidden w-full justify-center md:flex ">
+                <div
+                  className=" border-0 bg-cover"
+                  style={{
+                    height: '36rem',
+                    width: '36rem',
+                    backgroundImage: `url(${router.basePath}/assets/images/experience.png)`,
+                  }}
+                />
+              </div>
+            </Block>
+            <Block>
               <div className="flex flex-1 flex-col ">
                 <span
                   id="experience"
@@ -244,7 +261,9 @@ const Index = () => {
                 >
                   {t('Experiences')}
                 </span>
-                <Timeline data={experience} />
+                <Scroll style={{ height: 600 }}>
+                  <Timeline data={experience} />
+                </Scroll>
               </div>
             </Block>
           </Row>
@@ -257,7 +276,35 @@ const Index = () => {
                 >
                   {t('Educations')}
                 </span>
-                <Timeline data={education} />
+                <Scroll style={{ height: 600 }}>
+                  <Timeline data={education} />
+                </Scroll>
+              </div>
+            </Block>
+            <Block>
+              <div className="mt-10 hidden w-full items-center justify-center md:flex ">
+                <div
+                  className=" border-0 bg-cover"
+                  style={{
+                    height: '36rem',
+                    width: '36rem',
+                    backgroundImage: `url(${router.basePath}/assets/images/education.png)`,
+                  }}
+                />
+              </div>
+            </Block>
+          </Row>
+          <Row>
+            <Block>
+              <div className="mt-5 hidden w-full items-center justify-center md:flex ">
+                <div
+                  className=" border-0 bg-cover"
+                  style={{
+                    height: '28rem',
+                    width: '36rem',
+                    backgroundImage: `url(${router.basePath}/assets/images/certificate.png)`,
+                  }}
+                />
               </div>
             </Block>
             <Block>
