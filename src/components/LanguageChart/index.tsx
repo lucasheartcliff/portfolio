@@ -50,11 +50,10 @@ const buildState = (
     colors,
     dataLabels: {
       enabled: false,
-      distributed: true,
 
       style: {
         fontSize: '16px',
-        colors: colors.map(getContrastColor),
+        //colors: colors.map(getContrastColor),
       },
       formatter(value, { seriesIndex, dataPointIndex, w }) {
         const barValue = w.globals.series[seriesIndex][dataPointIndex];
@@ -117,7 +116,7 @@ const buildState = (
 });
 
 export default function LanguageChart(props: Props) {
-  const [state, setState] = useState<ApexProps>(buildState(0));
+  const [state, setState] = useState<ApexProps>(buildState());
   const router = useRouter();
   const { locale } = router.query;
   const { t } = useTranslation('common');
