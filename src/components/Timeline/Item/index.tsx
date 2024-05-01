@@ -1,4 +1,4 @@
-import CaretRightOutlined from '@ant-design/icons/CaretRightOutlined';
+import RightOutlined from '@ant-design/icons/lib/icons/RightOutlined';
 import Tooltip from 'antd/lib/tooltip';
 import moment from 'moment';
 import { useTranslation } from 'next-i18next';
@@ -53,9 +53,12 @@ export default function Item(props: Props) {
   } ${formatDuration()}`;
 
   return (
-    <div className="flex h-20 w-full flex-row items-center justify-center  px-4 pb-4 md:w-8/12">
+    <div
+      className="flex h-20 w-full flex-row items-center justify-center p-4 text-base md:text-xl"
+      onClick={onClick}
+    >
       <div className="w-full">
-        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
           <Tooltip title={t(title)}>
             <span className="overflow-hidden text-ellipsis whitespace-nowrap ">
               {t(title)}
@@ -63,21 +66,18 @@ export default function Item(props: Props) {
           </Tooltip>
         </div>
         <Tooltip title={period}>
-          <div
-            className={`w-full overflow-hidden text-ellipsis whitespace-nowrap text-base text-gray-600`}
-          >
+          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-600 ">
             {period}
-          </div>
+          </span>
         </Tooltip>
       </div>
 
       <div
-        className={`ml-5 items-end justify-center ${
+        className={`flex h-full items-center justify-center ${
           !hasChildren ? 'hidden' : ''
         }`}
-        onClick={onClick}
       >
-        <CaretRightOutlined
+        <RightOutlined
           className={`text-base font-extrabold  text-black ${
             open ? 'rotate-90' : ''
           }`}
