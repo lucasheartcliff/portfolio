@@ -1,9 +1,8 @@
-import '@/utils/log';
-
 import { type ReactNode, useEffect } from 'react';
 
 import Navbar from '@/components/Navbar';
 import Scroll from '@/components/Scroll';
+import heartcliff from '@/utils/log';
 
 type IMainProps = {
   title: string;
@@ -13,7 +12,7 @@ type IMainProps = {
 
 const Main = (props: IMainProps) => {
   useEffect(() => {
-    (console as any).heartcliff();
+    heartcliff();
   }, []);
   return (
     <div className="h-screen w-full">
