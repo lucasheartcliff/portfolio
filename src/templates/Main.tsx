@@ -13,7 +13,7 @@ type IMainProps = {
 
 const Main = (props: IMainProps) => {
   useEffect(() => {
-    console.heartcliff();
+    (console as any).heartcliff();
   }, []);
   return (
     <div className="h-screen w-full">
