@@ -1,11 +1,11 @@
-import ExportOutlined from "@ant-design/icons/ExportOutlined";
-import Tooltip from "antd/lib/tooltip";
-import { useTranslation } from "next-i18next";
-import React from "react";
+import ExportOutlined from '@ant-design/icons/ExportOutlined';
+import Tooltip from 'antd/lib/tooltip';
+import { useTranslation } from 'next-i18next';
+import React from 'react';
 
-import { getPlatformColor } from "@/utils";
+import { getPlatformColor } from '@/utils';
 
-import Link from "../Link";
+import Link from '../Link';
 
 interface Props {
   name: string;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function CertificateCard({ name, platform, url }: Props) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation('common');
   return (
     <div className="flex h-20 w-full flex-row items-center  justify-center border p-4 ">
       <div className="w-11/12">

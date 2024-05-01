@@ -53,5 +53,12 @@
   "month": "mes",
   "months": "meses",
   "day": "día",
-  "days": "días"
+  "days": "días",
+  "High School": "Escuela Secundaria",
+  "Instituto de Educação Pereira Batista": "Instituto de Educación Pereira Batista",
+  "Colégio Casimiro de Abreu": "Colegio Casimiro de Abreu",
+  "Primary School": "Escuela Primaria",
+  "Centro Educacional Vilar Novo": "Centro Educacional Vilar Novo",
+  "Fundação Pestalozzi": "Fundación Pestalozzi",
+  "Colégio Soberano": "Colegio Soberano"
 }

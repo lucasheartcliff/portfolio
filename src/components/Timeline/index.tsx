@@ -1,10 +1,10 @@
-import type { TimelineItemProps } from "antd/lib/timeline";
-import AntdTimeline from "antd/lib/timeline";
-import React, { useEffect, useState } from "react";
+import type { TimelineItemProps } from 'antd/lib/timeline';
+import AntdTimeline from 'antd/lib/timeline';
+import React, { useEffect, useState } from 'react';
 
-import Item from "./Item";
+import Item from './Item';
 
-const theme = require("@/styles/themes");
+const theme = require('@/styles/themes');
 
 interface ItemNode {
   key: string;
@@ -102,7 +102,7 @@ export default function Timeline({ data }: Props) {
 
   const renderItem = (item: ItemNode) => {
     return (
-      <div className={item.isChild ? "ml-5" : ""}>
+      <div className={item.isChild ? 'ml-5' : ''}>
         <Item
           {...item}
           onClickToOpen={() => {
@@ -115,7 +115,7 @@ export default function Timeline({ data }: Props) {
 
   const items = nodes.reduce((acc, curr) => {
     if (curr.isChild) {
-      const parentKey = curr.key.split(".")[0] as string;
+      const parentKey = curr.key.split('.')[0] as string;
       if (closedNodes.has(parentKey)) {
         return acc;
       }
@@ -123,11 +123,11 @@ export default function Timeline({ data }: Props) {
 
     const result: TimelineItemProps = {
       children: renderItem(curr),
-      position: "right",
+      position: 'right',
       color: theme.primary,
     };
 
-    if (curr.isChild) result.color = "gray";
+    if (curr.isChild) result.color = 'gray';
 
     acc.push(result);
     return acc;
