@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import type { Props as ApexProps } from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-import { getContrastColor, secondToHours } from '@/utils';
+import { secondToHours } from '@/utils';
 
 interface Props {
   data: any;
@@ -53,7 +53,6 @@ const buildState = (
 
       style: {
         fontSize: '16px',
-        //colors: colors.map(getContrastColor),
       },
       formatter(value, { seriesIndex, dataPointIndex, w }) {
         const barValue = w.globals.series[seriesIndex][dataPointIndex];
