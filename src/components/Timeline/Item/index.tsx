@@ -1,8 +1,8 @@
-import CaretRightOutlined from '@ant-design/icons/CaretRightOutlined';
-import Tooltip from 'antd/lib/tooltip';
-import moment from 'moment';
-import { useTranslation } from 'next-i18next';
-import React from 'react';
+import RightOutlined from "@ant-design/icons/lib/icons/RightOutlined";
+import Tooltip from "antd/lib/tooltip";
+import moment from "moment";
+import { useTranslation } from "next-i18next";
+import React from "react";
 
 interface Props {
   title: string;
@@ -13,10 +13,10 @@ interface Props {
   onClickToOpen?: (isOpen: boolean) => void;
 }
 export default function Item(props: Props) {
-  const DATE_FORMAT = 'MMM YYYY';
+  const DATE_FORMAT = "MMM YYYY";
 
   const { title, open, startDate, endDate, hasChildren, onClickToOpen } = props;
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(["common"]);
 
   function onClick() {
     const v = !open;
@@ -32,28 +32,31 @@ export default function Item(props: Props) {
     const months = duration.months();
     // const days = duration.days();
 
-    let formattedString = '';
+    let formattedString = "";
 
     if (years > 0) {
-      formattedString += `${years} ${years === 1 ? t('year') : t('years')}`;
+      formattedString += `${years} ${years === 1 ? t("year") : t("years")}`;
     }
 
     if (months > 0) {
       formattedString += ` ${months} ${
-        months === 1 ? t('month') : t('months')
+        months === 1 ? t("month") : t("months")
       }`;
     }
 
     formattedString = formattedString.trim();
-    return !formattedString ? '' : `(${formattedString.trim()})`;
+    return !formattedString ? "" : `(${formattedString.trim()})`;
   }
 
   const period = `${moment(startDate).format(DATE_FORMAT)} - ${
-    endDate ? moment(endDate).format(DATE_FORMAT) : t('Now')
+    endDate ? moment(endDate).format(DATE_FORMAT) : t("Now")
   } ${formatDuration()}`;
 
   return (
-    <div className="flex h-20 w-full flex-row items-center justify-center  px-4 pb-4 md:w-8/12">
+    <div
+      className="flex h-20 w-full flex-row items-center justify-center px-4 pb-4"
+      onClick={onClick}
+    >
       <div className="w-full">
         <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-black">
           <Tooltip title={t(title)}>
@@ -72,14 +75,13 @@ export default function Item(props: Props) {
       </div>
 
       <div
-        className={`ml-5 items-end justify-center ${
-          !hasChildren ? 'hidden' : ''
+        className={`flex h-full items-center justify-center ${
+          !hasChildren ? "hidden" : ""
         }`}
-        onClick={onClick}
       >
-        <CaretRightOutlined
+        <RightOutlined
           className={`text-base font-extrabold  text-black ${
-            open ? 'rotate-90' : ''
+            open ? "rotate-90" : ""
           }`}
         />
       </div>
