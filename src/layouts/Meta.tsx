@@ -2,16 +2,18 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 
-import { AppConfig } from '@/utils/AppConfig';
+import profile from '@/public/assets/jsons/profile.json';
+import { getEnvProperties } from '@/utils';
 
 type IMetaProps = {
   title: string;
   description: string;
-  canonical?: string;
+  locale: string;
 };
 
 const Meta = (props: IMetaProps) => {
   const router = useRouter();
+  const { url } = getEnvProperties();
 
   return (
     <>
@@ -54,13 +56,18 @@ const Meta = (props: IMetaProps) => {
       <NextSeo
         title={props.title}
         description={props.description}
-        canonical={props.canonical}
+        canonical={url}
         openGraph={{
+          profile: {
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            username: profile.username,
+          },
           title: props.title,
           description: props.description,
-          url: props.canonical,
-          locale: AppConfig.locale,
-          site_name: AppConfig.site_name,
+          url,
+          locale: props.locale,
+          site_name: props.title,
         }}
       />
     </>

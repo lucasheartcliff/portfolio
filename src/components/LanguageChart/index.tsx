@@ -1,17 +1,23 @@
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import type { Props as ApexProps } from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
-import { secondToHours } from '@/utils';
+import { getContrastColor, secondToHours } from '@/utils';
 
 interface Props {
   data: any;
 }
 
+const normalizeData = (value: number) => Math.log(value);
+const displayNormalizedData = (value: number) => Math.exp(value);
+
 const buildState = (
   data: any[] = [],
   colors: any[] = [],
-  labels: any[] = []
+  labels: any[] = [],
+  messages: { [k: string]: string } = {}
 ): ApexProps => ({
   series: [
     {
@@ -23,15 +29,19 @@ const buildState = (
       type: 'bar',
       fontFamily:
         'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-      height: 550,
+      height: 600,
       toolbar: {
         show: false,
       },
     },
     plotOptions: {
       bar: {
-        distributed: true,
+        barHeight: '90%',
         horizontal: true,
+        distributed: true,
+        dataLabels: {
+          position: 'top',
+        },
       },
     },
     legend: {
@@ -40,14 +50,14 @@ const buildState = (
     colors,
     dataLabels: {
       enabled: false,
-      textAnchor: 'end',
-      offsetX: 0,
-      offsetY: 0,
-      formatter(v: number) {
-        return `${v.toFixed(0)} h`;
+
+      style: {
+        fontSize: '16px',
+        //colors: colors.map(getContrastColor),
       },
-      dropShadow: {
-        enabled: true,
+      formatter(value, { seriesIndex, dataPointIndex, w }) {
+        const barValue = w.globals.series[seriesIndex][dataPointIndex];
+        return `${displayNormalizedData(barValue)?.toFixed(0)} h`;
       },
     },
     tooltip: {
@@ -56,9 +66,14 @@ const buildState = (
       onDatasetHover: {
         highlightDataSeries: true,
       },
+      style: {
+        fontSize: '16px',
+      },
       y: {
         formatter(val) {
-          return `${val.toFixed(0)} hours worked`;
+          return `${displayNormalizedData(val).toFixed(0)} ${
+            messages.hoursWorked
+          }`;
         },
         title: {
           formatter() {
@@ -67,15 +82,33 @@ const buildState = (
         },
       },
     },
+    yaxis: {
+      tickAmount: 5,
+      labels: {
+        minWidth: 75,
+        offsetX: 7,
+        style: {
+          cssClass: 'text-base md:text-xl mr-5',
+        },
+      },
+    },
 
     xaxis: {
       categories: labels,
-      title: { text: 'Time worked (h)' },
+      offsetX: 10,
+      title: {
+        offsetY: 10,
+        text: `${messages.timeWorked} (h)`,
+        style: { cssClass: 'text-base md:text-xl' },
+      },
 
       labels: {
         show: true,
+        style: {
+          cssClass: 'text-base md:text-xl',
+        },
         formatter(value: any) {
-          return `${value} h`;
+          return `${displayNormalizedData(value).toFixed(0)} h`;
         },
       },
     },
@@ -84,6 +117,9 @@ const buildState = (
 
 export default function LanguageChart(props: Props) {
   const [state, setState] = useState<ApexProps>(buildState());
+  const router = useRouter();
+  const { locale } = router.query;
+  const { t } = useTranslation('common');
 
   const Apex: any = ReactApexChart as any;
 
@@ -91,14 +127,20 @@ export default function LanguageChart(props: Props) {
     const data = [];
     const labels = [];
     const colors = [];
+    const messages = {
+      timeWorked: t('Time worked'),
+      hoursWorked: t('hours worked'),
+    };
+
     for (const v of props.data) {
-      data.push(secondToHours(v.value));
+      const d = secondToHours(v.value);
+      data.push(normalizeData(d));
       labels.push(v.name);
       colors.push(v.color);
     }
-    const newState = buildState(data, colors, labels);
+    const newState = buildState(data, colors, labels, messages);
     setState(newState);
-  }, [props.data]);
+  }, [props.data, locale]);
 
   return (
     <div id="chart">
@@ -106,7 +148,7 @@ export default function LanguageChart(props: Props) {
         options={state.options}
         series={state.series}
         type="bar"
-        height={550}
+        height={600}
       />
     </div>
   );
