@@ -261,7 +261,7 @@ const Index = () => {
                 >
                   {t('Experiences')}
                 </span>
-                <Scroll style={{ height: 600 }}>
+                <Scroll style={{ height: 500 }}>
                   <Timeline data={experience} />
                 </Scroll>
               </div>
@@ -276,7 +276,7 @@ const Index = () => {
                 >
                   {t('Educations')}
                 </span>
-                <Scroll style={{ height: 600 }}>
+                <Scroll style={{ height: 500 }}>
                   <Timeline data={education} />
                 </Scroll>
               </div>
