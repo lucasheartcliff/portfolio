@@ -69,6 +69,24 @@ const Meta = (props: IMetaProps) => {
           locale: props.locale,
           site_name: props.title,
         }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: 'portfolio, software, developer',
+          },
+          {
+            name: 'author',
+            content: `${profile?.firstName || ''} ${profile?.lastName || ''}`,
+          },
+          {
+            httpEquiv: 'x-ua-compatible',
+            content: 'IE=edge,chrome=1',
+          },
+          {
+            name: 'robots',
+            content: 'index,follow',
+          },
+        ]}
       />
     </>
   );
