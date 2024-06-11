@@ -24,7 +24,7 @@ export default function Item(props: Props) {
   }
   function formatDuration() {
     const start = moment(startDate);
-    const end = moment(endDate);
+    const end = moment(endDate).add(1, 'day');
 
     const duration = moment.duration(end.diff(start));
 

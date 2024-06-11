@@ -31,56 +31,56 @@
     {
       "title": "Freelancer - Grupo Fratelli",
       "startDate": "2017-01-01T00:00:00.000Z",
-      "endDate": "2019-12-31T00:00:00.000Z"
+      "endDate": "2020-01-01T00:00:00.000Z"
     }
   ],
   "education": [
     {
       "title": "Computer Science BS - UERJ",
-      "endDate": "2024-07-31T00:00:00.000Z",
-      "startDate": "2018-08-01T00:00:00.000Z"
+      "startDate": "2018-08-01T00:00:00.000Z",
+      "endDate": "2024-08-01T00:00:00.000Z"
     },
     {
       "title": "IT Techinical Education - IEPB",
       "startDate": "2015-01-01T00:00:00.000Z",
-      "endDate": "2016-12-31T00:00:00.000Z"
+      "endDate": "2017-01-01T00:00:00.000Z"
     },
     {
       "title": "High School",
       "startDate": "2014-01-01T00:00:00.000Z",
-      "endDate": "2016-12-31T00:00:00.000Z",
+      "endDate": "2017-01-01T00:00:00.000Z",
       "children": [
         {
           "title": "Instituto de Educação Pereira Batista",
           "startDate": "2015-01-01T00:00:00.000Z",
-          "endDate": "2016-12-31T00:00:00.000Z"
+          "endDate": "2017-01-01T00:00:00.000Z"
         },
         {
           "title": "Colégio Casimiro de Abreu",
           "startDate": "2014-01-01T00:00:00.000Z",
-          "endDate": "2014-12-31T00:00:00.000Z"
+          "endDate": "2015-01-01T00:00:00.000Z"
         }
       ]
     },
     {
       "title": "Primary School",
       "startDate": "2005-01-01T00:00:00.000Z",
-      "endDate": "2013-12-31T00:00:00.000Z",
+      "endDate": "2014-01-01T00:00:00.000Z",
       "children": [
         {
           "title": "Centro Educacional Vilar Novo",
           "startDate": "2012-07-01T00:00:00.000Z",
-          "endDate": "2013-12-31T00:00:00.000Z"
+          "endDate": "2014-01-01T00:00:00.000Z"
         },
         {
           "title": "Fundação Pestalozzi",
           "startDate": "2008-01-01T00:00:00.000Z",
-          "endDate": "2012-07-31T00:00:00.000Z"
+          "endDate": "2012-08-01T00:00:00.000Z"
         },
         {
           "title": "Colégio Soberano",
           "startDate": "2005-01-01T00:00:00.000Z",
-          "endDate": "2007-12-31T00:00:00.000Z"
+          "endDate": "2008-01-01T00:00:00.000Z"
         }
       ]
     }
