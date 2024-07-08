@@ -10,12 +10,13 @@ interface Props {
   startDate: string;
   endDate?: string;
   hasChildren?: boolean;
+  description?: string;
   onClickToOpen?: (isOpen: boolean) => void;
 }
 export default function Item(props: Props) {
   const DATE_FORMAT = 'MMM YYYY';
 
-  const { title, open, startDate, endDate, hasChildren, onClickToOpen } = props;
+  const { title, open, startDate, endDate, hasChildren, onClickToOpen, description } = props;
   const { t } = useTranslation(['common']);
 
   function onClick() {
@@ -52,37 +53,43 @@ export default function Item(props: Props) {
     endDate ? moment(endDate).format(DATE_FORMAT) : t('Now')
   } ${formatDuration()}`;
 
+  const opennedContent = open && description
+
   return (
-    <div
-      className="flex h-20 w-full flex-row items-center justify-center p-4 text-base md:text-xl"
-      onClick={onClick}
-    >
-      <div className="w-full">
-        <div className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
-          <Tooltip title={t(title)}>
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap ">
-              {t(title)}
+    <div className={"flex flex-col w-full items-center ph-4 pb-4 text-base md:text-xl"}>
+      <div
+        className="flex h-20 w-full flex-row items-center justify-center "
+        onClick={onClick}
+      >
+        <div className="w-full">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
+            <Tooltip title={t(title)}>
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap ">
+                {t(title)}
+              </span>
+            </Tooltip>
+          </div>
+          <Tooltip title={period}>
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-600 ">
+              {period}
             </span>
           </Tooltip>
         </div>
-        <Tooltip title={period}>
-          <span className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-600 ">
-            {period}
-          </span>
-        </Tooltip>
-      </div>
 
-      <div
-        className={`flex h-full items-center justify-center ${
-          !hasChildren ? 'hidden' : ''
-        }`}
-      >
-        <RightOutlined
-          className={`text-base font-extrabold  text-black ${
-            open ? 'rotate-90' : ''
+        <div
+          className={`flex h-full items-center justify-center ${
+            !description ? 'hidden' : ''
           }`}
-        />
+        >
+          <RightOutlined
+            className={`text-base font-extrabold  text-black ${
+              open ? 'rotate-90' : ''
+            }`}
+          />
+        </div>
+        
       </div>
+      <div className={`text-pretty whitespace-pre-line text-justify text-black w-full ${opennedContent ?'ph-4 pt-4' : 'hidden'}`}>{description}</div>
     </div>
   );
 }
