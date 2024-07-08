@@ -16,10 +16,12 @@ interface Props {
 export default function Item(props: Props) {
   const DATE_FORMAT = 'MMM YYYY';
 
-  const { title, open, startDate, endDate, hasChildren, onClickToOpen, description } = props;
+  const { title, open, startDate, endDate, onClickToOpen, description } = props;
   const { t } = useTranslation(['common']);
 
+  const opennedContent = open && description;
   function onClick() {
+    if (!description) return;
     const v = !open;
     if (onClickToOpen) onClickToOpen(v);
   }
@@ -53,10 +55,12 @@ export default function Item(props: Props) {
     endDate ? moment(endDate).format(DATE_FORMAT) : t('Now')
   } ${formatDuration()}`;
 
-  const opennedContent = open && description
-
   return (
-    <div className={"flex flex-col w-full items-center ph-4 pb-4 text-base md:text-xl"}>
+    <div
+      className={
+        'flex w-full flex-col items-center px-4 pb-4 text-base md:text-xl'
+      }
+    >
       <div
         className="flex h-20 w-full flex-row items-center justify-center "
         onClick={onClick}
@@ -87,9 +91,14 @@ export default function Item(props: Props) {
             }`}
           />
         </div>
-        
       </div>
-      <div className={`text-pretty whitespace-pre-line text-justify text-black w-full ${opennedContent ?'ph-4 pt-4' : 'hidden'}`}>{description}</div>
+      <div
+        className={`w-full whitespace-pre-line text-pretty text-justify text-black ${
+          opennedContent ? 'ph-4 pt-4' : 'hidden'
+        }`}
+      >
+        {description}
+      </div>
     </div>
   );
 }
