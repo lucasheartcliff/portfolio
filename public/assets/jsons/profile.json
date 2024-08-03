@@ -14,12 +14,14 @@
       "children": [
         {
           "title": "Mid-level Software Developer",
-          "startDate": "2021-12-15T00:00:00.000Z"
+          "startDate": "2021-12-15T00:00:00.000Z",
+          "description": "description\nexample"
         },
         {
           "title": "Junior Software Developer",
           "startDate": "2020-08-01T00:00:00.000Z",
-          "endDate": "2021-12-15T00:00:00.000Z"
+          "endDate": "2021-12-15T00:00:00.000Z",
+          "description": "description\nexample"
         },
         {
           "title": "Software Developer Trainee",
@@ -125,6 +127,16 @@
       "name": "Java Persistence API and Hibernate",
       "platform": "udemy",
       "url": "https://drive.google.com/file/d/1nV6ZsPt1TylT1UfyUd8vzufSVAeljdK7/view?usp=drive_link"
+    },
+        {
+      "name": "Java Multithreading Concurrency Performance Optimization",
+      "platform": "udemy",
+      "url":"https://drive.google.com/file/d/1S020hrnSlkhfWjFGH55u8CBLgnN8zxcy/view"
+    },
+       {
+      "name": "Learn Rust By Building Real Applications",
+      "platform": "udemy",
+      "url":"https://drive.google.com/file/d/10xBUKPPwJi2kF2HMNjOxwXhBEXNzz7Fd/view"
     },
     {
       "name": "Python 3 Basics",
