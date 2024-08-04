@@ -36,7 +36,7 @@ const locales = [
   { name: 'German', key: 'de', locale: 'de' }, // German (Germany)
   { name: 'Italian', key: 'it', locale: 'it' }, // Italian (Italy)
   { name: 'Chinese', key: 'cn', locale: 'zh' }, // Chinese (Simplified, Mainland China)
-  { name: 'Arabic', key: 'sa', locale: 'ar' }, // Arabic (Saudi Arabia)
+  // { name: 'Arabic', key: 'sa', locale: 'ar' }, // Arabic (Saudi Arabia)
 ];
 
 export default function LanguageSelector() {
@@ -105,13 +105,11 @@ export default function LanguageSelector() {
                     >
                       <button
                         key={language.key}
-                        className={`${
-                          selectedLanguage.key === language.key
+                        className={`${selectedLanguage.key === language.key
                             ? 'bg-gray-100 text-gray-900'
                             : 'text-gray-700'
-                        } inline-flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100 ${
-                          index % 2 === 0 ? 'rounded-r' : 'rounded-l'
-                        }`}
+                          } inline-flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100 ${index % 2 === 0 ? 'rounded-r' : 'rounded-l'
+                          }`}
                         role="menuitem"
                       >
                         <FlagIcon countryCode={language.key} />
