@@ -70,9 +70,8 @@ const buildState = (
       },
       y: {
         formatter(val) {
-          return `${displayNormalizedData(val).toFixed(0)} ${
-            messages.hoursWorked
-          }`;
+          return `${displayNormalizedData(val).toFixed(0)} ${messages.hoursWorked
+            }`;
         },
         title: {
           formatter() {
@@ -103,6 +102,11 @@ const buildState = (
 
       labels: {
         show: true,
+        rotate: -45,
+        rotateAlways: false,
+        hideOverlappingLabels: true,
+        showDuplicates: false,
+        trim: false,
         style: {
           cssClass: 'text-base md:text-xl',
         },
@@ -137,6 +141,7 @@ export default function LanguageChart(props: Props) {
       labels.push(v.name);
       colors.push(v.color);
     }
+    console.log(data, labels);
     const newState = buildState(data, colors, labels, messages);
     setState(newState);
   }, [props.data, locale]);
