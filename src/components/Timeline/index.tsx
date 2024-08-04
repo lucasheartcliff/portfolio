@@ -137,7 +137,7 @@ export default function Timeline({ data }: Props) {
   }, [] as TimelineItemProps[]);
 
   return (
-    <div>
+    <div className={'h-full pr-10'}>
       <AntdTimeline items={items} />
     </div>
   );
