@@ -3,6 +3,7 @@ import Tooltip from 'antd/lib/tooltip';
 import moment from 'moment';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 interface Props {
   title: string;
@@ -92,13 +93,13 @@ export default function Item(props: Props) {
           />
         </div>
       </div>
-      <div
+      <ReactMarkdown
         className={`w-full whitespace-pre-line text-pretty text-justify text-black ${
-          opennedContent ? 'ph-4 pt-4' : 'hidden'
+          opennedContent ? 'pt-4' : 'hidden'
         }`}
       >
-        {description}
-      </div>
+        {t(description || '')}
+      </ReactMarkdown>
     </div>
   );
 }
