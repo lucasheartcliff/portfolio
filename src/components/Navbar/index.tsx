@@ -8,13 +8,51 @@ import Logo from '../logo';
 
 interface Props {
   logoTitle: string;
+  scrollTo: (titleId: string) => void;
 }
 
-export default function Navbar({ logoTitle }: Props) {
+export default function Navbar({ logoTitle, scrollTo }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { t } = useTranslation('common');
 
+  const OPTIONS = [
+    {
+      title: t('About'),
+      key: 'about',
+    },
+    {
+      title: t('Languages'),
+      key: 'languages',
+    },
+    {
+      title: t('Experiences'),
+      key: 'experience',
+    },
+    {
+      title: t('Educations'),
+      key: 'education',
+    },
+    {
+      title: t('Certifications'),
+      key: 'certification',
+    },
+    {
+      title: t('Projects'),
+      key: 'projects',
+    },
+  ];
+
+  const renderOptions = () =>
+    OPTIONS.map(({ title, key }) => (
+      <span
+        key={key}
+        onClick={() => scrollTo(key)}
+        className={'cursor-pointer text-black hover:border-0'}
+      >
+        {title}
+      </span>
+    ));
   return (
     <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md md:px-16">
       <div className="container mx-auto">
@@ -23,12 +61,7 @@ export default function Navbar({ logoTitle }: Props) {
             <Logo title={logoTitle} />
           </Link>
           <div className="hidden space-x-4 md:flex md:text-2xl">
-            <Link href="#about">{t('About')}</Link>
-            <Link href="#languages">{t('Languages')}</Link>
-            <Link href="#experience">{t('Experiences')}</Link>
-            <Link href="#education">{t('Educations')}</Link>
-            <Link href="#certification">{t('Certifications')}</Link>
-            <Link href="#projects">{t('Projects')}</Link>
+            {renderOptions()}
             <LanguageSelector />
           </div>
           <button
@@ -52,12 +85,7 @@ export default function Navbar({ logoTitle }: Props) {
         {menuOpen && (
           <div className="mt-4 md:hidden">
             <div className="flex flex-col justify-center space-y-4 text-center align-middle text-lg">
-              <Link href="#about">{t('About')}</Link>
-              <Link href="#languages">{t('Languages')}</Link>
-              <Link href="#experience">{t('Experiences')}</Link>
-              <Link href="#education">{t('Educations')}</Link>
-              <Link href="#certification">{t('Certifications')}</Link>
-              <Link href="#projects">{t('Projects')}</Link>
+              {renderOptions()}
               <div className="flex w-full justify-center">
                 <LanguageSelector />
               </div>
