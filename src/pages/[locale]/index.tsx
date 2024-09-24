@@ -34,7 +34,6 @@ import {
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
 });
-
 const Index = () => {
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
@@ -43,6 +42,12 @@ const Index = () => {
 
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
+
+  const scrollTo = (titleId: string) => {
+    const element = document.getElementById(titleId);
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const l = currentLocale as string;
@@ -117,6 +122,7 @@ const Index = () => {
     <>
       <Main
         title={logoTitle}
+        scrollTo={scrollTo}
         meta={
           <Meta
             title={name}
