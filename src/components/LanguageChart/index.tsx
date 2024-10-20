@@ -70,8 +70,9 @@ const buildState = (
       },
       y: {
         formatter(val) {
-          return `${displayNormalizedData(val).toFixed(0)} ${messages.hoursWorked
-            }`;
+          return `${displayNormalizedData(val).toFixed(0)} ${
+            messages.hoursWorked
+          }`;
         },
         title: {
           formatter() {
@@ -141,7 +142,6 @@ export default function LanguageChart(props: Props) {
       labels.push(v.name);
       colors.push(v.color);
     }
-    console.log(data, labels);
     const newState = buildState(data, colors, labels, messages);
     setState(newState);
   }, [props.data, locale]);
