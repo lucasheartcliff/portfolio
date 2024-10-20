@@ -1,7 +1,9 @@
 import {
   GithubOutlined,
+  InstagramOutlined,
   LinkedinOutlined,
   MailOutlined,
+  TwitterOutlined,
   WhatsAppOutlined,
 } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
@@ -56,7 +58,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => { }
+      () => {}
     );
   }, [currentLocale]);
 
@@ -157,21 +159,21 @@ const Index = () => {
                         <WhatsAppOutlined />
                       </Icon>
                     </SocialLink>
-                    {/* <SocialLink href={`https://x.com/${username}`}>
-                    <Icon color={"#00acee"}>
-                      <TwitterOutlined />
-                    </Icon>
-                  </SocialLink> */}
+                    <SocialLink href={`https://x.com/${username}`}>
+                      <Icon color={'#00acee'}>
+                        <TwitterOutlined />
+                      </Icon>
+                    </SocialLink>
                     <SocialLink href={`https://linkedin.com/in/${username}`}>
                       <Icon color={'#0e76a8'}>
                         <LinkedinOutlined />
                       </Icon>
                     </SocialLink>
-                    {/* <SocialLink href={`https://instagram.com/${username}`}>
-                    <Icon color={'#dd2a7b'}>
-                      <InstagramOutlined />
-                    </Icon>
-                  </SocialLink> */}
+                    <SocialLink href={`https://instagram.com/${username}`}>
+                      <Icon color={'#dd2a7b'}>
+                        <InstagramOutlined />
+                      </Icon>
+                    </SocialLink>
                     <SocialLink href={`mailto:${email}`} skipLocaleHandling>
                       <Icon color={'#d44638'}>
                         <MailOutlined />
