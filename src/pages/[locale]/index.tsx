@@ -48,7 +48,6 @@ const Index = () => {
     if (!element) return;
     element.scrollIntoView({ behavior: 'smooth' });
   };
-
   useEffect(() => {
     const l = currentLocale as string;
     setLocale(
@@ -57,7 +56,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => {}
+      () => { }
     );
   }, [currentLocale]);
 
@@ -131,225 +130,227 @@ const Index = () => {
           />
         }
       >
-        <div className="mx-2 md:mx-14">
-          <Row>
-            <Block>
-              <div className="flex flex-col">
-                <h1 className="text-4xl font-bold text-black md:text-7xl">
-                  {t(name)}
-                </h1>
-                <h2 className="text-xl font-semibold italic text-black md:text-4xl ">
-                  {`@${t(username)}`}
-                </h2>
-                <p className="my-5 text-pretty text-justify text-xl text-gray-600 md:text-3xl">
-                  {t(introductionBio)}
-                </p>
-                <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
-                  <SocialLink href={`https://github.com/${username}`}>
-                    <Icon color={'#000000'}>
-                      <GithubOutlined />
-                    </Icon>
-                  </SocialLink>
-                  <SocialLink
-                    href={`https://api.whatsapp.com/send?phone=${phone}`}
-                  >
-                    <Icon color={'#25D366'}>
-                      <WhatsAppOutlined />
-                    </Icon>
-                  </SocialLink>
-                  {/* <SocialLink href={`https://x.com/${username}`}>
+        <>
+          <div className="mx-2 md:mx-14">
+            <Row>
+              <Block>
+                <div className="flex flex-col">
+                  <h1 className="text-4xl font-bold text-black md:text-7xl">
+                    {t(name)}
+                  </h1>
+                  <h2 className="text-xl font-semibold italic text-black md:text-4xl ">
+                    {`@${t(username)}`}
+                  </h2>
+                  <p className="my-5 text-pretty text-justify text-xl text-gray-600 md:text-3xl">
+                    {t(introductionBio)}
+                  </p>
+                  <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
+                    <SocialLink href={`https://github.com/${username}`}>
+                      <Icon color={'#000000'}>
+                        <GithubOutlined />
+                      </Icon>
+                    </SocialLink>
+                    <SocialLink
+                      href={`https://api.whatsapp.com/send?phone=${phone}`}
+                    >
+                      <Icon color={'#25D366'}>
+                        <WhatsAppOutlined />
+                      </Icon>
+                    </SocialLink>
+                    {/* <SocialLink href={`https://x.com/${username}`}>
                     <Icon color={"#00acee"}>
                       <TwitterOutlined />
                     </Icon>
                   </SocialLink> */}
-                  <SocialLink href={`https://linkedin.com/in/${username}`}>
-                    <Icon color={'#0e76a8'}>
-                      <LinkedinOutlined />
-                    </Icon>
-                  </SocialLink>
-                  {/* <SocialLink href={`https://instagram.com/${username}`}>
+                    <SocialLink href={`https://linkedin.com/in/${username}`}>
+                      <Icon color={'#0e76a8'}>
+                        <LinkedinOutlined />
+                      </Icon>
+                    </SocialLink>
+                    {/* <SocialLink href={`https://instagram.com/${username}`}>
                     <Icon color={'#dd2a7b'}>
                       <InstagramOutlined />
                     </Icon>
                   </SocialLink> */}
-                  <SocialLink href={`mailto:${email}`} skipLocaleHandling>
-                    <Icon color={'#d44638'}>
-                      <MailOutlined />
-                    </Icon>
-                  </SocialLink>
+                    <SocialLink href={`mailto:${email}`} skipLocaleHandling>
+                      <Icon color={'#d44638'}>
+                        <MailOutlined />
+                      </Icon>
+                    </SocialLink>
+                  </div>
                 </div>
-              </div>
-            </Block>
-            <Block>
-              <div className="hidden w-full items-center justify-center md:flex ">
-                <div
-                  className=" border-0 bg-cover"
-                  style={{
-                    height: '30rem',
-                    width: '32rem',
-                    backgroundImage: `url(${router.basePath}/assets/images/cover.png)`,
-                  }}
-                />
-              </div>
-            </Block>
-          </Row>
-          <Row>
-            <Block>
-              <div className="mt-5 flex w-full items-center justify-center md:mt-0">
-                <div>
+              </Block>
+              <Block>
+                <div className="hidden w-full items-center justify-center md:flex ">
                   <div
-                    className="h-80 w-80 rounded-full bg-cover"
+                    className=" border-0 bg-cover"
                     style={{
-                      backgroundImage: `url(${router.basePath}/assets/images/profile.jpeg)`,
+                      height: '30rem',
+                      width: '32rem',
+                      backgroundImage: `url(${router.basePath}/assets/images/cover.png)`,
                     }}
                   />
                 </div>
-              </div>
-            </Block>
-            <Block>
-              <div className="flex flex-1 flex-col">
-                <span
-                  id="about"
-                  className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                >
-                  {t('About')}
-                </span>
-                <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
-                  {t(bio)}
-                </p>
-              </div>
-            </Block>
-          </Row>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="mt-5 flex w-full items-center justify-center md:mt-0">
+                  <div>
+                    <div
+                      className="h-80 w-80 rounded-full bg-cover"
+                      style={{
+                        backgroundImage: `url(${router.basePath}/assets/images/profile.jpeg)`,
+                      }}
+                    />
+                  </div>
+                </div>
+              </Block>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <span
+                    id="about"
+                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                  >
+                    {t('About')}
+                  </span>
+                  <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
+                    {t(bio)}
+                  </p>
+                </div>
+              </Block>
+            </Row>
 
-          <Row>
-            <Block>
-              <div className="flex flex-1 flex-col ">
-                <span
-                  id="languages"
-                  className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                >
-                  {t('Languages')}
-                </span>
-                <LanguageChart data={data} />
-              </div>
-            </Block>
-            <Block>
-              <div className="hidden w-full items-center justify-center md:flex ">
-                <div
-                  className=" border-0 bg-cover"
-                  style={{
-                    height: '36rem',
-                    width: '36rem',
-                    backgroundImage: `url(${router.basePath}/assets/images/languages.png)`,
-                  }}
-                />
-              </div>
-            </Block>
-          </Row>
-          <Row>
-            <Block>
-              <div className="hidden w-full justify-center md:flex ">
-                <div
-                  className=" border-0 bg-cover"
-                  style={{
-                    height: '36rem',
-                    width: '36rem',
-                    backgroundImage: `url(${router.basePath}/assets/images/experience.png)`,
-                  }}
-                />
-              </div>
-            </Block>
-            <Block>
-              <div className="flex flex-1 flex-col ">
-                <span
-                  id="experience"
-                  className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                >
-                  {t('Experiences')}
-                </span>
-                <Scroll style={{ height: 500 }}>
-                  <Timeline data={experience} />
-                </Scroll>
-              </div>
-            </Block>
-          </Row>
-          <Row>
-            <Block>
-              <div className="flex flex-1 flex-col">
-                <span
-                  id="education"
-                  className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                >
-                  {t('Educations')}
-                </span>
-                <Scroll style={{ height: 500 }}>
-                  <Timeline data={education} />
-                </Scroll>
-              </div>
-            </Block>
-            <Block>
-              <div className="mt-10 hidden w-full items-center justify-center md:flex ">
-                <div
-                  className=" border-0 bg-cover"
-                  style={{
-                    height: '36rem',
-                    width: '36rem',
-                    backgroundImage: `url(${router.basePath}/assets/images/education.png)`,
-                  }}
-                />
-              </div>
-            </Block>
-          </Row>
-          <Row>
-            <Block>
-              <div className="mt-5 hidden w-full items-center justify-center md:flex ">
-                <div
-                  className=" border-0 bg-cover"
-                  style={{
-                    height: '28rem',
-                    width: '36rem',
-                    backgroundImage: `url(${router.basePath}/assets/images/certificate.png)`,
-                  }}
-                />
-              </div>
-            </Block>
-            <Block>
-              <div className="flex flex-1 flex-col">
-                <span
-                  id="certification"
-                  className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                >
-                  {t('Certifications')}
-                </span>
-                <Scroll style={{ height: 400 }}>
-                  {certification?.map((v, key) => (
-                    <div key={key} className="">
-                      <CertificateCard key={key} {...v} />
-                    </div>
-                  ))}
-                </Scroll>
-              </div>
-            </Block>
-          </Row>
-          <Row>
-            <Block>
-              <div className="flex flex-1 flex-col">
-                <span
-                  id="projects"
-                  className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                >
-                  {t('Projects')}
-                </span>
-                <ProjectGrid
-                  initialItemsCount={8}
-                  itemsToAdd={8}
-                  items={pinnedRepos}
-                />
-              </div>
-            </Block>
-          </Row>
-        </div>
-        <Footer />
+            <Row>
+              <Block>
+                <div className="flex flex-1 flex-col ">
+                  <span
+                    id="languages"
+                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                  >
+                    {t('Languages')}
+                  </span>
+                  <LanguageChart data={data} />
+                </div>
+              </Block>
+              <Block>
+                <div className="hidden w-full items-center justify-center md:flex ">
+                  <div
+                    className=" border-0 bg-cover"
+                    style={{
+                      height: '36rem',
+                      width: '36rem',
+                      backgroundImage: `url(${router.basePath}/assets/images/languages.png)`,
+                    }}
+                  />
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="hidden w-full justify-center md:flex ">
+                  <div
+                    className=" border-0 bg-cover"
+                    style={{
+                      height: '36rem',
+                      width: '36rem',
+                      backgroundImage: `url(${router.basePath}/assets/images/experience.png)`,
+                    }}
+                  />
+                </div>
+              </Block>
+              <Block>
+                <div className="flex flex-1 flex-col ">
+                  <span
+                    id="experience"
+                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                  >
+                    {t('Experiences')}
+                  </span>
+                  <Scroll style={{ height: 500 }}>
+                    <Timeline data={experience} />
+                  </Scroll>
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <span
+                    id="education"
+                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                  >
+                    {t('Educations')}
+                  </span>
+                  <Scroll style={{ height: 500 }}>
+                    <Timeline data={education} />
+                  </Scroll>
+                </div>
+              </Block>
+              <Block>
+                <div className="mt-10 hidden w-full items-center justify-center md:flex ">
+                  <div
+                    className=" border-0 bg-cover"
+                    style={{
+                      height: '36rem',
+                      width: '36rem',
+                      backgroundImage: `url(${router.basePath}/assets/images/education.png)`,
+                    }}
+                  />
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="mt-5 hidden w-full items-center justify-center md:flex ">
+                  <div
+                    className=" border-0 bg-cover"
+                    style={{
+                      height: '28rem',
+                      width: '36rem',
+                      backgroundImage: `url(${router.basePath}/assets/images/certificate.png)`,
+                    }}
+                  />
+                </div>
+              </Block>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <span
+                    id="certification"
+                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                  >
+                    {t('Certifications')}
+                  </span>
+                  <Scroll style={{ height: 400 }}>
+                    {certification?.map((v, key) => (
+                      <div key={key} className="">
+                        <CertificateCard key={key} {...v} />
+                      </div>
+                    ))}
+                  </Scroll>
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <span
+                    id="projects"
+                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                  >
+                    {t('Projects')}
+                  </span>
+                  <ProjectGrid
+                    initialItemsCount={8}
+                    itemsToAdd={8}
+                    items={pinnedRepos}
+                  />
+                </div>
+              </Block>
+            </Row>
+          </div>
+          <Footer />
+        </>
       </Main>
     </>
   );
