@@ -1,15 +1,15 @@
-import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import type { ScrollbarProps } from 'react-custom-scrollbars-2';
+import { Scrollbars } from 'react-custom-scrollbars-2';
 
-const Scrollbars = dynamic(() => import('react-custom-scrollbars-2'), {
-  ssr: false,
-});
+interface Props extends ScrollbarProps { }
 
-interface Props extends ScrollbarProps {}
+function Scroll({ children, ...props }: Props, ref: any) {
+  return (
+    <Scrollbars ref={ref} {...props}>
+      {children}
+    </Scrollbars>
+  );
+}
 
-const Scroll: React.FC<Props> = ({ children, ...props }) => {
-  return <Scrollbars {...props}>{children}</Scrollbars>;
-};
-
-export default Scroll;
+export default forwardRef(Scroll);

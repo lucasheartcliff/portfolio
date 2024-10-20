@@ -3,7 +3,7 @@
   "lastName": "Morais",
   "username": "lucasheartcliff",
   "logoTitle": "LucasHeartcliff",
-  "introductionBio": "A full-stack developer focused on results, with strong skills in performance optimization and efficiency. Committed to delivering pragmatic solutions that delivers what the customer needs with etichal and responsability.",
+  "introductionBio": "A full-stack developer focused on results, with strong skills in performance optimization and efficiency. Committed to delivering pragmatic solutions that delivers what the customer needs with ethical and responsability.",
   "bio": "In recent years, my journey in development has been marked by a challenging narrative, filled with achievements and significant learnings. When I embarked on this journey, I faced a steep learning curve, delving into the complexities of both front-end and back-end. Every line of code was an accomplishment, and every challenge was an opportunity for growth. Crafting intuitive interfaces and architecting robust solutions became my daily mantra.\n\nHowever, the true essence of development goes beyond the code. I found myself consistently challenged to translate customer needs into tangible solutions. Additionally, the importance of data security and respect for user privacy became integral aspects of my daily work.\n\nThese years in development are not just a chapter but the foundation for what lies ahead. I am excited to embrace future opportunities, apply the knowledge gained, and contribute to shaping the ever-evolving technological landscape.",
   "email": "lucascdemorais@gmail.com",
   "phone": "5521995366450",
@@ -14,73 +14,76 @@
       "children": [
         {
           "title": "Mid-level Software Developer",
-          "startDate": "2021-12-15T00:00:00.000Z"
+          "startDate": "2021-12-15T00:00:00.000Z",
+          "description": "Common Data Framework (CoDaF): I became one of the main technical leaders responsible for maintaining and enhancing functionalities of an internal framework for the persistence of common data, creating a centralized base for different projects.\n\nCoDaF Wells and Rigs: I interviewed specialists and modeled a general-use database for oil and gas solutions, resulting in approximately 100 entities.\n\nAtria: I technically led and implemented a pilot project to integrate real-time Machine Learning processing data related to the integrity status of multiple antennas.\n\nLicense Manager: I architected, scoped, and implemented the License Manager, a project to control and monitor client access to products (plugins) according to the contracted license, preventing misuse of the solutions in embedded environments. I prepared a presentation explaining the high-level functionality for the responsible managers.\n\nRig State: I performed reverse engineering on an application without adequate documentation to provide greater clarity to managers about the implemented business rules, allowing for the necessary modifications to proceed."
         },
         {
           "title": "Junior Software Developer",
           "startDate": "2020-08-01T00:00:00.000Z",
-          "endDate": "2021-12-15T00:00:00.000Z"
+          "endDate": "2021-12-15T00:00:00.000Z",
+          "description": "Sequence Builder + Cost Tracker: I was among the main contributors to the development of Sequence Builder, a system that generates simulations resulting in a sequence of operations with time estimates based on historical data for planning oil well activities. In parallel, there was the development of Cost Tracker, which works coupled with Sequence Builder by adding cost estimates for each operation during the simulation. Additionally, it allows the updating and monitoring of these operations based on real data, enabling comparisons between the planned and the executed.\n\nDynamic Risk Advisor (DRA): I temporarily participated in the development of the DRA project, a tool based on the bowtie methodology, allowing the user to manage and monitor barriers and alerts in real-time, aiming for optimized operational risk management."
         },
         {
           "title": "Software Developer Trainee",
           "startDate": "2020-02-03T00:00:00.000Z",
-          "endDate": "2020-08-01T00:00:00.000Z"
+          "endDate": "2020-08-01T00:00:00.000Z",
+          "description": "Campaign Planner: Contributed to the development of new features, maintenance, and compatibility with legacy browsers in an oil and gas operations campaign management application.\n\nPDF Extractor: Responsible for implementing a script to convert various PDF files into a specific CSV format using OCR, assisting the research team in obtaining structured data for machine learning models."
         }
       ]
     },
     {
       "title": "Freelancer - Grupo Fratelli",
       "startDate": "2017-01-01T00:00:00.000Z",
-      "endDate": "2019-12-31T00:00:00.000Z"
+      "endDate": "2020-01-01T00:00:00.000Z"
     }
   ],
   "education": [
     {
       "title": "Computer Science BS - UERJ",
-      "endDate": "2024-07-31T00:00:00.000Z",
-      "startDate": "2018-08-01T00:00:00.000Z"
+      "startDate": "2018-08-01T00:00:00.000Z",
+      "endDate": "2024-08-01T00:00:00.000Z"
     },
     {
       "title": "IT Techinical Education - IEPB",
       "startDate": "2015-01-01T00:00:00.000Z",
-      "endDate": "2016-12-31T00:00:00.000Z"
+      "endDate": "2017-01-01T00:00:00.000Z"
     },
     {
       "title": "High School",
       "startDate": "2014-01-01T00:00:00.000Z",
-      "endDate": "2016-12-31T00:00:00.000Z",
+      "endDate": "2017-01-01T00:00:00.000Z",
       "children": [
         {
           "title": "Instituto de Educação Pereira Batista",
           "startDate": "2015-01-01T00:00:00.000Z",
-          "endDate": "2016-12-31T00:00:00.000Z"
+          "endDate": "2017-01-01T00:00:00.000Z"
         },
         {
           "title": "Colégio Casimiro de Abreu",
           "startDate": "2014-01-01T00:00:00.000Z",
-          "endDate": "2014-12-31T00:00:00.000Z"
+          "endDate": "2015-01-01T00:00:00.000Z"
         }
       ]
     },
     {
       "title": "Primary School",
       "startDate": "2005-01-01T00:00:00.000Z",
-      "endDate": "2013-12-31T00:00:00.000Z",
+      "endDate": "2014-01-01T00:00:00.000Z",
       "children": [
         {
           "title": "Centro Educacional Vilar Novo",
           "startDate": "2012-07-01T00:00:00.000Z",
-          "endDate": "2013-12-31T00:00:00.000Z"
+          "endDate": "2014-01-01T00:00:00.000Z"
         },
         {
           "title": "Fundação Pestalozzi",
           "startDate": "2008-01-01T00:00:00.000Z",
-          "endDate": "2012-07-31T00:00:00.000Z"
+          "endDate": "2012-08-01T00:00:00.000Z"
         },
         {
           "title": "Colégio Soberano",
           "startDate": "2005-01-01T00:00:00.000Z",
-          "endDate": "2007-12-31T00:00:00.000Z"
+          "endDate": "2008-01-01T00:00:00.000Z"
         }
       ]
     }
@@ -125,6 +128,16 @@
       "name": "Java Persistence API and Hibernate",
       "platform": "udemy",
       "url": "https://drive.google.com/file/d/1nV6ZsPt1TylT1UfyUd8vzufSVAeljdK7/view?usp=drive_link"
+    },
+    {
+      "name": "Java Multithreading Concurrency Performance Optimization",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1S020hrnSlkhfWjFGH55u8CBLgnN8zxcy/view"
+    },
+    {
+      "name": "Learn Rust By Building Real Applications",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/10xBUKPPwJi2kF2HMNjOxwXhBEXNzz7Fd/view"
     },
     {
       "name": "Python 3 Basics",

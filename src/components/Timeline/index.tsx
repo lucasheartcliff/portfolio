@@ -43,13 +43,16 @@ export default function Timeline({ data }: Props) {
   }
   function toggleChildNodes(key: string) {
     const newClosedNodes = new Set<string>(closedNodes);
+    const node = nodeMap.get(key);
+    if (!node) return;
+
     if (!newClosedNodes.has(key)) {
       newClosedNodes.add(key);
-      nodeMap.get(key).open = false;
+      node.open = false;
     } else {
       newClosedNodes.delete(key);
 
-      nodeMap.get(key).open = true;
+      node.open = true;
     }
     setClosedNodes(newClosedNodes);
   }
@@ -134,7 +137,7 @@ export default function Timeline({ data }: Props) {
   }, [] as TimelineItemProps[]);
 
   return (
-    <div>
+    <div className={'h-full pr-10'}>
       <AntdTimeline items={items} />
     </div>
   );
