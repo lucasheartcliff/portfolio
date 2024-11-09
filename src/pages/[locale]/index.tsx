@@ -55,6 +55,7 @@ const Index = () => {
     setLocale(
       l,
       () => {
+        // eslint-disable-next-line no-console
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
