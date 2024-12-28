@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import Item from './Item';
 
-const theme = require('@/styles/themes');
+import theme from '@/styles/themes';
 
 interface ItemNode {
   key: string;

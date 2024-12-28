@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-const theme = require('./src/styles/themes');
 
-module.exports = {
+const config = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontSize: {
@@ -45,9 +44,11 @@ module.exports = {
           800: '#2c5282',
           900: '#2a4365',
         },
-        primary: theme.primary,
+        primary: "#253db6",
       },
     },
   },
   plugins: [],
 };
+module.exports = config
+export default config
