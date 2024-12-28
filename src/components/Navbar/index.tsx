@@ -1,20 +1,57 @@
 import { useTranslation } from 'next-i18next';
-import React, { useState } from 'react';
+import React, { RefObject, useEffect, useState } from 'react';
 
 import Link from '@/components/Link';
 
 import LanguageSelector from '../LanguageSelector';
 import Logo from '../logo';
+import type Scrollbars from 'react-custom-scrollbars-2';
 
 interface Props {
   logoTitle: string;
+  scrollRef: RefObject<Scrollbars>
   scrollTo: (titleId: string) => void;
 }
 
-export default function Navbar({ logoTitle, scrollTo }: Props) {
+export default function Navbar({ logoTitle, scrollRef, scrollTo }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<string | null>(null);
 
   const { t } = useTranslation('common');
+
+  function getHashFromURL() {
+    const urlId = window.location.hash
+    if (!urlId) return;
+    const normalizedId = urlId.toLowerCase().replace(/\#/g, "")
+    setActiveTab(normalizedId)
+
+  }
+
+  useEffect(() => getHashFromURL(), [])
+
+  function observeScrollPositionAndUpdateState() {
+    const headers = OPTIONS.map(({ key }) => key)
+    headers.forEach(id => {
+      const e = document.getElementById(id)
+      if (!e) return;
+      const rect = e.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top < 600) {
+        setActiveTab(id)
+      }
+    });
+  }
+
+  useEffect(() => {
+    const element = scrollRef.current?.container?.firstChild
+
+    if (!element) return;
+
+    element.addEventListener('scroll', () => {
+      observeScrollPositionAndUpdateState()
+    })
+
+    return () => element.removeEventListener("scroll", () => null)
+  }, [scrollRef])
 
   const OPTIONS = [
     {
@@ -47,8 +84,8 @@ export default function Navbar({ logoTitle, scrollTo }: Props) {
     OPTIONS.map(({ title, key }) => (
       <span
         key={key}
-        onClick={() => scrollTo(key)}
-        className={'cursor-pointer text-black hover:border-0'}
+        onClick={() => { scrollTo(key) }}
+        className={`cursor-pointer  hover:border-0 ${activeTab === key ? "text-primary" : "text-black"}`}
       >
         {title}
       </span>

@@ -18,6 +18,8 @@ const Main = (props: IMainProps) => {
   const scrollRef = useRef<Scrollbars>(null);
   useEffect(() => {
     heartcliff();
+
+
   }, []);
 
   const handleScroll = () => {
@@ -30,13 +32,13 @@ const Main = (props: IMainProps) => {
   const scrollToTop = () => {
     const ref = scrollRef.current;
     if (!ref) return;
-    ref.scrollToTop();
+    ref.container.firstElementChild?.scroll({ behavior: "smooth", top: 0 });
   };
 
   return (
     <div className="h-screen w-full">
       {props.meta}
-      <Navbar logoTitle={props.title} scrollTo={props.scrollTo} />
+      <Navbar logoTitle={props.title} scrollRef={scrollRef} scrollTo={props.scrollTo} />
       <div
         style={{ height: 'calc(100% - 77px)' }}
         className="max-h-screen w-full text-gray-700 antialiased"
