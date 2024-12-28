@@ -49,6 +49,7 @@ const Index = () => {
     const element = document.getElementById(titleId);
     if (!element) return;
     element.scrollIntoView({ behavior: 'smooth' });
+
   };
   useEffect(() => {
     const l = currentLocale as string;
@@ -59,7 +60,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => {}
+      () => { }
     );
   }, [currentLocale]);
 
@@ -211,12 +212,12 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="about"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('About')}
-                  </span>
+                  </h3>
                   <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
                     {t(bio)}
                   </p>
@@ -227,12 +228,12 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <span
+                  <h3
                     id="languages"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Languages')}
-                  </span>
+                  </h3>
                   <LanguageChart data={data} />
                 </div>
               </Block>
@@ -264,12 +265,12 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <span
+                  <h3
                     id="experience"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Experiences')}
-                  </span>
+                  </h3>
                   <Scroll style={{ height: 500 }}>
                     <Timeline data={experience} />
                   </Scroll>
@@ -279,12 +280,12 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="education"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Educations')}
-                  </span>
+                  </h3>
                   <Scroll style={{ height: 500 }}>
                     <Timeline data={education} />
                   </Scroll>
@@ -318,12 +319,12 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="certification"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Certifications')}
-                  </span>
+                  </h3>
                   <Scroll style={{ height: 400 }}>
                     {certification?.map((v, key) => (
                       <div key={key} className="">
@@ -337,12 +338,12 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="projects"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Projects')}
-                  </span>
+                  </h3>
                   <ProjectGrid
                     initialItemsCount={8}
                     itemsToAdd={8}

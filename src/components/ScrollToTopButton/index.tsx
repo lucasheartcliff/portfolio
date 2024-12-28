@@ -1,10 +1,6 @@
 import ArrowUpOutlined from '@ant-design/icons/lib/icons/ArrowUpOutlined';
 import React from 'react';
 
-import Icon from '../Icon';
-
-const theme = require('../../styles/themes');
-
 type Props = {
   isVisible: boolean;
   scrollToTop: () => void;
@@ -13,16 +9,18 @@ const ScrollToTopButton = ({ isVisible, scrollToTop }: Props) => {
   return (
     <div
       onClick={scrollToTop}
-      className={`fixed bottom-5 right-5 cursor-pointer rounded-full text-white shadow-lg transition duration-300 ease-in-out md:bottom-7 md:right-7 ${
-        isVisible ? '' : 'invisible'
-      }`}
+      className={`fixed bottom-5 right-5 cursor-pointer rounded-full text-white shadow-lg transition duration-300 ease-in-out ${isVisible ? '' : 'invisible'
+        }`}
     >
       <div>
-        <Icon color={theme.primary}>
+        <div
+
+          className="bg-primary flex h-11 w-11 justify-center rounded-full p-5 align-middle text-white hover:text-gray-400"
+        >
           <ArrowUpOutlined />
-        </Icon>
+        </div>
       </div>
-    </div>
+    </div >
   );
 };
 
