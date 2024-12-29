@@ -10,13 +10,11 @@ import type Scrollbars from 'react-custom-scrollbars-2';
 interface Props {
   logoTitle: string;
   scrollRef: RefObject<Scrollbars>
-  scrollTo: (titleId: string) => void;
 }
 
-export default function Navbar({ logoTitle, scrollRef, scrollTo }: Props) {
+export default function Navbar({ logoTitle, scrollRef }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string | null>(null);
-
   const { t } = useTranslation('common');
 
   function getHashFromURL() {
@@ -26,28 +24,41 @@ export default function Navbar({ logoTitle, scrollRef, scrollTo }: Props) {
     setActiveTab(normalizedId)
 
   }
+  function scrollTo(titleId: string) {
+    const element = document.getElementById(titleId);
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth' });
+
+  };
 
   useEffect(() => getHashFromURL(), [])
 
-  function observeScrollPositionAndUpdateState() {
+  function observeScrollPositionAndUpdateState(isOnBottom: boolean) {
     const headers = OPTIONS.map(({ key }) => key)
+    if (isOnBottom) {
+      const id = headers[headers.length - 1] as string
+      setActiveTab(id)
+      return;
+    }
     headers.forEach(id => {
       const e = document.getElementById(id)
       if (!e) return;
       const rect = e.getBoundingClientRect();
-      if (rect.top >= 0 && rect.top < 600) {
+      if (rect.top >= 0 && rect.top < 100) {
         setActiveTab(id)
       }
     });
   }
 
   useEffect(() => {
-    const element = scrollRef.current?.container?.firstChild
+    const scroll = scrollRef.current
+    const element = scroll?.container?.firstChild
 
     if (!element) return;
-
     element.addEventListener('scroll', () => {
-      observeScrollPositionAndUpdateState()
+      const position = scroll.getValues()
+      const isOnBottom = (position.scrollHeight - position.clientHeight) - position.scrollTop < 25
+      observeScrollPositionAndUpdateState(isOnBottom)
     })
 
     return () => element.removeEventListener("scroll", () => null)

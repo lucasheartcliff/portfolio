@@ -45,12 +45,6 @@ const Index = () => {
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
-  const scrollTo = (titleId: string) => {
-    const element = document.getElementById(titleId);
-    if (!element) return;
-    element.scrollIntoView({ behavior: 'smooth' });
-
-  };
   useEffect(() => {
     const l = currentLocale as string;
     setLocale(
@@ -125,7 +119,6 @@ const Index = () => {
     <>
       <Main
         title={logoTitle}
-        scrollTo={scrollTo}
         meta={
           <Meta
             title={name}
