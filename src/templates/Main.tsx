@@ -17,8 +17,6 @@ const Main = (props: IMainProps) => {
   const scrollRef = useRef<Scrollbars>(null);
   useEffect(() => {
     heartcliff();
-
-
   }, []);
 
   const handleScroll = () => {
