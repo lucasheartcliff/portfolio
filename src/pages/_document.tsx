@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
-import i18nextConfig from '../../next-i18next.config';
+import i18nextConfig from '../../next-i18next.config.js';
 // Need to create a custom _document because i18n support is not compatible with `next export`.
 class MyDocument extends Document {
   // eslint-disable-next-line class-methods-use-this
