@@ -1,6 +1,6 @@
 [build]
-  publish = "out"
-  command = "npm run build-prod"
+publish = "/opt/build/repo/out"
+command = "npm run build-prod"
 
 [build.environment]
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+NETLIFY_NEXT_PLUGIN_SKIP = "true"
