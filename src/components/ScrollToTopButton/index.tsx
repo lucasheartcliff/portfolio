@@ -14,7 +14,7 @@ const ScrollToTopButton = ({ isVisible, scrollToTop }: Props) => {
       }`}
     >
       <div>
-        <div className="bg-primary flex h-11 w-11 justify-center rounded-full p-5 align-middle text-white hover:text-gray-400">
+        <div className="flex h-11 w-11 justify-center rounded-full bg-primary p-5 align-middle text-white hover:text-gray-400">
           <ArrowUpOutlined />
         </div>
       </div>
