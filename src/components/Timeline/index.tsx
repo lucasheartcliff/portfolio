@@ -2,9 +2,9 @@ import type { TimelineItemProps } from 'antd/lib/timeline';
 import AntdTimeline from 'antd/lib/timeline';
 import React, { useEffect, useState } from 'react';
 
-import Item from './Item';
-
 import theme from '@/styles/themes';
+
+import Item from './Item';
 
 interface ItemNode {
   key: string;

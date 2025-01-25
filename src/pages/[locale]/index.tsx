@@ -1,9 +1,7 @@
 import {
   GithubOutlined,
-  InstagramOutlined,
   LinkedinOutlined,
   MailOutlined,
-  TwitterOutlined,
   WhatsAppOutlined,
 } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
@@ -54,7 +52,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => { }
+      () => {}
     );
   }, [currentLocale]);
 

@@ -29,7 +29,7 @@ const Main = (props: IMainProps) => {
   const scrollToTop = () => {
     const ref = scrollRef.current;
     if (!ref) return;
-    ref.container.firstElementChild?.scroll({ behavior: "smooth", top: 0 });
+    ref.container.firstElementChild?.scroll({ behavior: 'smooth', top: 0 });
   };
 
   return (

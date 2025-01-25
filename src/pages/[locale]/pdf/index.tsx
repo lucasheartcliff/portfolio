@@ -1,5 +1,5 @@
+'use client';
 
-"use client"
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -7,17 +7,14 @@ import { useEffect, useState } from 'react';
 
 import { Meta } from '@/layouts/Meta';
 import profile from '@/public/assets/jsons/profile.json';
-import { apiFetch } from '@/services';
 import { Main } from '@/templates/Main';
-import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
+import { setLocale } from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
-import {
-  GITHUB_PINNED_REPO,
-  GITHUB_REPO,
-  WAKATIME_CODING_TIME,
-  WAKATIME_LANGUAGES,
-} from '@/utils/url';
-const CurriculumVitae = dynamic(() => import('@/templates/pdf/CurriculumVitae'), { ssr: false });
+
+const CurriculumVitae = dynamic(
+  () => import('@/templates/pdf/CurriculumVitae'),
+  { ssr: false }
+);
 const Index = () => {
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
@@ -36,7 +33,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => { }
+      () => {}
     );
   }, [currentLocale]);
 
