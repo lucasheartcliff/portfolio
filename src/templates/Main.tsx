@@ -10,7 +10,6 @@ type IMainProps = {
   title: string;
   meta: ReactNode;
   children: ReactNode;
-  scrollTo: (titleId: string) => void;
 };
 
 const Main = (props: IMainProps) => {
@@ -30,13 +29,13 @@ const Main = (props: IMainProps) => {
   const scrollToTop = () => {
     const ref = scrollRef.current;
     if (!ref) return;
-    ref.scrollToTop();
+    ref.container.firstElementChild?.scroll({ behavior: 'smooth', top: 0 });
   };
 
   return (
     <div className="h-screen w-full">
       {props.meta}
-      <Navbar logoTitle={props.title} scrollTo={props.scrollTo} />
+      <Navbar logoTitle={props.title} scrollRef={scrollRef} />
       <div
         style={{ height: 'calc(100% - 77px)' }}
         className="max-h-screen w-full text-gray-700 antialiased"

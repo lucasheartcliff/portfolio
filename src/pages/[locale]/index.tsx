@@ -1,9 +1,7 @@
 import {
   GithubOutlined,
-  InstagramOutlined,
   LinkedinOutlined,
   MailOutlined,
-  TwitterOutlined,
   WhatsAppOutlined,
 } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
@@ -45,11 +43,6 @@ const Index = () => {
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
-  const scrollTo = (titleId: string) => {
-    const element = document.getElementById(titleId);
-    if (!element) return;
-    element.scrollIntoView({ behavior: 'smooth' });
-  };
   useEffect(() => {
     const l = currentLocale as string;
     setLocale(
@@ -124,7 +117,6 @@ const Index = () => {
     <>
       <Main
         title={logoTitle}
-        scrollTo={scrollTo}
         meta={
           <Meta
             title={name}
@@ -160,21 +152,21 @@ const Index = () => {
                         <WhatsAppOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink href={`https://x.com/${username}`}>
-                      <Icon color={'#00acee'}>
-                        <TwitterOutlined />
-                      </Icon>
-                    </SocialLink>
+                    {/* <SocialLink href={`https://x.com/${username}`}> */}
+                    {/*   <Icon color={'#00acee'}> */}
+                    {/*     <TwitterOutlined /> */}
+                    {/*   </Icon> */}
+                    {/* </SocialLink> */}
                     <SocialLink href={`https://linkedin.com/in/${username}`}>
                       <Icon color={'#0e76a8'}>
                         <LinkedinOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink href={`https://instagram.com/${username}`}>
-                      <Icon color={'#dd2a7b'}>
-                        <InstagramOutlined />
-                      </Icon>
-                    </SocialLink>
+                    {/* <SocialLink href={`https://instagram.com/${username}`}> */}
+                    {/*   <Icon color={'#dd2a7b'}> */}
+                    {/*     <InstagramOutlined /> */}
+                    {/*   </Icon> */}
+                    {/* </SocialLink> */}
                     <SocialLink href={`mailto:${email}`} skipLocaleHandling>
                       <Icon color={'#d44638'}>
                         <MailOutlined />
@@ -211,12 +203,12 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="about"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('About')}
-                  </span>
+                  </h3>
                   <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
                     {t(bio)}
                   </p>
@@ -227,12 +219,12 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <span
+                  <h3
                     id="languages"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Languages')}
-                  </span>
+                  </h3>
                   <LanguageChart data={data} />
                 </div>
               </Block>
@@ -264,12 +256,12 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <span
+                  <h3
                     id="experience"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Experiences')}
-                  </span>
+                  </h3>
                   <Scroll style={{ height: 500 }}>
                     <Timeline data={experience} />
                   </Scroll>
@@ -279,12 +271,12 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="education"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Educations')}
-                  </span>
+                  </h3>
                   <Scroll style={{ height: 500 }}>
                     <Timeline data={education} />
                   </Scroll>
@@ -318,12 +310,12 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="certification"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Certifications')}
-                  </span>
+                  </h3>
                   <Scroll style={{ height: 400 }}>
                     {certification?.map((v, key) => (
                       <div key={key} className="">
@@ -337,12 +329,12 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <span
+                  <h3
                     id="projects"
                     className="mb-3 text-xl font-semibold text-black md:text-4xl "
                   >
                     {t('Projects')}
-                  </span>
+                  </h3>
                   <ProjectGrid
                     initialItemsCount={8}
                     itemsToAdd={8}
