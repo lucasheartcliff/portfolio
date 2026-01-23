@@ -1,9 +1,13 @@
 import {
+  DownloadOutlined,
   GithubOutlined,
+  InstagramOutlined,
   LinkedinOutlined,
   MailOutlined,
+  TwitterOutlined,
   WhatsAppOutlined,
 } from '@ant-design/icons';
+import { Spin, Tooltip } from 'antd';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -12,7 +16,8 @@ import { useEffect, useState } from 'react';
 import CertificateCard from '@/components/CertificateCard';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
-import { SocialLink } from '@/components/Link';
+import Link, { SocialLink } from '@/components/Link';
+import PDFDocument from '@/components/PDFDocument';
 import ProjectGrid from '@/components/ProjectGrid';
 import Scroll from '@/components/Scroll';
 import Timeline from '@/components/Timeline';
@@ -30,10 +35,19 @@ import {
   WAKATIME_CODING_TIME,
   WAKATIME_LANGUAGES,
 } from '@/utils/url';
+import moment from 'moment';
 
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
 });
+const PDFDownloadLink = dynamic(
+  () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
+  {
+    ssr: false,
+    loading: () => null,
+  }
+) as any;
+
 const Index = () => {
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
@@ -52,7 +66,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => {}
+      () => { }
     );
   }, [currentLocale]);
 
@@ -140,38 +154,50 @@ const Index = () => {
                     {t(introductionBio)}
                   </p>
                   <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
-                    <SocialLink href={`https://github.com/${username}`}>
+                    <SocialLink title="GitHub" href={`https://github.com/${username}`}>
                       <Icon color={'#000000'}>
                         <GithubOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink
-                      href={`https://api.whatsapp.com/send?phone=${phone}`}
-                    >
+                    <SocialLink title="WhatsApp" href={`https://api.whatsapp.com/send?phone=${phone}`}>
                       <Icon color={'#25D366'}>
                         <WhatsAppOutlined />
                       </Icon>
                     </SocialLink>
-                    {/* <SocialLink href={`https://x.com/${username}`}> */}
-                    {/*   <Icon color={'#00acee'}> */}
-                    {/*     <TwitterOutlined /> */}
-                    {/*   </Icon> */}
-                    {/* </SocialLink> */}
-                    <SocialLink href={`https://linkedin.com/in/${username}`}>
+                    {/* <SocialLink href={`https://x.com/${username}`}> 
+                      <Icon color={'#00acee'}> 
+                        <TwitterOutlined /> 
+                      </Icon> 
+                    </SocialLink>  */}
+                    <SocialLink title="LinkedIn" href={`https://linkedin.com/in/${username}`}>
                       <Icon color={'#0e76a8'}>
                         <LinkedinOutlined />
                       </Icon>
                     </SocialLink>
-                    {/* <SocialLink href={`https://instagram.com/${username}`}> */}
-                    {/*   <Icon color={'#dd2a7b'}> */}
-                    {/*     <InstagramOutlined /> */}
-                    {/*   </Icon> */}
-                    {/* </SocialLink> */}
-                    <SocialLink href={`mailto:${email}`} skipLocaleHandling>
+                    <SocialLink title="Instagram" href={`https://instagram.com/${username}`}>
+                      <Icon color={'#dd2a7b'}>
+                        <InstagramOutlined />
+                      </Icon>
+                    </SocialLink>
+                    <SocialLink title="Email" href={`mailto:${email}`} skipLocaleHandling>
                       <Icon color={'#d44638'}>
                         <MailOutlined />
                       </Icon>
                     </SocialLink>
+                    <div className="cursor-pointer rounded hover:no-underline">
+                      <Tooltip className='hover:no-underline' title="Download CV">
+                        <PDFDownloadLink
+                          document={<PDFDocument />}
+                          fileName={`Lucas_Morais_CV_${moment().valueOf()}.pdf`}
+                        >
+                          {({ loading }: { loading: boolean }) => (
+                            <Icon color={'#0e76a8'}>
+                               {loading ? <Spin /> : <DownloadOutlined/>}
+                            </Icon>
+                          )}
+                        </PDFDownloadLink>
+                      </Tooltip>
+                    </div>
                   </div>
                 </div>
               </Block>

@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import type { LinkProps } from 'next/link';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -5,6 +6,7 @@ import React from 'react';
 
 interface Props extends LinkProps {
   skipLocaleHandling?: boolean;
+  title?: string;
   locale?: string;
   target?: string;
   className?: string;
@@ -40,9 +42,11 @@ const LinkComponent = ({
 
 export default function Link({ children, ...props }: Props) {
   return (
-    <LinkComponent className="text-black hover:border-0" {...props}>
-      {children}
-    </LinkComponent>
+    <Tooltip className="hover:no-underline" title={props.title}>
+      <LinkComponent className="text-black hover:border-0" {...props}>
+        {children}
+      </LinkComponent>
+    </Tooltip>
   );
 }
 
