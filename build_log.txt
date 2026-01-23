@@ -1,0 +1,83 @@
+
+> portfolio@1.0.0 build
+> next build
+
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverComponentsExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+   Linting and checking validity of types ...
+
+./src/components/LanguageSelector/index.tsx
+105:39  Warning: Insert `⏎··························`  prettier/prettier
+108:1  Warning: Replace `··························}·inline-flex·w-full·items-center·px-4·py-2·text-left·text-sm·hover:bg-gray-100·${` with `························}·inline-flex·w-full·items-center·px-4·py-2·text-left·text-sm·hover:bg-gray-100·${⏎··························`  prettier/prettier
+109:1  Warning: Delete `··`  prettier/prettier
+
+./src/pages/[locale]/index.tsx
+114:23  Warning: Unexpected console statement.  no-console
+
+./src/styles/themes.ts
+1:1  Warning: Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+./src/utils/index.ts
+89:23  Warning: 'localeData' is defined but never used. Allowed unused args must match /^_/u.  unused-imports/no-unused-vars
+94:7  Warning: Unexpected console statement.  no-console
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Collecting page data ...
+   Generating static pages (0/9) ...
+   Generating static pages (2/9) 
+   Generating static pages (4/9) 
+   Generating static pages (6/9) 
+ ✓ Generating static pages (9/9) 
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (pages)                              Size     First Load JS
+┌ ○ /                                      3.58 kB         133 kB
+├   /_app                                  0 B             129 kB
+├ ● /[locale] (3252 ms)                    596 kB          725 kB
+├   ├ /es (550 ms)
+├   ├ /pt (545 ms)
+├   ├ /fr (545 ms)
+├   ├ /en (544 ms)
+├   ├ /de (535 ms)
+├   └ /it (533 ms)
+└ ○ /404                                   184 B           129 kB
++ First Load JS shared by all              139 kB
+  ├ chunks/framework-ca706bf673a13738.js   45.4 kB
+  ├ chunks/main-6d59e5743d91d42f.js        33.1 kB
+  ├ chunks/pages/_app-376d122f294bef7a.js  46.6 kB
+  ├ chunks/webpack-b11434a9ec70e1df.js     3.94 kB
+  └ css/4d095bfe4223ee72.css               10.2 kB
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+
+
+> portfolio@1.0.0 postbuild
+> next-sitemap
+
+✨ [next-sitemap] Loading next-sitemap config: file:///home/lucasheartcliff/projects/portfolio/next-sitemap.config.js
+✅ [next-sitemap] Generation completed
+┌───────────────┬────────┐
+│    (index)    │ Values │
+├───────────────┼────────┤
+│ indexSitemaps │   1    │
+│   sitemaps    │   1    │
+└───────────────┴────────┘
+-----------------------------------------------------
+ SITEMAP INDICES 
+-----------------------------------------------------
+
+   ○ https://example.com/sitemap.xml
+
+
+-----------------------------------------------------
+ SITEMAPS 
+-----------------------------------------------------
+
+   ○ https://example.com/sitemap-0.xml
+
+
