@@ -4,10 +4,10 @@ import {
   InstagramOutlined,
   LinkedinOutlined,
   MailOutlined,
-  TwitterOutlined,
   WhatsAppOutlined,
 } from '@ant-design/icons';
 import { Spin, Tooltip } from 'antd';
+import moment from 'moment';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import CertificateCard from '@/components/CertificateCard';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
-import Link, { SocialLink } from '@/components/Link';
+import { SocialLink } from '@/components/Link';
 import PDFDocument from '@/components/PDFDocument';
 import ProjectGrid from '@/components/ProjectGrid';
 import Scroll from '@/components/Scroll';
@@ -35,7 +35,6 @@ import {
   WAKATIME_CODING_TIME,
   WAKATIME_LANGUAGES,
 } from '@/utils/url';
-import moment from 'moment';
 
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
@@ -125,7 +124,10 @@ const Index = () => {
         }
         setData(langData);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      });
   }, []);
   return (
     <>
@@ -154,12 +156,18 @@ const Index = () => {
                     {t(introductionBio)}
                   </p>
                   <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
-                    <SocialLink title="GitHub" href={`https://github.com/${username}`}>
+                    <SocialLink
+                      title="GitHub"
+                      href={`https://github.com/${username}`}
+                    >
                       <Icon color={'#000000'}>
                         <GithubOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink title="WhatsApp" href={`https://api.whatsapp.com/send?phone=${phone}`}>
+                    <SocialLink
+                      title="WhatsApp"
+                      href={`https://api.whatsapp.com/send?phone=${phone}`}
+                    >
                       <Icon color={'#25D366'}>
                         <WhatsAppOutlined />
                       </Icon>
@@ -169,30 +177,43 @@ const Index = () => {
                         <TwitterOutlined /> 
                       </Icon> 
                     </SocialLink>  */}
-                    <SocialLink title="LinkedIn" href={`https://linkedin.com/in/${username}`}>
+                    <SocialLink
+                      title="LinkedIn"
+                      href={`https://linkedin.com/in/${username}`}
+                    >
                       <Icon color={'#0e76a8'}>
                         <LinkedinOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink title="Instagram" href={`https://instagram.com/${username}`}>
+                    <SocialLink
+                      title="Instagram"
+                      href={`https://instagram.com/${username}`}
+                    >
                       <Icon color={'#dd2a7b'}>
                         <InstagramOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink title="Email" href={`mailto:${email}`} skipLocaleHandling>
+                    <SocialLink
+                      title="Email"
+                      href={`mailto:${email}`}
+                      skipLocaleHandling
+                    >
                       <Icon color={'#d44638'}>
                         <MailOutlined />
                       </Icon>
                     </SocialLink>
                     <div className="cursor-pointer rounded hover:no-underline">
-                      <Tooltip className='hover:no-underline' title="Download CV">
+                      <Tooltip
+                        className="hover:no-underline"
+                        title="Download CV"
+                      >
                         <PDFDownloadLink
                           document={<PDFDocument />}
                           fileName={`Lucas_Morais_CV_${moment().valueOf()}.pdf`}
                         >
                           {({ loading }: { loading: boolean }) => (
                             <Icon color={'#0e76a8'}>
-                               {loading ? <Spin /> : <DownloadOutlined/>}
+                              {loading ? <Spin /> : <DownloadOutlined />}
                             </Icon>
                           )}
                         </PDFDownloadLink>
