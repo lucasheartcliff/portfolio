@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { Tooltip } from 'antd';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -31,12 +32,8 @@ const locales = [
   { name: 'English', key: 'us', locale: 'en' }, // English (USA)
   { name: 'French', key: 'fr', locale: 'fr' }, // French (France)
   { name: 'Spanish', key: 'es', locale: 'es' }, // Spanish (Spain)
-  { name: 'Korean', key: 'kr', locale: 'ko' }, // Korean (South Korea)
-  { name: 'Japanese', key: 'jp', locale: 'ja' }, // Japanese (Japan)
   { name: 'German', key: 'de', locale: 'de' }, // German (Germany)
   { name: 'Italian', key: 'it', locale: 'it' }, // Italian (Italy)
-  { name: 'Chinese', key: 'cn', locale: 'zh' }, // Chinese (Simplified, Mainland China)
-  // { name: 'Arabic', key: 'sa', locale: 'ar' }, // Arabic (Saudi Arabia)
 ];
 
 export default function LanguageSelector() {
@@ -87,7 +84,7 @@ export default function LanguageSelector() {
           </div>
           {isOpen && (
             <div
-              className="absolute mt-12 w-44 origin-top rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5  md:right-0 md:origin-top-right"
+              className="absolute mt-12 w-44 origin-top rounded-md bg-white shadow-lg ring-1 ring-black/5  md:right-0 md:origin-top-right"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="language-selector"

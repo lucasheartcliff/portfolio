@@ -21,7 +21,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
-    "@ant-design/icons": "4.0.0",
+    "@ant-design/icons": "^5.0.0",
     "@next/third-parties": "^14.1.4",
     "@react-pdf/renderer": "^4.1.6",
     "antd": "5.11.5",

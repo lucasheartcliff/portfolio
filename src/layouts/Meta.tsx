@@ -24,10 +24,7 @@ const Meta = (props: IMetaProps) => {
           content="width=device-width,initial-scale=1"
           key="viewport"
         />
-        <link
-          rel="stylesheet"
-          href={`${router.basePath}/assets/css/index.css`}
-        />
+
         <link
           rel="apple-touch-icon"
           href={`${router.basePath}/apple-touch-icon.png`}
