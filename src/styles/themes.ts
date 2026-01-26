@@ -1,1 +1,2 @@
-export default { primary: '#253db6' };
+const theme = { primary: '#253db6' }; 
+export default theme;
