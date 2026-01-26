@@ -167,34 +167,34 @@ const PDFDocument = () => {
                 </Text>
               </View>
 
-
-
               {/* Roles Loop */}
-              {exp.children ?
-                exp.children.map((role: any, rIndex: number) => (
-                  <View
-                    key={`role-${rIndex}`}
-                    style={{ marginBottom: 8, paddingLeft: 0 }}
-                  >
-                    <View style={styles.rowHeader}>
-                      <Text style={styles.roleTitle}>{role.title}</Text>
-                      <Text style={styles.dateLocation}>
-                        {formatDate(role.startDate)} –{' '}
-                        {role.endDate ? formatDate(role.endDate) : 'Present'}
-                      </Text>
+              {exp.children
+                ? exp.children.map((role: any, rIndex: number) => (
+                    <View
+                      key={`role-${rIndex}`}
+                      style={{ marginBottom: 8, paddingLeft: 0 }}
+                    >
+                      <View style={styles.rowHeader}>
+                        <Text style={styles.roleTitle}>{role.title}</Text>
+                        <Text style={styles.dateLocation}>
+                          {formatDate(role.startDate)} –{' '}
+                          {role.endDate ? formatDate(role.endDate) : 'Present'}
+                        </Text>
+                      </View>
+                      {role.description && (
+                        <Text style={styles.paragraph}>
+                          {role.description.replace(/\n\n/g, '\n')}
+                        </Text>
+                      )}
                     </View>
-                    {role.description && (
-                      <Text style={styles.paragraph}>
-                        {role.description
-                          .replace(/\n\n/g, '\n')}
-                      </Text>
-                    )}
-                  </View>
-                )) : exp.description && (
-                  <Text style={styles.paragraph}>
-                    {exp.description.replace(/\n\n/g, '\n').replace(/\n/g, ' ')}
-                  </Text>
-                )}
+                  ))
+                : exp.description && (
+                    <Text style={styles.paragraph}>
+                      {exp.description
+                        .replace(/\n\n/g, '\n')
+                        .replace(/\n/g, ' ')}
+                    </Text>
+                  )}
             </View>
           ))}
         </View>

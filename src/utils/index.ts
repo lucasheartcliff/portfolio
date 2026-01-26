@@ -86,11 +86,12 @@ export async function setLocale(
     moment.locale(locale);
   }
   return import(`moment/locale/${momentLocale}`)
-    .then(({ default: localeData }) => {
+    .then(({ default: _localeData }) => {
       moment.locale(momentLocale);
       onSuccess();
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.error('Error while importing locale module: ', e);
       onError(e);
     });
