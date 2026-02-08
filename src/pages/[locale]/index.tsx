@@ -6,8 +6,7 @@ import {
   MailOutlined,
   WhatsAppOutlined,
 } from '@ant-design/icons';
-import { Spin, Tooltip } from 'antd';
-import moment from 'moment';
+import { Tooltip } from 'antd';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -17,7 +16,6 @@ import CertificateCard from '@/components/CertificateCard';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import { SocialLink } from '@/components/Link';
-import PDFDocument from '@/components/PDFDocument';
 import ProjectGrid from '@/components/ProjectGrid';
 import Scroll from '@/components/Scroll';
 import Timeline from '@/components/Timeline';
@@ -39,13 +37,6 @@ import {
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
 });
-const PDFDownloadLink = dynamic(
-  () => import('@react-pdf/renderer').then((mod) => mod.PDFDownloadLink),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-) as any;
 
 const Index = () => {
   const router = useRouter();
@@ -65,7 +56,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => { }
+      () => {}
     );
   }, [currentLocale]);
 
@@ -207,16 +198,15 @@ const Index = () => {
                         className="hover:no-underline"
                         title="Download CV"
                       >
-                        <PDFDownloadLink
-                          document={<PDFDocument />}
-                          fileName={`Lucas_Morais_CV_${moment().valueOf()}.pdf`}
+                        <a
+                          href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
+                          download="Lucas_Morais_Resume.pdf"
+                          className="hover:no-underline"
                         >
-                          {({ loading }: { loading: boolean }) => (
-                            <Icon color={'#0e76a8'}>
-                              {loading ? <Spin /> : <DownloadOutlined />}
-                            </Icon>
-                          )}
-                        </PDFDownloadLink>
+                          <Icon color={'#0e76a8'}>
+                            <DownloadOutlined />
+                          </Icon>
+                        </a>
                       </Tooltip>
                     </div>
                   </div>
