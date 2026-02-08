@@ -11,116 +11,232 @@ import React from 'react';
 
 import profile from '@/public/assets/jsons/profile.json';
 
-// Register standard font (optional, but ensures consistency)
+// Register standard font for ATS compatibility
 Font.register({
   family: 'Helvetica',
   fonts: [
-    { src: 'https://fonts.gstatic.com/s/helvetica/v1/0.ttf' }, // Standard
+    { src: 'https://fonts.gstatic.com/s/helvetica/v1/0.ttf' },
     {
       src: 'https://fonts.gstatic.com/s/helvetica/v1/0.ttf',
       fontWeight: 'bold',
-    }, // Bold (simulated for standard fonts in react-pdf often works without src if using built-in names)
+    },
   ],
 });
 
-// Styles: Strict single-column, highly readable, standard typography
+// ATS-Friendly Styles: Simple, clean, highly parseable
 const styles = StyleSheet.create({
   page: {
     padding: 40,
     fontFamily: 'Helvetica',
     fontSize: 10,
     lineHeight: 1.4,
-    color: '#000000', // Absolute black for best contrast
-    flexDirection: 'column', // Force column layout
+    color: '#000000',
+    flexDirection: 'column',
   },
   // Header Section
   header: {
     marginBottom: 20,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#000000',
     paddingBottom: 10,
   },
   name: {
-    fontSize: 24,
-    fontWeight: 'bold', // Helvetica-Bold
-    marginBottom: 16,
-    textTransform: 'uppercase',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 4,
   },
-  jobTitle: {
+  professionalTitle: {
     fontSize: 12,
+    fontWeight: 'bold',
     marginBottom: 8,
   },
   contactInfo: {
     fontSize: 10,
-    marginBottom: 8,
+    marginBottom: 4,
   },
-  // Section Headers
+  // Section Headers - ATS Standard
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    marginTop: 15,
+    marginTop: 16,
     marginBottom: 8,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#cccccc',
-    paddingBottom: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000000',
+    paddingBottom: 3,
   },
   // Content Blocks
   block: {
-    marginBottom: 10,
+    marginBottom: 12,
   },
-  rowHeader: {
+  paragraph: {
+    fontSize: 10,
+    textAlign: 'justify',
+    marginBottom: 6,
+    lineHeight: 1.5,
+  },
+  // Bullet Points
+  bulletContainer: {
+    flexDirection: 'row',
+    marginBottom: 4,
+    paddingLeft: 10,
+  },
+  bulletSymbol: {
+    width: 15,
+    fontSize: 10,
+  },
+  bulletText: {
+    flex: 1,
+    fontSize: 10,
+    lineHeight: 1.4,
+  },
+  // Work Experience
+  companyHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 2,
+    marginBottom: 4,
+    marginTop: 8,
   },
   companyName: {
     fontSize: 11,
     fontWeight: 'bold',
   },
-  roleTitle: {
-    fontSize: 11,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-  },
-  dateLocation: {
+  dateRange: {
     fontSize: 10,
     textAlign: 'right',
   },
-  paragraph: {
+  roleHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 3,
+    marginTop: 6,
+  },
+  roleTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  technologies: {
+    fontSize: 9,
+    fontStyle: 'italic',
+    color: '#333333',
+    marginBottom: 4,
+  },
+  location: {
+    fontSize: 9,
+    color: '#333333',
+    marginBottom: 2,
+  },
+  // Skills
+  skillCategory: {
     fontSize: 10,
-    textAlign: 'justify',
+    fontWeight: 'bold',
+    marginTop: 6,
+    marginBottom: 3,
+  },
+  skillList: {
+    fontSize: 10,
+    marginBottom: 4,
+    lineHeight: 1.4,
+  },
+  // Education & Certifications
+  educationItem: {
+    marginBottom: 8,
+  },
+  educationTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  educationDetails: {
+    fontSize: 10,
+    fontStyle: 'italic',
     marginTop: 2,
   },
-  // Skills List
-  skillsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+  certificationItem: {
+    marginBottom: 4,
   },
-  skillItem: {
-    marginRight: 5,
-    marginBottom: 3,
+  certificationText: {
+    fontSize: 10,
   },
 });
 
-// Helper for MM/YYYY date format
-const formatDate = (dateString: string) => {
+// Helper: Format date to MM/YYYY or "Present"
+const formatDate = (dateString: string | null | undefined): string => {
   if (!dateString) return 'Present';
   return moment(dateString).format('MM/YYYY');
 };
 
+// Helper: Split description into bullet points
+const formatBulletPoints = (description: string): string[] => {
+  if (!description) return [];
+
+  // Split by double newlines first, then by single newlines if needed
+  const paragraphs = description.split('\n\n');
+  const bullets: string[] = [];
+
+  paragraphs.forEach((para) => {
+    // If paragraph is already short enough, treat as one bullet
+    if (para.length < 200) {
+      bullets.push(para.trim());
+    } else {
+      // Split long paragraphs by sentences
+      const sentences = para.split('. ');
+      sentences.forEach((sentence, idx) => {
+        const trimmed = sentence.trim();
+        if (trimmed) {
+          // Add period back if it was removed and not the last sentence
+          bullets.push(
+            idx < sentences.length - 1 && !trimmed.endsWith('.')
+              ? `${trimmed}.`
+              : trimmed
+          );
+        }
+      });
+    }
+  });
+
+  return bullets.filter((b) => b.length > 0);
+};
+
+// Helper: Render bullet points
+const renderBullets = (bullets: string[]) => {
+  return bullets.map((bullet, idx) => (
+    <View key={idx} style={styles.bulletContainer}>
+      <Text style={styles.bulletSymbol}>•</Text>
+      <Text style={styles.bulletText}>{bullet}</Text>
+    </View>
+  ));
+};
+
 const PDFDocument = () => {
-  // Join skills for keywords metadata
-  const keywords = (profile as any).skills
-    ? (profile as any).skills.join(', ')
+  // Extract data with type safety
+  const profileData = profile as any;
+
+  // Build keywords for metadata
+  const keywords = profileData.skills
+    ? profileData.skills.join(', ')
     : '';
+
+  // Get professional title
+  const professionalTitle =
+    profileData.professionalTitle || 'Software Engineer | Full-Stack Developer';
+
+  // Get location
+  const location = profileData.location || '';
+
+  // Get achievements if available
+  const achievements = profileData.achievements || [];
+
+  // Get skills categories or fall back to flat list
+  const skillsCategories = profileData.skillsCategories || null;
+  const flatSkills = profileData.skills || [];
+
+  // Get certifications
+  const certifications = profileData.certification || [];
 
   return (
     <Document
-      title={`${profile.firstName} ${profile.lastName} - CV`}
+      title={`${profile.firstName} ${profile.lastName} - Resume`}
       author={`${profile.firstName} ${profile.lastName}`}
       keywords={keywords}
-      subject="Software Engineer CV"
+      subject="Professional Resume - Software Engineer"
       language="en"
     >
       <Page size="A4" style={styles.page}>
@@ -129,105 +245,164 @@ const PDFDocument = () => {
           <Text style={styles.name}>
             {profile.firstName} {profile.lastName}
           </Text>
-          <Text style={styles.jobTitle}>
-            Software Engineer | Full-Stack Developer
+          <Text style={styles.professionalTitle}>{professionalTitle}</Text>
+          <Text style={styles.contactInfo}>
+            {profile.email} • {profile.phone}
+            {location && ` • ${location}`}
           </Text>
           <Text style={styles.contactInfo}>
-            {profile.email} | {profile.phone}
+            GitHub: github.com/{profile.username}
+            {profileData.linkedin && ` • LinkedIn: ${profileData.linkedin}`}
           </Text>
-          <Text style={styles.contactInfo}>github.com/{profile.username}</Text>
         </View>
 
-        {/* PROFESSIONAL SUMMARY */}
+        {/* ABOUT / PROFESSIONAL SUMMARY */}
         <View style={styles.block}>
-          <Text style={styles.sectionTitle}>Professional Summary</Text>
+          <Text style={styles.sectionTitle}>ABOUT</Text>
           <Text style={styles.paragraph}>{profile.introductionBio}</Text>
+          {profileData.bio && profileData.bio !== profile.introductionBio && (
+            <Text style={styles.paragraph}>{profileData.bio}</Text>
+          )}
         </View>
 
-        {/* CORE COMPETENCIES (Skills) */}
-        {(profile as any).skills && (profile as any).skills.length > 0 && (
+        {/* ACHIEVEMENTS / KEY HIGHLIGHTS (if available) */}
+        {achievements.length > 0 && (
           <View style={styles.block}>
-            <Text style={styles.sectionTitle}>Core Competencies</Text>
-            <Text style={styles.paragraph}>
-              {(profile as any).skills.join(' • ')}
-            </Text>
+            <Text style={styles.sectionTitle}>KEY ACHIEVEMENTS</Text>
+            {renderBullets(achievements)}
           </View>
         )}
 
+        {/* TECHNICAL SKILLS */}
+        <View style={styles.block}>
+          <Text style={styles.sectionTitle}>TECHNICAL SKILLS</Text>
+
+          {skillsCategories ? (
+            // Render categorized skills
+            Object.entries(skillsCategories).map(([category, skills]: [string, any]) => (
+              <View key={category} style={{ marginBottom: 6 }}>
+                <Text style={styles.skillCategory}>{category}:</Text>
+                <Text style={styles.skillList}>
+                  {Array.isArray(skills) ? skills.join(' • ') : skills}
+                </Text>
+              </View>
+            ))
+          ) : (
+            // Fall back to flat list
+            <Text style={styles.skillList}>
+              {flatSkills.join(' • ')}
+            </Text>
+          )}
+        </View>
+
         {/* WORK EXPERIENCE */}
         <View style={styles.block}>
-          <Text style={styles.sectionTitle}>Work Experience</Text>
-          {profile.experience.map((exp: any, index: number) => (
-            <View key={`exp-${index}`} style={{ marginBottom: 10 }}>
-              {/* Company Name Row */}
-              <View style={{ ...styles.rowHeader, marginBottom: 4 }}>
+          <Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
+
+          {profile.experience.map((exp: any, expIdx: number) => (
+            <View key={`exp-${expIdx}`} style={{ marginBottom: 12 }}>
+              {/* Company Header */}
+              <View style={styles.companyHeader}>
                 <Text style={styles.companyName}>{exp.title}</Text>
-                <Text style={styles.dateLocation}>
+                <Text style={styles.dateRange}>
                   {formatDate(exp.startDate)} – {formatDate(exp.endDate)}
                 </Text>
               </View>
 
-              {/* Roles Loop */}
-              {exp.children
-                ? exp.children.map((role: any, rIndex: number) => (
-                    <View
-                      key={`role-${rIndex}`}
-                      style={{ marginBottom: 8, paddingLeft: 0 }}
-                    >
-                      <View style={styles.rowHeader}>
-                        <Text style={styles.roleTitle}>{role.title}</Text>
-                        <Text style={styles.dateLocation}>
-                          {formatDate(role.startDate)} –{' '}
-                          {role.endDate ? formatDate(role.endDate) : 'Present'}
-                        </Text>
-                      </View>
-                      {role.description && (
-                        <Text style={styles.paragraph}>
-                          {role.description.replace(/\n\n/g, '\n')}
-                        </Text>
-                      )}
+              {/* Location and Work Type (if available) */}
+              {(exp.location || exp.workType) && (
+                <Text style={styles.location}>
+                  {exp.location}
+                  {exp.location && exp.workType && ' · '}
+                  {exp.workType}
+                </Text>
+              )}
+
+              {/* Roles within company */}
+              {exp.children && exp.children.length > 0 ? (
+                exp.children.map((role: any, roleIdx: number) => (
+                  <View key={`role-${roleIdx}`} style={{ marginTop: 8 }}>
+                    <View style={styles.roleHeader}>
+                      <Text style={styles.roleTitle}>{role.title}</Text>
+                      <Text style={styles.dateRange}>
+                        {formatDate(role.startDate)} –{' '}
+                        {formatDate(role.endDate)}
+                      </Text>
                     </View>
-                  ))
-                : exp.description && (
-                    <Text style={styles.paragraph}>
-                      {exp.description
-                        .replace(/\n\n/g, '\n')
-                        .replace(/\n/g, ' ')}
+
+                    {/* Technologies used in this role */}
+                    {role.technologies && role.technologies.length > 0 && (
+                      <Text style={styles.technologies}>
+                        Technologies: {role.technologies.join(', ')}
+                      </Text>
+                    )}
+
+                    {/* Role achievements or description as bullets */}
+                    {role.achievements && role.achievements.length > 0 ? (
+                      renderBullets(role.achievements)
+                    ) : role.description ? (
+                      renderBullets(formatBulletPoints(role.description))
+                    ) : null}
+                  </View>
+                ))
+              ) : (
+                // Single role (no children)
+                <>
+                  {exp.technologies && exp.technologies.length > 0 && (
+                    <Text style={styles.technologies}>
+                      Technologies: {exp.technologies.join(', ')}
                     </Text>
                   )}
+                  {exp.description && renderBullets(formatBulletPoints(exp.description))}
+                </>
+              )}
             </View>
           ))}
         </View>
 
         {/* EDUCATION */}
         <View style={styles.block}>
-          <Text style={styles.sectionTitle}>Education</Text>
-          {profile.education.map((edu: any, index: number) => (
-            <View key={`edu-${index}`} style={{ marginBottom: 6 }}>
-              <View style={styles.rowHeader}>
-                <Text style={{ fontWeight: 'bold', fontSize: 11 }}>
-                  {edu.title}
-                </Text>
-                <Text style={styles.dateLocation}>
-                  {formatDate(edu.startDate)} – {formatDate(edu.endDate)}
-                </Text>
-              </View>
+          <Text style={styles.sectionTitle}>EDUCATION</Text>
+
+          {profile.education.map((edu: any, eduIdx: number) => (
+            <View key={`edu-${eduIdx}`} style={styles.educationItem}>
+              <Text style={styles.educationTitle}>{edu.title}</Text>
+              <Text style={styles.educationDetails}>
+                {formatDate(edu.startDate)} – {formatDate(edu.endDate)}
+              </Text>
               {edu.subtitle && (
-                <Text style={styles.paragraph}>{edu.subtitle}</Text>
+                <Text style={styles.educationDetails}>{edu.subtitle}</Text>
               )}
+
+              {/* Nested education items (if any) */}
               {edu.children &&
-                edu.children.map((child: any, cIndex: number) => (
-                  <Text
-                    key={cIndex}
-                    style={{ fontSize: 10, fontStyle: 'italic' }}
-                  >
-                    {child.title} ({formatDate(child.startDate)} -{' '}
+                edu.children.map((child: any, childIdx: number) => (
+                  <Text key={childIdx} style={styles.educationDetails}>
+                    {child.title} ({formatDate(child.startDate)} –{' '}
                     {formatDate(child.endDate)})
                   </Text>
                 ))}
             </View>
           ))}
         </View>
+
+        {/* CERTIFICATIONS (if available) */}
+        {certifications.length > 0 && (
+          <View style={styles.block}>
+            <Text style={styles.sectionTitle}>CERTIFICATIONS</Text>
+
+            {certifications.map((cert: any, certIdx: number) => (
+              <View key={`cert-${certIdx}`} style={styles.certificationItem}>
+                <Text style={styles.certificationText}>
+                  • <Text style={{ fontWeight: 'bold' }}>{cert.name}</Text>
+                  {cert.platform && (
+                    <Text style={{ fontStyle: 'italic' }}> - {cert.platform}</Text>
+                  )}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
       </Page>
     </Document>
   );
