@@ -1,7 +1,6 @@
 import {
   DownloadOutlined,
   GithubOutlined,
-  InstagramOutlined,
   LinkedinOutlined,
   MailOutlined,
   WhatsAppOutlined,
@@ -176,14 +175,14 @@ const Index = () => {
                         <LinkedinOutlined />
                       </Icon>
                     </SocialLink>
-                    <SocialLink
+                    {/* <SocialLink
                       title="Instagram"
                       href={`https://instagram.com/${username}`}
                     >
                       <Icon color={'#dd2a7b'}>
                         <InstagramOutlined />
                       </Icon>
-                    </SocialLink>
+                    </SocialLink> */}
                     <SocialLink
                       title="Email"
                       href={`mailto:${email}`}
