@@ -8,12 +8,8 @@ module.exports = {
       'en', // English (USA)
       'fr', // French (France)
       'es', // Spanish (Spain)
-      'ko', // Korean (South Korea)
-      'ja', // Japanese (Japan)
       'de', // German (Germany)
       'it', // Italian (Italy)
-      'zh', // Chinese (Simplified, Mainland China)
-      'ar', // Arabic
     ],
     localeDetection: true,
     reloadOnPrerender: process.env.NODE_ENV === 'development',

@@ -1,0 +1,78 @@
+
+> portfolio@1.0.0 build
+> next build
+
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'serverComponentsExternalPackages'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+   Linting and checking validity of types ...
+
+./src/pages/[locale]/index.tsx
+124:23  Warning: Unexpected console statement.  no-console
+
+./src/styles/themes.ts
+1:1  Warning: Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+./src/utils/index.ts
+89:23  Warning: 'localeData' is defined but never used. Allowed unused args must match /^_/u.  unused-imports/no-unused-vars
+94:7  Warning: Unexpected console statement.  no-console
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Collecting page data ...
+   Generating static pages (0/9) ...
+   Generating static pages (2/9) 
+   Generating static pages (4/9) 
+   Generating static pages (6/9) 
+ ✓ Generating static pages (9/9) 
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (pages)                              Size     First Load JS
+┌ ○ /                                      3.58 kB         133 kB
+├   /_app                                  0 B             129 kB
+├ ● /[locale] (3135 ms)                    597 kB          726 kB
+├   ├ /en (564 ms)
+├   ├ /pt (551 ms)
+├   ├ /de (513 ms)
+├   ├ /fr (510 ms)
+├   ├ /es (499 ms)
+├   └ /it (498 ms)
+└ ○ /404                                   184 B           129 kB
++ First Load JS shared by all              139 kB
+  ├ chunks/framework-ca706bf673a13738.js   45.4 kB
+  ├ chunks/main-6d59e5743d91d42f.js        33.1 kB
+  ├ chunks/pages/_app-376d122f294bef7a.js  46.6 kB
+  ├ chunks/webpack-b8289652bb24add4.js     3.94 kB
+  └ css/c4d1315d32283c1b.css               10.2 kB
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+
+
+> portfolio@1.0.0 postbuild
+> next-sitemap
+
+✨ [next-sitemap] Loading next-sitemap config: file:///home/lucasheartcliff/projects/portfolio/next-sitemap.config.js
+✅ [next-sitemap] Generation completed
+┌───────────────┬────────┐
+│    (index)    │ Values │
+├───────────────┼────────┤
+│ indexSitemaps │   1    │
+│   sitemaps    │   1    │
+└───────────────┴────────┘
+-----------------------------------------------------
+ SITEMAP INDICES 
+-----------------------------------------------------
+
+   ○ https://example.com/sitemap.xml
+
+
+-----------------------------------------------------
+ SITEMAPS 
+-----------------------------------------------------
+
+   ○ https://example.com/sitemap-0.xml
+
+

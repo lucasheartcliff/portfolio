@@ -3,86 +3,70 @@
   "lastName": "Morais",
   "username": "lucasheartcliff",
   "logoTitle": "LucasHeartcliff",
-  "introductionBio": "A full-stack developer focused on results, with strong skills in performance optimization and efficiency. Committed to delivering pragmatic solutions that delivers what the customer needs with etichal and responsability.",
-  "bio": "In recent years, my journey in development has been marked by a challenging narrative, filled with achievements and significant learnings. When I embarked on this journey, I faced a steep learning curve, delving into the complexities of both front-end and back-end. Every line of code was an accomplishment, and every challenge was an opportunity for growth. Crafting intuitive interfaces and architecting robust solutions became my daily mantra.\n\nHowever, the true essence of development goes beyond the code. I found myself consistently challenged to translate customer needs into tangible solutions. Additionally, the importance of data security and respect for user privacy became integral aspects of my daily work.\n\nThese years in development are not just a chapter but the foundation for what lies ahead. I am excited to embrace future opportunities, apply the knowledge gained, and contribute to shaping the ever-evolving technological landscape.",
+  "introductionBio": "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.",
+  "bio": "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.",
   "email": "lucascdemorais@gmail.com",
   "phone": "5521995366450",
+  "skills": [
+    "Java (Spring Boot)",
+    "JS (JavaScript)",
+    "TS (TypeScript)",
+    "Node.js",
+    "React.js",
+    "SQL (Structured Query Language)",
+    "PostgreSQL",
+    "Docker",
+    "K8s (Kubernetes)",
+    "Microservices Architecture",
+    "System Scalability",
+    "Backend Architecture",
+    "Full-Stack Development",
+    "Legacy System Modernization",
+    "Operational Efficiency",
+    "Rust",
+    "Python 3"
+  ],
   "experience": [
     {
-      "title": "Intelie by Viasat",
+      "title": "Intelie",
       "startDate": "2020-02-03T00:00:00.000Z",
       "children": [
         {
           "title": "Mid-level Software Developer",
-          "startDate": "2021-12-15T00:00:00.000Z"
+          "startDate": "2021-12-15T00:00:00.000Z",
+          "description": "Common Data Framework (CoDaF): As one of the main technical leaders, I optimized an internal framework for data persistence. By creating a centralized base, I eliminated information redundancy and increased data consistency across different projects, leading to greater operational efficiency.\n\nCoDaF Wells and Rigs: I conducted interviews with specialists to model a general-use database for oil and gas solutions. This resulted in a robust foundation with approximately 100 entities that serves as a pillar for new projects, ensuring the integrity and standardization of critical business information.\n\nAtria: Technically led the implementation of a pilot project for real-time Machine Learning data processing. This initiative enabled the monitoring of the integrity status of multiple antennas, allowing for proactive fault detection and reducing maintenance costs.\n\nLicense Manager: Architectured and implemented a solution to control client access to the company's products. This system protected intellectual property and revenue streams by preventing misuse of the solutions, ensuring that clients only utilized their contracted features. I also presented the project's functionality to managers, ensuring strategic alignment and a clear understanding of its added value.\n\nRig State: Performed reverse engineering on an application lacking adequate documentation, which provided essential clarity to managers regarding the implemented business rules. This action unblocked the team's ability to proceed with critical modifications safely and with agility."
         },
         {
           "title": "Junior Software Developer",
           "startDate": "2020-08-01T00:00:00.000Z",
-          "endDate": "2021-12-15T00:00:00.000Z"
+          "endDate": "2021-12-15T00:00:00.000Z",
+          "description": "Sequence Builder + Cost Tracker: As one of the main contributors, I developed a system that optimized the planning of oil well activities by generating simulations with time and cost estimates. The system enabled more accurate planning and efficient resource allocation. The ability to compare planned versus actual data provided valuable insights, leading to continuous improvements in operational processes and cost reductions.\n\nDynamic Risk Advisor (DRA): I participated in the development of a real-time operational risk management tool. My contribution helped create a system that empowers users to monitor safety barriers and alerts, thereby increasing safety and efficiency in critical decision-making."
         },
         {
           "title": "Software Developer Trainee",
           "startDate": "2020-02-03T00:00:00.000Z",
-          "endDate": "2020-08-01T00:00:00.000Z"
+          "endDate": "2020-08-01T00:00:00.000Z",
+          "description": "Campaign Planner: Contributed to the development and maintenance of an application for managing campaigns in oil and gas operations. My work ensured the system's compatibility and functionality, directly supporting the efficient execution of complex operational plans.\n\nPDF Extractor: Implemented a script that automated the conversion of PDF files to a specific CSV format using OCR. This solution eliminated the research team's manual and time-consuming work, accelerating the acquisition of structured data to feed machine learning models and generate new business opportunities."
         }
       ]
     },
     {
-      "title": "Freelancer - Grupo Fratelli",
+      "title": "Grupo Fratelli",
       "startDate": "2017-01-01T00:00:00.000Z",
-      "endDate": "2019-12-31T00:00:00.000Z"
+      "endDate": "2020-01-01T00:00:00.000Z",
+      "description": "Developed an end-to-end solution for multi-warehouse management and financial control. The system integrated inventory and financial operations, resulting in a significant increase in operational efficiency and providing accurate data for more strategic and informed decision-making."
     }
   ],
   "education": [
     {
       "title": "Computer Science BS - UERJ",
-      "endDate": "2024-07-31T00:00:00.000Z",
-      "startDate": "2018-08-01T00:00:00.000Z"
+      "startDate": "2018-08-01T00:00:00.000Z",
+      "endDate": "2024-08-01T00:00:00.000Z"
     },
     {
       "title": "IT Techinical Education - IEPB",
       "startDate": "2015-01-01T00:00:00.000Z",
-      "endDate": "2016-12-31T00:00:00.000Z"
-    },
-    {
-      "title": "High School",
-      "startDate": "2014-01-01T00:00:00.000Z",
-      "endDate": "2016-12-31T00:00:00.000Z",
-      "children": [
-        {
-          "title": "Instituto de Educação Pereira Batista",
-          "startDate": "2015-01-01T00:00:00.000Z",
-          "endDate": "2016-12-31T00:00:00.000Z"
-        },
-        {
-          "title": "Colégio Casimiro de Abreu",
-          "startDate": "2014-01-01T00:00:00.000Z",
-          "endDate": "2014-12-31T00:00:00.000Z"
-        }
-      ]
-    },
-    {
-      "title": "Primary School",
-      "startDate": "2005-01-01T00:00:00.000Z",
-      "endDate": "2013-12-31T00:00:00.000Z",
-      "children": [
-        {
-          "title": "Centro Educacional Vilar Novo",
-          "startDate": "2012-07-01T00:00:00.000Z",
-          "endDate": "2013-12-31T00:00:00.000Z"
-        },
-        {
-          "title": "Fundação Pestalozzi",
-          "startDate": "2008-01-01T00:00:00.000Z",
-          "endDate": "2012-07-31T00:00:00.000Z"
-        },
-        {
-          "title": "Colégio Soberano",
-          "startDate": "2005-01-01T00:00:00.000Z",
-          "endDate": "2007-12-31T00:00:00.000Z"
-        }
-      ]
+      "endDate": "2017-01-01T00:00:00.000Z"
     }
   ],
   "certification": [
@@ -125,6 +109,16 @@
       "name": "Java Persistence API and Hibernate",
       "platform": "udemy",
       "url": "https://drive.google.com/file/d/1nV6ZsPt1TylT1UfyUd8vzufSVAeljdK7/view?usp=drive_link"
+    },
+    {
+      "name": "Java Multithreading Concurrency Performance Optimization",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/1S020hrnSlkhfWjFGH55u8CBLgnN8zxcy/view"
+    },
+    {
+      "name": "Learn Rust By Building Real Applications",
+      "platform": "udemy",
+      "url": "https://drive.google.com/file/d/10xBUKPPwJi2kF2HMNjOxwXhBEXNzz7Fd/view"
     },
     {
       "name": "Python 3 Basics",

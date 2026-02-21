@@ -1,5 +1,7 @@
 import { useTranslation } from 'next-i18next';
-import React, { useState } from 'react';
+import type { RefObject } from 'react';
+import React, { useEffect, useState } from 'react';
+import type Scrollbars from 'react-custom-scrollbars-2';
 
 import Link from '@/components/Link';
 
@@ -8,13 +10,104 @@ import Logo from '../logo';
 
 interface Props {
   logoTitle: string;
+  scrollRef: RefObject<Scrollbars>;
 }
 
-export default function Navbar({ logoTitle }: Props) {
+export default function Navbar({ logoTitle, scrollRef }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const [activeTab, setActiveTab] = useState<string | null>(null);
   const { t } = useTranslation('common');
 
+  const OPTIONS = [
+    {
+      title: t('About'),
+      key: 'about',
+    },
+    {
+      title: t('Languages'),
+      key: 'languages',
+    },
+    {
+      title: t('Experiences'),
+      key: 'experience',
+    },
+    {
+      title: t('Educations'),
+      key: 'education',
+    },
+    {
+      title: t('Certifications'),
+      key: 'certification',
+    },
+    {
+      title: t('Projects'),
+      key: 'projects',
+    },
+  ];
+
+  function getHashFromURL() {
+    const urlId = window.location.hash;
+    if (!urlId) return;
+    const normalizedId = urlId.toLowerCase().replace(/#/g, '');
+    setActiveTab(normalizedId);
+  }
+  function scrollTo(titleId: string) {
+    const element = document.getElementById(titleId);
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  useEffect(() => getHashFromURL(), []);
+
+  function observeScrollPositionAndUpdateState(isOnBottom: boolean) {
+    const headers = OPTIONS.map(({ key }) => key);
+    if (isOnBottom) {
+      const id = headers[headers.length - 1] as string;
+      setActiveTab(id);
+    } else {
+      headers.forEach((id) => {
+        const e = document.getElementById(id);
+        if (!e) return;
+        const rect = e.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top < 100) {
+          setActiveTab(id);
+        }
+      });
+    }
+  }
+
+  useEffect(() => {
+    const scroll = scrollRef.current;
+    const element = scroll?.container?.firstChild;
+
+    if (element) {
+      element.addEventListener('scroll', () => {
+        const position = scroll.getValues();
+        const isOnBottom =
+          position.scrollHeight - position.clientHeight - position.scrollTop <
+          25;
+        observeScrollPositionAndUpdateState(isOnBottom);
+      });
+
+      return () => element.removeEventListener('scroll', () => null);
+    }
+    return () => null;
+  }, [scrollRef]);
+
+  const renderOptions = () =>
+    OPTIONS.map(({ title, key }) => (
+      <span
+        key={key}
+        onClick={() => {
+          scrollTo(key);
+        }}
+        className={`cursor-pointer  hover:border-0 ${
+          activeTab === key ? 'text-primary' : 'text-black'
+        }`}
+      >
+        {title}
+      </span>
+    ));
   return (
     <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md md:px-16">
       <div className="container mx-auto">
@@ -23,12 +116,7 @@ export default function Navbar({ logoTitle }: Props) {
             <Logo title={logoTitle} />
           </Link>
           <div className="hidden space-x-4 md:flex md:text-2xl">
-            <Link href="#about">{t('About')}</Link>
-            <Link href="#languages">{t('Languages')}</Link>
-            <Link href="#experience">{t('Experiences')}</Link>
-            <Link href="#education">{t('Educations')}</Link>
-            <Link href="#certification">{t('Certifications')}</Link>
-            <Link href="#projects">{t('Projects')}</Link>
+            {renderOptions()}
             <LanguageSelector />
           </div>
           <button
@@ -52,12 +140,7 @@ export default function Navbar({ logoTitle }: Props) {
         {menuOpen && (
           <div className="mt-4 md:hidden">
             <div className="flex flex-col justify-center space-y-4 text-center align-middle text-lg">
-              <Link href="#about">{t('About')}</Link>
-              <Link href="#languages">{t('Languages')}</Link>
-              <Link href="#experience">{t('Experiences')}</Link>
-              <Link href="#education">{t('Educations')}</Link>
-              <Link href="#certification">{t('Certifications')}</Link>
-              <Link href="#projects">{t('Projects')}</Link>
+              {renderOptions()}
               <div className="flex w-full justify-center">
                 <LanguageSelector />
               </div>
