@@ -1,4 +1,4 @@
-function heartcliff() {
-  console.info(`%cSite created by Lucas Heartcliff`, 'color: orange');
+/* eslint-disable no-console */
+export default function heartcliff(): void {
+  console.info(`%cCreated by Lucas Heartcliff`, 'color: orange');
 }
-(console as any).heartcliff = heartcliff;

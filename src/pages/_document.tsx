@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable @next/next/no-css-tags */
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 const i18nextConfig = require('../../next-i18next.config');
@@ -12,7 +13,9 @@ class MyDocument extends Document {
     return (
       <Html lang={currentLocale}>
         <>
-          <Head />
+          <Head>
+            <link rel="stylesheet" href="/assets/css/index.css" />
+          </Head>
           <body>
             <Main />
             <NextScript />
