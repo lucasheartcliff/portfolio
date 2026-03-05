@@ -1,7 +1,5 @@
 # 💼 Portfolio
 
-![Build Status](https://github.com/lucasheartcliff/portfolio/actions/workflows/ci-basic.yml/badge.svg)
-
 A modern, multilingual portfolio website built with Next.js and TypeScript, showcasing professional experiences, technical skills, certifications, and projects. Features a fully responsive design with internationalization support for 6 languages.
 
 🔗 **Live Preview**: [https://lucasheartcliff.com.br](https://lucasheartcliff.com.br)
