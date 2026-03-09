@@ -6,6 +6,7 @@ import {
   WhatsAppOutlined,
 } from '@ant-design/icons';
 import { Tooltip } from 'antd';
+import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -15,7 +16,9 @@ import CertificateCard from '@/components/CertificateCard';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import { SocialLink } from '@/components/Link';
+import LoadingScreen from '@/components/LoadingScreen';
 import ProjectGrid from '@/components/ProjectGrid';
+import Reveal from '@/components/Reveal';
 import Scroll from '@/components/Scroll';
 import Timeline from '@/components/Timeline';
 import Block from '@/layouts/Block';
@@ -42,6 +45,7 @@ const Index = () => {
   const [data, setData] = useState<any[]>([]);
   const [language, setLanguage] = useState<string>('en');
   const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
@@ -55,7 +59,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => {}
+      () => { }
     );
   }, [currentLocale]);
 
@@ -117,10 +121,16 @@ const Index = () => {
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.error(err);
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 2000); // Wait 2s to show off the loading animation
       });
   }, []);
   return (
     <>
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingScreen key="loader" name={name} />}
+      </AnimatePresence>
       <Main
         title={logoTitle}
         meta={
@@ -136,46 +146,53 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-col">
-                  <h1 className="text-4xl font-bold text-black md:text-7xl">
-                    {t(name)}
-                  </h1>
-                  <h2 className="text-xl font-semibold italic text-black md:text-4xl ">
-                    {`@${t(username)}`}
-                  </h2>
-                  <p className="my-5 text-pretty text-justify text-xl text-gray-600 md:text-3xl">
-                    {t(introductionBio)}
-                  </p>
-                  <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
-                    <SocialLink
-                      title="GitHub"
-                      href={`https://github.com/${username}`}
-                    >
-                      <Icon color={'#000000'}>
-                        <GithubOutlined />
-                      </Icon>
-                    </SocialLink>
-                    <SocialLink
-                      title="WhatsApp"
-                      href={`https://api.whatsapp.com/send?phone=${phone}`}
-                    >
-                      <Icon color={'#25D366'}>
-                        <WhatsAppOutlined />
-                      </Icon>
-                    </SocialLink>
-                    {/* <SocialLink href={`https://x.com/${username}`}> 
+                  <Reveal>
+                    <h1 className="text-4xl font-bold text-black md:text-7xl">
+                      {t(name)}
+                    </h1>
+                  </Reveal>
+                  <Reveal delay={0.35}>
+                    <h2 className="text-xl font-semibold italic text-black md:text-4xl ">
+                      {`@${t(username)}`}
+                    </h2>
+                  </Reveal>
+                  <Reveal delay={0.45}>
+                    <p className="my-5 text-pretty text-justify text-xl text-gray-600 md:text-3xl">
+                      {t(introductionBio)}
+                    </p>
+                  </Reveal>
+                  <Reveal delay={0.55}>
+                    <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
+                      <SocialLink
+                        title="GitHub"
+                        href={`https://github.com/${username}`}
+                      >
+                        <Icon color={'#000000'}>
+                          <GithubOutlined />
+                        </Icon>
+                      </SocialLink>
+                      <SocialLink
+                        title="WhatsApp"
+                        href={`https://api.whatsapp.com/send?phone=${phone}`}
+                      >
+                        <Icon color={'#25D366'}>
+                          <WhatsAppOutlined />
+                        </Icon>
+                      </SocialLink>
+                      {/* <SocialLink href={`https://x.com/${username}`}> 
                       <Icon color={'#00acee'}> 
                         <TwitterOutlined /> 
                       </Icon> 
                     </SocialLink>  */}
-                    <SocialLink
-                      title="LinkedIn"
-                      href={`https://linkedin.com/in/${username}`}
-                    >
-                      <Icon color={'#0e76a8'}>
-                        <LinkedinOutlined />
-                      </Icon>
-                    </SocialLink>
-                    {/* <SocialLink
+                      <SocialLink
+                        title="LinkedIn"
+                        href={`https://linkedin.com/in/${username}`}
+                      >
+                        <Icon color={'#0e76a8'}>
+                          <LinkedinOutlined />
+                        </Icon>
+                      </SocialLink>
+                      {/* <SocialLink
                       title="Instagram"
                       href={`https://instagram.com/${username}`}
                     >
@@ -183,32 +200,33 @@ const Index = () => {
                         <InstagramOutlined />
                       </Icon>
                     </SocialLink> */}
-                    <SocialLink
-                      title="Email"
-                      href={`mailto:${email}`}
-                      skipLocaleHandling
-                    >
-                      <Icon color={'#d44638'}>
-                        <MailOutlined />
-                      </Icon>
-                    </SocialLink>
-                    <div className="cursor-pointer rounded hover:no-underline">
-                      <Tooltip
-                        className="hover:no-underline"
-                        title="Download CV"
+                      <SocialLink
+                        title="Email"
+                        href={`mailto:${email}`}
+                        skipLocaleHandling
                       >
-                        <a
-                          href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
-                          download="Lucas_Morais_Resume.pdf"
+                        <Icon color={'#d44638'}>
+                          <MailOutlined />
+                        </Icon>
+                      </SocialLink>
+                      <div className="cursor-pointer rounded hover:no-underline">
+                        <Tooltip
                           className="hover:no-underline"
+                          title="Download CV"
                         >
-                          <Icon color={'#0e76a8'}>
-                            <DownloadOutlined />
-                          </Icon>
-                        </a>
-                      </Tooltip>
+                          <a
+                            href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
+                            download="Lucas_Morais_Resume.pdf"
+                            className="hover:no-underline"
+                          >
+                            <Icon color={'#0e76a8'}>
+                              <DownloadOutlined />
+                            </Icon>
+                          </a>
+                        </Tooltip>
+                      </div>
                     </div>
-                  </div>
+                  </Reveal>
                 </div>
               </Block>
               <Block>
@@ -239,15 +257,19 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="about"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('About')}
-                  </h3>
-                  <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
-                    {t(bio)}
-                  </p>
+                  <Reveal>
+                    <>
+                      <h3
+                        id="about"
+                        className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                      >
+                        {t('About')}
+                      </h3>
+                      <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
+                        {t(bio)}
+                      </p>
+                    </>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
@@ -255,13 +277,17 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <h3
-                    id="languages"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Languages')}
-                  </h3>
-                  <LanguageChart data={data} />
+                  <Reveal>
+                    <>
+                      <h3
+                        id="languages"
+                        className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                      >
+                        {t('Languages')}
+                      </h3>
+                      <LanguageChart data={data} />
+                    </>
+                  </Reveal>
                 </div>
               </Block>
               <Block>
@@ -292,30 +318,38 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <h3
-                    id="experience"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Experiences')}
-                  </h3>
-                  <Scroll style={{ height: 500 }}>
-                    <Timeline data={experience} />
-                  </Scroll>
+                  <Reveal>
+                    <>
+                      <h3
+                        id="experience"
+                        className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                      >
+                        {t('Experiences')}
+                      </h3>
+                      <Scroll style={{ height: 500 }}>
+                        <Timeline data={experience} />
+                      </Scroll>
+                    </>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="education"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Educations')}
-                  </h3>
-                  <Scroll style={{ height: 500 }}>
-                    <Timeline data={education} />
-                  </Scroll>
+                  <Reveal>
+                    <>
+                      <h3
+                        id="education"
+                        className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                      >
+                        {t('Educations')}
+                      </h3>
+                      <Scroll style={{ height: 500 }}>
+                        <Timeline data={education} />
+                      </Scroll>
+                    </>
+                  </Reveal>
                 </div>
               </Block>
               <Block>
@@ -346,36 +380,44 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="certification"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Certifications')}
-                  </h3>
-                  <Scroll style={{ height: 400 }}>
-                    {certification?.map((v, key) => (
-                      <div key={key} className="">
-                        <CertificateCard key={key} {...v} />
-                      </div>
-                    ))}
-                  </Scroll>
+                  <Reveal>
+                    <>
+                      <h3
+                        id="certification"
+                        className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                      >
+                        {t('Certifications')}
+                      </h3>
+                      <Scroll style={{ height: 400 }}>
+                        {certification?.map((v, key) => (
+                          <div key={key} className="">
+                            <CertificateCard key={key} {...v} />
+                          </div>
+                        ))}
+                      </Scroll>
+                    </>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="projects"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Projects')}
-                  </h3>
-                  <ProjectGrid
-                    initialItemsCount={8}
-                    itemsToAdd={8}
-                    items={pinnedRepos}
-                  />
+                  <Reveal>
+                    <>
+                      <h3
+                        id="projects"
+                        className="mb-3 text-xl font-semibold text-black md:text-4xl "
+                      >
+                        {t('Projects')}
+                      </h3>
+                      <ProjectGrid
+                        initialItemsCount={8}
+                        itemsToAdd={8}
+                        items={pinnedRepos}
+                      />
+                    </>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
