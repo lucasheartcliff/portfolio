@@ -6,31 +6,32 @@ interface Props {
 }
 
 const DEVICON_MAP: Record<string, string> = {
-  'Java': 'java',
+  Java: 'java',
   'Spring Boot': 'spring',
   'Node.js': 'nodejs',
-  'Python': 'python',
-  'Rust': 'rust',
-  'React': 'react',
-  'TypeScript': 'typescript',
-  'JavaScript': 'javascript',
-  'HTML5': 'html5',
-  'CSS3': 'css3',
+  Python: 'python',
+  Rust: 'rust',
+  React: 'react',
+  TypeScript: 'typescript',
+  JavaScript: 'javascript',
+  HTML5: 'html5',
+  CSS3: 'css3',
   'Tailwind CSS': 'tailwindcss',
-  'PostgreSQL': 'postgresql',
-  'Redis': 'redis',
+  PostgreSQL: 'postgresql',
+  Redis: 'redis',
   'Apache Kafka': 'apachekafka',
-  'RabbitMQ': 'rabbitmq',
-  'Docker': 'docker',
-  'Kubernetes': 'kubernetes',
-  'AWS': 'amazonwebservices',
-  'Git': 'git',
-  'Linux': 'linux',
-  'Nginx': 'nginx',
+  RabbitMQ: 'rabbitmq',
+  Docker: 'docker',
+  Kubernetes: 'kubernetes',
+  AWS: 'amazonwebservices',
+  Git: 'git',
+  Linux: 'linux',
+  Nginx: 'nginx',
 };
 
 function getDeviconUrl(tech: string): string {
-  const slug = DEVICON_MAP[tech] || tech.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const slug =
+    DEVICON_MAP[tech] || tech.toLowerCase().replace(/[^a-z0-9]/g, '');
   return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg`;
 }
 

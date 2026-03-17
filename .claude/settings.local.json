@@ -1,8 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(ls:*)",
-      "Bash(npx tsc:*)"
-    ]
+    "allow": ["Bash(ls:*)", "Bash(npx tsc:*)"]
   }
 }

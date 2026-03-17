@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {
   name?: string;
-}
+};
 
 const LoadingScreen = ({ name }: Props) => {
   return (

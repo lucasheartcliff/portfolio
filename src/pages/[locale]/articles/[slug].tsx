@@ -127,7 +127,7 @@ export default function ArticlePage({ article }: Props) {
             {article.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
+                className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
               >
                 #{tag}
               </span>
@@ -135,7 +135,7 @@ export default function ArticlePage({ article }: Props) {
           </div>
         )}
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
-        <div className="prose prose-lg max-w-none dark:prose-invert">
+        <div className="prose prose-lg dark:prose-invert max-w-none">
           <ReactMarkdown>{article.body_markdown}</ReactMarkdown>
         </div>
       </article>
@@ -180,7 +180,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     if (Array.isArray(data.tags)) {
       tags = data.tags;
     } else if (typeof data.tag_list === 'string' && data.tag_list) {
-      tags = data.tag_list.split(',').map((t: string) => t.trim()).filter(Boolean);
+      tags = data.tag_list
+        .split(',')
+        .map((t: string) => t.trim())
+        .filter(Boolean);
     } else if (Array.isArray(data.tag_list)) {
       tags = data.tag_list;
     }
