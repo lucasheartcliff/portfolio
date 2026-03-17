@@ -12,12 +12,13 @@ interface Props {
   endDate?: string;
   hasChildren?: boolean;
   description?: string;
+  techTags?: string[];
   onClickToOpen?: (isOpen: boolean) => void;
 }
 export default function Item(props: Props) {
   const DATE_FORMAT = 'MMM YYYY';
 
-  const { title, open, startDate, endDate, onClickToOpen, description } = props;
+  const { title, open, startDate, endDate, onClickToOpen, description, techTags } = props;
   const { t } = useTranslation(['common']);
 
   const opennedContent = open && description;
@@ -34,7 +35,6 @@ export default function Item(props: Props) {
 
     const years = duration.years();
     const months = duration.months();
-    // const days = duration.days();
 
     let formattedString = '';
 
@@ -67,7 +67,7 @@ export default function Item(props: Props) {
         onClick={onClick}
       >
         <div className="w-full">
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black dark:text-white">
             <Tooltip title={t(title)}>
               <span className="overflow-hidden text-ellipsis whitespace-nowrap ">
                 {t(title)}
@@ -75,7 +75,7 @@ export default function Item(props: Props) {
             </Tooltip>
           </div>
           <Tooltip title={period}>
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-600 ">
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap text-gray-600 dark:text-gray-400">
               {period}
             </span>
           </Tooltip>
@@ -87,14 +87,26 @@ export default function Item(props: Props) {
           }`}
         >
           <RightOutlined
-            className={`text-base font-extrabold  text-black ${
+            className={`text-base font-extrabold text-black dark:text-white ${
               open ? 'rotate-90' : ''
             }`}
           />
         </div>
       </div>
+      {techTags && techTags.length > 0 && (
+        <div className="mb-2 flex w-full flex-wrap gap-1.5">
+          {techTags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
       <ReactMarkdown
-        className={`w-full whitespace-pre-line text-pretty text-justify text-black ${
+        className={`w-full whitespace-pre-line text-pretty text-left text-black dark:text-gray-300 ${
           opennedContent ? 'pt-4' : 'hidden'
         }`}
       >

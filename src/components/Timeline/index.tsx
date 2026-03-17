@@ -15,6 +15,8 @@ interface ItemNode {
   isChild?: boolean;
   order: number;
   open: boolean;
+  description?: string;
+  techTags?: string[];
 }
 
 type Node = {
@@ -22,6 +24,8 @@ type Node = {
   startDate: string;
   endDate?: string;
   open?: boolean;
+  description?: string;
+  techTags?: string[];
   children?: Node[];
 };
 

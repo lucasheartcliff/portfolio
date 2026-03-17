@@ -73,7 +73,7 @@ export default function LanguageSelector() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="inline-flex w-full items-center justify-center rounded-md  bg-white py-2 text-sm font-medium text-gray-700 md:px-4"
+                className="inline-flex w-full items-center justify-center rounded-md bg-white py-2 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-200 md:px-4"
                 id={LANGUAGE_SELECTOR_ID}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
@@ -84,7 +84,7 @@ export default function LanguageSelector() {
           </div>
           {isOpen && (
             <div
-              className="absolute mt-12 w-44 origin-top rounded-md bg-white shadow-lg ring-1 ring-black/5  md:right-0 md:origin-top-right"
+              className="absolute mt-12 w-44 origin-top rounded-md bg-white shadow-lg ring-1 ring-black/5 dark:bg-gray-800 dark:ring-white/10 md:right-0 md:origin-top-right"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="language-selector"
@@ -104,9 +104,9 @@ export default function LanguageSelector() {
                         key={language.key}
                         className={`${
                           selectedLanguage.key === language.key
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-700'
-                        } inline-flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100 ${
+                            ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
+                            : 'text-gray-700 dark:text-gray-300'
+                        } inline-flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 ${
                           index % 2 === 0 ? 'rounded-r' : 'rounded-l'
                         }`}
                         role="menuitem"
