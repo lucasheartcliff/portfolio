@@ -45,7 +45,7 @@ export default function ArticleCard({ article }: Props) {
               {tags.slice(0, 4).map((tag) => (
                 <span
                   key={tag}
-                  className="rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
+                  className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
                 >
                   #{tag}
                 </span>
@@ -53,7 +53,9 @@ export default function ArticleCard({ article }: Props) {
             </div>
           )}
           <div className="mt-3 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-            <span>{article.reading_time_minutes} {t('min read')}</span>
+            <span>
+              {article.reading_time_minutes} {t('min read')}
+            </span>
             <span>{new Date(article.published_at).toLocaleDateString()}</span>
           </div>
         </div>

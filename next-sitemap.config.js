@@ -3,8 +3,6 @@ module.exports = {
   siteUrl: 'https://lucasheartcliff.com.br',
   generateRobotsTxt: true,
   robotsTxtOptions: {
-    policies: [
-      { userAgent: '*', allow: '/' },
-    ],
+    policies: [{ userAgent: '*', allow: '/' }],
   },
 };

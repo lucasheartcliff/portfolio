@@ -130,23 +130,33 @@ export interface DevtoArticleFull {
 }
 
 /** Normalize tag_list to always be string[] regardless of endpoint quirks */
-export function normalizeTags(article: DevtoArticleIndex | DevtoArticleFull): string[] {
+export function normalizeTags(
+  article: DevtoArticleIndex | DevtoArticleFull
+): string[] {
   if (Array.isArray(article.tag_list)) {
     return article.tag_list;
   }
   if (typeof article.tag_list === 'string' && article.tag_list) {
-    return (article.tag_list as string).split(',').map((t) => t.trim()).filter(Boolean);
+    return (article.tag_list as string)
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
   }
   if (Array.isArray(article.tags)) {
     return article.tags;
   }
   if (typeof article.tags === 'string' && article.tags) {
-    return (article.tags as string).split(',').map((t) => t.trim()).filter(Boolean);
+    return (article.tags as string)
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean);
   }
   return [];
 }
 
-export async function fetchArticles(username: string): Promise<DevtoArticleIndex[]> {
+export async function fetchArticles(
+  username: string
+): Promise<DevtoArticleIndex[]> {
   const cacheKey = `devto_articles_${username}`;
   const cached = getCache<DevtoArticleIndex[]>(cacheKey);
   if (cached) return cached;
@@ -169,7 +179,9 @@ export async function fetchArticleBySlug(
   if (cached) return cached;
 
   const res = await fetch(
-    `${DEVTO_API}/articles/${encodeURIComponent(username)}/${encodeURIComponent(slug)}`
+    `${DEVTO_API}/articles/${encodeURIComponent(username)}/${encodeURIComponent(
+      slug
+    )}`
   );
   if (!res.ok) return null;
   const article: DevtoArticleFull = await res.json();

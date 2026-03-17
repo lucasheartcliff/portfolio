@@ -18,7 +18,15 @@ interface Props {
 export default function Item(props: Props) {
   const DATE_FORMAT = 'MMM YYYY';
 
-  const { title, open, startDate, endDate, onClickToOpen, description, techTags } = props;
+  const {
+    title,
+    open,
+    startDate,
+    endDate,
+    onClickToOpen,
+    description,
+    techTags,
+  } = props;
   const { t } = useTranslation(['common']);
 
   const opennedContent = open && description;
@@ -98,7 +106,7 @@ export default function Item(props: Props) {
           {techTags.map((tag) => (
             <span
               key={tag}
-              className="rounded bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
+              className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
             >
               {tag}
             </span>

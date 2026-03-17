@@ -28,9 +28,23 @@
   ],
   "techStack": {
     "Backend": ["Java", "Spring Boot", "Node.js", "Python", "Rust"],
-    "Frontend": ["React", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS"],
+    "Frontend": [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS"
+    ],
     "Data & Messaging": ["PostgreSQL", "Redis", "Apache Kafka", "RabbitMQ"],
-    "Cloud & Infrastructure": ["Docker", "Kubernetes", "AWS", "Git", "Linux", "Nginx"]
+    "Cloud & Infrastructure": [
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "Git",
+      "Linux",
+      "Nginx"
+    ]
   },
   "experience": [
     {
@@ -41,7 +55,15 @@
           "title": "Senior Software Engineer",
           "startDate": "2021-12-15T00:00:00.000Z",
           "description": "Common Data Framework (CoDaF): As one of the main technical leaders, I optimized an internal framework for data persistence. By creating a centralized base, I eliminated information redundancy and increased data consistency across different projects, leading to greater operational efficiency.\n\nCoDaF Wells and Rigs: I conducted interviews with specialists to model a general-use database for oil and gas solutions. This resulted in a robust foundation with approximately 100 entities that serves as a pillar for new projects, ensuring the integrity and standardization of critical business information.\n\nAtria: Technically led the implementation of a pilot project for real-time Machine Learning data processing. This initiative enabled the monitoring of the integrity status of multiple antennas, allowing for proactive fault detection and reducing maintenance costs.\n\nLicense Manager: Architectured and implemented a solution to control client access to the company's products. This system protected intellectual property and revenue streams by preventing misuse of the solutions, ensuring that clients only utilized their contracted features. I also presented the project's functionality to managers, ensuring strategic alignment and a clear understanding of its added value.\n\nRig State: Performed reverse engineering on an application lacking adequate documentation, which provided essential clarity to managers regarding the implemented business rules. This action unblocked the team's ability to proceed with critical modifications safely and with agility.",
-          "techTags": ["Java", "Spring Boot", "PostgreSQL", "Docker", "Kubernetes", "React", "TypeScript"]
+          "techTags": [
+            "Java",
+            "Spring Boot",
+            "PostgreSQL",
+            "Docker",
+            "Kubernetes",
+            "React",
+            "TypeScript"
+          ]
         },
         {
           "title": "Junior Software Developer",

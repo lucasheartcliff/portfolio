@@ -66,7 +66,7 @@ const Index = () => {
         console.info(`Change locale to '${l}'`);
         setLanguage(l);
       },
-      () => { }
+      () => {}
     );
   }, [currentLocale]);
 
@@ -154,7 +154,7 @@ const Index = () => {
               name,
               jobTitle: 'Senior Software Engineer',
               url: 'https://lucasheartcliff.com.br',
-              email: email,
+              email,
               sameAs: [
                 `https://github.com/${username}`,
                 `https://linkedin.com/in/${username}`,
@@ -200,7 +200,7 @@ const Index = () => {
                     </p>
                   </Reveal>
                   <Reveal delay={0.55}>
-                    <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black dark:text-white hover:no-underline">
+                    <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline dark:text-white">
                       <SocialLink
                         title="GitHub"
                         href={`https://github.com/${username}`}
@@ -469,7 +469,9 @@ const Index = () => {
                             children: (
                               <div>
                                 {certification
-                                  ?.filter((v: any) => v.type === 'certification')
+                                  ?.filter(
+                                    (v: any) => v.type === 'certification'
+                                  )
                                   .map((v: any, key: number) => (
                                     <CertificateCard key={key} {...v} />
                                   ))}

@@ -113,9 +113,7 @@ export default function Navbar({ logoTitle, scrollRef }: Props) {
           scrollTo(key);
         }}
         className={`cursor-pointer  hover:border-0 ${
-          activeTab === key
-            ? 'text-primary'
-            : 'text-black dark:text-gray-200'
+          activeTab === key ? 'text-primary' : 'text-black dark:text-gray-200'
         }`}
       >
         {title}
