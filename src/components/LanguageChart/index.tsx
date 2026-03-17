@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import type { Props as ApexProps } from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
+import { DarkModeContext } from '@/pages/_app';
 import { secondToHours } from '@/utils';
 
 interface Props {
@@ -17,7 +18,8 @@ const buildState = (
   data: any[] = [],
   colors: any[] = [],
   labels: any[] = [],
-  messages: { [k: string]: string } = {}
+  messages: { [k: string]: string } = {},
+  isDark: boolean = false
 ): ApexProps => ({
   series: [
     {
@@ -33,6 +35,9 @@ const buildState = (
       toolbar: {
         show: false,
       },
+    },
+    theme: {
+      mode: isDark ? 'dark' : 'light',
     },
     plotOptions: {
       bar: {
@@ -88,6 +93,7 @@ const buildState = (
         offsetX: 7,
         style: {
           cssClass: 'text-base md:text-xl mr-5',
+          colors: isDark ? '#e5e7eb' : '#374151',
         },
       },
     },
@@ -98,7 +104,10 @@ const buildState = (
       title: {
         offsetY: 10,
         text: `${messages.timeWorked} (h)`,
-        style: { cssClass: 'text-base md:text-xl' },
+        style: {
+          cssClass: 'text-base md:text-xl',
+          color: isDark ? '#f3f4f6' : '#111827',
+        },
       },
 
       labels: {
@@ -110,6 +119,7 @@ const buildState = (
         trim: false,
         style: {
           cssClass: 'text-base md:text-xl',
+          colors: isDark ? '#e5e7eb' : '#374151',
         },
         formatter(value: any) {
           return `${displayNormalizedData(value).toFixed(0)} h`;
@@ -120,6 +130,7 @@ const buildState = (
 });
 
 export default function LanguageChart(props: Props) {
+  const { isDark } = useContext(DarkModeContext);
   const [state, setState] = useState<ApexProps>(buildState());
   const router = useRouter();
   const { locale } = router.query;
@@ -132,8 +143,8 @@ export default function LanguageChart(props: Props) {
     const labels = [];
     const colors = [];
     const messages = {
-      timeWorked: t('Time worked'),
-      hoursWorked: t('hours worked'),
+      timeWorked: t('Experience time'),
+      hoursWorked: 'h',
     };
 
     for (const v of props.data) {
@@ -142,9 +153,9 @@ export default function LanguageChart(props: Props) {
       labels.push(v.name);
       colors.push(v.color);
     }
-    const newState = buildState(data, colors, labels, messages);
+    const newState = buildState(data, colors, labels, messages, isDark);
     setState(newState);
-  }, [props.data, locale]);
+  }, [props.data, locale, isDark]);
 
   return (
     <div id="chart">

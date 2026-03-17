@@ -33,7 +33,7 @@ const Main = (props: IMainProps) => {
   };
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full bg-white dark:bg-gray-900">
       {props.meta}
       <Navbar logoTitle={props.title} scrollRef={scrollRef} />
       <div

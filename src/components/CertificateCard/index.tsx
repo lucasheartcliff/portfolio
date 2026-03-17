@@ -1,5 +1,6 @@
 import ExportOutlined from '@ant-design/icons/ExportOutlined';
 import Tooltip from 'antd/lib/tooltip';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 
@@ -16,9 +17,13 @@ interface Props {
 export default function CertificateCard({ name, platform, url }: Props) {
   const { t } = useTranslation('common');
   return (
-    <div className="flex h-20 w-full flex-row items-center justify-center border p-4 text-base md:text-xl">
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: 'spring', stiffness: 300 }}
+      className="flex h-20 w-full flex-row items-center justify-center border border-gray-200 p-4 text-base dark:border-gray-700 dark:bg-gray-800 md:text-xl"
+    >
       <div className="w-11/12">
-        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
+        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black dark:text-white">
           <Tooltip title={t(name)}>
             <span>{t(name)}</span>
           </Tooltip>
@@ -33,9 +38,9 @@ export default function CertificateCard({ name, platform, url }: Props) {
 
       <div className="ml-5 items-end justify-center font-bold no-underline hover:no-underline">
         <Link target="_blank" href={url}>
-          <ExportOutlined className="text-base font-extrabold text-black" />
+          <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }

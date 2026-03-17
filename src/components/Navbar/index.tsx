@@ -1,11 +1,13 @@
 import { useTranslation } from 'next-i18next';
 import type { RefObject } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import type Scrollbars from 'react-custom-scrollbars-2';
 
-import Link from '@/components/Link';
+import { DarkModeContext } from '@/pages/_app';
 
+import DarkModeToggle from '../DarkModeToggle';
 import LanguageSelector from '../LanguageSelector';
+import Link from '../Link';
 import Logo from '../logo';
 
 interface Props {
@@ -17,6 +19,7 @@ export default function Navbar({ logoTitle, scrollRef }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const { t } = useTranslation('common');
+  const { isDark, toggle } = useContext(DarkModeContext);
 
   const OPTIONS = [
     {
@@ -28,16 +31,24 @@ export default function Navbar({ logoTitle, scrollRef }: Props) {
       key: 'languages',
     },
     {
-      title: t('Experiences'),
+      title: t('Tech Stack'),
+      key: 'tech-stack',
+    },
+    {
+      title: t('Experience'),
       key: 'experience',
     },
     {
-      title: t('Educations'),
+      title: t('Education'),
       key: 'education',
     },
     {
       title: t('Certifications'),
       key: 'certification',
+    },
+    {
+      title: t('Articles'),
+      key: 'articles',
     },
     {
       title: t('Projects'),
@@ -102,40 +113,46 @@ export default function Navbar({ logoTitle, scrollRef }: Props) {
           scrollTo(key);
         }}
         className={`cursor-pointer  hover:border-0 ${
-          activeTab === key ? 'text-primary' : 'text-black'
+          activeTab === key
+            ? 'text-primary'
+            : 'text-black dark:text-gray-200'
         }`}
       >
         {title}
       </span>
     ));
   return (
-    <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md md:px-16">
+    <nav className="sticky top-0 z-50 bg-white p-4 px-6 text-white no-underline shadow-md dark:bg-gray-900 md:px-16">
       <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <Link href="/" className={'text-primary hover:border-0'}>
             <Logo title={logoTitle} />
           </Link>
-          <div className="hidden space-x-4 md:flex md:text-2xl">
+          <div className="hidden items-center space-x-4 md:flex md:text-2xl">
             {renderOptions()}
             <LanguageSelector />
+            <DarkModeToggle isDark={isDark} toggle={toggle} />
           </div>
-          <button
-            className="md:hidden"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle Menu"
-          >
-            <svg
-              className="h-6 w-6 fill-current text-gray-600"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+          <div className="flex items-center gap-2 md:hidden">
+            <DarkModeToggle isDark={isDark} toggle={toggle} />
+            <button
+              className="md:hidden"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle Menu"
             >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M4 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 5h16a1 1 0 010 2H4a1 1 0 010-2zm0 5h16a1 1 0 010 2H4a1 1 0 010-2z"
-              />
-            </svg>
-          </button>
+              <svg
+                className="h-6 w-6 fill-current text-gray-600 dark:text-gray-300"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M4 6h16a1 1 0 010 2H4a1 1 0 010-2zm0 5h16a1 1 0 010 2H4a1 1 0 010-2zm0 5h16a1 1 0 010 2H4a1 1 0 010-2z"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
         {menuOpen && (
           <div className="mt-4 md:hidden">

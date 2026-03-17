@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 const config = {
+  darkMode: 'class',
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontSize: {
@@ -44,7 +45,7 @@ const config = {
           800: '#2c5282',
           900: '#2a4365',
         },
-        primary: '#253db6',
+        primary: 'var(--color-primary)',
       },
     },
   },

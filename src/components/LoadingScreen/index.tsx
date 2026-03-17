@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-type Props = {  
-  name: string;
+type Props = {
+  name?: string;
 }
 
 const LoadingScreen = ({ name }: Props) => {
@@ -11,7 +11,7 @@ const LoadingScreen = ({ name }: Props) => {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-gray-900"
     >
       <motion.div
         animate={{
