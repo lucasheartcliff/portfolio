@@ -21,8 +21,7 @@ export default function ArticleCard({ article }: Props) {
       transition={{ type: 'spring', stiffness: 300 }}
     >
       <Link
-        href={article.url}
-        target="_blank"
+        href={`/articles/${article.slug}`}
         className="block overflow-hidden rounded-lg border border-gray-200 no-underline shadow-sm transition-shadow hover:border-0 hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
       >
         {article.cover_image && (

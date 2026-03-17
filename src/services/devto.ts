@@ -170,6 +170,41 @@ export async function fetchArticles(
   return articles;
 }
 
+/**
+ * Fetch unpublished (draft) articles for the authenticated user.
+ * Requires DEVTO_API_KEY — server-side only.
+ */
+export async function fetchUnpublishedArticles(
+  apiKey: string
+): Promise<DevtoArticleIndex[]> {
+  const res = await fetch(`${DEVTO_API}/articles/me/unpublished?per_page=30`, {
+    headers: { 'api-key': apiKey },
+  });
+  if (!res.ok) return [];
+  return res.json();
+}
+
+/** Article returned by /articles/me/* endpoints — includes body_markdown. */
+export type DevtoMyArticle = DevtoArticleIndex & {
+  published: boolean;
+  body_markdown: string;
+  page_views_count: number;
+};
+
+/**
+ * Fetch all articles (published + unpublished) for the authenticated user.
+ * Requires DEVTO_API_KEY — server-side only.
+ */
+export async function fetchAllMyArticles(
+  apiKey: string
+): Promise<DevtoMyArticle[]> {
+  const res = await fetch(`${DEVTO_API}/articles/me/all?per_page=30`, {
+    headers: { 'api-key': apiKey },
+  });
+  if (!res.ok) return [];
+  return res.json();
+}
+
 export async function fetchArticleBySlug(
   username: string,
   slug: string

@@ -73,7 +73,7 @@ export default function LanguageSelector() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="inline-flex w-full items-center justify-center rounded-md bg-white py-2 text-sm font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-200 md:px-4"
+                className="inline-flex w-full items-center justify-center rounded-md bg-transparent py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:text-gray-200 dark:hover:bg-gray-700 md:px-4"
                 id={LANGUAGE_SELECTOR_ID}
                 aria-haspopup="true"
                 aria-expanded={isOpen}

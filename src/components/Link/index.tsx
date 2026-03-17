@@ -58,7 +58,7 @@ export function SocialLink({ children, ...rest }: Props) {
       {...rest}
     >
       <div className="relative">
-        <div className="absolute inset-0 bg-white opacity-0 transition-opacity duration-300 hover:opacity-40"></div>
+        <div className="absolute inset-0 mx-1 rounded-full bg-white opacity-0 transition-opacity duration-300 hover:opacity-40 dark:hover:opacity-20"></div>
         {children}
       </div>
     </Link>

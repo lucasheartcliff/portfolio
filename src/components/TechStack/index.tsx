@@ -29,10 +29,15 @@ const DEVICON_MAP: Record<string, string> = {
   Nginx: 'nginx',
 };
 
+const DEVICON_VARIANT: Record<string, string> = {
+  amazonwebservices: 'original-wordmark',
+};
+
 function getDeviconUrl(tech: string): string {
   const slug =
     DEVICON_MAP[tech] || tech.toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-original.svg`;
+  const variant = DEVICON_VARIANT[slug] || 'original';
+  return `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-${variant}.svg`;
 }
 
 export default function TechStack({ data }: Props) {
