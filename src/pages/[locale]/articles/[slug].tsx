@@ -1,48 +1,108 @@
-import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
+import type { AsideSection } from '@/components/AsideNav';
+import AsideNav from '@/components/AsideNav';
 import { Meta } from '@/layouts/Meta';
+import type { DevtoArticleFull } from '@/services/devto';
+import { normalizeTags } from '@/services/devto';
 import { Main } from '@/templates/Main';
 
-/**
- * Serializable article props.
- * `tags` is always normalized to string[] here in getStaticProps,
- * since the /articles/{username}/{slug} endpoint returns:
- * - `tag_list` as a comma-separated string (e.g. "discuss")
- * - `tags` as string[] (e.g. ["discuss"])
- */
-interface Article {
-  title: string;
-  description: string;
-  body_markdown: string;
-  body_html: string;
-  cover_image: string | null;
-  social_image: string | null;
-  published_at: string;
-  reading_time_minutes: number;
-  tags: string[];
-  url: string;
-  canonical_url: string;
-}
-
-interface Props {
-  article: Article | null;
-}
-
-const DEVTO_API = 'https://dev.to/api';
 const USERNAME = process.env.NEXT_PUBLIC_DEVTO_USERNAME || 'lucasheartcliff';
 
-export default function ArticlePage({ article }: Props) {
-  const router = useRouter();
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
 
-  if (router.isFallback) {
+function extractHeadings(markdown: string): AsideSection[] {
+  const headingRegex = /^(#{1,6})\s+(.+)$/gm;
+  const sections: AsideSection[] = [];
+  let match = headingRegex.exec(markdown);
+  while (match !== null) {
+    const level = match[1]!.length;
+    const label = match[2]!.replace(/\*\*|__|~~|`/g, '').trim();
+    sections.push({
+      key: slugify(label),
+      label,
+      level,
+    });
+    match = headingRegex.exec(markdown);
+  }
+  return sections;
+}
+
+function extractTextFromChildren(children: React.ReactNode): string {
+  if (typeof children === 'string') return children;
+  if (typeof children === 'number') return String(children);
+  if (Array.isArray(children))
+    return children.map(extractTextFromChildren).join('');
+  if (React.isValidElement(children) && children.props) {
+    return extractTextFromChildren(
+      (children.props as { children?: React.ReactNode }).children
+    );
+  }
+  return '';
+}
+
+/** Custom heading renderer that adds id attributes for scroll anchoring */
+function createHeadingRenderer(level: number) {
+  const HeadingComponent = ({ children }: { children?: React.ReactNode }) => {
+    const text =
+      typeof children === 'string'
+        ? children
+        : extractTextFromChildren(children);
+    const id = slugify(text);
+    const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+    return <Tag id={id}>{children}</Tag>;
+  };
+  HeadingComponent.displayName = `Heading${level}`;
+  return HeadingComponent;
+}
+
+const markdownComponents = {
+  h1: createHeadingRenderer(1),
+  h2: createHeadingRenderer(2),
+  h3: createHeadingRenderer(3),
+  h4: createHeadingRenderer(4),
+  h5: createHeadingRenderer(5),
+  h6: createHeadingRenderer(6),
+};
+
+export default function ArticlePage() {
+  const router = useRouter();
+  const { slug } = router.query;
+  const [article, setArticle] = useState<DevtoArticleFull | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    fetch(`/api/articles/${slug}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then(setArticle)
+      .catch(() => setArticle(null))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  const sections = useMemo(
+    () =>
+      article?.body_markdown ? extractHeadings(article.body_markdown) : [],
+    [article?.body_markdown]
+  );
+
+  if (loading) {
     return (
       <Main
         title="Loading..."
         meta={<Meta title="Loading..." description="" locale="en" />}
+        showLanguageSelector={false}
       >
         <div className="flex min-h-[50vh] items-center justify-center">
           <p className="text-xl text-gray-600 dark:text-gray-400">Loading...</p>
@@ -56,6 +116,7 @@ export default function ArticlePage({ article }: Props) {
       <Main
         title="Article Not Found"
         meta={<Meta title="Article Not Found" description="" locale="en" />}
+        showLanguageSelector={false}
       >
         <div className="flex min-h-[50vh] items-center justify-center">
           <p className="text-xl text-gray-600 dark:text-gray-400">
@@ -66,6 +127,7 @@ export default function ArticlePage({ article }: Props) {
     );
   }
 
+  const tags = normalizeTags(article);
   const ogImage = article.social_image || article.cover_image;
 
   const jsonLd = {
@@ -85,6 +147,7 @@ export default function ArticlePage({ article }: Props) {
   return (
     <Main
       title="LucasHeartcliff"
+      showLanguageSelector={false}
       meta={
         <Meta
           title={article.title}
@@ -101,6 +164,7 @@ export default function ArticlePage({ article }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </Head>
+      <AsideNav sections={sections} translate={false} widthRem={18} />
       <article className="mx-auto max-w-4xl px-4 py-8">
         {article.cover_image && (
           <img
@@ -113,18 +177,20 @@ export default function ArticlePage({ article }: Props) {
           {article.title}
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-          <span>
-            {new Date(article.published_at).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </span>
+          {article.published_at && (
+            <span>
+              {new Date(article.published_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+          )}
           <span>{article.reading_time_minutes} min read</span>
         </div>
-        {article.tags.length > 0 && (
+        {tags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
-            {article.tags.map((tag) => (
+            {tags.map((tag) => (
               <span
                 key={tag}
                 className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
@@ -136,77 +202,11 @@ export default function ArticlePage({ article }: Props) {
         )}
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
         <div className="prose prose-lg dark:prose-invert max-w-none">
-          <ReactMarkdown>{article.body_markdown}</ReactMarkdown>
+          <ReactMarkdown components={markdownComponents}>
+            {article.body_markdown}
+          </ReactMarkdown>
         </div>
       </article>
     </Main>
   );
 }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const res = await fetch(
-      `${DEVTO_API}/articles?username=${USERNAME}&per_page=30`
-    );
-    if (!res.ok) return { paths: [], fallback: true };
-    const articles = await res.json();
-
-    const locales = ['en', 'pt'];
-    const paths = articles.flatMap((a: any) =>
-      locales.map((locale: string) => ({
-        params: { locale, slug: a.slug },
-      }))
-    );
-
-    return { paths, fallback: true };
-  } catch {
-    return { paths: [], fallback: true };
-  }
-};
-
-export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const slug = params?.slug as string;
-
-  try {
-    const res = await fetch(`${DEVTO_API}/articles/${USERNAME}/${slug}`);
-    if (!res.ok) {
-      return { props: { article: null }, revalidate: 3600 };
-    }
-    const data = await res.json();
-
-    // Normalize tags: the single-article endpoint returns `tags` as string[]
-    // and `tag_list` as a comma-separated string. We normalize to string[].
-    let tags: string[] = [];
-    if (Array.isArray(data.tags)) {
-      tags = data.tags;
-    } else if (typeof data.tag_list === 'string' && data.tag_list) {
-      tags = data.tag_list
-        .split(',')
-        .map((t: string) => t.trim())
-        .filter(Boolean);
-    } else if (Array.isArray(data.tag_list)) {
-      tags = data.tag_list;
-    }
-
-    return {
-      props: {
-        article: {
-          title: data.title,
-          description: data.description,
-          body_markdown: data.body_markdown || '',
-          body_html: data.body_html || '',
-          cover_image: data.cover_image || null,
-          social_image: data.social_image || null,
-          published_at: data.published_at,
-          reading_time_minutes: data.reading_time_minutes,
-          tags,
-          url: data.url,
-          canonical_url: data.canonical_url || data.url,
-        },
-      },
-      revalidate: 3600,
-    };
-  } catch {
-    return { props: { article: null }, revalidate: 3600 };
-  }
-};

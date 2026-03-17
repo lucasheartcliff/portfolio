@@ -14,7 +14,9 @@ import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
 import ArticleGrid from '@/components/ArticleGrid';
+import AsideNav from '@/components/AsideNav';
 import CertificateCard from '@/components/CertificateCard';
+import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import { SocialLink } from '@/components/Link';
@@ -29,18 +31,11 @@ import Block from '@/layouts/Block';
 import { Meta } from '@/layouts/Meta';
 import Row from '@/layouts/Row';
 import profile from '@/public/assets/jsons/profile.json';
-import { apiFetch } from '@/services';
 import type { DevtoArticleIndex } from '@/services/devto';
-import { fetchArticles } from '@/services/devto';
 import { Main } from '@/templates/Main';
 import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
-import {
-  GITHUB_PINNED_REPO,
-  GITHUB_REPO,
-  WAKATIME_CODING_TIME,
-  WAKATIME_LANGUAGES,
-} from '@/utils/url';
+import { GITHUB_REPO } from '@/utils/url';
 
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
@@ -56,6 +51,18 @@ const Index = () => {
 
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
+
+  const SECTIONS = [
+    { key: 'about', label: 'About' },
+    { key: 'languages', label: 'Languages' },
+    { key: 'tech-stack', label: 'Tech Stack' },
+    { key: 'experience', label: 'Experience' },
+    { key: 'education', label: 'Education' },
+    { key: 'certification', label: 'Certifications' },
+    { key: 'articles', label: 'Articles' },
+    { key: 'projects', label: 'Projects' },
+    { key: 'contact', label: 'Contact' },
+  ];
 
   useEffect(() => {
     const l = currentLocale as string;
@@ -85,24 +92,19 @@ const Index = () => {
   } = profile as any;
   const name = `${firstName} ${lastName}`.trim();
   useEffect(() => {
-    fetchArticles(username)
+    fetch('/api/articles')
+      .then((res) => (res.ok ? res.json() : []))
       .then(setArticles)
       .catch(() => {});
 
     Promise.all([
-      apiFetch(GITHUB_PINNED_REPO(username)).get(),
-      apiFetch(WAKATIME_CODING_TIME).getJsonP(),
-      apiFetch(WAKATIME_LANGUAGES).getJsonP(),
+      fetch('/api/github/repos').then((r) => (r.ok ? r.json() : [])),
+      fetch('/api/wakatime/coding-time').then((r) => (r.ok ? r.json() : {})),
+      fetch('/api/wakatime/languages').then((r) => (r.ok ? r.json() : {})),
     ])
-      .then((responses) => {
-        return responses.map((r) => r.json());
-      })
-      .then(async ([repos, codingTime, languages]: any[]) => {
-        const r = (await repos) as any;
-        const c = (await codingTime) as any;
-        const langs = (await languages) as any;
+      .then(([r, c, langs]: any[]) => {
         setPinnedRepos(
-          r.map((v: any) => ({
+          (Array.isArray(r) ? r : []).map((v: any) => ({
             ...v,
             url: GITHUB_REPO(username, v.name),
             name: capitalize(v.name?.replace(/-/g, ' ')),
@@ -174,6 +176,7 @@ const Index = () => {
         }
       >
         <>
+          <AsideNav sections={SECTIONS} />
           <div className="mx-2 md:mx-14">
             <Row>
               <Block>
@@ -259,15 +262,6 @@ const Index = () => {
                   </Reveal>
                   <Reveal delay={0.65}>
                     <div className="mt-4 flex flex-wrap gap-3">
-                      <button
-                        onClick={() => {
-                          const el = document.getElementById('projects');
-                          el?.scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        className="rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white transition-colors hover:border-0 hover:opacity-90"
-                      >
-                        {t('View Projects')}
-                      </button>
                       <a
                         href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
                         download="Lucas_Morais_Resume.pdf"
@@ -308,17 +302,14 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <>
-                      <h3
-                        id="about"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                      >
+                    <div id="about">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('About')}
                       </h3>
                       <p className="text-pretty text-left text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
                         {t(bio)}
                       </p>
-                    </>
+                    </div>
                   </Reveal>
                 </div>
               </Block>
@@ -328,15 +319,12 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col ">
                   <Reveal>
-                    <>
-                      <h3
-                        id="languages"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                      >
+                    <div id="languages">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Languages')}
                       </h3>
                       <LanguageChart data={data} />
-                    </>
+                    </div>
                   </Reveal>
                 </div>
               </Block>
@@ -357,15 +345,12 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <>
-                      <h3
-                        id="tech-stack"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                      >
+                    <div id="tech-stack">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Tech Stack')}
                       </h3>
                       <TechStack data={techStack} />
-                    </>
+                    </div>
                   </Reveal>
                 </div>
               </Block>
@@ -386,17 +371,14 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col ">
                   <Reveal>
-                    <>
-                      <h3
-                        id="experience"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                      >
+                    <div id="experience">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Experience')}
                       </h3>
                       <Scroll style={{ height: 500 }}>
                         <Timeline data={experience} />
                       </Scroll>
-                    </>
+                    </div>
                   </Reveal>
                 </div>
               </Block>
@@ -405,17 +387,14 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <>
-                      <h3
-                        id="education"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                      >
+                    <div id="education">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Education')}
                       </h3>
                       <Scroll style={{ height: 500 }}>
                         <Timeline data={education} />
                       </Scroll>
-                    </>
+                    </div>
                   </Reveal>
                 </div>
               </Block>
@@ -448,11 +427,8 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <>
-                      <h3
-                        id="certification"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl "
-                      >
+                    <div id="certification">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Certifications')}
                       </h3>
                       <Collapse
@@ -497,39 +473,33 @@ const Index = () => {
                           },
                         ]}
                       />
-                    </>
+                    </div>
                   </Reveal>
                 </div>
               </Block>
             </Row>
-            {articles.length > 0 && (
-              <Row>
-                <Block>
-                  <div className="flex flex-1 flex-col">
-                    <Reveal>
-                      <>
-                        <h3
-                          id="articles"
-                          className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                        >
-                          {t('Articles')}
-                        </h3>
-                        <ArticleGrid articles={articles.slice(0, 6)} />
-                      </>
-                    </Reveal>
-                  </div>
-                </Block>
-              </Row>
-            )}
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <>
-                      <h3
-                        id="projects"
-                        className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl"
-                      >
+                    <div id="articles">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Articles')}
+                      </h3>
+                      {articles.length > 0 && (
+                        <ArticleGrid articles={articles.slice(0, 6)} />
+                      )}
+                    </div>
+                  </Reveal>
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <Reveal>
+                    <div id="projects">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Projects')}
                       </h3>
                       <ProjectGrid
@@ -537,7 +507,26 @@ const Index = () => {
                         itemsToAdd={8}
                         items={pinnedRepos}
                       />
-                    </>
+                    </div>
+                  </Reveal>
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <Reveal>
+                    <div id="contact">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Contact')}
+                      </h3>
+                      <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
+                        {t(
+                          'Have a project in mind or just want to say hello? Feel free to reach out!'
+                        )}
+                      </p>
+                      <ContactForm />
+                    </div>
                   </Reveal>
                 </div>
               </Block>
