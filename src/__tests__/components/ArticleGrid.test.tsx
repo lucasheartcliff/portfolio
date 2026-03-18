@@ -64,6 +64,6 @@ describe('ArticleGrid', () => {
 
   it('should return null when articles is empty', () => {
     const { container } = render(<ArticleGrid articles={[]} />);
-    expect(container.firstChild).toBeNull();
+    expect(container).toBeEmptyDOMElement();
   });
 });

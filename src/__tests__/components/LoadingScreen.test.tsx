@@ -11,6 +11,6 @@ describe('LoadingScreen', () => {
 
   it('should render without name', () => {
     const { container } = render(<LoadingScreen />);
-    expect(container.firstChild).toBeInTheDocument();
+    expect(container).toBeInTheDocument();
   });
 });

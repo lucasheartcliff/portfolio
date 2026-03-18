@@ -87,9 +87,7 @@ describe('ArticleCard', () => {
   it('should not render cover image when not available', () => {
     const noCoverArticle = { ...article, cover_image: null };
     render(<ArticleCard article={noCoverArticle} />);
-    expect(
-      screen.queryByAltText('Test Article Title')
-    ).not.toBeInTheDocument();
+    expect(screen.queryByAltText('Test Article Title')).not.toBeInTheDocument();
   });
 
   it('should format the date with locale options', () => {

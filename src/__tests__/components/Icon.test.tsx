@@ -14,12 +14,13 @@ describe('Icon', () => {
   });
 
   it('should apply the background color', () => {
-    const { container } = render(
+    render(
       <Icon color="#0e76a8">
-        <span>icon</span>
+        <span data-testid="icon-child">icon</span>
       </Icon>
     );
-    const wrapper = container.firstChild as HTMLElement;
+    // eslint-disable-next-line testing-library/no-node-access
+    const wrapper = screen.getByTestId('icon-child').parentElement;
     expect(wrapper).toHaveStyle({ backgroundColor: '#0e76a8' });
   });
 });

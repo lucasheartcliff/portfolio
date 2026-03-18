@@ -55,7 +55,7 @@ export default function ProjectCard({
           </div>
         </div>
 
-        <div className="ml-3 flex flex-shrink-0 items-center justify-center mt-1">
+        <div className="ml-3 mt-1 flex shrink-0 items-center justify-center">
           <Link target="_blank" href={url}>
             <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
           </Link>

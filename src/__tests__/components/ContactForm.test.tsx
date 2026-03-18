@@ -1,13 +1,13 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+
+import ContactForm from '@/components/ContactForm';
 
 jest.mock('next-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
   }),
 }));
-
-import ContactForm from '@/components/ContactForm';
 
 describe('ContactForm', () => {
   it('should render all form fields', () => {
@@ -41,7 +41,7 @@ describe('ContactForm', () => {
       target: { value: 'Hello!' },
     });
 
-    fireEvent.submit(screen.getByText('Send Message').closest('form')!);
+    fireEvent.submit(screen.getByRole('button', { name: /send message/i }));
 
     await waitFor(() => {
       expect(
@@ -68,7 +68,7 @@ describe('ContactForm', () => {
       target: { value: 'Hello!' },
     });
 
-    fireEvent.submit(screen.getByText('Send Message').closest('form')!);
+    fireEvent.submit(screen.getByRole('button', { name: /send message/i }));
 
     await waitFor(() => {
       expect(screen.getByText('Server error')).toBeInTheDocument();

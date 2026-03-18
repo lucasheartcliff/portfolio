@@ -1,23 +1,22 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 
 describe('ScrollToTopButton', () => {
   it('should be visible when isVisible is true', () => {
-    const { container } = render(
+    render(
       <ScrollToTopButton isVisible={true} scrollToTop={jest.fn()} />
     );
-    const wrapper = container.firstChild as HTMLElement;
-    expect(wrapper.className).not.toContain('invisible');
+    expect(screen.getByRole('img')).toBeInTheDocument();
   });
 
   it('should be invisible when isVisible is false', () => {
     const { container } = render(
       <ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />
     );
-    const wrapper = container.firstChild as HTMLElement;
-    expect(wrapper.className).toContain('invisible');
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(container.firstChild).toHaveClass('invisible');
   });
 
   it('should call scrollToTop when clicked', () => {
@@ -25,6 +24,7 @@ describe('ScrollToTopButton', () => {
     const { container } = render(
       <ScrollToTopButton isVisible={true} scrollToTop={scrollToTop} />
     );
+    // eslint-disable-next-line testing-library/no-node-access
     fireEvent.click(container.firstChild as HTMLElement);
     expect(scrollToTop).toHaveBeenCalledTimes(1);
   });

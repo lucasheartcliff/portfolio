@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 
 import Logo from '@/components/logo';
@@ -17,10 +17,8 @@ describe('Logo', () => {
 
   it('should call onClick when clicked', () => {
     const handleClick = jest.fn();
-    const { container } = render(
-      <Logo title="Test" onClick={handleClick} />
-    );
-    fireEvent.click(container.firstChild as HTMLElement);
+    render(<Logo title="Test" onClick={handleClick} />);
+    fireEvent.click(screen.getByText('Test'));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 });

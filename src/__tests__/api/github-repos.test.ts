@@ -5,19 +5,22 @@ import handler from '@/pages/api/github/repos';
 const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
-function createMockRes(): NextApiResponse & { _status: number; _json: any } {
+function createMockRes(): NextApiResponse & {
+  statusCode: number;
+  jsonBody: any;
+} {
   const res = {
-    _status: 0,
-    _json: null,
+    statusCode: 0,
+    jsonBody: null,
     status(code: number) {
-      res._status = code;
+      res.statusCode = code;
       return res;
     },
     json(data: any) {
-      res._json = data;
+      res.jsonBody = data;
       return res;
     },
-  } as unknown as NextApiResponse & { _status: number; _json: any };
+  } as unknown as NextApiResponse & { statusCode: number; jsonBody: any };
   return res;
 }
 
@@ -34,8 +37,8 @@ describe('GET /api/github/repos', () => {
     });
     const res = createMockRes();
     await handler({} as NextApiRequest, res);
-    expect(res._status).toBe(200);
-    expect(res._json).toEqual(repos);
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody).toEqual(repos);
   });
 
   it('should forward error status on failure', async () => {
@@ -46,6 +49,6 @@ describe('GET /api/github/repos', () => {
     });
     const res = createMockRes();
     await handler({} as NextApiRequest, res);
-    expect(res._status).toBe(500);
+    expect(res.statusCode).toBe(500);
   });
 });

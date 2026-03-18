@@ -40,13 +40,12 @@ describe('ProjectCard', () => {
 
   it('should render description when provided', () => {
     render(<ProjectCard {...defaultProps} />);
-    expect(
-      screen.getByText('A test project description')
-    ).toBeInTheDocument();
+    expect(screen.getByText('A test project description')).toBeInTheDocument();
   });
 
   it('should not render description when not provided', () => {
-    const { description: _, ...propsWithoutDesc } = defaultProps;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { description: unusedDesc, ...propsWithoutDesc } = defaultProps;
     render(<ProjectCard {...propsWithoutDesc} />);
     expect(
       screen.queryByText('A test project description')

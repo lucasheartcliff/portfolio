@@ -1,10 +1,9 @@
 import {
-  DownloadOutlined,
   GithubOutlined,
   LinkedinOutlined,
   MailOutlined,
 } from '@ant-design/icons';
-import { Collapse, Tooltip } from 'antd';
+import { Collapse } from 'antd';
 import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';

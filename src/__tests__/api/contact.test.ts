@@ -8,7 +8,9 @@ jest.mock('nodemailer', () => ({
   }),
 }));
 
-function createMockReq(overrides: Partial<NextApiRequest> = {}): NextApiRequest {
+function createMockReq(
+  overrides: Partial<NextApiRequest> = {}
+): NextApiRequest {
   return {
     method: 'POST',
     body: {
@@ -23,19 +25,22 @@ function createMockReq(overrides: Partial<NextApiRequest> = {}): NextApiRequest 
   } as unknown as NextApiRequest;
 }
 
-function createMockRes(): NextApiResponse & { _status: number; _json: any } {
+function createMockRes(): NextApiResponse & {
+  statusCode: number;
+  jsonBody: any;
+} {
   const res = {
-    _status: 0,
-    _json: null,
+    statusCode: 0,
+    jsonBody: null,
     status(code: number) {
-      res._status = code;
+      res.statusCode = code;
       return res;
     },
     json(data: any) {
-      res._json = data;
+      res.jsonBody = data;
       return res;
     },
-  } as unknown as NextApiResponse & { _status: number; _json: any };
+  } as unknown as NextApiResponse & { statusCode: number; jsonBody: any };
   return res;
 }
 
@@ -58,15 +63,15 @@ describe('POST /api/contact', () => {
     const req = createMockReq({ method: 'GET' });
     const res = createMockRes();
     await handler(req, res);
-    expect(res._status).toBe(405);
+    expect(res.statusCode).toBe(405);
   });
 
   it('should reject missing required fields', async () => {
     const req = createMockReq({ body: { name: 'John' } });
     const res = createMockRes();
     await handler(req, res);
-    expect(res._status).toBe(400);
-    expect(res._json.error).toBe('Missing required fields');
+    expect(res.statusCode).toBe(400);
+    expect(res.jsonBody.error).toBe('Missing required fields');
   });
 
   it('should reject invalid email', async () => {
@@ -75,8 +80,8 @@ describe('POST /api/contact', () => {
     });
     const res = createMockRes();
     await handler(req, res);
-    expect(res._status).toBe(400);
-    expect(res._json.error).toBe('Invalid email address');
+    expect(res.statusCode).toBe(400);
+    expect(res.jsonBody.error).toBe('Invalid email address');
   });
 
   it('should send email successfully', async () => {
@@ -85,8 +90,8 @@ describe('POST /api/contact', () => {
     });
     const res = createMockRes();
     await handler(req, res);
-    expect(res._status).toBe(200);
-    expect(res._json.success).toBe(true);
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody.success).toBe(true);
   });
 
   it('should return 500 when SMTP is not configured', async () => {
@@ -97,7 +102,7 @@ describe('POST /api/contact', () => {
     });
     const res = createMockRes();
     await handler(req, res);
-    expect(res._status).toBe(500);
-    expect(res._json.error).toBe('Email service not configured');
+    expect(res.statusCode).toBe(500);
+    expect(res.jsonBody.error).toBe('Email service not configured');
   });
 });

@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
+import Reveal from '@/components/Reveal';
+
 // Mock IntersectionObserver for framer-motion useInView
 beforeAll(() => {
   const mockIntersectionObserver = jest.fn();
@@ -11,8 +13,6 @@ beforeAll(() => {
   });
   window.IntersectionObserver = mockIntersectionObserver;
 });
-
-import Reveal from '@/components/Reveal';
 
 describe('Reveal', () => {
   it('should render children', () => {
@@ -25,22 +25,28 @@ describe('Reveal', () => {
   });
 
   it('should accept custom width prop', () => {
-    const { container } = render(
+    render(
       <Reveal width="fit-content">
-        <div>content</div>
+        <div data-testid="reveal-fit">content</div>
       </Reveal>
     );
-    const wrapper = container.firstChild as HTMLElement;
-    expect(wrapper).toHaveStyle({ width: 'fit-content' });
+    /* eslint-disable testing-library/no-node-access */
+    const outerWrapper =
+      screen.getByTestId('reveal-fit').parentElement?.parentElement;
+    /* eslint-enable testing-library/no-node-access */
+    expect(outerWrapper).toHaveStyle({ width: 'fit-content' });
   });
 
   it('should default to 100% width', () => {
-    const { container } = render(
+    render(
       <Reveal>
-        <div>content</div>
+        <div data-testid="reveal-default">content</div>
       </Reveal>
     );
-    const wrapper = container.firstChild as HTMLElement;
-    expect(wrapper).toHaveStyle({ width: '100%' });
+    /* eslint-disable testing-library/no-node-access */
+    const outerWrapper =
+      screen.getByTestId('reveal-default').parentElement?.parentElement;
+    /* eslint-enable testing-library/no-node-access */
+    expect(outerWrapper).toHaveStyle({ width: '100%' });
   });
 });
