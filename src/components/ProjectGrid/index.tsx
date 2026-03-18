@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 
 import type { Props as CardProps } from '@/components/ProjectCard';
@@ -14,6 +15,7 @@ export default function ProjectGrid({
   initialItemsCount = 5,
   itemsToAdd = 5,
 }: Props) {
+  const { t } = useTranslation('common');
   const [visibleItems, setVisibleItems] = useState(initialItemsCount);
 
   const handleShowMore = () => {
@@ -32,7 +34,7 @@ export default function ProjectGrid({
           onClick={handleShowMore}
           className="mt-4 rounded bg-blue-500 p-4 text-white"
         >
-          {'Show more projects...'}
+          {t('Show more projects...')}
         </button>
       )}
     </div>

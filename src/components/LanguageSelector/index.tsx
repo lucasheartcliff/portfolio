@@ -30,10 +30,6 @@ const LANGUAGE_SELECTOR_ID = 'language-selector';
 const locales = [
   { name: 'Portuguese', key: 'br', locale: 'pt' }, // Portuguese (Brazil)
   { name: 'English', key: 'us', locale: 'en' }, // English (USA)
-  { name: 'French', key: 'fr', locale: 'fr' }, // French (France)
-  { name: 'Spanish', key: 'es', locale: 'es' }, // Spanish (Spain)
-  { name: 'German', key: 'de', locale: 'de' }, // German (Germany)
-  { name: 'Italian', key: 'it', locale: 'it' }, // Italian (Italy)
 ];
 
 export default function LanguageSelector() {
