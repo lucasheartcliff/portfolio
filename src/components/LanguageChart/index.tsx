@@ -14,6 +14,15 @@ interface Props {
 const normalizeData = (value: number) => Math.log(value);
 const displayNormalizedData = (value: number) => Math.exp(value);
 
+const getContrastColor = (hex: string): string => {
+  const c = hex.replace('#', '');
+  const r = parseInt(c.substring(0, 2), 16);
+  const g = parseInt(c.substring(2, 4), 16);
+  const b = parseInt(c.substring(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.5 ? '#000000' : '#ffffff';
+};
+
 const buildState = (
   data: any[] = [],
   colors: any[] = [],
@@ -54,14 +63,16 @@ const buildState = (
     },
     colors,
     dataLabels: {
-      enabled: false,
-
+      enabled: true,
+      textAnchor: 'start',
+      offsetX: 5,
       style: {
-        fontSize: '16px',
+        fontSize: '13px',
+        fontWeight: 600,
+        colors: colors.map(getContrastColor),
       },
-      formatter(value, { seriesIndex, dataPointIndex, w }) {
-        const barValue = w.globals.series[seriesIndex][dataPointIndex];
-        return `${displayNormalizedData(barValue)?.toFixed(0)} h`;
+      formatter(value: number) {
+        return `${displayNormalizedData(value)?.toFixed(0)} h`;
       },
     },
     tooltip: {
@@ -102,30 +113,21 @@ const buildState = (
       categories: labels,
       offsetX: 10,
       title: {
-        offsetY: 10,
         text: `${messages.timeWorked} (h)`,
+        offsetY: -15,
         style: {
           cssClass: 'text-sm md:text-base',
           color: isDark ? '#f3f4f6' : '#111827',
         },
       },
-
       labels: {
-        show: true,
-        rotate: -45,
-        rotateAlways: true,
-        hideOverlappingLabels: true,
-        showDuplicates: false,
-        trim: true,
-        maxHeight: 80,
-        style: {
-          cssClass: 'text-xs md:text-sm',
-          colors: isDark ? '#e5e7eb' : '#374151',
-          fontSize: '11px',
-        },
-        formatter(value: any) {
-          return `${displayNormalizedData(value).toFixed(0)} h`;
-        },
+        show: false,
+      },
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
       },
       tickAmount: 5,
     },
