@@ -39,6 +39,14 @@ a:hover {
 }
 
 /* Article prose styling */
+.prose {
+  @apply text-gray-900;
+}
+
+.dark .prose {
+  @apply text-gray-100;
+}
+
 .prose h1, .prose h2, .prose h3, .prose h4 {
   @apply font-bold text-black;
 }

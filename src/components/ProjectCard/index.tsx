@@ -29,10 +29,10 @@ export default function ProjectCard({
   tags,
 }: Props) {
   return (
-    <div className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-fit md:text-xl">
-      <div className="flex flex-row items-center justify-between">
-        <div className="w-full">
-          <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black dark:text-white">
+    <div className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl">
+      <div className="flex flex-row items-start justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-semibold text-black dark:text-white">
             <Tooltip title={name}>
               <span>{name}</span>
             </Tooltip>
@@ -55,7 +55,7 @@ export default function ProjectCard({
           </div>
         </div>
 
-        <div className="ml-5 items-end justify-center">
+        <div className="ml-3 flex flex-shrink-0 items-center justify-center mt-1">
           <Link target="_blank" href={url}>
             <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
           </Link>

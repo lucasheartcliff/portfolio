@@ -42,7 +42,7 @@ function getDeviconUrl(tech: string): string {
 
 export default function TechStack({ data }: Props) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 pb-8 md:grid-cols-2">
       {Object.entries(data).map(([category, techs]) => (
         <div key={category}>
           <h4 className="mb-3 text-lg font-semibold text-black dark:text-white">
