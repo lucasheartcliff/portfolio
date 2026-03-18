@@ -46,16 +46,13 @@ const Main = (props: IMainProps) => {
 
   return (
     <ScrollRefContext.Provider value={scrollRef}>
-      <div className="h-screen w-full bg-white dark:bg-gray-900">
+      <div className="flex h-screen w-full flex-col overflow-hidden bg-white dark:bg-gray-900">
         {props.meta}
         <Navbar
           logoTitle={props.title}
           showLanguageSelector={props.showLanguageSelector}
         />
-        <div
-          style={{ height: 'calc(100% - 77px)' }}
-          className="max-h-screen w-full text-gray-700 antialiased"
-        >
+        <div className="min-h-0 flex-1 w-full text-gray-700 antialiased">
           <div className="relative h-full text-xl">
             <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
               <>

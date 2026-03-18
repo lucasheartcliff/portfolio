@@ -56,7 +56,7 @@ jobs:
 
   deploy:
     needs: build-and-push
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy via SSH

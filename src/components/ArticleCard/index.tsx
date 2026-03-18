@@ -12,8 +12,9 @@ interface Props {
 }
 
 export default function ArticleCard({ article }: Props) {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const tags = normalizeTags(article);
+  const locale = i18n.language || 'en';
 
   return (
     <motion.div
@@ -33,10 +34,10 @@ export default function ArticleCard({ article }: Props) {
           />
         )}
         <div className="p-4">
-          <h4 className="line-clamp-2 text-lg font-semibold text-black dark:text-white">
+          <h4 className="line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
             {article.title}
           </h4>
-          <p className="mt-1 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-1 line-clamp-2 text-sm text-gray-700 dark:text-gray-300">
             {article.description}
           </p>
           {tags.length > 0 && (
@@ -55,7 +56,13 @@ export default function ArticleCard({ article }: Props) {
             <span>
               {article.reading_time_minutes} {t('min read')}
             </span>
-            <span>{new Date(article.published_at).toLocaleDateString()}</span>
+            <span>
+              {new Date(article.published_at).toLocaleDateString(locale, {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
           </div>
         </div>
       </Link>

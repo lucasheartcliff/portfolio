@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import ArticleGrid from '@/components/ArticleGrid';
 import AsideNav from '@/components/AsideNav';
 import CertificateCard from '@/components/CertificateCard';
-import ContactForm from '@/components/ContactForm';
+// import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import { SocialLink } from '@/components/Link';
@@ -61,7 +61,6 @@ const Index = () => {
     { key: 'certification', label: 'Certifications' },
     { key: 'articles', label: 'Articles' },
     { key: 'projects', label: 'Projects' },
-    { key: 'contact', label: 'Contact' },
   ];
 
   useEffect(() => {
@@ -242,22 +241,6 @@ const Index = () => {
                           <MailOutlined />
                         </Icon>
                       </SocialLink>
-                      <div className="cursor-pointer rounded hover:no-underline">
-                        <Tooltip
-                          className="hover:no-underline"
-                          title="Download CV"
-                        >
-                          <a
-                            href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
-                            download="Lucas_Morais_Resume.pdf"
-                            className="hover:no-underline"
-                          >
-                            <Icon color={'#0e76a8'}>
-                              <DownloadOutlined />
-                            </Icon>
-                          </a>
-                        </Tooltip>
-                      </div>
                     </div>
                   </Reveal>
                   <Reveal delay={0.65}>
@@ -512,6 +495,7 @@ const Index = () => {
                 </div>
               </Block>
             </Row>
+            {/* Contact section hidden until ready
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
@@ -531,6 +515,7 @@ const Index = () => {
                 </div>
               </Block>
             </Row>
+            */}
           </div>
           <Footer />
         </>
