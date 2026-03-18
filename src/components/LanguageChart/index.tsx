@@ -105,7 +105,7 @@ const buildState = (
         offsetY: 10,
         text: `${messages.timeWorked} (h)`,
         style: {
-          cssClass: 'text-base md:text-xl',
+          cssClass: 'text-sm md:text-base',
           color: isDark ? '#f3f4f6' : '#111827',
         },
       },
@@ -113,18 +113,21 @@ const buildState = (
       labels: {
         show: true,
         rotate: -45,
-        rotateAlways: false,
+        rotateAlways: true,
         hideOverlappingLabels: true,
         showDuplicates: false,
-        trim: false,
+        trim: true,
+        maxHeight: 80,
         style: {
-          cssClass: 'text-base md:text-xl',
+          cssClass: 'text-xs md:text-sm',
           colors: isDark ? '#e5e7eb' : '#374151',
+          fontSize: '11px',
         },
         formatter(value: any) {
           return `${displayNormalizedData(value).toFixed(0)} h`;
         },
       },
+      tickAmount: 5,
     },
   },
 });
