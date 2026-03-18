@@ -52,7 +52,7 @@ const Main = (props: IMainProps) => {
           logoTitle={props.title}
           showLanguageSelector={props.showLanguageSelector}
         />
-        <div className="min-h-0 flex-1 w-full text-gray-700 antialiased">
+        <div className="min-h-0 w-full flex-1 text-gray-700 antialiased">
           <div className="relative h-full text-xl">
             <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
               <>

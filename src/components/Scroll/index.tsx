@@ -39,15 +39,30 @@ function Scroll({ children, ...props }: Props, ref: any) {
         />
       )}
       renderTrackHorizontal={(p) => (
-        <div {...p} className="track-horizontal" style={{ ...p.style, display: 'none'}} />
+        <div
+          {...p}
+          className="track-horizontal"
+          style={{ ...p.style, display: 'none' }}
+        />
       )}
-      renderThumbHorizontal={
-        (p)=> (
-          <div {...p} className="thumb-horizontal" style={{ ...p.style, display: 'none' }} />
-        )
-      }
+      renderThumbHorizontal={(p) => (
+        <div
+          {...p}
+          className="thumb-horizontal"
+          style={{ ...p.style, display: 'none' }}
+        />
+      )}
       renderView={(p) => (
-        <div {...p} className="scroll-view" style={{ ...p.style, marginBottom:-16, border: 0, boxShadow: 'none' }} />
+        <div
+          {...p}
+          className="scroll-view"
+          style={{
+            ...p.style,
+            marginBottom: -16,
+            border: 0,
+            boxShadow: 'none',
+          }}
+        />
       )}
       {...props}
     >

@@ -1,29 +1,34 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-jest.mock('@/services/devto', () => ({
-  fetchArticles: jest.fn().mockResolvedValue([
-    { id: 1, title: 'Test Article' },
-  ]),
-  fetchAllMyArticles: jest.fn().mockResolvedValue([
-    { id: 2, title: 'Draft', published: false, slug: 'draft' },
-  ]),
-}));
-
 import handler from '@/pages/api/articles';
 
-function createMockRes(): NextApiResponse & { _status: number; _json: any } {
+jest.mock('@/services/devto', () => ({
+  fetchArticles: jest
+    .fn()
+    .mockResolvedValue([{ id: 1, title: 'Test Article' }]),
+  fetchAllMyArticles: jest
+    .fn()
+    .mockResolvedValue([
+      { id: 2, title: 'Draft', published: false, slug: 'draft' },
+    ]),
+}));
+
+function createMockRes(): NextApiResponse & {
+  statusCode: number;
+  jsonBody: any;
+} {
   const res = {
-    _status: 0,
-    _json: null,
+    statusCode: 0,
+    jsonBody: null,
     status(code: number) {
-      res._status = code;
+      res.statusCode = code;
       return res;
     },
     json(data: any) {
-      res._json = data;
+      res.jsonBody = data;
       return res;
     },
-  } as unknown as NextApiResponse & { _status: number; _json: any };
+  } as unknown as NextApiResponse & { statusCode: number; jsonBody: any };
   return res;
 }
 
@@ -31,7 +36,7 @@ describe('GET /api/articles', () => {
   it('should return published articles', async () => {
     const res = createMockRes();
     await handler({} as NextApiRequest, res);
-    expect(res._status).toBe(200);
-    expect(res._json).toEqual([{ id: 1, title: 'Test Article' }]);
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody).toEqual([{ id: 1, title: 'Test Article' }]);
   });
 });

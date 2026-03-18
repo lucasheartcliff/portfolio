@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import handler from '@/pages/api/articles/[slug]';
+
 const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
@@ -7,21 +9,22 @@ jest.mock('@/services/devto', () => ({
   fetchAllMyArticles: jest.fn().mockResolvedValue([]),
 }));
 
-import handler from '@/pages/api/articles/[slug]';
-
-function createMockRes(): NextApiResponse & { _status: number; _json: any } {
+function createMockRes(): NextApiResponse & {
+  statusCode: number;
+  jsonBody: any;
+} {
   const res = {
-    _status: 0,
-    _json: null,
+    statusCode: 0,
+    jsonBody: null,
     status(code: number) {
-      res._status = code;
+      res.statusCode = code;
       return res;
     },
     json(data: any) {
-      res._json = data;
+      res.jsonBody = data;
       return res;
     },
-  } as unknown as NextApiResponse & { _status: number; _json: any };
+  } as unknown as NextApiResponse & { statusCode: number; jsonBody: any };
   return res;
 }
 
@@ -42,8 +45,8 @@ describe('GET /api/articles/[slug]', () => {
       { query: { slug: 'test' } } as unknown as NextApiRequest,
       res
     );
-    expect(res._status).toBe(200);
-    expect(res._json).toEqual(articleData);
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody).toEqual(articleData);
   });
 
   it('should return 404 when article not found', async () => {
@@ -54,6 +57,6 @@ describe('GET /api/articles/[slug]', () => {
       { query: { slug: 'nonexistent' } } as unknown as NextApiRequest,
       res
     );
-    expect(res._status).toBe(404);
+    expect(res.statusCode).toBe(404);
   });
 });

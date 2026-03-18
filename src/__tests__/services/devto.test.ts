@@ -1,5 +1,5 @@
+import type { DevtoArticleFull, DevtoArticleIndex } from '../../services/devto';
 import { normalizeTags } from '../../services/devto';
-import type { DevtoArticleIndex, DevtoArticleFull } from '../../services/devto';
 
 describe('devto service', () => {
   describe('normalizeTags', () => {
@@ -16,11 +16,7 @@ describe('devto service', () => {
         tag_list: 'react, typescript, nextjs' as any,
         tags: ['react', 'typescript', 'nextjs'],
       } as DevtoArticleFull;
-      expect(normalizeTags(article)).toEqual([
-        'react',
-        'typescript',
-        'nextjs',
-      ]);
+      expect(normalizeTags(article)).toEqual(['react', 'typescript', 'nextjs']);
     });
 
     it('should fall back to tags array if tag_list is empty', () => {

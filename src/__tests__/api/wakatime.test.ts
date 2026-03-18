@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import handler from '@/pages/api/wakatime/[stat]';
 
-// Mock global fetch
 const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
@@ -12,19 +11,22 @@ function createMockReq(stat: string): NextApiRequest {
   } as unknown as NextApiRequest;
 }
 
-function createMockRes(): NextApiResponse & { _status: number; _json: any } {
+function createMockRes(): NextApiResponse & {
+  statusCode: number;
+  jsonBody: any;
+} {
   const res = {
-    _status: 0,
-    _json: null,
+    statusCode: 0,
+    jsonBody: null,
     status(code: number) {
-      res._status = code;
+      res.statusCode = code;
       return res;
     },
     json(data: any) {
-      res._json = data;
+      res.jsonBody = data;
       return res;
     },
-  } as unknown as NextApiResponse & { _status: number; _json: any };
+  } as unknown as NextApiResponse & { statusCode: number; jsonBody: any };
   return res;
 }
 
@@ -36,8 +38,8 @@ describe('GET /api/wakatime/[stat]', () => {
   it('should return 400 for unknown stat', async () => {
     const res = createMockRes();
     await handler(createMockReq('unknown'), res);
-    expect(res._status).toBe(400);
-    expect(res._json.error).toContain('Unknown stat');
+    expect(res.statusCode).toBe(400);
+    expect(res.jsonBody.error).toContain('Unknown stat');
   });
 
   it('should proxy languages data', async () => {
@@ -48,8 +50,8 @@ describe('GET /api/wakatime/[stat]', () => {
     });
     const res = createMockRes();
     await handler(createMockReq('languages'), res);
-    expect(res._status).toBe(200);
-    expect(res._json).toEqual(mockData);
+    expect(res.statusCode).toBe(200);
+    expect(res.jsonBody).toEqual(mockData);
   });
 
   it('should handle upstream errors', async () => {
@@ -59,6 +61,6 @@ describe('GET /api/wakatime/[stat]', () => {
     });
     const res = createMockRes();
     await handler(createMockReq('languages'), res);
-    expect(res._status).toBe(503);
+    expect(res.statusCode).toBe(503);
   });
 });

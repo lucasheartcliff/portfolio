@@ -10,10 +10,9 @@ describe('ColorfulDot', () => {
   });
 
   it('should apply the background color to the dot', () => {
-    const { container } = render(
-      <ColorfulDot color="#2b7489" label="TypeScript" />
-    );
-    const dot = container.querySelector('.rounded-full');
+    render(<ColorfulDot color="#2b7489" label="TypeScript" />);
+    // eslint-disable-next-line testing-library/no-node-access
+    const dot = screen.getByText('TypeScript').previousElementSibling;
     expect(dot).toHaveStyle({ background: '#2b7489' });
   });
 });

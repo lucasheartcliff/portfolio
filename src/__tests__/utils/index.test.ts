@@ -38,9 +38,7 @@ describe('Utils', () => {
   describe('capitalize', () => {
     it('should capitalize the first letter of each word', () => {
       expect(capitalize('hello world')).toBe('Hello World');
-      expect(capitalize('typescript is awesome')).toBe(
-        'Typescript Is Awesome'
-      );
+      expect(capitalize('typescript is awesome')).toBe('Typescript Is Awesome');
     });
 
     it('should return an empty string if input is empty', () => {

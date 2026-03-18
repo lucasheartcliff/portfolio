@@ -95,7 +95,7 @@ export default function AsideNav({
   const panelWidth = `${widthRem}rem`;
 
   return (
-    <div className="fixed left-0 top-1/2 z-50 -translate-y-1/2 block">
+    <div className="fixed left-0 top-1/2 z-50 block -translate-y-1/2">
       <button
         onClick={() => setOpen((v) => !v)}
         style={{ left: open ? panelWidth : 0 }}
@@ -113,7 +113,12 @@ export default function AsideNav({
             : 'pointer-events-none -translate-x-full opacity-0'
         }`}
       >
-        <Scroll style={{ maxHeight: '70vh' }} hideTracksWhenNotNeeded  autoHeight autoHeightMax="70vh">
+        <Scroll
+          style={{ maxHeight: '70vh' }}
+          hideTracksWhenNotNeeded
+          autoHeight
+          autoHeightMax="70vh"
+        >
           <div className="flex flex-col gap-0.5 px-2 py-3">
             {sections.map(({ key, label, level = 1 }) => {
               const text = translate ? t(label) : label;

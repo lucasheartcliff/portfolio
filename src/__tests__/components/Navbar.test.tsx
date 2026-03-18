@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
+import Navbar from '@/components/Navbar';
+import { DarkModeContext } from '@/pages/_app';
+
 jest.mock('next/router', () => ({
   useRouter: () => ({
     query: { locale: 'en' },
@@ -17,9 +20,6 @@ jest.mock('next-i18next', () => ({
   }),
   appWithTranslation: (component: any) => component,
 }));
-
-import { DarkModeContext } from '@/pages/_app';
-import Navbar from '@/components/Navbar';
 
 function renderWithDarkMode(ui: React.ReactElement) {
   return render(

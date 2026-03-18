@@ -1,5 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+
+import Timeline from '@/components/Timeline';
 
 jest.mock('react-markdown', () => {
   return {
@@ -15,8 +17,6 @@ jest.mock('next-i18next', () => ({
     t: (key: string) => key,
   }),
 }));
-
-import Timeline from '@/components/Timeline';
 
 describe('Timeline', () => {
   const data = [
