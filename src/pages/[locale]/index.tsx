@@ -59,9 +59,7 @@ const Index = () => {
     { key: 'education', label: 'Education' },
     { key: 'certification', label: 'Certifications' },
     ...(articles.length > 0 ? [{ key: 'articles', label: 'Articles' }] : []),
-    ...(pinnedRepos.length > 0
-      ? [{ key: 'projects', label: 'Projects' }]
-      : []),
+    ...(pinnedRepos.length > 0 ? [{ key: 'projects', label: 'Projects' }] : []),
   ];
 
   useEffect(() => {

@@ -5,9 +5,7 @@ import ScrollToTopButton from '@/components/ScrollToTopButton';
 
 describe('ScrollToTopButton', () => {
   it('should be visible when isVisible is true', () => {
-    render(
-      <ScrollToTopButton isVisible={true} scrollToTop={jest.fn()} />
-    );
+    render(<ScrollToTopButton isVisible={true} scrollToTop={jest.fn()} />);
     expect(screen.getByRole('img')).toBeInTheDocument();
   });
 
