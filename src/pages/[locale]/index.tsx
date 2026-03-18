@@ -58,8 +58,10 @@ const Index = () => {
     { key: 'experience', label: 'Experience' },
     { key: 'education', label: 'Education' },
     { key: 'certification', label: 'Certifications' },
-    { key: 'articles', label: 'Articles' },
-    { key: 'projects', label: 'Projects' },
+    ...(articles.length > 0 ? [{ key: 'articles', label: 'Articles' }] : []),
+    ...(pinnedRepos.length > 0
+      ? [{ key: 'projects', label: 'Projects' }]
+      : []),
   ];
 
   useEffect(() => {
@@ -175,7 +177,7 @@ const Index = () => {
       >
         <>
           <AsideNav sections={SECTIONS} />
-          <div className="mx-2 md:mx-14">
+          <div className="mx-2 overflow-x-hidden md:mx-14">
             <Row>
               <Block>
                 <div className="flex flex-col">
@@ -460,40 +462,42 @@ const Index = () => {
                 </div>
               </Block>
             </Row>
-            <Row>
-              <Block>
-                <div className="flex flex-1 flex-col">
-                  <Reveal>
-                    <div id="articles">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Articles')}
-                      </h3>
-                      {articles.length > 0 && (
+            {articles.length > 0 && (
+              <Row>
+                <Block>
+                  <div className="flex flex-1 flex-col">
+                    <Reveal>
+                      <div id="articles">
+                        <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                          {t('Articles')}
+                        </h3>
                         <ArticleGrid articles={articles.slice(0, 6)} />
-                      )}
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
-            <Row>
-              <Block>
-                <div className="flex flex-1 flex-col">
-                  <Reveal>
-                    <div id="projects">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Projects')}
-                      </h3>
-                      <ProjectGrid
-                        initialItemsCount={8}
-                        itemsToAdd={8}
-                        items={pinnedRepos}
-                      />
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
+                      </div>
+                    </Reveal>
+                  </div>
+                </Block>
+              </Row>
+            )}
+            {pinnedRepos.length > 0 && (
+              <Row>
+                <Block>
+                  <div className="flex flex-1 flex-col">
+                    <Reveal>
+                      <div id="projects">
+                        <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                          {t('Projects')}
+                        </h3>
+                        <ProjectGrid
+                          initialItemsCount={8}
+                          itemsToAdd={8}
+                          items={pinnedRepos}
+                        />
+                      </div>
+                    </Reveal>
+                  </div>
+                </Block>
+              </Row>
+            )}
             {/* Contact section hidden until ready
             <Row>
               <Block>
