@@ -357,9 +357,14 @@ const Index = () => {
                       <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Experience')}
                       </h3>
-                      <Scroll style={{ height: 500 }}>
+                      <div className="md:hidden">
                         <Timeline data={experience} />
-                      </Scroll>
+                      </div>
+                      <div className="hidden md:block">
+                        <Scroll style={{ height: 500 }}>
+                          <Timeline data={experience} />
+                        </Scroll>
+                      </div>
                     </div>
                   </Reveal>
                 </div>
@@ -373,9 +378,14 @@ const Index = () => {
                       <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Education')}
                       </h3>
-                      <Scroll style={{ height: 500 }}>
+                      <div className="md:hidden">
                         <Timeline data={education} />
-                      </Scroll>
+                      </div>
+                      <div className="hidden md:block">
+                        <Scroll style={{ height: 500 }}>
+                          <Timeline data={education} />
+                        </Scroll>
+                      </div>
                     </div>
                   </Reveal>
                 </div>
