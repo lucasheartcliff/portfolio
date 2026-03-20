@@ -16,17 +16,24 @@ export default async function handler(
   const url = WAKATIME_URLS[stat as string];
 
   if (!url) {
+    console.error(`[API] GET /api/wakatime/${stat} failed: unknown stat`);
     return res.status(400).json({ error: `Unknown stat: ${stat}` });
   }
 
-  const response = await fetch(url);
+  try {
+    const response = await fetch(url);
 
-  if (!response.ok) {
-    return res
-      .status(response.status)
-      .json({ error: 'Failed to fetch wakatime data' });
+    if (!response.ok) {
+      console.error(`[API] GET /api/wakatime/${stat} failed: upstream returned ${response.status}`);
+      return res
+        .status(response.status)
+        .json({ error: 'Failed to fetch wakatime data' });
+    }
+
+    const data = await response.json();
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error(`[API] GET /api/wakatime/${stat} failed:`, error);
+    return res.status(500).json({ error: 'Failed to fetch wakatime data' });
   }
-
-  const data = await response.json();
-  return res.status(200).json(data);
 }

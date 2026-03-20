@@ -9,22 +9,27 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!isDev) {
-    const articles = await fetchArticles(USERNAME);
-    return res.status(200).json(articles);
+  try {
+    if (!isDev) {
+      const articles = await fetchArticles(USERNAME);
+      return res.status(200).json(articles);
+    }
+
+    const apiKey = process.env.DEVTO_API_KEY;
+    if (!apiKey) {
+      const articles = await fetchArticles(USERNAME);
+      return res.status(200).json(articles);
+    }
+
+    const articles = await fetchAllMyArticles(apiKey);
+    const tagged = articles.map((a) => ({
+      ...a,
+      title: a.published ? a.title : `[DRAFT] ${a.title}`,
+    }));
+
+    return res.status(200).json(tagged);
+  } catch (error) {
+    console.error('[API] GET /api/articles failed:', error);
+    return res.status(500).json({ error: 'Failed to fetch articles' });
   }
-
-  const apiKey = process.env.DEVTO_API_KEY;
-  if (!apiKey) {
-    const articles = await fetchArticles(USERNAME);
-    return res.status(200).json(articles);
-  }
-
-  const articles = await fetchAllMyArticles(apiKey);
-  const tagged = articles.map((a) => ({
-    ...a,
-    title: a.published ? a.title : `[DRAFT] ${a.title}`,
-  }));
-
-  return res.status(200).json(tagged);
 }

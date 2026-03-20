@@ -48,6 +48,7 @@ export default async function handler(
   const contactTo = process.env.CONTACT_EMAIL || smtpUser;
 
   if (!smtpUser || !smtpPass) {
+    console.error('[API] POST /api/contact failed: SMTP credentials not configured');
     return res.status(500).json({ error: 'Email service not configured' });
   }
 
@@ -83,7 +84,8 @@ export default async function handler(
 
     lastSent.set(ip, now);
     return res.status(200).json({ success: true });
-  } catch {
+  } catch (error) {
+    console.error('[API] POST /api/contact failed:', error);
     return res.status(500).json({ error: 'Failed to send email' });
   }
 }
