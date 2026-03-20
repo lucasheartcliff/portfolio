@@ -114,17 +114,18 @@ export default function AsideNav({
         }`}
       >
         <Scroll
-          style={{ maxHeight: '70vh'}}
-          renderView={
-            (props) => (
-              <div {...props} style={{
-            ...props.style,
-            marginBottom: -16,
-            border: 0,
-            boxShadow: 'none',
-          }} />
-            )
-          }
+          style={{ maxHeight: '70vh' }}
+          renderView={(props) => (
+            <div
+              {...props}
+              style={{
+                ...props.style,
+                marginBottom: -16,
+                border: 0,
+                boxShadow: 'none',
+              }}
+            />
+          )}
           hideTracksWhenNotNeeded
           autoHeight
           autoHeightMax="70vh"

@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import handler from '@/pages/api/wakatime/[stat]';
+
 process.env.WAKATIME_LANGUAGES_URL =
   'https://wakatime.com/share/@test/languages.json';
 process.env.WAKATIME_CODING_TIME_URL =
@@ -10,8 +12,6 @@ process.env.WAKATIME_EDITORS_URL =
   'https://wakatime.com/share/@test/editors.json';
 process.env.WAKATIME_CODE_ACTIVITY_URL =
   'https://wakatime.com/share/@test/code-activity.json';
-
-import handler from '@/pages/api/wakatime/[stat]';
 
 const mockFetch = jest.fn();
 global.fetch = mockFetch;
