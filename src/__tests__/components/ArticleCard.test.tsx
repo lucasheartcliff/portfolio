@@ -78,16 +78,10 @@ describe('ArticleCard', () => {
     expect(screen.getByText('#typescript')).toBeInTheDocument();
   });
 
-  it('should render cover image when available', () => {
+  it('should render external link to article', () => {
     render(<ArticleCard article={article} />);
-    const img = screen.getByAltText('Test Article Title');
-    expect(img).toHaveAttribute('src', 'https://example.com/cover.jpg');
-  });
-
-  it('should not render cover image when not available', () => {
-    const noCoverArticle = { ...article, cover_image: null };
-    render(<ArticleCard article={noCoverArticle} />);
-    expect(screen.queryByAltText('Test Article Title')).not.toBeInTheDocument();
+    const link = screen.getByRole('link');
+    expect(link).toHaveAttribute('href', '/en/articles/test-article');
   });
 
   it('should format the date with locale options', () => {

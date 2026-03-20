@@ -7,7 +7,8 @@
       "Bash(curl -s http://localhost:3000/api/articles)",
       "Bash(find:*)",
       "Bash(npx next:*)",
-      "Bash(npx jest:*)"
+      "Bash(npx jest:*)",
+      "Bash(npm test:*)"
     ]
   }
 }
