@@ -63,17 +63,7 @@ const buildState = (
     },
     colors,
     dataLabels: {
-      enabled: true,
-      textAnchor: 'start',
-      offsetX: 5,
-      style: {
-        fontSize: '13px',
-        fontWeight: 600,
-        colors: colors.map(getContrastColor),
-      },
-      formatter(value: number) {
-        return `${displayNormalizedData(value)?.toFixed(0)} h`;
-      },
+      enabled: false,
     },
     tooltip: {
       enabled: true,
@@ -114,20 +104,31 @@ const buildState = (
       offsetX: 10,
       title: {
         text: `${messages.timeWorked} (h)`,
-        offsetY: -15,
+        offsetY: 15,
         style: {
           cssClass: 'text-sm md:text-base',
           color: isDark ? '#f3f4f6' : '#111827',
         },
       },
       labels: {
-        show: false,
+        show: true,
+        hideOverlappingLabels: true,
+        trim: true,
+        maxHeight: 60,
+        style: {
+          cssClass: 'text-[9px] md:text-[10px]',
+          colors: isDark ? '#e5e7eb' : '#374151',
+          fontSize: '9px',
+        },
+        formatter(value: any) {
+          return `${displayNormalizedData(value).toFixed(0)} h`;
+        },
       },
       axisBorder: {
-        show: false,
+        show: true,
       },
       axisTicks: {
-        show: false,
+        show: true,
       },
       tickAmount: 5,
     },

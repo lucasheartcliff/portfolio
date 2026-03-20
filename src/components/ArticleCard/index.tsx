@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import ExportOutlined from '@ant-design/icons/ExportOutlined';
+import Tooltip from 'antd/lib/tooltip';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 
@@ -17,42 +18,15 @@ export default function ArticleCard({ article }: Props) {
   const locale = i18n.language || 'en';
 
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ type: 'spring', stiffness: 300 }}
-    >
-      <Link
-        href={`/articles/${article.slug}`}
-        className="block overflow-hidden rounded-lg border border-gray-200 no-underline shadow-sm transition-shadow hover:border-0 hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
-      >
-        {article.cover_image && (
-          <img
-            src={article.cover_image}
-            alt={article.title}
-            className="h-40 w-full object-cover"
-            loading="lazy"
-          />
-        )}
-        <div className="p-4">
-          <h4 className="line-clamp-2 text-lg font-semibold text-gray-900 dark:text-gray-100">
-            {article.title}
-          </h4>
-          <p className="mt-1 line-clamp-2 text-sm text-gray-700 dark:text-gray-300">
-            {article.description}
-          </p>
-          {tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {tags.slice(0, 4).map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-          <div className="mt-3 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+    <div className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl">
+      <div className="flex flex-row items-start justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-semibold text-black dark:text-white">
+            <Tooltip title={article.title}>
+              <span>{article.title}</span>
+            </Tooltip>
+          </div>
+          <div className="mt-1 flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
             <span>
               {article.reading_time_minutes} {t('min read')}
             </span>
@@ -65,7 +39,30 @@ export default function ArticleCard({ article }: Props) {
             </span>
           </div>
         </div>
-      </Link>
-    </motion.div>
+
+        <div className="ml-3 mt-1 flex shrink-0 items-center justify-center">
+          <Link target="_blank" href={`/articles/${article.slug}`}>
+            <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
+          </Link>
+        </div>
+      </div>
+      {article.description && (
+        <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+          {article.description}
+        </p>
+      )}
+      {tags.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {tags.slice(0, 4).map((tag) => (
+            <span
+              key={tag}
+              className="rounded bg-gray-200 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

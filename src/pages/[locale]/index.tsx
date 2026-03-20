@@ -417,9 +417,9 @@ const Index = () => {
                 </div>
               </Block>
               <Block>
-                <div className="flex flex-1 flex-col">
+                <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                   <Reveal>
-                    <div id="certification">
+                    <div id="certification" className="min-w-0">
                       <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('Certifications')}
                       </h3>
@@ -473,7 +473,7 @@ const Index = () => {
             {articles.length > 0 && (
               <Row>
                 <Block>
-                  <div className="flex flex-1 flex-col">
+                  <div className="flex flex-1 flex-col ">
                     <Reveal>
                       <div id="articles">
                         <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">

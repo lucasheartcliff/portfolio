@@ -23,17 +23,17 @@
     "Full-Stack Development",
     "Legacy System Modernization",
     "Operational Efficiency",
-    "Rust",
     "Python 3"
   ],
   "techStack": {
-    "Backend": ["Java", "Spring Boot", "Node.js", "Python", "Rust"],
+    "Backend": ["Java", "Spring Boot", "Node.js", "Python", "Kotlin","Rust"],
     "Frontend": [
       "React",
       "TypeScript",
       "JavaScript",
       "HTML5",
       "CSS3",
+      "Next.js",
       "Tailwind CSS"
     ],
     "Data & Messaging": ["PostgreSQL", "Redis", "Apache Kafka", "RabbitMQ"],
@@ -41,6 +41,7 @@
       "Docker",
       "Kubernetes",
       "AWS",
+      "Azure",
       "Git",
       "Linux",
       "Nginx"

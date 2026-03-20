@@ -20,14 +20,14 @@ export default function CertificateCard({ name, platform, url }: Props) {
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300 }}
-      className="flex h-20 w-full flex-row items-center justify-center border border-gray-200 p-4 text-base dark:border-gray-700 dark:bg-gray-800 md:text-xl"
+      className="flex h-20 w-full flex-row items-center justify-center overflow-hidden border border-gray-200 p-4 text-base dark:border-gray-700 dark:bg-gray-800 md:text-xl"
     >
-      <div className="w-11/12">
-        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black dark:text-white">
-          <Tooltip title={t(name)}>
-            <span>{t(name)}</span>
-          </Tooltip>
-        </div>
+      <div className="min-w-0 flex-1">
+        <Tooltip title={t(name)}>
+          <div className="truncate font-semibold text-black dark:text-white">
+            {t(name)}
+          </div>
+        </Tooltip>
         <div
           style={{ backgroundColor: getPlatformColor(platform) }}
           className={`inline-flex items-center rounded-md px-2 py-1  text-sm font-semibold capitalize text-white md:text-base`}

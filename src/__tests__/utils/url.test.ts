@@ -2,21 +2,9 @@ import {
   GITHUB_PINNED_REPO,
   GITHUB_PROFILE,
   GITHUB_REPO,
-  WAKATIME_ACTIVITY,
-  WAKATIME_CODE_ACTIVITY,
-  WAKATIME_CODING_TIME,
-  WAKATIME_EDITORS,
-  WAKATIME_LANGUAGES,
 } from '../../utils/url';
 
 describe('URL constants', () => {
-  it('should have valid WakaTime URLs', () => {
-    expect(WAKATIME_LANGUAGES).toContain('wakatime.com');
-    expect(WAKATIME_ACTIVITY).toContain('wakatime.com');
-    expect(WAKATIME_CODING_TIME).toContain('wakatime.com');
-    expect(WAKATIME_EDITORS).toContain('wakatime.com');
-    expect(WAKATIME_CODE_ACTIVITY).toContain('wakatime.com');
-  });
 
   it('GITHUB_PROFILE should build correct URL', () => {
     expect(GITHUB_PROFILE('testuser')).toBe(
