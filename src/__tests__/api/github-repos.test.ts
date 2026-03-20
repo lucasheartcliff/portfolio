@@ -29,16 +29,47 @@ describe('GET /api/github/repos', () => {
     mockFetch.mockReset();
   });
 
-  it('should return repos on success', async () => {
-    const repos = [{ name: 'portfolio', language: 'TypeScript' }];
+  it('should return mapped repos on success', async () => {
+    const graphqlResponse = {
+      data: {
+        user: {
+          pinnedItems: {
+            nodes: [
+              {
+                name: 'portfolio',
+                description: 'My portfolio site',
+                url: 'https://github.com/lucasheartcliff/portfolio',
+                stargazerCount: 5,
+                forkCount: 1,
+                primaryLanguage: { name: 'TypeScript', color: '#3178c6' },
+                repositoryTopics: {
+                  nodes: [{ topic: { name: 'nextjs' } }],
+                },
+              },
+            ],
+          },
+        },
+      },
+    };
     mockFetch.mockResolvedValue({
       ok: true,
-      json: () => Promise.resolve(repos),
+      json: () => Promise.resolve(graphqlResponse),
     });
     const res = createMockRes();
     await handler({} as NextApiRequest, res);
     expect(res.statusCode).toBe(200);
-    expect(res.jsonBody).toEqual(repos);
+    expect(res.jsonBody).toEqual([
+      {
+        name: 'portfolio',
+        description: 'My portfolio site',
+        url: 'https://github.com/lucasheartcliff/portfolio',
+        stargazerCount: 5,
+        forkCount: 1,
+        language: 'TypeScript',
+        languageColor: '#3178c6',
+        topics: ['nextjs'],
+      },
+    ]);
   });
 
   it('should forward error status on failure', async () => {
@@ -50,5 +81,16 @@ describe('GET /api/github/repos', () => {
     const res = createMockRes();
     await handler({} as NextApiRequest, res);
     expect(res.statusCode).toBe(500);
+  });
+
+  it('should return 502 on GraphQL errors', async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: () =>
+        Promise.resolve({ errors: [{ message: 'Something went wrong' }] }),
+    });
+    const res = createMockRes();
+    await handler({} as NextApiRequest, res);
+    expect(res.statusCode).toBe(502);
   });
 });

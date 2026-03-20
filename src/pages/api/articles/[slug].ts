@@ -14,9 +14,7 @@ export default async function handler(
 
   try {
     // Try published article by username/slug
-    const published = await fetch(
-      `${DEVTO_API}/articles/${USERNAME}/${slug}`
-    );
+    const published = await fetch(`${DEVTO_API}/articles/${USERNAME}/${slug}`);
 
     if (published.ok) {
       return res.status(200).json(await published.json());
