@@ -10,8 +10,10 @@
   --color-primary: #5c7cfa;
 }
 
-html {
+html,
+body {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 a {

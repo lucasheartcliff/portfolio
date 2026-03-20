@@ -24,7 +24,9 @@ export default async function handler(
     const response = await fetch(url);
 
     if (!response.ok) {
-      console.error(`[API] GET /api/wakatime/${stat} failed: upstream returned ${response.status}`);
+      console.error(
+        `[API] GET /api/wakatime/${stat} failed: upstream returned ${response.status}`
+      );
       return res
         .status(response.status)
         .json({ error: 'Failed to fetch wakatime data' });
