@@ -13,6 +13,7 @@ function Scroll({ children, ...props }: Props, ref: any) {
     <Scrollbars
       ref={ref}
       hideTracksWhenNotNeeded={true}
+      
       renderTrackVertical={(p) => (
         <div
           {...p}
@@ -58,7 +59,7 @@ function Scroll({ children, ...props }: Props, ref: any) {
           className="scroll-view"
           style={{
             ...p.style,
-            marginBottom: -16,
+            marginBottom: -17,
             border: 0,
             boxShadow: 'none',
           }}
