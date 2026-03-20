@@ -5,7 +5,6 @@ import {
 } from '../../utils/url';
 
 describe('URL constants', () => {
-
   it('GITHUB_PROFILE should build correct URL', () => {
     expect(GITHUB_PROFILE('testuser')).toBe(
       'https://api.github.com/users/testuser'
