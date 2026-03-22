@@ -6,7 +6,7 @@ interface Props {
 
 export default function Block({ children }: Props) {
   return (
-    <div className="flex min-w-0 flex-1 p-2 sm:align-middle md:p-5">
+    <div className="flex min-w-0 flex-1 p-3 sm:align-middle md:p-5">
       {children}
     </div>
   );

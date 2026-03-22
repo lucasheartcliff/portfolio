@@ -41,7 +41,11 @@ export default function ArticleCard({ article }: Props) {
         </div>
 
         <div className="ml-3 mt-1 flex shrink-0 items-center justify-center">
-          <Link target="_blank" href={`/articles/${article.slug}`}>
+          <Link
+            target="_blank"
+            href={`/articles/${article.slug}`}
+            skipLocaleHandling
+          >
             <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
           </Link>
         </div>

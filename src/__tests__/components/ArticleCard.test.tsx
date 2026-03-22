@@ -81,7 +81,7 @@ describe('ArticleCard', () => {
   it('should render external link to article', () => {
     render(<ArticleCard article={article} />);
     const link = screen.getByRole('link');
-    expect(link).toHaveAttribute('href', '/en/articles/test-article');
+    expect(link).toHaveAttribute('href', '/articles/test-article');
   });
 
   it('should format the date with locale options', () => {
