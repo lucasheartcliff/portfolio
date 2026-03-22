@@ -104,7 +104,7 @@ const buildState = (
       offsetX: 10,
       title: {
         text: `${messages.timeWorked} (h)`,
-        offsetY: 15,
+        offsetY: 10,
         style: {
           cssClass: 'text-sm md:text-base',
           color: isDark ? '#f3f4f6' : '#111827',

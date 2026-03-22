@@ -99,7 +99,7 @@ export default function AsideNav({
       <button
         onClick={() => setOpen((v) => !v)}
         style={{ left: open ? panelWidth : 0 }}
-        className="absolute top-1/2 -translate-y-1/2 rounded-r-lg border-0 bg-white p-2.5 text-gray-500 shadow-md transition-all duration-300 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:shadow-gray-900/50 dark:hover:text-gray-200"
+        className="absolute top-1/2 -translate-y-1/2 rounded-r-lg border-0 bg-white p-2.5 text-gray-600 shadow-md transition-all duration-300 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:shadow-gray-900/50 dark:hover:text-gray-200"
         aria-label={open ? 'Hide menu' : 'Show menu'}
       >
         {open ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
@@ -120,7 +120,6 @@ export default function AsideNav({
               {...props}
               style={{
                 ...props.style,
-                marginBottom: -16,
                 border: 0,
                 boxShadow: 'none',
               }}
