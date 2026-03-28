@@ -12,8 +12,6 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useContext, useEffect, useState } from 'react';
 
-import { DarkModeContext } from '@/pages/_app';
-
 import ArticleGrid from '@/components/ArticleGrid';
 import AsideNav from '@/components/AsideNav';
 import CertificateCard from '@/components/CertificateCard';
@@ -31,6 +29,7 @@ import TypedRole from '@/components/TypedRole';
 import Block from '@/layouts/Block';
 import { Meta } from '@/layouts/Meta';
 import Row from '@/layouts/Row';
+import { DarkModeContext } from '@/pages/_app';
 import profile from '@/public/assets/jsons/profile.json';
 import type { DevtoArticleIndex } from '@/services/devto';
 import { Main } from '@/templates/Main';
@@ -265,7 +264,9 @@ const Index = () => {
                     style={{
                       height: '30rem',
                       width: '32rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${isDark ? 'cover-dark' : 'cover'}.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'cover-dark' : 'cover'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -348,7 +349,9 @@ const Index = () => {
                     style={{
                       height: '36rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${isDark ? 'experience-dark' : 'experience'}.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'experience-dark' : 'experience'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -400,7 +403,9 @@ const Index = () => {
                     style={{
                       height: '36rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${isDark ? 'education-dark' : 'education'}.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'education-dark' : 'education'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -414,7 +419,9 @@ const Index = () => {
                     style={{
                       height: '28rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${isDark ? 'certificate-dark' : 'certificate'}.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'certificate-dark' : 'certificate'
+                      }.png)`,
                     }}
                   />
                 </div>
