@@ -369,3 +369,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **⭐ If you find this project useful, please consider giving it a star!**
+
+---
+
+## ☕ Support
+
+If you enjoy this project and want to support my work, consider buying me a coffee!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/lucasheartcliff)
