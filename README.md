@@ -19,6 +19,7 @@ A modern, multilingual portfolio website built with Next.js and TypeScript, show
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Contributing](#-contributing)
 - [License](#-license)
+- [Support](#-support)
 
 ---
 
@@ -369,3 +370,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **⭐ If you find this project useful, please consider giving it a star!**
+
+---
+
+## ☕ Support
+
+If you enjoy this project and want to support my work, consider buying me a coffee!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/lucasheartcliff)
