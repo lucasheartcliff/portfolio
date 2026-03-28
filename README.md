@@ -19,6 +19,7 @@ A modern, multilingual portfolio website built with Next.js and TypeScript, show
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Contributing](#-contributing)
 - [License](#-license)
+- [Support](#-support)
 
 ---
 
