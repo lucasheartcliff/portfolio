@@ -18,6 +18,7 @@ import CertificateCard from '@/components/CertificateCard';
 // import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
+import KofiButton from '@/components/KofiButton';
 import { SocialLink } from '@/components/Link';
 import LoadingScreen from '@/components/LoadingScreen';
 import ProjectGrid from '@/components/ProjectGrid';
@@ -321,7 +322,9 @@ const Index = () => {
                     style={{
                       height: '36rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/languages.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'languages-dark' : 'languages'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -539,6 +542,7 @@ const Index = () => {
             */}
           </div>
           <Footer />
+          {!isLoading && <KofiButton username={username} />}
         </>
       </Main>
     </>
