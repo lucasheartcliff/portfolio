@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import type { AsideSection } from '@/components/AsideNav';
 import AsideNav from '@/components/AsideNav';
+import { ClickableImage } from '@/components/ImageLightbox';
 import { Meta } from '@/layouts/Meta';
 import type { DevtoArticleFull } from '@/services/devto';
 import { normalizeTags } from '@/services/devto';
@@ -73,13 +74,39 @@ const markdownComponents = {
   h4: createHeadingRenderer(4),
   h5: createHeadingRenderer(5),
   h6: createHeadingRenderer(6),
+  img: ({ src, alt }: { src?: string; alt?: string }) => (
+    <ClickableImage src={src} alt={alt} />
+  ),
 };
+
+const FONT_SIZE_OPTIONS = [12, 14, 16, 18, 20, 22, 24, 26, 28];
+const FONT_SIZE_DEFAULT = 5; // index for 22px
+
+function getInitialFontSizeIndex(): number {
+  if (typeof window === 'undefined') return FONT_SIZE_DEFAULT;
+  const saved = Number(localStorage.getItem('article-font-size-idx'));
+  if (!Number.isNaN(saved) && saved >= 0 && saved < FONT_SIZE_OPTIONS.length)
+    return saved;
+  return FONT_SIZE_DEFAULT;
+}
 
 export default function ArticlePage() {
   const router = useRouter();
   const { slug } = router.query;
   const [article, setArticle] = useState<DevtoArticleFull | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fontIdx, setFontIdx] = useState(FONT_SIZE_DEFAULT);
+
+  useEffect(() => {
+    setFontIdx(getInitialFontSizeIndex());
+  }, []);
+
+  const handleFontChange = useCallback((idx: number) => {
+    setFontIdx(idx);
+    localStorage.setItem('article-font-size-idx', String(idx));
+  }, []);
+
+  const articleFontSize = FONT_SIZE_OPTIONS[fontIdx] || 18;
 
   useEffect(() => {
     if (!slug) return;
@@ -165,9 +192,9 @@ export default function ArticlePage() {
         />
       </Head>
       <AsideNav sections={sections} translate={false} widthRem={18} />
-      <article className="mx-auto max-w-4xl px-4 py-8">
+      <article className="mx-auto max-w-4xl overflow-x-hidden px-4 py-8">
         {article.cover_image && (
-          <img
+          <ClickableImage
             src={article.cover_image}
             alt={article.title}
             className="mb-6 h-64 w-full rounded-lg object-cover md:h-96"
@@ -201,7 +228,49 @@ export default function ArticlePage() {
           </div>
         )}
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="mb-4 flex items-center justify-end gap-2">
+          <span
+            className="text-gray-400 dark:text-gray-500"
+            style={{ fontSize: 13 }}
+          >
+            A
+          </span>
+          <button
+            type="button"
+            onClick={() => handleFontChange(Math.max(0, fontIdx - 1))}
+            disabled={fontIdx === 0}
+            aria-label="Decrease font size"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-lg text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+          >
+            −
+          </button>
+          <span className="min-w-[3.5ch] text-center text-sm font-medium tabular-nums text-gray-600 dark:text-gray-300">
+            {articleFontSize}px
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              handleFontChange(
+                Math.min(FONT_SIZE_OPTIONS.length - 1, fontIdx + 1)
+              )
+            }
+            disabled={fontIdx === FONT_SIZE_OPTIONS.length - 1}
+            aria-label="Increase font size"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-lg text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+          >
+            +
+          </button>
+          <span
+            className="text-gray-400 dark:text-gray-500"
+            style={{ fontSize: 20 }}
+          >
+            A
+          </span>
+        </div>
+        <div
+          className="prose prose-lg dark:prose-invert max-w-none text-justify [&_pre]:overflow-x-auto"
+          style={{ fontSize: `${articleFontSize}px` }}
+        >
           <ReactMarkdown components={markdownComponents}>
             {article.body_markdown}
           </ReactMarkdown>

@@ -10,7 +10,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import ArticleGrid from '@/components/ArticleGrid';
 import AsideNav from '@/components/AsideNav';
@@ -18,6 +18,7 @@ import CertificateCard from '@/components/CertificateCard';
 // import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
+import KofiButton from '@/components/KofiButton';
 import { SocialLink } from '@/components/Link';
 import LoadingScreen from '@/components/LoadingScreen';
 import ProjectGrid from '@/components/ProjectGrid';
@@ -29,6 +30,7 @@ import TypedRole from '@/components/TypedRole';
 import Block from '@/layouts/Block';
 import { Meta } from '@/layouts/Meta';
 import Row from '@/layouts/Row';
+import { DarkModeContext } from '@/pages/_app';
 import profile from '@/public/assets/jsons/profile.json';
 import type { DevtoArticleIndex } from '@/services/devto';
 import { Main } from '@/templates/Main';
@@ -48,6 +50,7 @@ const Index = () => {
   const [articles, setArticles] = useState<DevtoArticleIndex[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const { isDark } = useContext(DarkModeContext);
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
@@ -92,7 +95,15 @@ const Index = () => {
   useEffect(() => {
     fetch('/api/articles')
       .then((res) => (res.ok ? res.json() : []))
-      .then(setArticles)
+      .then((fetchedArticles: DevtoArticleIndex[]) =>
+        setArticles(
+          [...fetchedArticles].sort(
+            (a, b) =>
+              new Date(b.published_at).getTime() -
+              new Date(a.published_at).getTime()
+          )
+        )
+      )
       .catch(() => {});
 
     Promise.all([
@@ -196,7 +207,7 @@ const Index = () => {
                     </span>
                   </Reveal>
                   <Reveal delay={0.45}>
-                    <p className="my-5 text-pretty text-left text-xl text-gray-600 dark:text-gray-400 md:text-3xl">
+                    <p className="my-5 text-pretty text-justify text-xl text-gray-600 dark:text-gray-400 md:text-3xl">
                       {t(introductionBio)}
                     </p>
                   </Reveal>
@@ -262,7 +273,9 @@ const Index = () => {
                     style={{
                       height: '30rem',
                       width: '32rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/cover.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'cover-dark' : 'cover'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -288,7 +301,7 @@ const Index = () => {
                       <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('About')}
                       </h3>
-                      <p className="text-pretty text-left text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
+                      <p className="text-pretty text-justify text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
                         {t(bio)}
                       </p>
                     </div>
@@ -317,7 +330,9 @@ const Index = () => {
                     style={{
                       height: '36rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/languages.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'languages-dark' : 'languages'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -345,7 +360,9 @@ const Index = () => {
                     style={{
                       height: '36rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/experience.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'experience-dark' : 'experience'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -397,7 +414,9 @@ const Index = () => {
                     style={{
                       height: '36rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/education.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'education-dark' : 'education'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -411,7 +430,9 @@ const Index = () => {
                     style={{
                       height: '28rem',
                       width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/certificate.png)`,
+                      backgroundImage: `url(${router.basePath}/assets/images/${
+                        isDark ? 'certificate-dark' : 'certificate'
+                      }.png)`,
                     }}
                   />
                 </div>
@@ -473,7 +494,7 @@ const Index = () => {
             {articles.length > 0 && (
               <Row>
                 <Block>
-                  <div className="flex flex-1 flex-col ">
+                  <div className="flex min-w-0 flex-1 flex-col">
                     <Reveal>
                       <div id="articles">
                         <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
@@ -529,6 +550,7 @@ const Index = () => {
             */}
           </div>
           <Footer />
+          {!isLoading && <KofiButton username={username} />}
         </>
       </Main>
     </>
