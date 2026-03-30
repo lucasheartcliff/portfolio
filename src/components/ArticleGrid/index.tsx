@@ -12,7 +12,7 @@ export default function ArticleGrid({ articles }: Props) {
   if (!articles.length) return null;
 
   return (
-    <div className="my-2 flex w-full flex-wrap justify-items-start gap-1.5">
+    <div className="my-2 flex min-w-0 w-full flex-wrap justify-items-start gap-1.5 overflow-hidden">
       {articles.map((article) => (
         <ArticleCard key={article.id} article={article} />
       ))}

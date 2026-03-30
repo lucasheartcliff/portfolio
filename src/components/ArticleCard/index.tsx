@@ -51,7 +51,7 @@ export default function ArticleCard({ article }: Props) {
         </div>
       </div>
       {article.description && (
-        <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+        <p className="mt-2 line-clamp-2 break-words text-sm text-gray-600 dark:text-gray-400">
           {article.description}
         </p>
       )}
