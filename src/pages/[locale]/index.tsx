@@ -95,7 +95,15 @@ const Index = () => {
   useEffect(() => {
     fetch('/api/articles')
       .then((res) => (res.ok ? res.json() : []))
-      .then(setArticles)
+      .then((fetchedArticles: DevtoArticleIndex[]) =>
+        setArticles(
+          [...fetchedArticles].sort(
+            (a, b) =>
+              new Date(b.published_at).getTime() -
+              new Date(a.published_at).getTime()
+          )
+        )
+      )
       .catch(() => {});
 
     Promise.all([
@@ -199,7 +207,7 @@ const Index = () => {
                     </span>
                   </Reveal>
                   <Reveal delay={0.45}>
-                    <p className="my-5 text-pretty text-left text-xl text-gray-600 dark:text-gray-400 md:text-3xl">
+                    <p className="my-5 text-pretty text-justify text-xl text-gray-600 dark:text-gray-400 md:text-3xl">
                       {t(introductionBio)}
                     </p>
                   </Reveal>
@@ -293,7 +301,7 @@ const Index = () => {
                       <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
                         {t('About')}
                       </h3>
-                      <p className="text-pretty text-left text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
+                      <p className="text-pretty text-justify text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
                         {t(bio)}
                       </p>
                     </div>
@@ -486,7 +494,7 @@ const Index = () => {
             {articles.length > 0 && (
               <Row>
                 <Block>
-                  <div className="flex flex-1 flex-col ">
+                  <div className="flex min-w-0 flex-1 flex-col">
                     <Reveal>
                       <div id="articles">
                         <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">

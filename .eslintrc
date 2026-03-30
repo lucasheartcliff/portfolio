@@ -60,7 +60,9 @@
         "simple-import-sort/exports": "error", // Export configuration for `eslint-plugin-simple-import-sort`
         "@typescript-eslint/no-unused-vars": "off",
         "unused-imports/no-unused-imports": "warn",
-        "unused-imports/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+        "unused-imports/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "tailwindcss/no-custom-classname": "off",
+        "no-console": "off"
       }
     },
     // Configuration for testing
