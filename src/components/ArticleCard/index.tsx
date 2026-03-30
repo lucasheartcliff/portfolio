@@ -18,7 +18,7 @@ export default function ArticleCard({ article }: Props) {
   const locale = i18n.language || 'en';
 
   return (
-    <div className="flex w-full min-w-0 flex-col overflow-hidden border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl">
+    <div className="flex min-w-0 w-full flex-col overflow-hidden border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl">
       <div className="flex flex-row items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="truncate font-semibold text-black dark:text-white">
