@@ -1,37 +1,40 @@
 import {
-  DownloadOutlined,
   GithubOutlined,
   LinkedinOutlined,
   MailOutlined,
-  WhatsAppOutlined,
 } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { Collapse } from 'antd';
+import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
+import ArticleGrid from '@/components/ArticleGrid';
+import AsideNav from '@/components/AsideNav';
 import CertificateCard from '@/components/CertificateCard';
+// import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import { SocialLink } from '@/components/Link';
+import LoadingScreen from '@/components/LoadingScreen';
 import ProjectGrid from '@/components/ProjectGrid';
+import Reveal from '@/components/Reveal';
 import Scroll from '@/components/Scroll';
+import TechStack from '@/components/TechStack';
 import Timeline from '@/components/Timeline';
+import TypedRole from '@/components/TypedRole';
 import Block from '@/layouts/Block';
 import { Meta } from '@/layouts/Meta';
 import Row from '@/layouts/Row';
 import profile from '@/public/assets/jsons/profile.json';
-import { apiFetch } from '@/services';
+import type { DevtoArticleIndex } from '@/services/devto';
 import { Main } from '@/templates/Main';
 import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
-import {
-  GITHUB_PINNED_REPO,
-  GITHUB_REPO,
-  WAKATIME_CODING_TIME,
-  WAKATIME_LANGUAGES,
-} from '@/utils/url';
+import { GITHUB_REPO } from '@/utils/url';
 
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
@@ -42,9 +45,22 @@ const Index = () => {
   const [data, setData] = useState<any[]>([]);
   const [language, setLanguage] = useState<string>('en');
   const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
+  const [articles, setArticles] = useState<DevtoArticleIndex[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
+
+  const SECTIONS = [
+    { key: 'about', label: 'About' },
+    { key: 'languages', label: 'Languages' },
+    { key: 'tech-stack', label: 'Tech Stack' },
+    { key: 'experience', label: 'Experience' },
+    { key: 'education', label: 'Education' },
+    { key: 'certification', label: 'Certifications' },
+    ...(articles.length > 0 ? [{ key: 'articles', label: 'Articles' }] : []),
+    ...(pinnedRepos.length > 0 ? [{ key: 'projects', label: 'Projects' }] : []),
+  ];
 
   useEffect(() => {
     const l = currentLocale as string;
@@ -64,33 +80,34 @@ const Index = () => {
     lastName,
     username,
     logoTitle,
-    phone,
     introductionBio,
     bio,
     email,
     experience,
     education,
     certification,
-  } = profile;
+    techStack,
+  } = profile as any;
   const name = `${firstName} ${lastName}`.trim();
   useEffect(() => {
+    fetch('/api/articles')
+      .then((res) => (res.ok ? res.json() : []))
+      .then(setArticles)
+      .catch(() => {});
+
     Promise.all([
-      apiFetch(GITHUB_PINNED_REPO(username)).get(),
-      apiFetch(WAKATIME_CODING_TIME).getJsonP(),
-      apiFetch(WAKATIME_LANGUAGES).getJsonP(),
+      fetch('/api/github/repos').then((r) => (r.ok ? r.json() : [])),
+      fetch('/api/wakatime/coding-time').then((r) => (r.ok ? r.json() : {})),
+      fetch('/api/wakatime/languages').then((r) => (r.ok ? r.json() : {})),
     ])
-      .then((responses) => {
-        return responses.map((r) => r.json());
-      })
-      .then(async ([repos, codingTime, languages]: any[]) => {
-        const r = (await repos) as any;
-        const c = (await codingTime) as any;
-        const langs = (await languages) as any;
+      .then(([r, c, langs]: any[]) => {
         setPinnedRepos(
-          r.map((v: any) => ({
+          (Array.isArray(r) ? r : []).map((v: any) => ({
             ...v,
             url: GITHUB_REPO(username, v.name),
             name: capitalize(v.name?.replace(/-/g, ' ')),
+            description: v.description || '',
+            tags: v.topics || [],
           }))
         );
         const totalSeconds =
@@ -117,10 +134,35 @@ const Index = () => {
       .catch((err) => {
         // eslint-disable-next-line no-console
         console.error(err);
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 2000); // Wait 2s to show off the loading animation
       });
   }, []);
   return (
     <>
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingScreen key="loader" name={name} />}
+      </AnimatePresence>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name,
+              jobTitle: 'Senior Software Engineer',
+              url: 'https://lucasheartcliff.com.br',
+              email,
+              sameAs: [
+                `https://github.com/${username}`,
+                `https://linkedin.com/in/${username}`,
+              ],
+            }),
+          }}
+        />
+      </Head>
       <Main
         title={logoTitle}
         meta={
@@ -132,50 +174,56 @@ const Index = () => {
         }
       >
         <>
-          <div className="mx-2 md:mx-14">
+          <AsideNav sections={SECTIONS} />
+          <div className="mx-2 overflow-x-hidden md:mx-14">
             <Row>
               <Block>
                 <div className="flex flex-col">
-                  <h1 className="text-4xl font-bold text-black md:text-7xl">
-                    {t(name)}
-                  </h1>
-                  <h2 className="text-xl font-semibold italic text-black md:text-4xl ">
-                    {`@${t(username)}`}
-                  </h2>
-                  <p className="my-5 text-pretty text-justify text-xl text-gray-600 md:text-3xl">
-                    {t(introductionBio)}
-                  </p>
-                  <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline">
-                    <SocialLink
-                      title="GitHub"
-                      href={`https://github.com/${username}`}
-                    >
-                      <Icon color={'#000000'}>
-                        <GithubOutlined />
-                      </Icon>
-                    </SocialLink>
-                    <SocialLink
-                      title="WhatsApp"
-                      href={`https://api.whatsapp.com/send?phone=${phone}`}
-                    >
-                      <Icon color={'#25D366'}>
-                        <WhatsAppOutlined />
-                      </Icon>
-                    </SocialLink>
-                    {/* <SocialLink href={`https://x.com/${username}`}> 
+                  <Reveal>
+                    <h1 className="text-4xl font-bold text-black dark:text-white md:text-7xl">
+                      {t(name)}
+                    </h1>
+                  </Reveal>
+                  <Reveal delay={0.35}>
+                    <h2 className="text-xl font-semibold text-black dark:text-gray-200 md:text-4xl">
+                      <TypedRole />
+                    </h2>
+                  </Reveal>
+                  <Reveal delay={0.4}>
+                    <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
+                      <span className="h-2 w-2 rounded-full bg-green-500" />
+                      {t('Available for opportunities')}
+                    </span>
+                  </Reveal>
+                  <Reveal delay={0.45}>
+                    <p className="my-5 text-pretty text-left text-xl text-gray-600 dark:text-gray-400 md:text-3xl">
+                      {t(introductionBio)}
+                    </p>
+                  </Reveal>
+                  <Reveal delay={0.55}>
+                    <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline dark:text-white">
+                      <SocialLink
+                        title="GitHub"
+                        href={`https://github.com/${username}`}
+                      >
+                        <Icon color={'#000000'}>
+                          <GithubOutlined />
+                        </Icon>
+                      </SocialLink>
+                      {/* <SocialLink href={`https://x.com/${username}`}> 
                       <Icon color={'#00acee'}> 
                         <TwitterOutlined /> 
                       </Icon> 
                     </SocialLink>  */}
-                    <SocialLink
-                      title="LinkedIn"
-                      href={`https://linkedin.com/in/${username}`}
-                    >
-                      <Icon color={'#0e76a8'}>
-                        <LinkedinOutlined />
-                      </Icon>
-                    </SocialLink>
-                    {/* <SocialLink
+                      <SocialLink
+                        title="LinkedIn"
+                        href={`https://linkedin.com/in/${username}`}
+                      >
+                        <Icon color={'#0e76a8'}>
+                          <LinkedinOutlined />
+                        </Icon>
+                      </SocialLink>
+                      {/* <SocialLink
                       title="Instagram"
                       href={`https://instagram.com/${username}`}
                     >
@@ -183,32 +231,28 @@ const Index = () => {
                         <InstagramOutlined />
                       </Icon>
                     </SocialLink> */}
-                    <SocialLink
-                      title="Email"
-                      href={`mailto:${email}`}
-                      skipLocaleHandling
-                    >
-                      <Icon color={'#d44638'}>
-                        <MailOutlined />
-                      </Icon>
-                    </SocialLink>
-                    <div className="cursor-pointer rounded hover:no-underline">
-                      <Tooltip
-                        className="hover:no-underline"
-                        title="Download CV"
+                      <SocialLink
+                        title="Email"
+                        href={`mailto:${email}`}
+                        skipLocaleHandling
                       >
-                        <a
-                          href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
-                          download="Lucas_Morais_Resume.pdf"
-                          className="hover:no-underline"
-                        >
-                          <Icon color={'#0e76a8'}>
-                            <DownloadOutlined />
-                          </Icon>
-                        </a>
-                      </Tooltip>
+                        <Icon color={'#d44638'}>
+                          <MailOutlined />
+                        </Icon>
+                      </SocialLink>
                     </div>
-                  </div>
+                  </Reveal>
+                  <Reveal delay={0.65}>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <a
+                        href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
+                        download="Lucas_Morais_Resume.pdf"
+                        className="rounded-lg border-2 border-primary px-6 py-3 text-base font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+                      >
+                        {t('Download CV')}
+                      </a>
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
               <Block>
@@ -227,27 +271,28 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="mt-5 flex w-full items-center justify-center md:mt-0">
-                  <div>
-                    <div
-                      className="h-80 w-80 rounded-full bg-cover"
-                      style={{
-                        backgroundImage: `url(${router.basePath}/assets/images/profile.jpeg)`,
-                      }}
-                    />
-                  </div>
+                  <Image
+                    src={`${router.basePath}/assets/images/profile.jpeg`}
+                    alt={name}
+                    width={320}
+                    height={320}
+                    className="h-80 w-80 rounded-full object-cover"
+                    priority
+                  />
                 </div>
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="about"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('About')}
-                  </h3>
-                  <p className="text-pretty text-justify text-lg text-gray-600 md:text-2xl">
-                    {t(bio)}
-                  </p>
+                  <Reveal>
+                    <div id="about">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('About')}
+                      </h3>
+                      <p className="text-pretty text-left text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
+                        {t(bio)}
+                      </p>
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
@@ -255,13 +300,14 @@ const Index = () => {
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <h3
-                    id="languages"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Languages')}
-                  </h3>
-                  <LanguageChart data={data} />
+                  <Reveal>
+                    <div id="languages">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Languages')}
+                      </h3>
+                      <LanguageChart data={data} />
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
               <Block>
@@ -274,6 +320,20 @@ const Index = () => {
                       backgroundImage: `url(${router.basePath}/assets/images/languages.png)`,
                     }}
                   />
+                </div>
+              </Block>
+            </Row>
+            <Row>
+              <Block>
+                <div className="flex flex-1 flex-col">
+                  <Reveal>
+                    <div id="tech-stack">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Tech Stack')}
+                      </h3>
+                      <TechStack data={techStack} />
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
@@ -292,30 +352,42 @@ const Index = () => {
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col ">
-                  <h3
-                    id="experience"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Experiences')}
-                  </h3>
-                  <Scroll style={{ height: 500 }}>
-                    <Timeline data={experience} />
-                  </Scroll>
+                  <Reveal>
+                    <div id="experience">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Experience')}
+                      </h3>
+                      <div className="md:hidden">
+                        <Timeline data={experience} />
+                      </div>
+                      <div className="hidden md:block">
+                        <Scroll style={{ height: 500 }}>
+                          <Timeline data={experience} />
+                        </Scroll>
+                      </div>
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="education"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Educations')}
-                  </h3>
-                  <Scroll style={{ height: 500 }}>
-                    <Timeline data={education} />
-                  </Scroll>
+                  <Reveal>
+                    <div id="education">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Education')}
+                      </h3>
+                      <div className="md:hidden">
+                        <Timeline data={education} />
+                      </div>
+                      <div className="hidden md:block">
+                        <Scroll style={{ height: 500 }}>
+                          <Timeline data={education} />
+                        </Scroll>
+                      </div>
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
               <Block>
@@ -345,40 +417,116 @@ const Index = () => {
                 </div>
               </Block>
               <Block>
-                <div className="flex flex-1 flex-col">
-                  <h3
-                    id="certification"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Certifications')}
-                  </h3>
-                  <Scroll style={{ height: 400 }}>
-                    {certification?.map((v, key) => (
-                      <div key={key} className="">
-                        <CertificateCard key={key} {...v} />
-                      </div>
-                    ))}
-                  </Scroll>
+                <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+                  <Reveal>
+                    <div id="certification" className="min-w-0">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Certifications')}
+                      </h3>
+                      <Collapse
+                        defaultActiveKey={['certifications', 'courses']}
+                        ghost
+                        items={[
+                          {
+                            key: 'certifications',
+                            label: (
+                              <span className="text-lg font-semibold text-black dark:text-white">
+                                {t('Certifications')}
+                              </span>
+                            ),
+                            children: (
+                              <div>
+                                {certification
+                                  ?.filter(
+                                    (v: any) => v.type === 'certification'
+                                  )
+                                  .map((v: any, key: number) => (
+                                    <CertificateCard key={key} {...v} />
+                                  ))}
+                              </div>
+                            ),
+                          },
+                          {
+                            key: 'courses',
+                            label: (
+                              <span className="text-lg font-semibold text-black dark:text-white">
+                                {t('Courses')}
+                              </span>
+                            ),
+                            children: (
+                              <div>
+                                {certification
+                                  ?.filter((v: any) => v.type === 'course')
+                                  .map((v: any, key: number) => (
+                                    <CertificateCard key={key} {...v} />
+                                  ))}
+                              </div>
+                            ),
+                          },
+                        ]}
+                      />
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
+            {articles.length > 0 && (
+              <Row>
+                <Block>
+                  <div className="flex flex-1 flex-col ">
+                    <Reveal>
+                      <div id="articles">
+                        <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                          {t('Articles')}
+                        </h3>
+                        <ArticleGrid articles={articles.slice(0, 6)} />
+                      </div>
+                    </Reveal>
+                  </div>
+                </Block>
+              </Row>
+            )}
+            {pinnedRepos.length > 0 && (
+              <Row>
+                <Block>
+                  <div className="flex flex-1 flex-col">
+                    <Reveal>
+                      <div id="projects">
+                        <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                          {t('Projects')}
+                        </h3>
+                        <ProjectGrid
+                          initialItemsCount={8}
+                          itemsToAdd={8}
+                          items={pinnedRepos}
+                        />
+                      </div>
+                    </Reveal>
+                  </div>
+                </Block>
+              </Row>
+            )}
+            {/* Contact section hidden until ready
             <Row>
               <Block>
                 <div className="flex flex-1 flex-col">
-                  <h3
-                    id="projects"
-                    className="mb-3 text-xl font-semibold text-black md:text-4xl "
-                  >
-                    {t('Projects')}
-                  </h3>
-                  <ProjectGrid
-                    initialItemsCount={8}
-                    itemsToAdd={8}
-                    items={pinnedRepos}
-                  />
+                  <Reveal>
+                    <div id="contact">
+                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
+                        {t('Contact')}
+                      </h3>
+                      <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
+                        {t(
+                          'Have a project in mind or just want to say hello? Feel free to reach out!'
+                        )}
+                      </p>
+                      <ContactForm />
+                    </div>
+                  </Reveal>
                 </div>
               </Block>
             </Row>
+            */}
           </div>
           <Footer />
         </>

@@ -1,360 +1,264 @@
-# 💼 Portfolio
+# Portfolio
 
-A modern, multilingual portfolio website built with Next.js and TypeScript, showcasing professional experiences, technical skills, certifications, and projects. Features a fully responsive design with internationalization support for 6 languages.
+A personal portfolio website built with Next.js 13, TypeScript, and Tailwind CSS. Showcases professional experience, technical skills, certifications, articles, and open-source projects with bilingual support (English and Portuguese).
 
-🔗 **Live Preview**: [https://lucasheartcliff.com.br](https://lucasheartcliff.com.br)
-
----
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Available Scripts](#-available-scripts)
-- [Internationalization](#-internationalization)
-- [Testing](#-testing)
-- [Deployment](#-deployment)
-- [CI/CD Pipeline](#-cicd-pipeline)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Support](#-support)
+**Live**: [lucasheartcliff.com.br](https://lucasheartcliff.com.br)
 
 ---
 
-## ✨ Features
+## Features
 
-### Core Features
-* 🔍 **About Section** - Personal introduction with professional summary
-* 📊 **Interactive Charts** - Visual representation of programming language experience using ApexCharts
-* 👨‍💻 **Career Timeline** - Chronological display of professional roles and achievements
-* 🎓 **Certifications** - Showcase of completed courses and certifications from platforms like Udemy and Alura
-* 📁 **Projects Gallery** - Portfolio of personal and professional projects with GitHub links
-* 📄 **PDF Resume** - Downloadable resume generated with React-PDF
+### Page Sections
 
-### Technical Features
-* 🌐 **Multilingual Support** - Full i18n implementation supporting 6 languages (EN, PT, FR, ES, DE, IT)
-* 📱 **Fully Responsive** - Mobile-first design that works seamlessly across all devices
-* 🎨 **Modern UI/UX** - Clean, professional design with Tailwind CSS
-* ⚡ **Static Site Generation** - Optimized performance with Next.js SSG
-* 🔍 **SEO Optimized** - Meta tags, sitemaps, and structured data
-* ♿ **Accessibility** - WCAG compliant with semantic HTML
+- **Hero** — Name, animated rotating role titles (Framer Motion), social links (GitHub, LinkedIn, Email), availability badge, and downloadable PDF resume
+- **About** — Professional summary with profile photo
+- **Languages** — Interactive horizontal bar chart (ApexCharts) showing programming language experience time sourced from WakaTime
+- **Tech Stack** — Grid of technologies organized by category (Backend, Frontend, Database, DevOps, Infrastructure) with devicon images
+- **Experience** — Collapsible career timeline with company grouping, date ranges, duration calculation, tech tag pills, and scrollable overflow
+- **Education** — Same timeline format for academic background
+- **Certifications** — Collapsible panels separating certifications and courses, with platform badges and external links
+- **Articles** — Dev.to article cards sorted newest-first with cover image, tags, reading time, publish date, and a **"New" badge** for articles published within the last 30 days. Section auto-hides when no articles are available
+- **Projects** — GitHub pinned repository cards with language, stars, forks, description, and topic tags. Paginated with "Show more" button. Section auto-hides when no repos are available
+- **Contact** — Form with name, email, subject, and message fields. Sends email via Nodemailer (SMTP/Gmail). Rate-limited by IP. Currently hidden, ready to enable
 
-### Upcoming Features
-* 🔜 **Blog Platform** - Medium-like article publishing system (see [GitHub Issues](https://github.com/lucasheartcliff/portfolio/issues))
+### Article Reader
 
----
+Dedicated page (`/[locale]/articles/[slug]`) that fetches and renders full Dev.to articles as Markdown with:
+- Auto-generated aside navigation from article headings
+- Cover image, tags, reading time, and publish date
+- **Image lightbox** — Click any image (including the cover) to expand it in a fullscreen overlay with zoom toggle, Escape/click-outside to close
+- **Font size controls** — −/+ stepper buttons (12px–28px, default 22px) with localStorage persistence for reader preference
+- Justified text for improved readability
+- JSON-LD structured data for SEO
+- Draft preview support in development mode
 
-## 🚀 Tech Stack
+### UI/UX
 
-### Frontend
-- **Framework**: [Next.js](https://nextjs.org/) 13.x (React 18)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) 3.x
-- **UI Components**: [Ant Design](https://ant.design/) 5.x
-- **Charts**: [ApexCharts](https://apexcharts.com/) with React wrapper
-- **PDF Generation**: [@react-pdf/renderer](https://react-pdf.org/)
+- **Dark Mode** — Toggle in navbar, persisted in localStorage, respects system `prefers-color-scheme`, applies Tailwind `dark:` classes and Ant Design dark algorithm
+- **Scroll Animations** — `Reveal` component wraps sections with Framer Motion fade-in + slide-up triggered on scroll (viewport intersection, fires once)
+- **Scroll-to-Top Button** — Appears after 300px scroll, smooth scrolls to top
+- **Aside Navigation** — Collapsible side panel with section links, scroll-spy active state highlighting, and smooth scroll-to-section
+- **Loading Screen** — Animated splash screen with spinner and name on initial page load
+- **Custom Scrollbar** — `react-custom-scrollbars-2` with styled vertical track, hidden horizontal track
+- **Responsive Design** — Mobile-first layout using Tailwind breakpoints, hidden decorative images on mobile
 
 ### Internationalization
-- **i18n Framework**: [next-i18next](https://github.com/i18next/next-i18next)
-- **Supported Languages**: English, Portuguese, French, Spanish, German, Italian
-- **Language Detection**: Automatic browser language detection
 
-### Development Tools
-- **Linting**: ESLint with Airbnb TypeScript config
-- **Formatting**: Prettier
-- **Git Hooks**: Husky + lint-staged
-- **Commit Convention**: Commitlint (Conventional Commits)
+- **Languages**: English (default), Portuguese
+- **Framework**: next-i18next with `public/locales/{en,pt}/common.json`
+- **Routing**: URL-based (`/en`, `/pt`) with automatic browser language detection
+- **Coverage**: All UI strings, section titles, role names, experience descriptions, certifications, and form labels
 
-### Testing
-- **Unit Testing**: Jest + React Testing Library
-- **E2E Testing**: Cypress
-- **Visual Testing**: Percy (optional)
+### Integrations
 
-### Build & Deployment
-- **Build Tool**: Next.js built-in compiler
-- **Bundle Analyzer**: @next/bundle-analyzer
-- **Deployment**: Netlify (configured with `netlify.toml`)
-- **CI/CD**: GitHub Actions
+| Service | Purpose | API Route |
+|---------|---------|-----------|
+| **Dev.to** | Fetch published articles (and drafts in dev) | `/api/articles`, `/api/articles/[slug]` |
+| **GitHub** | Fetch pinned repositories via berrysauce API | `/api/github/repos` |
+| **WakaTime** | Fetch coding time and language stats | `/api/wakatime/[stat]` (languages, coding-time, activity, editors, code-activity) |
+| **Nodemailer** | Send contact form emails via SMTP | `/api/contact` |
+| **Google Analytics** | Page tracking via `@next/third-parties` | Configured in `_app.tsx` |
+
+### SEO
+
+- `next-sitemap` auto-generates `sitemap.xml` and `robots.txt` post-build
+- `<Meta>` component sets OpenGraph and Twitter Card tags per page
+- JSON-LD structured data for Person (homepage) and Article (article pages)
+- Canonical URL support for articles
 
 ---
 
-## 📂 Project Structure
+## Tech Stack
+
+| Layer | Technologies |
+|-------|-------------|
+| **Framework** | Next.js 13 (Pages Router), React 18, TypeScript |
+| **Styling** | Tailwind CSS 3, Ant Design 5 |
+| **Animations** | Framer Motion |
+| **Charts** | ApexCharts (react-apexcharts) |
+| **Markdown** | react-markdown |
+| **i18n** | next-i18next, react-i18next, i18next |
+| **Scrolling** | react-custom-scrollbars-2 |
+| **Email** | Nodemailer |
+| **Analytics** | Google Analytics (@next/third-parties) |
+| **Testing** | Jest, React Testing Library, Cypress |
+| **Linting** | ESLint (Airbnb TypeScript), Prettier, eslint-plugin-tailwindcss |
+| **Git Hooks** | Husky, lint-staged, Commitlint (Conventional Commits) |
+| **Build** | Next.js compiler, @next/bundle-analyzer |
+| **Deployment** | Docker (multi-stage), Nginx reverse proxy, GitHub Actions CI/CD |
+
+---
+
+## Project Structure
 
 ```
 portfolio/
-├── .github/
-│   └── workflows/          # GitHub Actions CI/CD workflows
-├── cypress/                # E2E tests
+├── .github/workflows/deploy.yml   # CI/CD: test → Docker build → SSH deploy
+├── nginx/nginx.conf                # Reverse proxy with security headers and caching
+├── Dockerfile                      # Multi-stage build (deps → build → standalone runner)
 ├── public/
-│   ├── assets/            # Images, icons, and static files
-│   ├── locales/           # Translation files (en, pt, fr, es, de, it)
-│   └── *.png              # Favicons and app icons
+│   ├── assets/
+│   │   ├── images/                 # Profile photo, section illustrations
+│   │   ├── jsons/profile.json      # Experience, education, certifications, tech stack data
+│   │   └── pdfs/                   # Downloadable CV
+│   └── locales/{en,pt}/common.json # Translation files
 ├── src/
-│   ├── components/        # Reusable React components
-│   │   ├── CertificateCard/
-│   │   ├── LanguageChart/
-│   │   ├── Navbar/
-│   │   ├── ProjectCard/
-│   │   ├── Timeline/
-│   │   └── ...
-│   ├── layouts/           # Page layout components
-│   ├── pages/             # Next.js pages (file-based routing)
-│   │   ├── [locale]/      # Localized routes
-│   │   ├── _app.tsx       # Custom App component
-│   │   └── _document.tsx  # Custom Document component
-│   ├── services/          # API services and data fetching
-│   ├── styles/            # Global styles and Tailwind config
-│   ├── templates/         # Page templates
-│   └── utils/             # Utility functions and helpers
-├── .eslintrc              # ESLint configuration
-├── jest.config.js         # Jest configuration
-├── next.config.js         # Next.js configuration
-├── next-i18next.config.js # i18n configuration
-├── tailwind.config.js     # Tailwind CSS configuration
-├── tsconfig.json          # TypeScript configuration
-└── package.json           # Dependencies and scripts
+│   ├── components/
+│   │   ├── ArticleCard/            # Dev.to article card with cover, tags, reading time, "New" badge
+│   │   ├── ImageLightbox/          # Fullscreen image preview with zoom toggle
+│   │   ├── ArticleGrid/            # Responsive article grid
+│   │   ├── AsideNav/               # Collapsible side navigation with scroll spy
+│   │   ├── CertificateCard/        # Certification entry with platform badge
+│   │   ├── ContactForm/            # Email contact form
+│   │   ├── DarkModeToggle/         # Sun/moon toggle button
+│   │   ├── Footer/                 # "Made with ❤ by" footer
+│   │   ├── Icon/                   # Colored background icon wrapper
+│   │   ├── LanguageChart/          # ApexCharts horizontal bar chart
+│   │   ├── LanguageSelector/       # Dropdown with flag icons
+│   │   ├── Link/                   # Locale-aware link and SocialLink
+│   │   ├── LoadingScreen/          # Animated splash screen
+│   │   ├── logo/                   # <Logo /> angle-bracket title
+│   │   ├── Navbar/                 # Sticky top bar with logo, language, dark mode
+│   │   ├── ProjectCard/            # GitHub repo card with stats
+│   │   ├── ProjectGrid/            # Paginated project grid
+│   │   ├── Reveal/                 # Scroll-triggered Framer Motion animation
+│   │   ├── Scroll/                 # Custom scrollbar wrapper
+│   │   ├── ScrollToTopButton/      # Floating back-to-top button
+│   │   ├── TechStack/              # Tech category grid with devicons
+│   │   ├── Timeline/               # Collapsible parent-child timeline
+│   │   ├── Timeline/Item/          # Timeline entry with duration and tech tags
+│   │   └── TypedRole/              # Animated rotating role titles
+│   ├── layouts/
+│   │   ├── Block.tsx               # Flex section block
+│   │   ├── Meta.tsx                # SEO meta tags (OG, Twitter, canonical)
+│   │   └── Row.tsx                 # Responsive row wrapper
+│   ├── pages/
+│   │   ├── [locale]/index.tsx      # Main portfolio page
+│   │   ├── [locale]/articles/[slug].tsx # Article reader page
+│   │   ├── api/articles.ts         # Dev.to articles list endpoint
+│   │   ├── api/articles/[slug].ts  # Dev.to single article endpoint
+│   │   ├── api/github/repos.ts     # GitHub pinned repos endpoint
+│   │   ├── api/wakatime/[stat].ts  # WakaTime stats endpoint
+│   │   ├── api/contact.ts          # Contact form email endpoint
+│   │   ├── _app.tsx                # DarkModeContext, ConfigProvider, GA
+│   │   └── _document.tsx           # Custom HTML document
+│   ├── services/devto.ts           # Dev.to API client and types
+│   ├── styles/global.css           # Tailwind base, CSS variables, prose styling
+│   ├── templates/Main.tsx          # Main layout (Navbar + Scroll + ScrollToTop)
+│   └── utils/                      # Helpers (locale, URL builders, formatting)
+├── next-i18next.config.js          # i18n locale configuration
+├── next-sitemap.config.js          # Sitemap generation config
+├── tailwind.config.js              # Custom colors, fonts, dark mode config
+└── jest.config.js                  # Test configuration
 ```
 
 ---
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js**: v14.x, v16.x, or v18.x (see `.nvmrc`)
-- **Package Manager**: npm or yarn
+- Node.js 18.x
+- Yarn or npm
 
 ### Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/lucasheartcliff/portfolio.git
-   cd portfolio
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Start the development server**:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-4. **Open your browser** and navigate to: `http://localhost:3000`
-
----
-
-## 📜 Available Scripts
-
-### Development
 ```bash
-npm run dev              # Start development server on localhost:3000
-npm run build            # Create production build
-npm run start            # Start production server
-npm run export           # Export static HTML (SSG)
-npm run build-prod       # Clean, build, and export for production
+git clone https://github.com/lucasheartcliff/portfolio.git
+cd portfolio
+yarn install
+yarn dev
 ```
 
-### Code Quality
-```bash
-npm run lint             # Run ESLint
-npm run format           # Fix linting issues and format code with Prettier
-npm run check-types      # Type-check TypeScript files
-```
-
-### Testing
-```bash
-npm run test             # Run Jest unit tests
-npm run cypress          # Open Cypress test runner (interactive)
-npm run cypress:headless # Run Cypress tests in headless mode
-npm run e2e              # Start dev server and run E2E tests
-npm run e2e:headless     # Start dev server and run E2E tests (headless)
-```
-
-### Build Analysis
-```bash
-npm run build-stats      # Analyze bundle size with webpack-bundle-analyzer
-```
-
-### Utilities
-```bash
-npm run clean            # Remove .next and out directories
-```
-
----
-
-## 🌐 Internationalization
-
-This portfolio supports **6 languages** with automatic detection:
-
-| Language | Code | Flag |
-|----------|------|------|
-| English (Default) | `en` | 🇺🇸 |
-| Portuguese | `pt` | 🇧🇷 |
-| French | `fr` | 🇫🇷 |
-| Spanish | `es` | 🇪🇸 |
-| German | `de` | 🇩🇪 |
-| Italian | `it` | 🇮🇹 |
-
-### How It Works
-- **Automatic Detection**: The app detects the user's browser language on first visit
-- **Manual Selection**: Users can switch languages via the language selector in the navbar
-- **URL-based Routing**: Each language has its own route (e.g., `/en`, `/pt`, `/fr`)
-- **Translation Files**: Located in `public/locales/{locale}/common.json`
-
-### Adding a New Language
-1. Add the locale code to `next-i18next.config.js`
-2. Create a new folder in `public/locales/{locale}/`
-3. Add translation file: `public/locales/{locale}/common.json`
-4. Update the language selector component
-
----
-
-## 🧪 Testing
-
-### Unit Tests (Jest)
-```bash
-npm run test
-```
-- Tests are located in `src/__tests__/` and co-located with components
-- Configuration: `jest.config.js`
-- Coverage threshold: 30% (branches, functions, lines, statements)
-
-### E2E Tests (Cypress)
-```bash
-npm run e2e              # Interactive mode
-npm run e2e:headless     # Headless mode (CI)
-```
-- Tests are located in `cypress/` directory
-- Configuration: `cypress.config.js`
-- Base URL: `http://localhost:3000`
-
-### Visual Testing (Percy - Optional)
-```bash
-npx percy exec -- npm run e2e:headless
-```
-- Requires `PERCY_TOKEN` environment variable
-- Captures visual snapshots for regression testing
-
----
-
-## 🚢 Deployment
-
-### Netlify (Recommended)
-This project is configured for Netlify deployment:
-
-1. **Connect your repository** to Netlify
-2. **Build settings** (auto-detected from `netlify.toml`):
-   - Build command: `npm run build-prod`
-   - Publish directory: `out`
-3. **Deploy**: Netlify will automatically deploy on every push to `main`
-
-### Manual Deployment
-```bash
-npm run build-prod       # Creates static export in /out directory
-```
-Upload the `out/` directory to any static hosting service (Vercel, GitHub Pages, AWS S3, etc.)
+Open [http://localhost:3000](http://localhost:3000).
 
 ### Environment Variables
-If needed, create a `.env.local` file:
+
+Create a `.env.local` file for optional features:
+
 ```env
-# Add any environment variables here
-# Example: NEXT_PUBLIC_API_URL=https://api.example.com
+# Dev.to (draft preview in dev mode)
+DEVTO_API_KEY=your_devto_api_key
+NEXT_PUBLIC_DEVTO_USERNAME=lucasheartcliff
+
+# Contact form (SMTP)
+SMTP_USER=your@gmail.com
+SMTP_PASS=your_app_password
+CONTACT_EMAIL=recipient@email.com
+
+# Google Analytics
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+> For full configuration details (profile data, theming, i18n, Docker, CI/CD) see the **[Configuration Wiki](wiki/CONFIGURATION.md)**.
+
+---
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `yarn dev` | Start development server |
+| `yarn build` | Create production build (generates sitemap post-build) |
+| `yarn start` | Start production server |
+| `yarn test` | Run Jest unit tests |
+| `yarn lint` | Run ESLint |
+| `yarn format` | Fix linting and format JSON/YAML with Prettier |
+| `yarn check-types` | TypeScript type checking |
+| `yarn build-stats` | Analyze bundle size |
+| `yarn e2e` | Run Cypress E2E tests (starts dev server) |
+| `yarn e2e:headless` | Run Cypress E2E tests in headless mode |
+| `yarn clean` | Remove `.next` and `out` directories |
+
+---
+
+## Deployment
+
+### Docker (Production)
+
+The project uses a multi-stage Dockerfile that produces a standalone Next.js server:
+
+```bash
+docker build -t portfolio .
+docker run -p 3000:3000 portfolio
+```
+
+An Nginx reverse proxy config is included at `nginx/nginx.conf` with security headers and static asset caching.
+
+### CI/CD
+
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) runs on push to `main`/`next`:
+
+1. **Test** — Install, lint, run unit tests
+2. **Build & Push** — Build Docker image, push to GitHub Container Registry (GHCR)
+3. **Deploy** — SSH into server, pull latest image, restart with `docker compose`
+
+---
+
+## Testing
+
+- **Unit Tests**: 122 tests across 32 suites covering all components, layouts, and utilities
+- **Configuration**: `jest.config.js` with jsdom environment and path aliases
+- **E2E**: Cypress with optional Percy visual regression testing
+
+```bash
+yarn test              # Unit tests
+yarn e2e:headless      # E2E tests
 ```
 
 ---
 
-## 🔄 CI/CD Pipeline
+## Adding a New Language
 
-### GitHub Actions Workflows
-
-#### 1. **CI Basic** (`.github/workflows/ci-basic.yml`)
-Runs on every push and pull request to `main`:
-- ✅ Install dependencies
-- ✅ Lint code
-- ✅ Run unit tests
-- ✅ Build production bundle
-
-#### 2. **CI** (`.github/workflows/CI.yml`)
-Comprehensive testing across multiple Node versions:
-- ✅ Build with Node 14.x, 16.x, 18.x
-- ✅ Validate commit messages (commitlint)
-- ✅ Type checking
-- ✅ Unit tests
-- ✅ E2E tests with Percy
-
-#### 3. **Release** (`.github/workflows/release.yml`)
-Automated semantic versioning and changelog generation:
-- 📝 Generates CHANGELOG.md
-- 🏷️ Creates GitHub releases
-- 🔢 Bumps version numbers
-
-#### 4. **Update Dependencies** (`.github/workflows/update-deps.yml`)
-Automated dependency updates (scheduled)
+1. Add the locale code to `next-i18next.config.js`
+2. Create `public/locales/{locale}/common.json` with all translation keys
+3. Add the locale entry in `src/components/LanguageSelector/index.tsx`
 
 ---
 
-## 🤝 Contributing
+## License
 
-Contributions are welcome! Please follow these guidelines:
-
-### Development Workflow
-1. **Fork** the repository
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes** and commit using conventional commits:
-   ```bash
-   git commit -m "feat: add amazing feature"
-   ```
-4. **Run tests**: `npm run test && npm run e2e:headless`
-5. **Push to your fork**: `git push origin feature/amazing-feature`
-6. **Open a Pull Request**
-
-### Commit Convention
-This project uses [Conventional Commits](https://www.conventionalcommits.org/):
-- `feat:` - New feature
-- `fix:` - Bug fix
-- `docs:` - Documentation changes
-- `style:` - Code style changes (formatting, etc.)
-- `refactor:` - Code refactoring
-- `test:` - Adding or updating tests
-- `chore:` - Maintenance tasks
-
-### Code Quality Standards
-- ✅ All tests must pass
-- ✅ Code must pass linting (`npm run lint`)
-- ✅ TypeScript must compile without errors (`npm run check-types`)
-- ✅ Maintain or improve code coverage (30% minimum)
-
----
-
-## 📚 Additional Resources
-
-### Key Sections Overview
-- **Languages**: Visual representation of programming language proficiency over time
-- **Experiences**: Professional timeline showing roles at companies like Intelie by Viasat
-- **Certifications**: Courses completed on platforms like Udemy and Alura
-- **Projects**: Sample applications including Crypt Image, Data Persistence, and this portfolio
-
-### Customization Guide
-To customize this portfolio for your own use:
-1. Update personal information in translation files (`public/locales/*/common.json`)
-2. Replace images in `public/assets/`
-3. Modify color scheme in `tailwind.config.js`
-4. Update experiences, certifications, and projects data in `src/services/`
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT - see [LICENSE](LICENSE) for details.
 
 **Author**: Lucas Morais ([@lucasheartcliff](https://github.com/lucasheartcliff))
 

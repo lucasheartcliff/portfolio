@@ -1,4 +1,11 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import type Scrollbars from 'react-custom-scrollbars-2';
 
 import Navbar from '@/components/Navbar';
@@ -6,10 +13,15 @@ import Scroll from '@/components/Scroll';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import heartcliff from '@/utils/log';
 
+export const ScrollRefContext = createContext<RefObject<Scrollbars> | null>(
+  null
+);
+
 type IMainProps = {
   title: string;
   meta: ReactNode;
   children: ReactNode;
+  showLanguageSelector?: boolean;
 };
 
 const Main = (props: IMainProps) => {
@@ -33,26 +45,28 @@ const Main = (props: IMainProps) => {
   };
 
   return (
-    <div className="h-screen w-full">
-      {props.meta}
-      <Navbar logoTitle={props.title} scrollRef={scrollRef} />
-      <div
-        style={{ height: 'calc(100% - 77px)' }}
-        className="max-h-screen w-full text-gray-700 antialiased"
-      >
-        <div className="relative h-full text-xl">
-          <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
-            <>
-              {props.children}
-              <ScrollToTopButton
-                isVisible={isScrollTopVisible}
-                scrollToTop={scrollToTop}
-              />
-            </>
-          </Scroll>
+    <ScrollRefContext.Provider value={scrollRef}>
+      <div className="flex h-screen w-full flex-col overflow-hidden bg-white dark:bg-gray-900">
+        {props.meta}
+        <Navbar
+          logoTitle={props.title}
+          showLanguageSelector={props.showLanguageSelector}
+        />
+        <div className="min-h-0 w-full flex-1 text-gray-700 antialiased">
+          <div className="relative h-full text-xl">
+            <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
+              <>
+                {props.children}
+                <ScrollToTopButton
+                  isVisible={isScrollTopVisible}
+                  scrollToTop={scrollToTop}
+                />
+              </>
+            </Scroll>
+          </div>
         </div>
       </div>
-    </div>
+    </ScrollRefContext.Provider>
   );
 };
 
