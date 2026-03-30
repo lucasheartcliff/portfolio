@@ -165,7 +165,7 @@ export default function ArticlePage() {
         />
       </Head>
       <AsideNav sections={sections} translate={false} widthRem={18} />
-      <article className="mx-auto max-w-4xl px-4 py-8">
+      <article className="mx-auto max-w-4xl overflow-x-hidden px-4 py-8">
         {article.cover_image && (
           <img
             src={article.cover_image}
@@ -201,7 +201,7 @@ export default function ArticlePage() {
           </div>
         )}
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-lg dark:prose-invert max-w-none [&_pre]:overflow-x-auto">
           <ReactMarkdown components={markdownComponents}>
             {article.body_markdown}
           </ReactMarkdown>
