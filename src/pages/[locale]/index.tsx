@@ -95,9 +95,9 @@ const Index = () => {
   useEffect(() => {
     fetch('/api/articles')
       .then((res) => (res.ok ? res.json() : []))
-      .then((data: DevtoArticleIndex[]) =>
+      .then((fetchedArticles: DevtoArticleIndex[]) =>
         setArticles(
-          [...data].sort(
+          [...fetchedArticles].sort(
             (a, b) =>
               new Date(b.published_at).getTime() -
               new Date(a.published_at).getTime()
