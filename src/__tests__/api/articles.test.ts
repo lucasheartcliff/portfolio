@@ -33,6 +33,18 @@ function createMockRes(): NextApiResponse & {
 }
 
 describe('GET /api/articles', () => {
+  const originalApiKey = process.env.DEVTO_API_KEY;
+
+  beforeEach(() => {
+    delete process.env.DEVTO_API_KEY;
+  });
+
+  afterEach(() => {
+    if (originalApiKey !== undefined) {
+      process.env.DEVTO_API_KEY = originalApiKey;
+    }
+  });
+
   it('should return published articles', async () => {
     const res = createMockRes();
     await handler({} as NextApiRequest, res);
