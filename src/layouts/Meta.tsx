@@ -9,11 +9,14 @@ type IMetaProps = {
   title: string;
   description: string;
   locale: string;
+  canonical?: string;
+  image?: string;
 };
 
 const Meta = (props: IMetaProps) => {
   const router = useRouter();
   const { url } = getEnvProperties();
+  const canonicalUrl = props.canonical || url;
 
   return (
     <>
@@ -23,6 +26,16 @@ const Meta = (props: IMetaProps) => {
           name="viewport"
           content="width=device-width,initial-scale=1"
           key="viewport"
+        />
+        <meta
+          name="theme-color"
+          content="#253db6"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#5c7cfa"
+          media="(prefers-color-scheme: dark)"
         />
 
         <link
@@ -53,7 +66,7 @@ const Meta = (props: IMetaProps) => {
       <NextSeo
         title={props.title}
         description={props.description}
-        canonical={url}
+        canonical={canonicalUrl}
         openGraph={{
           profile: {
             firstName: profile.firstName,
@@ -62,14 +75,27 @@ const Meta = (props: IMetaProps) => {
           },
           title: props.title,
           description: props.description,
-          url,
+          url: canonicalUrl,
           locale: props.locale,
           site_name: props.title,
+          ...(props.image
+            ? {
+                images: [
+                  {
+                    url: props.image,
+                    width: 1200,
+                    height: 630,
+                    alt: props.title,
+                  },
+                ],
+              }
+            : {}),
         }}
         additionalMetaTags={[
           {
             name: 'keywords',
-            content: 'portfolio, software, developer',
+            content:
+              'Lucas Morais, software engineer, full-stack developer, backend architect, portfolio, Java, Spring Boot, React, TypeScript',
           },
           {
             name: 'author',

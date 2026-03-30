@@ -100,6 +100,7 @@ export async function setLocale(
 export const getEnvProperties = () => ({
   url: process.env.NEXT_PUBLIC_URL || '',
   googleAnalytics: process.env.NEXT_PUBLIC_ANALYTICS_ID || '',
+  devtoUsername: process.env.NEXT_PUBLIC_DEVTO_USERNAME || 'lucasheartcliff',
 });
 
 export function getContrastColor(hexColor: string): string {

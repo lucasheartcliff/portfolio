@@ -5,13 +5,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // const { i18n } = require("./i18n");
 
 module.exports = withBundleAnalyzer({
+  output: 'standalone',
   eslint: {
     dirs: ['.'],
   },
   poweredByHeader: false,
   trailingSlash: true,
   basePath: '',
-  serverComponentsExternalPackages: ['@react-pdf/renderer'],
+  experimental: {
+    serverComponentsExternalPackages: ['@react-pdf/renderer'],
+  },
   // The starter code load resources from `public` folder with `router.basePath` in React components.
   // So, the source code is "basePath-ready".
   // You can remove `basePath` if you don't need it.

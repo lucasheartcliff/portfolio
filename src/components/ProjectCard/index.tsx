@@ -15,6 +15,8 @@ export interface Props {
   forks: number;
   stars: number;
   url: string;
+  description?: string;
+  tags?: string[];
 }
 
 export default function ProjectCard({
@@ -23,38 +25,59 @@ export default function ProjectCard({
   forks,
   stars,
   url,
+  description,
+  tags,
 }: Props) {
   return (
-    <div className="flex h-28 w-full flex-row items-center justify-center border p-4 text-base shadow-md md:w-fit md:text-xl">
-      <div className="w-full">
-        <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-semibold text-black">
-          <Tooltip title={name}>
-            <span>{name}</span>
-          </Tooltip>
-        </div>
-        <div className="mt-1 flex w-full flex-row items-center capitalize">
-          <ColorfulDot color={getLanguageColor(language)} label={language} />
+    <div className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl">
+      <div className="flex flex-row items-start justify-between">
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-semibold text-black dark:text-white">
+            <Tooltip title={name}>
+              <span>{name}</span>
+            </Tooltip>
+          </div>
+          <div className="mt-1 flex w-full flex-row items-center capitalize">
+            <ColorfulDot color={getLanguageColor(language)} label={language} />
 
-          <div
-            className={`ml-3 inline-flex justify-start text-sm md:text-base`}
-          >
-            <BranchesOutlined />
-            <span className="ml-1">{forks}</span>
+            <div
+              className={`ml-3 inline-flex justify-start text-sm md:text-base`}
+            >
+              <BranchesOutlined />
+              <span className="ml-1">{forks}</span>
+            </div>
+            <div
+              className={`ml-3 inline-flex justify-start text-sm md:text-base`}
+            >
+              <StarOutlined />
+              <span className="ml-1">{stars}</span>
+            </div>
           </div>
-          <div
-            className={`ml-3 inline-flex justify-start text-sm md:text-base`}
-          >
-            <StarOutlined />
-            <span className="ml-1">{stars}</span>
-          </div>
+        </div>
+
+        <div className="ml-3 mt-1 flex shrink-0 items-center justify-center">
+          <Link target="_blank" href={url}>
+            <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
+          </Link>
         </div>
       </div>
-
-      <div className="ml-5 items-end justify-center">
-        <Link target="_blank" href={url}>
-          <ExportOutlined className="text-base font-extrabold text-black" />
-        </Link>
-      </div>
+      {description && (
+        <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+          {description}
+        </p>
+      )}
+      {tags && tags.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded bg-gray-200 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
