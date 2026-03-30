@@ -17,15 +17,18 @@ A personal portfolio website built with Next.js 13, TypeScript, and Tailwind CSS
 - **Experience** — Collapsible career timeline with company grouping, date ranges, duration calculation, tech tag pills, and scrollable overflow
 - **Education** — Same timeline format for academic background
 - **Certifications** — Collapsible panels separating certifications and courses, with platform badges and external links
-- **Articles** — Dev.to article cards with cover image, tags, reading time, and publish date. Section auto-hides when no articles are available
+- **Articles** — Dev.to article cards sorted newest-first with tags, reading time, publish date, and a **"New" badge** for articles published within the last 30 days. Section auto-hides when no articles are available
 - **Projects** — GitHub pinned repository cards with language, stars, forks, description, and topic tags. Paginated with "Show more" button. Section auto-hides when no repos are available
 - **Contact** — Form with name, email, subject, and message fields. Sends email via Nodemailer (SMTP/Gmail). Rate-limited by IP. Currently hidden, ready to enable
 
 ### Article Reader
 
-Dedicated page (`/[locale]/articles/[slug]`) that fetches and renders full Dev.to articles as Markdown with:
+Dedicated page (`/articles/[slug]`) that fetches and renders full Dev.to articles as Markdown with:
 - Auto-generated aside navigation from article headings
 - Cover image, tags, reading time, and publish date
+- **Image lightbox** — Click any image (including the cover) to expand it in a fullscreen overlay with zoom toggle, Escape/click-outside to close
+- **Font size slider** — 9-step range slider (12px–28px) with localStorage persistence for reader preference
+- Justified text for improved readability
 - JSON-LD structured data for SEO
 - Draft preview support in development mode
 
@@ -86,105 +89,19 @@ Dedicated page (`/[locale]/articles/[slug]`) that fetches and renders full Dev.t
 
 ---
 
-## Project Structure
-
-```
-portfolio/
-├── .github/workflows/deploy.yml   # CI/CD: test → Docker build → SSH deploy
-├── nginx/nginx.conf                # Reverse proxy with security headers and caching
-├── Dockerfile                      # Multi-stage build (deps → build → standalone runner)
-├── public/
-│   ├── assets/
-│   │   ├── images/                 # Profile photo, section illustrations
-│   │   ├── jsons/profile.json      # Experience, education, certifications, tech stack data
-│   │   └── pdfs/                   # Downloadable CV
-│   └── locales/{en,pt}/common.json # Translation files
-├── src/
-│   ├── components/
-│   │   ├── ArticleCard/            # Dev.to article card with cover, tags, reading time
-│   │   ├── ArticleGrid/            # Responsive article grid
-│   │   ├── AsideNav/               # Collapsible side navigation with scroll spy
-│   │   ├── CertificateCard/        # Certification entry with platform badge
-│   │   ├── ContactForm/            # Email contact form
-│   │   ├── DarkModeToggle/         # Sun/moon toggle button
-│   │   ├── Footer/                 # "Made with ❤ by" footer
-│   │   ├── Icon/                   # Colored background icon wrapper
-│   │   ├── LanguageChart/          # ApexCharts horizontal bar chart
-│   │   ├── LanguageSelector/       # Dropdown with flag icons
-│   │   ├── Link/                   # Locale-aware link and SocialLink
-│   │   ├── LoadingScreen/          # Animated splash screen
-│   │   ├── logo/                   # <Logo /> angle-bracket title
-│   │   ├── Navbar/                 # Sticky top bar with logo, language, dark mode
-│   │   ├── ProjectCard/            # GitHub repo card with stats
-│   │   ├── ProjectGrid/            # Paginated project grid
-│   │   ├── Reveal/                 # Scroll-triggered Framer Motion animation
-│   │   ├── Scroll/                 # Custom scrollbar wrapper
-│   │   ├── ScrollToTopButton/      # Floating back-to-top button
-│   │   ├── TechStack/              # Tech category grid with devicons
-│   │   ├── Timeline/               # Collapsible parent-child timeline
-│   │   ├── Timeline/Item/          # Timeline entry with duration and tech tags
-│   │   └── TypedRole/              # Animated rotating role titles
-│   ├── layouts/
-│   │   ├── Block.tsx               # Flex section block
-│   │   ├── Meta.tsx                # SEO meta tags (OG, Twitter, canonical)
-│   │   └── Row.tsx                 # Responsive row wrapper
-│   ├── pages/
-│   │   ├── [locale]/index.tsx      # Main portfolio page
-│   │   ├── [locale]/articles/[slug].tsx # Article reader page
-│   │   ├── api/articles.ts         # Dev.to articles list endpoint
-│   │   ├── api/articles/[slug].ts  # Dev.to single article endpoint
-│   │   ├── api/github/repos.ts     # GitHub pinned repos endpoint
-│   │   ├── api/wakatime/[stat].ts  # WakaTime stats endpoint
-│   │   ├── api/contact.ts          # Contact form email endpoint
-│   │   ├── _app.tsx                # DarkModeContext, ConfigProvider, GA
-│   │   └── _document.tsx           # Custom HTML document
-│   ├── services/devto.ts           # Dev.to API client and types
-│   ├── styles/global.css           # Tailwind base, CSS variables, prose styling
-│   ├── templates/Main.tsx          # Main layout (Navbar + Scroll + ScrollToTop)
-│   └── utils/                      # Helpers (locale, URL builders, formatting)
-├── next-i18next.config.js          # i18n locale configuration
-├── next-sitemap.config.js          # Sitemap generation config
-├── tailwind.config.js              # Custom colors, fonts, dark mode config
-└── jest.config.js                  # Test configuration
-```
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.x
-- Yarn or npm
-
-### Installation
+## Quick Start
 
 ```bash
 git clone https://github.com/lucasheartcliff/portfolio.git
 cd portfolio
+cp local.env .env   # Copy and edit with your values
 yarn install
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Environment Variables
-
-Create a `.env.local` file for optional features:
-
-```env
-# Dev.to (draft preview in dev mode)
-DEVTO_API_KEY=your_devto_api_key
-NEXT_PUBLIC_DEVTO_USERNAME=lucasheartcliff
-
-# Contact form (SMTP)
-SMTP_USER=your@gmail.com
-SMTP_PASS=your_app_password
-CONTACT_EMAIL=recipient@email.com
-
-# Google Analytics
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-```
+> For full configuration details see the **[Configuration Wiki](wiki/CONFIGURATION.md)**.
 
 ---
 
@@ -210,14 +127,18 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 ### Docker (Production)
 
-The project uses a multi-stage Dockerfile that produces a standalone Next.js server:
+```bash
+docker compose up -d --build
+```
+
+This builds and starts both the Next.js app and an Nginx reverse proxy. The app runs on port 3000 internally; Nginx exposes ports 80/443.
+
+For manual builds:
 
 ```bash
 docker build -t portfolio .
-docker run -p 3000:3000 portfolio
+docker run -p 3000:3000 --env-file .env.local portfolio
 ```
-
-An Nginx reverse proxy config is included at `nginx/nginx.conf` with security headers and static asset caching.
 
 ### CI/CD
 
@@ -239,14 +160,6 @@ The GitHub Actions workflow (`.github/workflows/deploy.yml`) runs on push to `ma
 yarn test              # Unit tests
 yarn e2e:headless      # E2E tests
 ```
-
----
-
-## Adding a New Language
-
-1. Add the locale code to `next-i18next.config.js`
-2. Create `public/locales/{locale}/common.json` with all translation keys
-3. Add the locale entry in `src/components/LanguageSelector/index.tsx`
 
 ---
 

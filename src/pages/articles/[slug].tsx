@@ -228,25 +228,43 @@ export default function ArticlePage() {
           </div>
         )}
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
-        <div className="mb-4 flex items-center justify-end gap-3">
-          <span className="text-sm text-gray-400 dark:text-gray-500" style={{ fontSize: 13 }}>
+        <div className="mb-4 flex items-center justify-end gap-2">
+          <span
+            className="text-gray-400 dark:text-gray-500"
+            style={{ fontSize: 13 }}
+          >
             A
           </span>
-          <input
-            type="range"
-            min={0}
-            max={FONT_SIZE_OPTIONS.length - 1}
-            step={1}
-            value={fontIdx}
-            onChange={(e) => handleFontChange(Number(e.target.value))}
-            aria-label="Font size"
-            className="h-1.5 w-28 cursor-pointer appearance-none rounded-full bg-gray-200 accent-primary dark:bg-gray-700"
-          />
-          <span className="text-lg text-gray-400 dark:text-gray-500" style={{ fontSize: 20 }}>
-            A
-          </span>
-          <span className="ml-1 min-w-[3ch] text-right text-xs tabular-nums text-gray-400 dark:text-gray-500">
+          <button
+            type="button"
+            onClick={() => handleFontChange(Math.max(0, fontIdx - 1))}
+            disabled={fontIdx === 0}
+            aria-label="Decrease font size"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-lg text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+          >
+            −
+          </button>
+          <span className="min-w-[3.5ch] text-center text-sm font-medium tabular-nums text-gray-600 dark:text-gray-300">
             {articleFontSize}px
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              handleFontChange(
+                Math.min(FONT_SIZE_OPTIONS.length - 1, fontIdx + 1)
+              )
+            }
+            disabled={fontIdx === FONT_SIZE_OPTIONS.length - 1}
+            aria-label="Increase font size"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-lg text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+          >
+            +
+          </button>
+          <span
+            className="text-gray-400 dark:text-gray-500"
+            style={{ fontSize: 20 }}
+          >
+            A
           </span>
         </div>
         <div
