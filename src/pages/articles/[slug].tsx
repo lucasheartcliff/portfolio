@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 
 import type { AsideSection } from '@/components/AsideNav';
 import AsideNav from '@/components/AsideNav';
+import { ClickableImage } from '@/components/ImageLightbox';
 import { Meta } from '@/layouts/Meta';
 import type { DevtoArticleFull } from '@/services/devto';
 import { normalizeTags } from '@/services/devto';
@@ -73,6 +74,9 @@ const markdownComponents = {
   h4: createHeadingRenderer(4),
   h5: createHeadingRenderer(5),
   h6: createHeadingRenderer(6),
+  img: ({ src, alt }: { src?: string; alt?: string }) => (
+    <ClickableImage src={src} alt={alt} />
+  ),
 };
 
 export default function ArticlePage() {
@@ -167,7 +171,7 @@ export default function ArticlePage() {
       <AsideNav sections={sections} translate={false} widthRem={18} />
       <article className="mx-auto max-w-4xl overflow-x-hidden px-4 py-8">
         {article.cover_image && (
-          <img
+          <ClickableImage
             src={article.cover_image}
             alt={article.title}
             className="mb-6 h-64 w-full rounded-lg object-cover md:h-96"
