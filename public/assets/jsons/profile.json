@@ -51,58 +51,21 @@
     {
       "title": "Intelie",
       "startDate": "2020-02-01T00:00:00.000Z",
-      "children": [
-        {
-          "title": "Senior Software Engineer",
-          "startDate": "2026-04-01T00:00:00.000Z",
-          "techTags": [
-            "Java",
-            "Spring Boot",
-            "PostgreSQL",
-            "Docker",
-            "Kubernetes",
-            "React",
-            "TypeScript",
-            "Python"
-          ]
-        },
-        {
-          "title": "Mid-level Software Engineer",
-          "startDate": "2021-12-01T00:00:00.000Z",
-          "endDate": "2026-04-01T00:00:00.000Z",
-          "description": "CoDaF (Framework & Database): Spearheaded the optimization of a centralized data persistence framework, eliminating redundancy and establishing a standardized foundation of 100+ entities to drive cross-project consistency and operational efficiency.\n\nAtria (ML & Cost Reduction): Technically led a real-time Machine Learning pilot for antenna monitoring, enabling proactive fault detection that significantly reduced maintenance costs and improved system integrity.\n\nLicense Manager & Rig State: Architected access control solutions to protect intellectual property and conducted reverse engineering on critical undocumented applications, unblocking team agility and ensuring strategic alignment with management.",
-          "techTags": [
-            "Java",
-            "Spring Boot",
-            "PostgreSQL",
-            "Docker",
-            "Kubernetes",
-            "React",
-            "TypeScript",
-            "Python"
-          ]
-        },
-        {
-          "title": "Junior Software Engineer",
-          "startDate": "2020-07-01T00:00:00.000Z",
-          "endDate": "2021-12-01T00:00:00.000Z",
-          "description": "Sequence Builder + Cost Tracker: Engineered a simulation system for oil well planning that optimized resource allocation through precise time and cost estimates. By enabling 'planned vs. actual' data analysis, the solution drove continuous process improvements and significant operational cost reductions.\n\nDynamic Risk Advisor (DRA): Contributed to a real-time operational risk management tool that empowered critical decision-making by monitoring safety barriers and alerts. This system directly enhanced operational safety and efficiency through proactive risk mitigation.",
-          "techTags": ["Java", "React", "TypeScript", "PostgreSQL", "Python"]
-        },
-        {
-          "title": "Trainee Software Engineer",
-          "startDate": "2020-02-01T00:00:00.000Z",
-          "endDate": "2020-07-01T00:00:00.000Z",
-          "description": "Campaign Planner: Maintained and enhanced a mission-critical application for oil and gas campaign management, ensuring system stability and seamless execution of complex operational plans.\n\nPDF Extractor (OCR Automation): Engineered an OCR-based automation script that eliminated manual data entry, accelerating the delivery of structured data for Machine Learning models and unlocking new business opportunities.",
-          "techTags": ["Java", "Python", "React", "TypeScript"]
-        }
+      "techTags": [
+        "Java",
+        "Spring Boot",
+        "PostgreSQL",
+        "Docker",
+        "Kubernetes",
+        "React",
+        "TypeScript",
+        "Python"
       ]
     },
     {
       "title": "Grupo Fratelli",
       "startDate": "2016-12-01T00:00:00.000Z",
       "endDate": "2019-12-01T00:00:00.000Z",
-      "description": "Multi-Warehouse Solution: Architectured and delivered an end-to-end warehouse and financial management system that synchronized inventory with fiscal operations. This integration eliminated data silos, significantly boosting operational efficiency and enabling data-driven strategic decision-making.",
       "techTags": ["PHP", "JavaScript", "HTML", "CSS"]
     }
   ],

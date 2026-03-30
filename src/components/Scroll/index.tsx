@@ -59,6 +59,7 @@ function Scroll({ children, ...props }: Props, ref: any) {
           style={{
             ...p.style,
             marginBottom: -17,
+            overflowX: 'hidden',
             border: 0,
             boxShadow: 'none',
           }}
