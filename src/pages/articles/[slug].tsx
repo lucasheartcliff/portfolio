@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import type { AsideSection } from '@/components/AsideNav';
@@ -79,11 +79,34 @@ const markdownComponents = {
   ),
 };
 
+const FONT_SIZE_OPTIONS = [12, 14, 16, 18, 20, 22, 24, 26, 28];
+const FONT_SIZE_DEFAULT = 5; // index for 22px
+
+function getInitialFontSizeIndex(): number {
+  if (typeof window === 'undefined') return FONT_SIZE_DEFAULT;
+  const saved = Number(localStorage.getItem('article-font-size-idx'));
+  if (!Number.isNaN(saved) && saved >= 0 && saved < FONT_SIZE_OPTIONS.length)
+    return saved;
+  return FONT_SIZE_DEFAULT;
+}
+
 export default function ArticlePage() {
   const router = useRouter();
   const { slug } = router.query;
   const [article, setArticle] = useState<DevtoArticleFull | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fontIdx, setFontIdx] = useState(FONT_SIZE_DEFAULT);
+
+  useEffect(() => {
+    setFontIdx(getInitialFontSizeIndex());
+  }, []);
+
+  const handleFontChange = useCallback((idx: number) => {
+    setFontIdx(idx);
+    localStorage.setItem('article-font-size-idx', String(idx));
+  }, []);
+
+  const articleFontSize = FONT_SIZE_OPTIONS[fontIdx] || 18;
 
   useEffect(() => {
     if (!slug) return;
@@ -205,7 +228,31 @@ export default function ArticlePage() {
           </div>
         )}
         <hr className="my-6 border-gray-200 dark:border-gray-700" />
-        <div className="prose prose-lg dark:prose-invert max-w-none [&_pre]:overflow-x-auto">
+        <div className="mb-4 flex items-center justify-end gap-3">
+          <span className="text-sm text-gray-400 dark:text-gray-500" style={{ fontSize: 13 }}>
+            A
+          </span>
+          <input
+            type="range"
+            min={0}
+            max={FONT_SIZE_OPTIONS.length - 1}
+            step={1}
+            value={fontIdx}
+            onChange={(e) => handleFontChange(Number(e.target.value))}
+            aria-label="Font size"
+            className="h-1.5 w-28 cursor-pointer appearance-none rounded-full bg-gray-200 accent-primary dark:bg-gray-700"
+          />
+          <span className="text-lg text-gray-400 dark:text-gray-500" style={{ fontSize: 20 }}>
+            A
+          </span>
+          <span className="ml-1 min-w-[3ch] text-right text-xs tabular-nums text-gray-400 dark:text-gray-500">
+            {articleFontSize}px
+          </span>
+        </div>
+        <div
+          className="prose prose-lg dark:prose-invert max-w-none text-justify [&_pre]:overflow-x-auto"
+          style={{ fontSize: `${articleFontSize}px` }}
+        >
           <ReactMarkdown components={markdownComponents}>
             {article.body_markdown}
           </ReactMarkdown>
