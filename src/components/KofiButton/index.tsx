@@ -1,5 +1,5 @@
-import { useTranslation } from 'next-i18next';
 import Script from 'next/script';
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 
 interface Props {
