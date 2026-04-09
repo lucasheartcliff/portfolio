@@ -2,6 +2,7 @@ import BranchesOutlined from '@ant-design/icons/BranchesOutlined';
 import ExportOutlined from '@ant-design/icons/ExportOutlined';
 import StarOutlined from '@ant-design/icons/StarOutlined';
 import Tooltip from 'antd/lib/tooltip';
+import { motion } from 'framer-motion';
 import React from 'react';
 
 import { getLanguageColor } from '@/utils';
@@ -29,7 +30,11 @@ export default function ProjectCard({
   tags,
 }: Props) {
   return (
-    <div className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl">
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
+      className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl"
+    >
       <div className="flex flex-row items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="truncate font-semibold text-black dark:text-white">
@@ -78,6 +83,6 @@ export default function ProjectCard({
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

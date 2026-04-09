@@ -107,11 +107,12 @@ export default function Timeline({ data }: Props) {
     setNodes(nodesMapToList(newNodeMap));
   }, [data]);
 
-  const renderItem = (item: ItemNode) => {
+  const renderItem = (item: ItemNode, index: number) => {
     return (
       <div className={item.isChild ? 'ml-5' : ''}>
         <Item
           {...item}
+          index={index}
           onClickToOpen={() => {
             toggleChildNodes(item.key);
           }}
@@ -129,7 +130,7 @@ export default function Timeline({ data }: Props) {
     }
 
     const result: TimelineItemProps = {
-      children: renderItem(curr),
+      children: renderItem(curr, acc.length),
       position: 'right',
       color: theme.primary,
     };

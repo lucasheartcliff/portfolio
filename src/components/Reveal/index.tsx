@@ -1,4 +1,9 @@
-import { motion, useAnimation, useInView } from 'framer-motion';
+import {
+  motion,
+  useAnimation,
+  useInView,
+  useReducedMotion,
+} from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 
 interface Props {
@@ -10,14 +15,13 @@ interface Props {
 const Reveal = ({ children, width = '100%', delay = 0.25 }: Props) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const prefersReducedMotion = useReducedMotion();
 
   const mainControls = useAnimation();
-  const slideControls = useAnimation();
 
   useEffect(() => {
     if (isInView) {
       mainControls.start('visible');
-      slideControls.start('visible');
     }
   }, [isInView]);
 
@@ -25,7 +29,7 @@ const Reveal = ({ children, width = '100%', delay = 0.25 }: Props) => {
     <div ref={ref} style={{ position: 'relative', width, overflow: 'hidden' }}>
       <motion.div
         variants={{
-          hidden: { opacity: 0, y: 75 },
+          hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 75 },
           visible: { opacity: 1, y: 0 },
         }}
         initial="hidden"
@@ -34,24 +38,6 @@ const Reveal = ({ children, width = '100%', delay = 0.25 }: Props) => {
       >
         {children}
       </motion.div>
-      <motion.div
-        variants={{
-          hidden: { left: 0 },
-          visible: { left: '100%' },
-        }}
-        initial="hidden"
-        animate={slideControls}
-        transition={{ duration: 0.5, ease: 'easeIn' }}
-        style={{
-          position: 'absolute',
-          top: 4,
-          bottom: 4,
-          left: 0,
-          right: 0,
-          background: 'transparent',
-          zIndex: 20,
-        }}
-      />
     </div>
   );
 };
