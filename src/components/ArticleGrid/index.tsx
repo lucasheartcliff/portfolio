@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 
 import type { DevtoArticleIndex } from '@/services/devto';
@@ -8,16 +9,34 @@ interface Props {
   articles: DevtoArticleIndex[];
 }
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
+
 export default function ArticleGrid({ articles }: Props) {
   if (!articles.length) return null;
 
   return (
     <div className="flex flex-col items-center">
-      <div className="my-2 flex w-full flex-wrap justify-items-start gap-1.5">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-50px' }}
+        className="my-2 flex w-full flex-wrap justify-items-start gap-1.5"
+      >
         {articles.map((article) => (
-          <ArticleCard key={article.id} article={article} />
+          <motion.div key={article.id} variants={itemVariants}>
+            <ArticleCard article={article} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

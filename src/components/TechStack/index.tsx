@@ -5,6 +5,20 @@ interface Props {
   data: Record<string, string[]>;
 }
 
+const categoryVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05 } },
+};
+
+const iconVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.3, ease: 'easeOut' },
+  },
+};
+
 const DEVICON_MAP: Record<string, string> = {
   Java: 'java',
   'Spring Boot': 'spring',
@@ -48,10 +62,17 @@ export default function TechStack({ data }: Props) {
           <h4 className="mb-3 text-lg font-semibold text-black dark:text-white">
             {category}
           </h4>
-          <div className="flex flex-wrap gap-3">
+          <motion.div
+            variants={categoryVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-40px' }}
+            className="flex flex-wrap gap-3"
+          >
             {techs.map((tech) => (
               <motion.div
                 key={tech}
+                variants={iconVariants}
                 whileHover={{ scale: 1.1 }}
                 className="flex flex-col items-center gap-1 rounded-lg border border-gray-200 p-3 dark:border-gray-700 dark:bg-gray-800"
               >
@@ -71,7 +92,7 @@ export default function TechStack({ data }: Props) {
                 </span>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       ))}
     </div>
