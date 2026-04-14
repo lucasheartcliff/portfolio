@@ -9,9 +9,6 @@ interface Props {
 export default function AnimatedHeading({ children, className = '' }: Props) {
   return (
     <motion.h3
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-40px' }}
       variants={{
         hidden: { clipPath: 'inset(0 100% 0 0)' },
         visible: {
@@ -19,7 +16,7 @@ export default function AnimatedHeading({ children, className = '' }: Props) {
           transition: { duration: 0.8, ease: 'easeOut' },
         },
       }}
-      className={`relative mb-3 inline-block text-xl font-semibold text-black dark:text-white md:text-4xl ${className}`}
+      className={`relative mb-3 block text-xl font-semibold text-black dark:text-white md:text-4xl ${className}`}
     >
       {children}
       <motion.span
