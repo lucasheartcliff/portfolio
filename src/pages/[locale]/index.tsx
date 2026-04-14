@@ -2,16 +2,18 @@ import {
   GithubOutlined,
   LinkedinOutlined,
   MailOutlined,
+  MediumOutlined,
 } from '@ant-design/icons';
 import { Collapse } from 'antd';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
+import AnimatedHeading from '@/components/AnimatedHeading';
 import ArticleGrid from '@/components/ArticleGrid';
 import AsideNav from '@/components/AsideNav';
 import CertificateCard from '@/components/CertificateCard';
@@ -33,7 +35,7 @@ import Row from '@/layouts/Row';
 import { DarkModeContext } from '@/pages/_app';
 import profile from '@/public/assets/jsons/profile.json';
 import type { DevtoArticleIndex } from '@/services/devto';
-import { Main } from '@/templates/Main';
+import { Main, ScrollTopContext } from '@/templates/Main';
 import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
 import { GITHUB_REPO } from '@/utils/url';
@@ -41,6 +43,16 @@ import { GITHUB_REPO } from '@/utils/url';
 const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
   ssr: false,
 });
+
+const heroContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+};
+
+const heroItemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const Index = () => {
   const router = useRouter();
@@ -51,6 +63,8 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const { isDark } = useContext(DarkModeContext);
+  const scrollTop = useContext(ScrollTopContext);
+  const prefersReducedMotion = useReducedMotion();
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
@@ -64,6 +78,11 @@ const Index = () => {
     ...(articles.length > 0 ? [{ key: 'articles', label: 'Articles' }] : []),
     ...(pinnedRepos.length > 0 ? [{ key: 'projects', label: 'Projects' }] : []),
   ];
+
+  const parallaxY = useMemo(
+    () => (prefersReducedMotion ? 0 : Math.min(scrollTop * -0.15, 0)),
+    [scrollTop, prefersReducedMotion]
+  );
 
   useEffect(() => {
     const l = currentLocale as string;
@@ -189,52 +208,71 @@ const Index = () => {
           <div className="mx-2 overflow-x-hidden md:mx-14">
             <Row>
               <Block>
-                <div className="flex flex-col">
-                  <Reveal>
-                    <h1 className="text-4xl font-bold text-black dark:text-white md:text-7xl">
-                      {t(name)}
-                    </h1>
-                  </Reveal>
-                  <Reveal delay={0.35}>
-                    <h2 className="text-xl font-semibold text-black dark:text-gray-200 md:text-4xl">
-                      <TypedRole />
-                    </h2>
-                  </Reveal>
-                  <Reveal delay={0.4}>
-                    <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
-                      <span className="h-2 w-2 rounded-full bg-green-500" />
-                      {t('Available for opportunities')}
-                    </span>
-                  </Reveal>
-                  <Reveal delay={0.45}>
-                    <p className="my-5 text-pretty text-justify text-xl text-gray-600 dark:text-gray-400 md:text-3xl">
-                      {t(introductionBio)}
-                    </p>
-                  </Reveal>
-                  <Reveal delay={0.55}>
-                    <div className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline dark:text-white">
-                      <SocialLink
-                        title="GitHub"
-                        href={`https://github.com/${username}`}
-                      >
-                        <Icon color={'#000000'}>
-                          <GithubOutlined />
-                        </Icon>
-                      </SocialLink>
-                      {/* <SocialLink href={`https://x.com/${username}`}> 
+                <motion.div
+                  variants={heroContainerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="relative z-10 flex flex-col"
+                >
+                  <motion.h1
+                    variants={heroItemVariants}
+                    className="animated-gradient-text text-4xl font-bold md:text-7xl"
+                  >
+                    {t(name)}
+                  </motion.h1>
+                  <motion.h2
+                    variants={heroItemVariants}
+                    className="text-xl font-semibold text-black dark:text-gray-200 md:text-4xl"
+                  >
+                    <TypedRole />
+                  </motion.h2>
+                  <motion.span
+                    variants={heroItemVariants}
+                    className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200"
+                  >
+                    <span className="h-2 w-2 rounded-full bg-green-500" />
+                    {t('Available for opportunities')}
+                  </motion.span>
+                  <motion.p
+                    variants={heroItemVariants}
+                    className="my-5 text-pretty text-justify text-xl text-gray-600 dark:text-gray-400 md:text-3xl"
+                  >
+                    {t(introductionBio)}
+                  </motion.p>
+                  <motion.div
+                    variants={heroItemVariants}
+                    className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline dark:text-white"
+                  >
+                    <SocialLink
+                      title="GitHub"
+                      href={`https://github.com/${username}`}
+                    >
+                      <Icon color={'#000000'}>
+                        <GithubOutlined />
+                      </Icon>
+                    </SocialLink>
+                    {/* <SocialLink href={`https://x.com/${username}`}> 
                       <Icon color={'#00acee'}> 
                         <TwitterOutlined /> 
                       </Icon> 
                     </SocialLink>  */}
-                      <SocialLink
-                        title="LinkedIn"
-                        href={`https://linkedin.com/in/${username}`}
-                      >
-                        <Icon color={'#0e76a8'}>
-                          <LinkedinOutlined />
-                        </Icon>
-                      </SocialLink>
-                      {/* <SocialLink
+                    <SocialLink
+                      title="LinkedIn"
+                      href={`https://linkedin.com/in/${username}`}
+                    >
+                      <Icon color={'#0e76a8'}>
+                        <LinkedinOutlined />
+                      </Icon>
+                    </SocialLink>
+                    <SocialLink
+                      title="Medium"
+                      href={`https://medium.com/@${username}`}
+                    >
+                      <Icon color={'#000'}>
+                        <MediumOutlined />
+                      </Icon>
+                    </SocialLink>
+                    {/* <SocialLink
                       title="Instagram"
                       href={`https://instagram.com/${username}`}
                     >
@@ -242,29 +280,29 @@ const Index = () => {
                         <InstagramOutlined />
                       </Icon>
                     </SocialLink> */}
-                      <SocialLink
-                        title="Email"
-                        href={`mailto:${email}`}
-                        skipLocaleHandling
-                      >
-                        <Icon color={'#d44638'}>
-                          <MailOutlined />
-                        </Icon>
-                      </SocialLink>
-                    </div>
-                  </Reveal>
-                  <Reveal delay={0.65}>
-                    <div className="mt-4 flex flex-wrap gap-3">
-                      <a
-                        href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
-                        download="Lucas_Morais_Resume.pdf"
-                        className="rounded-lg border-2 border-primary px-6 py-3 text-base font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
-                      >
-                        {t('Download CV')}
-                      </a>
-                    </div>
-                  </Reveal>
-                </div>
+                    <SocialLink
+                      title="Email"
+                      href={`mailto:${email}`}
+                      skipLocaleHandling
+                    >
+                      <Icon color={'#d44638'}>
+                        <MailOutlined />
+                      </Icon>
+                    </SocialLink>
+                  </motion.div>
+                  <motion.div
+                    variants={heroItemVariants}
+                    className="mt-4 flex flex-wrap gap-3"
+                  >
+                    <a
+                      href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
+                      download="Lucas_Morais_Resume.pdf"
+                      className="rounded-lg border-2 border-primary px-6 py-3 text-base font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+                    >
+                      {t('Download CV')}
+                    </a>
+                  </motion.div>
+                </motion.div>
               </Block>
               <Block>
                 <div className="hidden w-full items-center justify-center md:flex ">
@@ -283,7 +321,10 @@ const Index = () => {
             </Row>
             <Row>
               <Block>
-                <div className="mt-5 flex w-full items-center justify-center md:mt-0">
+                <motion.div
+                  style={{ y: parallaxY }}
+                  className="mt-5 flex w-full items-center justify-center md:mt-0"
+                >
                   <Image
                     src={`${router.basePath}/assets/images/profile.jpeg`}
                     alt={name}
@@ -292,15 +333,13 @@ const Index = () => {
                     className="h-80 w-80 rounded-full object-cover"
                     priority
                   />
-                </div>
+                </motion.div>
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
                     <div id="about">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('About')}
-                      </h3>
+                      <AnimatedHeading>{t('About')}</AnimatedHeading>
                       <p className="text-pretty text-justify text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
                         {t(bio)}
                       </p>
@@ -315,9 +354,7 @@ const Index = () => {
                 <div className="flex flex-1 flex-col ">
                   <Reveal>
                     <div id="languages">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Languages')}
-                      </h3>
+                      <AnimatedHeading>{t('Languages')}</AnimatedHeading>
                       <LanguageChart data={data} />
                     </div>
                   </Reveal>
@@ -343,9 +380,7 @@ const Index = () => {
                 <div className="flex flex-1 flex-col">
                   <Reveal>
                     <div id="tech-stack">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Tech Stack')}
-                      </h3>
+                      <AnimatedHeading>{t('Tech Stack')}</AnimatedHeading>
                       <TechStack data={techStack} />
                     </div>
                   </Reveal>
@@ -371,9 +406,7 @@ const Index = () => {
                 <div className="flex flex-1 flex-col ">
                   <Reveal>
                     <div id="experience">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Experience')}
-                      </h3>
+                      <AnimatedHeading>{t('Experience')}</AnimatedHeading>
                       <div className="md:hidden">
                         <Timeline data={experience} />
                       </div>
@@ -392,9 +425,7 @@ const Index = () => {
                 <div className="flex flex-1 flex-col">
                   <Reveal>
                     <div id="education">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Education')}
-                      </h3>
+                      <AnimatedHeading>{t('Education')}</AnimatedHeading>
                       <div className="md:hidden">
                         <Timeline data={education} />
                       </div>
@@ -441,9 +472,7 @@ const Index = () => {
                 <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                   <Reveal>
                     <div id="certification" className="min-w-0">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Certifications')}
-                      </h3>
+                      <AnimatedHeading>{t('Certifications')}</AnimatedHeading>
                       <Collapse
                         defaultActiveKey={['certifications', 'courses']}
                         ghost
@@ -497,9 +526,7 @@ const Index = () => {
                   <div className="flex min-w-0 flex-1 flex-col">
                     <Reveal>
                       <div id="articles">
-                        <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                          {t('Articles')}
-                        </h3>
+                        <AnimatedHeading>{t('Articles')}</AnimatedHeading>
                         <ArticleGrid articles={articles.slice(0, 6)} />
                       </div>
                     </Reveal>
@@ -513,9 +540,7 @@ const Index = () => {
                   <div className="flex flex-1 flex-col">
                     <Reveal>
                       <div id="projects">
-                        <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                          {t('Projects')}
-                        </h3>
+                        <AnimatedHeading>{t('Projects')}</AnimatedHeading>
                         <ProjectGrid
                           initialItemsCount={8}
                           itemsToAdd={8}

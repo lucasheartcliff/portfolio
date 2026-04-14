@@ -1,8 +1,19 @@
+import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 
 import type { Props as CardProps } from '@/components/ProjectCard';
 import ProjectCard from '@/components/ProjectCard';
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
 
 interface Props {
   items: CardProps[];
@@ -24,11 +35,20 @@ export default function ProjectGrid({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="my-2 flex w-full flex-wrap justify-items-start gap-1.5">
+      <motion.div
+        key={visibleItems}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-50px' }}
+        className="my-2 flex w-full flex-wrap justify-items-start gap-1.5"
+      >
         {items.slice(0, visibleItems).map((item, index) => (
-          <ProjectCard key={index} {...item} />
+          <motion.div key={index} variants={itemVariants}>
+            <ProjectCard {...item} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
       {visibleItems < items.length && (
         <button
           onClick={handleShowMore}

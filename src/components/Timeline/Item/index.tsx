@@ -1,4 +1,5 @@
 import Tooltip from 'antd/lib/tooltip';
+import { motion } from 'framer-motion';
 import moment from 'moment';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
@@ -11,13 +12,15 @@ interface Props {
   hasChildren?: boolean;
   description?: string;
   techTags?: string[];
+  index?: number;
   onClickToOpen?: (isOpen: boolean) => void;
 }
 export default function Item(props: Props) {
   const DATE_FORMAT = 'MMM YYYY';
 
-  const { title, startDate, endDate, techTags } = props;
+  const { title, startDate, endDate, techTags, index = 0 } = props;
   const { t } = useTranslation(['common']);
+  const fromX = index % 2 === 0 ? -40 : 40;
 
   function formatDuration() {
     const start = moment(startDate);
@@ -49,7 +52,11 @@ export default function Item(props: Props) {
   } ${formatDuration()}`;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, x: fromX }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
       className={
         'flex w-full flex-col items-center px-4 pb-4 text-base md:text-xl'
       }
@@ -82,6 +89,6 @@ export default function Item(props: Props) {
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
