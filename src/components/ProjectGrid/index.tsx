@@ -41,10 +41,10 @@ export default function ProjectGrid({
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-50px' }}
-        className="my-2 flex w-full flex-wrap justify-items-start gap-1.5"
+        className="my-2 flex w-full flex-wrap justify-start gap-1.5"
       >
         {items.slice(0, visibleItems).map((item, index) => (
-          <motion.div key={index} variants={itemVariants}>
+          <motion.div key={index} variants={itemVariants} className="min-w-0 w-full md:w-auto">
             <ProjectCard {...item} />
           </motion.div>
         ))}
