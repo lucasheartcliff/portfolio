@@ -1,7 +1,7 @@
-import { SendOutlined } from '@ant-design/icons';
-import { motion } from 'framer-motion';
+import { LoadingOutlined, SendOutlined } from '@ant-design/icons';
+import { motion, useAnimation } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
 
@@ -9,6 +9,16 @@ export default function ContactForm() {
   const { t } = useTranslation('common');
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const shakeControls = useAnimation();
+
+  useEffect(() => {
+    if (status === 'error') {
+      shakeControls.start({
+        x: [0, -8, 8, -8, 8, 0],
+        transition: { duration: 0.4 },
+      });
+    }
+  }, [status, shakeControls]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -120,9 +130,10 @@ export default function ContactForm() {
           disabled={status === 'sending'}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          animate={shakeControls}
           className="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white transition-opacity hover:border-0 hover:opacity-90 disabled:opacity-50"
         >
-          <SendOutlined />
+          {status === 'sending' ? <LoadingOutlined spin /> : <SendOutlined />}
           {status === 'sending' ? t('Sending...') : t('Send Message')}
         </motion.button>
 

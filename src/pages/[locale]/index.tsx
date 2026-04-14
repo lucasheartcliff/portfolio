@@ -2,22 +2,22 @@ import {
   GithubOutlined,
   LinkedinOutlined,
   MailOutlined,
+  MediumOutlined,
 } from '@ant-design/icons';
 import { Collapse } from 'antd';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import AnimatedHeading from '@/components/AnimatedHeading';
 import ArticleGrid from '@/components/ArticleGrid';
 import AsideNav from '@/components/AsideNav';
 import CertificateCard from '@/components/CertificateCard';
 // import ContactForm from '@/components/ContactForm';
-import DevToIcon from '@/components/DevToIcon';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import KofiButton from '@/components/KofiButton';
@@ -35,7 +35,7 @@ import Row from '@/layouts/Row';
 import { DarkModeContext } from '@/pages/_app';
 import profile from '@/public/assets/jsons/profile.json';
 import type { DevtoArticleIndex } from '@/services/devto';
-import { Main } from '@/templates/Main';
+import { Main, ScrollTopContext } from '@/templates/Main';
 import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
 import { GITHUB_REPO } from '@/utils/url';
@@ -63,6 +63,8 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const { isDark } = useContext(DarkModeContext);
+  const scrollTop = useContext(ScrollTopContext);
+  const prefersReducedMotion = useReducedMotion();
   const { t } = useTranslation('common');
   const currentLocale = router.query.locale;
 
@@ -76,6 +78,11 @@ const Index = () => {
     ...(articles.length > 0 ? [{ key: 'articles', label: 'Articles' }] : []),
     ...(pinnedRepos.length > 0 ? [{ key: 'projects', label: 'Projects' }] : []),
   ];
+
+  const parallaxY = useMemo(
+    () => (prefersReducedMotion ? 0 : Math.min(scrollTop * -0.15, 0)),
+    [scrollTop, prefersReducedMotion]
+  );
 
   useEffect(() => {
     const l = currentLocale as string;
@@ -209,7 +216,7 @@ const Index = () => {
                 >
                   <motion.h1
                     variants={heroItemVariants}
-                    className="text-4xl font-bold text-black dark:text-white md:text-7xl"
+                    className="animated-gradient-text text-4xl font-bold md:text-7xl"
                   >
                     {t(name)}
                   </motion.h1>
@@ -258,11 +265,11 @@ const Index = () => {
                       </Icon>
                     </SocialLink>
                     <SocialLink
-                      title="Dev.to"
-                      href={`https://dev.to/${username}`}
+                      title="Medium"
+                      href={`https://medium.com/@${username}`}
                     >
                       <Icon color={'#000'}>
-                        <DevToIcon />
+                        <MediumOutlined />
                       </Icon>
                     </SocialLink>
                     {/* <SocialLink
@@ -314,7 +321,10 @@ const Index = () => {
             </Row>
             <Row>
               <Block>
-                <div className="mt-5 flex w-full items-center justify-center md:mt-0">
+                <motion.div
+                  style={{ y: parallaxY }}
+                  className="mt-5 flex w-full items-center justify-center md:mt-0"
+                >
                   <Image
                     src={`${router.basePath}/assets/images/profile.jpeg`}
                     alt={name}
@@ -323,7 +333,7 @@ const Index = () => {
                     className="h-80 w-80 rounded-full object-cover"
                     priority
                   />
-                </div>
+                </motion.div>
               </Block>
               <Block>
                 <div className="flex flex-1 flex-col">
