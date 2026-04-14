@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 
+import useShinyHover from '@/hooks/useShinyHover';
 import { getPlatformColor } from '@/utils';
 
 import Link from '../Link';
@@ -16,12 +17,21 @@ interface Props {
 
 export default function CertificateCard({ name, platform, url }: Props) {
   const { t } = useTranslation('common');
+  const { ref, shinyOverlayStyle, onMouseMove, onMouseLeave } = useShinyHover();
+
   return (
     <motion.div
+      ref={ref}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
       whileHover={{ y: -4 }}
       transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
-      className="flex h-20 w-full flex-row items-center justify-center overflow-hidden border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 md:text-xl"
+      className="relative flex h-20 w-full flex-row items-center justify-center overflow-hidden border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 md:text-xl"
     >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={shinyOverlayStyle}
+      />
       <div className="min-w-0 flex-1">
         <Tooltip title={t(name)}>
           <div className="truncate font-semibold text-black dark:text-white">

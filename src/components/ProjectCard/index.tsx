@@ -5,6 +5,7 @@ import Tooltip from 'antd/lib/tooltip';
 import { motion } from 'framer-motion';
 import React from 'react';
 
+import useShinyHover from '@/hooks/useShinyHover';
 import { getLanguageColor } from '@/utils';
 
 import ColorfulDot from '../ColorfulDot';
@@ -29,12 +30,21 @@ export default function ProjectCard({
   description,
   tags,
 }: Props) {
+  const { ref, shinyOverlayStyle, onMouseMove, onMouseLeave } = useShinyHover();
+
   return (
     <motion.div
+      ref={ref}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
       whileHover={{ y: -4 }}
       transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
-      className="flex w-full flex-col border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl"
+      className="relative flex w-full flex-col border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl"
     >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={shinyOverlayStyle}
+      />
       <div className="flex flex-row items-start justify-between">
         <div className="min-w-0 flex-1">
           <div className="truncate font-semibold text-black dark:text-white">
