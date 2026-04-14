@@ -13,8 +13,9 @@ describe('ScrollToTopButton', () => {
     const { container } = render(
       <ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />
     );
+    // Component uses AnimatePresence with conditional rendering — renders nothing when not visible
     // eslint-disable-next-line testing-library/no-node-access
-    expect(container.firstChild).toHaveClass('invisible');
+    expect(container.firstChild).toBeNull();
   });
 
   it('should call scrollToTop when clicked', () => {
