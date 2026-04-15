@@ -10,11 +10,8 @@ describe('ScrollToTopButton', () => {
   });
 
   it('should be invisible when isVisible is false', () => {
-    const { container } = render(
-      <ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />
-    );
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(container.firstChild).toHaveClass('invisible');
+    render(<ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />);
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
   });
 
   it('should call scrollToTop when clicked', () => {
