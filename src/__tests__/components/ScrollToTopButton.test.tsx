@@ -13,7 +13,7 @@ describe('ScrollToTopButton', () => {
     const { container } = render(
       <ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />
     );
-    expect(container.firstChild).toBeNull();
+    expect(container).toBeEmptyDOMElement();
   });
 
   it('should call scrollToTop when clicked', () => {
