@@ -65,6 +65,13 @@
         "no-console": "off"
       }
     },
+    // Configuration for Jest setup file
+    {
+      "files": ["jest.setup.js"],
+      "env": {
+        "jest": true
+      }
+    },
     // Configuration for testing
     {
       "files": ["**/*.test.ts", "**/*.test.tsx"],
