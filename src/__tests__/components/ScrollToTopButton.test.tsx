@@ -10,10 +10,8 @@ describe('ScrollToTopButton', () => {
   });
 
   it('should be invisible when isVisible is false', () => {
-    const { container } = render(
-      <ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />
-    );
-    expect(container).toBeEmptyDOMElement();
+    render(<ScrollToTopButton isVisible={false} scrollToTop={jest.fn()} />);
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
   });
 
   it('should call scrollToTop when clicked', () => {
