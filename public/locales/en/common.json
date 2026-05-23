@@ -117,5 +117,135 @@
   "Support me": "Support me",
   "Article not found.": "Article not found.",
   "Loading...": "Loading...",
-  "New": "New"
+  "New": "New",
+  "nav": {
+    "about": "About",
+    "architecture": "Architecture",
+    "stack": "Stack",
+    "languages": "Languages",
+    "projects": "Projects",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "cta": {
+    "getInTouch": "Get in touch",
+    "hireMe": "Hire me",
+    "backToPortfolio": "back to portfolio"
+  },
+  "hero": {
+    "available": "Available for opportunities",
+    "line1": "Lucas Morais",
+    "line2": "builds systems",
+    "line3": "that scale.",
+    "bio": "Software Engineer specializing in {b}backend architecture{/b} and system scalability. Since 2017, building resilient platforms for oil & gas and logistics — modernizing legacy systems, designing microservices, and making operations measurably faster.",
+    "viewProjects": "View Projects →",
+    "downloadCV": "Download CV",
+    "scroll": "SCROLL",
+    "now": "Now: building scalable systems @ Intelie by Viasat"
+  },
+  "role": {
+    "0": "Backend Architect",
+    "1": "Full-Stack Engineer",
+    "2": "Distributed Systems",
+    "3": "Legacy Modernizer"
+  },
+  "arch": {
+    "label": "Architectural Overview",
+    "title1": "Systems I've designed,",
+    "title2": "shipped, and modernized.",
+    "body": "A look at the patterns I reach for — from event-driven pipelines to multi-tenant SaaS architectures across the oil & gas and logistics sectors.",
+    "card1": {
+      "tag": "EVENT-DRIVEN",
+      "title": "Real-time data pipelines",
+      "body": "Atria — pilot for real-time ML data processing across thousands of antenna sensors. Proactive fault detection, reduced maintenance cost."
+    },
+    "card2": {
+      "tag": "DOMAIN MODELING",
+      "title": "Common Data Framework",
+      "body": "Centralized persistence base eliminating redundancy across O&G projects. ~100 entities modeled with subject-matter experts."
+    },
+    "card3": {
+      "tag": "MULTI-TENANT",
+      "title": "License & access control",
+      "body": "Architected a system that protects IP and revenue by gating product features per contracted plan, with strategic sign-off from leadership."
+    },
+    "topology": "REFERENCE TOPOLOGY",
+    "topologySub": "How the layers fit together"
+  },
+  "stack": {
+    "label": "Technical Stack",
+    "title": "The toolkit, by layer.",
+    "body": "What I reach for when designing services — biased toward boring, battle-tested technology that scales without surprises.",
+    "cat": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "data": "Data & Messaging",
+      "cloud": "Cloud & Infra"
+    },
+    "metric": {
+      "years": "years shipping",
+      "entities": "entities modeled",
+      "services": "services architected",
+      "sla": "SLA uptime"
+    }
+  },
+  "lang": {
+    "label": "Languages",
+    "title": "Time spent, by language.",
+    "tracked": "tracked via WakaTime · last 5 years",
+    "total": "Total tracked",
+    "hours": "hours",
+    "years": "years",
+    "summary": "≈ {y} years of keyboard time across {n} languages.",
+    "thisWeek": "This week",
+    "byLang": "BY LANG"
+  },
+  "proj": {
+    "label": "Featured Projects",
+    "title": "Open source & experiments.",
+    "allRepos": "All repos on GitHub →",
+    "pinned": "★ PINNED"
+  },
+  "writing": {
+    "label": "Writing",
+    "title": "Notes & deep dives.",
+    "all": "All articles →"
+  },
+  "contact": {
+    "label": "Contact",
+    "title1": "Let's build",
+    "title2": "something solid.",
+    "body": "Have a project in mind, want to talk architecture, or just need a sparring partner on a hard backend problem? My inbox is open.",
+    "name": "Name",
+    "namePh": "Your name",
+    "email": "Email",
+    "emailPh": "you@example.com",
+    "subject": "Subject",
+    "subjectPh": "What's this about?",
+    "message": "Message",
+    "messagePh": "Tell me a bit about what you're working on…",
+    "replies": "Usually replies within 24h",
+    "send": "Send Message →",
+    "sending": "Sending…",
+    "sent": "✓ Sent",
+    "error": "✕ Try again",
+    "row": {
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "location": "Location",
+      "locationValue": "Rio de Janeiro, Brazil · UTC−3"
+    },
+    "currentStatus": "CURRENT STATUS",
+    "openTo": "Open to senior / staff backend & platform roles."
+  },
+  "footer": {
+    "built": "built with care"
+  },
+  "article": {
+    "contents": "Contents",
+    "reading": "Reading",
+    "relatedLabel": "more",
+    "relatedTitle": "Recent writing"
+  }
 }

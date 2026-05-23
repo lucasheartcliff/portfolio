@@ -26,9 +26,9 @@ class MyDocument extends Document {
               rel="stylesheet"
             />
             <script
-              // Apply theme before paint to avoid a flash of the wrong theme.
+              // Dark-only design: lock the theme before first paint.
               dangerouslySetInnerHTML={{
-                __html: `(function(){try{var s=localStorage.getItem('darkMode');var d=s==='true'||(!s&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.setAttribute('data-theme',d?'dark':'light');if(d){r.classList.add('dark');}else{r.classList.remove('dark');}}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`,
+                __html: `(function(){var r=document.documentElement;r.setAttribute('data-theme','dark');r.classList.add('dark');})();`,
               }}
             />
           </Head>

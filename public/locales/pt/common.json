@@ -117,5 +117,135 @@
   "Support me": "Apoie-me",
   "Article not found.": "Artigo não encontrado.",
   "Loading...": "Carregando...",
-  "New": "Novo"
+  "New": "Novo",
+  "nav": {
+    "about": "Sobre",
+    "architecture": "Arquitetura",
+    "stack": "Stack",
+    "languages": "Linguagens",
+    "projects": "Projetos",
+    "writing": "Artigos",
+    "contact": "Contato"
+  },
+  "cta": {
+    "getInTouch": "Fale comigo",
+    "hireMe": "Me contrate",
+    "backToPortfolio": "voltar ao portfólio"
+  },
+  "hero": {
+    "available": "Disponível para oportunidades",
+    "line1": "Lucas Morais",
+    "line2": "constrói sistemas",
+    "line3": "que escalam.",
+    "bio": "Engenheiro de Software especializado em {b}arquitetura backend{/b} e escalabilidade de sistemas. Desde 2017, construindo plataformas resilientes para óleo & gás e logística — modernizando sistemas legados, projetando microsserviços e tornando operações mensuravelmente mais rápidas.",
+    "viewProjects": "Ver projetos →",
+    "downloadCV": "Baixar CV",
+    "scroll": "ROLE",
+    "now": "Agora: construindo sistemas escaláveis @ Intelie by Viasat"
+  },
+  "role": {
+    "0": "Arquiteto Backend",
+    "1": "Engenheiro Full-Stack",
+    "2": "Sistemas Distribuídos",
+    "3": "Modernizador de Legados"
+  },
+  "arch": {
+    "label": "Visão de Arquitetura",
+    "title1": "Sistemas que projetei,",
+    "title2": "entreguei e modernizei.",
+    "body": "Um olhar sobre os padrões que uso — de pipelines orientados a eventos a arquiteturas SaaS multi-tenant nos setores de óleo & gás e logística.",
+    "card1": {
+      "tag": "ORIENTADO A EVENTOS",
+      "title": "Pipelines de dados em tempo real",
+      "body": "Atria — piloto de processamento ML em tempo real para milhares de sensores de antena. Detecção proativa de falhas, redução de custos de manutenção."
+    },
+    "card2": {
+      "tag": "MODELAGEM DE DOMÍNIO",
+      "title": "Common Data Framework",
+      "body": "Base centralizada de persistência eliminando redundância entre projetos de O&G. ~100 entidades modeladas com especialistas do domínio."
+    },
+    "card3": {
+      "tag": "MULTI-TENANT",
+      "title": "Controle de licença & acesso",
+      "body": "Arquitetei um sistema que protege IP e receita controlando features por plano contratado, com aval estratégico da liderança."
+    },
+    "topology": "TOPOLOGIA DE REFERÊNCIA",
+    "topologySub": "Como as camadas se encaixam"
+  },
+  "stack": {
+    "label": "Stack Técnico",
+    "title": "Ferramentas, por camada.",
+    "body": "O que uso ao projetar serviços — viés por tecnologia chata e testada em batalha, que escala sem surpresas.",
+    "cat": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "data": "Dados & Mensageria",
+      "cloud": "Nuvem & Infra"
+    },
+    "metric": {
+      "years": "anos entregando",
+      "entities": "entidades modeladas",
+      "services": "serviços arquitetados",
+      "sla": "SLA de uptime"
+    }
+  },
+  "lang": {
+    "label": "Linguagens",
+    "title": "Tempo gasto, por linguagem.",
+    "tracked": "rastreado via WakaTime · últimos 5 anos",
+    "total": "Total rastreado",
+    "hours": "horas",
+    "years": "anos",
+    "summary": "≈ {y} anos de tempo de teclado em {n} linguagens.",
+    "thisWeek": "Esta semana",
+    "byLang": "POR LING"
+  },
+  "proj": {
+    "label": "Projetos em Destaque",
+    "title": "Open source & experimentos.",
+    "allRepos": "Todos os repos no GitHub →",
+    "pinned": "★ FIXADO"
+  },
+  "writing": {
+    "label": "Artigos",
+    "title": "Notas & aprofundamentos.",
+    "all": "Todos os artigos →"
+  },
+  "contact": {
+    "label": "Contato",
+    "title1": "Vamos construir",
+    "title2": "algo sólido.",
+    "body": "Tem um projeto em mente, quer falar de arquitetura, ou precisa de um sparring para um problema difícil de backend? Minha caixa de entrada está aberta.",
+    "name": "Nome",
+    "namePh": "Seu nome",
+    "email": "Email",
+    "emailPh": "voce@exemplo.com",
+    "subject": "Assunto",
+    "subjectPh": "Sobre o que é?",
+    "message": "Mensagem",
+    "messagePh": "Conte-me um pouco sobre o que você está trabalhando…",
+    "replies": "Responde em até 24h",
+    "send": "Enviar mensagem →",
+    "sending": "Enviando…",
+    "sent": "✓ Enviado",
+    "error": "✕ Tente novamente",
+    "row": {
+      "email": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "location": "Localização",
+      "locationValue": "Rio de Janeiro, Brasil · UTC−3"
+    },
+    "currentStatus": "STATUS ATUAL",
+    "openTo": "Aberto a vagas senior / staff de backend & plataforma."
+  },
+  "footer": {
+    "built": "feito com carinho"
+  },
+  "article": {
+    "contents": "Sumário",
+    "reading": "Leitura",
+    "relatedLabel": "mais",
+    "relatedTitle": "Artigos recentes"
+  }
 }
