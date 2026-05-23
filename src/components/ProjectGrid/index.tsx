@@ -44,7 +44,11 @@ export default function ProjectGrid({
         className="my-2 flex w-full flex-wrap justify-start gap-1.5"
       >
         {items.slice(0, visibleItems).map((item, index) => (
-          <motion.div key={index} variants={itemVariants} className="min-w-0 w-full md:w-auto">
+          <motion.div
+            key={index}
+            variants={itemVariants}
+            className="w-full min-w-0 md:w-auto"
+          >
             <ProjectCard {...item} />
           </motion.div>
         ))}

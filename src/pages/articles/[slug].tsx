@@ -200,7 +200,7 @@ export default function ArticlePage() {
             className="mb-6 h-64 w-full rounded-lg object-cover md:h-96"
           />
         )}
-        <h1 className="text-3xl font-bold text-black dark:text-white md:text-5xl">
+        <h1 className="font-display text-3xl font-bold text-black dark:text-white md:text-5xl">
           {article.title}
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
@@ -220,31 +220,29 @@ export default function ArticlePage() {
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
+                className="tag-chip rounded px-2 py-0.5 text-xs font-medium"
               >
                 #{tag}
               </span>
             ))}
           </div>
         )}
-        <hr className="my-6 border-gray-200 dark:border-gray-700" />
+        <hr className="my-6" style={{ borderColor: 'var(--hairline)' }} />
         <div className="mb-4 flex items-center justify-end gap-2">
-          <span
-            className="text-gray-400 dark:text-gray-500"
-            style={{ fontSize: 13 }}
-          >
-            A
-          </span>
+          <span style={{ fontSize: 13, color: 'var(--text-faint)' }}>A</span>
           <button
             type="button"
             onClick={() => handleFontChange(Math.max(0, fontIdx - 1))}
             disabled={fontIdx === 0}
             aria-label="Decrease font size"
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-lg text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="glass-btn flex h-8 w-8 items-center justify-center rounded-md text-lg disabled:opacity-30"
           >
             −
           </button>
-          <span className="min-w-[3.5ch] text-center text-sm font-medium tabular-nums text-gray-600 dark:text-gray-300">
+          <span
+            className="min-w-[3.5ch] text-center text-sm font-medium tabular-nums"
+            style={{ color: 'var(--text-mute)' }}
+          >
             {articleFontSize}px
           </span>
           <button
@@ -256,19 +254,14 @@ export default function ArticlePage() {
             }
             disabled={fontIdx === FONT_SIZE_OPTIONS.length - 1}
             aria-label="Increase font size"
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 text-lg text-gray-500 transition-colors hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="glass-btn flex h-8 w-8 items-center justify-center rounded-md text-lg disabled:opacity-30"
           >
             +
           </button>
-          <span
-            className="text-gray-400 dark:text-gray-500"
-            style={{ fontSize: 20 }}
-          >
-            A
-          </span>
+          <span style={{ fontSize: 20, color: 'var(--text-faint)' }}>A</span>
         </div>
         <div
-          className="prose prose-lg dark:prose-invert max-w-none text-justify [&_pre]:overflow-x-auto"
+          className="prose prose-body code-block prose-lg dark:prose-invert max-w-none text-justify [&_pre]:overflow-x-auto"
           style={{ fontSize: `${articleFontSize}px` }}
         >
           <ReactMarkdown components={markdownComponents}>

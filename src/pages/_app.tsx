@@ -25,9 +25,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       stored === 'true' ||
       (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
     setIsDark(prefersDark);
-    if (prefersDark) {
-      document.documentElement.classList.add('dark');
-    }
+    // The blocking script in _document already set these before paint; keep
+    // them in sync here in case storage changed since the last render.
+    const root = document.documentElement;
+    root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    root.classList.toggle('dark', prefersDark);
     setLoading(false);
   }, []);
 
@@ -35,11 +37,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     setIsDark((prev) => {
       const next = !prev;
       localStorage.setItem('darkMode', String(next));
-      if (next) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      const root = document.documentElement;
+      root.setAttribute('data-theme', next ? 'dark' : 'light');
+      root.classList.toggle('dark', next);
       return next;
     });
   }, []);
@@ -48,7 +48,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <DarkModeContext.Provider value={{ isDark, toggle }}>
       <ConfigProvider
         theme={{
-          token: { colorPrimary: isDark ? '#5c7cfa' : '#253db6' },
+          token: { colorPrimary: isDark ? '#10b981' : '#047857' },
           algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
         }}
       >

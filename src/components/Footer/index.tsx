@@ -5,7 +5,10 @@ import React from 'react';
 const Footer = () => {
   const { t } = useTranslation('common');
   return (
-    <footer className="py-10 text-center text-lg text-gray-700 dark:text-gray-300 md:text-2xl">
+    <footer
+      className="py-10 text-center text-lg md:text-2xl"
+      style={{ color: 'var(--text-mute)' }}
+    >
       <div className="flex items-center justify-center">
         <p className="mr-2">{t('Made with')}</p>
         <HeartFilled className="text-red-700" />

@@ -15,6 +15,22 @@ class MyDocument extends Document {
         <>
           <Head>
             <link rel="stylesheet" href="/assets/css/index.css" />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link
+              rel="preconnect"
+              href="https://fonts.gstatic.com"
+              crossOrigin="anonymous"
+            />
+            <link
+              href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+              rel="stylesheet"
+            />
+            <script
+              // Apply theme before paint to avoid a flash of the wrong theme.
+              dangerouslySetInnerHTML={{
+                __html: `(function(){try{var s=localStorage.getItem('darkMode');var d=s==='true'||(!s&&window.matchMedia('(prefers-color-scheme: dark)').matches);var r=document.documentElement;r.setAttribute('data-theme',d?'dark':'light');if(d){r.classList.add('dark');}else{r.classList.remove('dark');}}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();`,
+              }}
+            />
           </Head>
           <body>
             <Main />
