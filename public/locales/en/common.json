@@ -165,7 +165,7 @@
       "body": "Centralized persistence base eliminating redundancy across O&G projects. ~100 entities modeled with subject-matter experts."
     },
     "card3": {
-      "tag": "MULTI-TENANT",
+      "tag": "SECURITY",
       "title": "License & access control",
       "body": "Architected a system that protects IP and revenue by gating product features per contracted plan, with strategic sign-off from leadership."
     },

@@ -85,7 +85,7 @@ const HeroPanel = ({
   const rps = Math.round(1240 + Math.sin(tick) * 220);
 
   return (
-    <Glass className="relative p-5" style={{ aspectRatio: '0.95' }}>
+    <Glass className="relative p-5">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
@@ -150,8 +150,8 @@ const HeroPanel = ({
         </div>
 
         <div className="mt-3 text-[10.5px] text-slate-500">
-          <span style={{ color: accent }}>▍</span> Now: building scalable
-          systems @ Intelie by Viasat
+          <span style={{ color: accent }}>▍</span> Building scalable systems @
+          Intelie
         </div>
       </div>
     </Glass>
