@@ -165,7 +165,7 @@
       "body": "Base centralizada de persistência eliminando redundância entre projetos de O&G. ~100 entidades modeladas com especialistas do domínio."
     },
     "card3": {
-      "tag": "MULTI-TENANT",
+      "tag": "SEGURANÇA",
       "title": "Controle de licença & acesso",
       "body": "Arquitetei um sistema que protege IP e receita controlando features por plano contratado, com aval estratégico da liderança."
     },
