@@ -135,7 +135,7 @@ const DiagramEntities = ({
   </svg>
 );
 
-const DiagramTenants = ({
+const DiagramLicense = ({
   accent,
   accentB,
 }: {
@@ -143,40 +143,96 @@ const DiagramTenants = ({
   accentB: string;
 }) => (
   <svg viewBox="0 0 320 128" className="h-full w-full">
-    {[0, 1, 2].map((i) => (
-      <g key={i} transform={`translate(${30 + i * 90}, 20)`}>
-        <rect
-          width="70"
-          height="88"
-          rx="6"
-          fill="rgba(255,255,255,0.03)"
-          stroke={`${accentB}33`}
-        />
-        <text
-          x="35"
-          y="14"
-          textAnchor="middle"
-          fontSize="8"
-          fill="#94a3b8"
-          fontFamily="monospace"
-        >
-          tenant_{i + 1}
-        </text>
-        {[28, 44, 60, 76].map((y, j) => (
-          <rect
-            // eslint-disable-next-line react/no-array-index-key
-            key={j}
-            x="8"
-            y={y}
-            width="54"
-            height="8"
-            rx="2"
-            fill={j === 0 ? accent : `${accentB}55`}
-            opacity={j === 0 ? 0.8 : 0.4}
+    {/* padlock — the access gate */}
+    <g transform="translate(34, 28)">
+      <path
+        d="M14 32 V22 a18 18 0 0 1 36 0 V32"
+        fill="none"
+        stroke={accent}
+        strokeWidth="3"
+      />
+      <rect
+        x="4"
+        y="32"
+        width="56"
+        height="46"
+        rx="8"
+        fill={`${accent}22`}
+        stroke={accent}
+        strokeWidth="1.5"
+      />
+      <circle cx="32" cy="52" r="5" fill={accent} />
+      <rect x="30" y="55" width="4" height="13" rx="2" fill={accent} />
+    </g>
+
+    {/* plan-gated features: two granted, one locked */}
+    {(
+      [
+        [22, true],
+        [52, true],
+        [82, false],
+      ] as [number, boolean][]
+    ).map(([y, granted]) => {
+      const c = granted ? accent : '#64748b';
+      return (
+        <g key={y}>
+          <line
+            x1="96"
+            y1={y + 9}
+            x2="150"
+            y2={y + 9}
+            stroke={`${granted ? accent : accentB}55`}
+            strokeWidth="1"
           />
-        ))}
-      </g>
-    ))}
+          <rect
+            x="150"
+            y={y}
+            width="138"
+            height="18"
+            rx="4"
+            fill="rgba(255,255,255,0.04)"
+            stroke={`${granted ? accentB : c}55`}
+          />
+          {granted ? (
+            <path
+              d={`M158 ${y + 9} l4 4 l8 -9`}
+              fill="none"
+              stroke={accent}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          ) : (
+            <g>
+              <rect
+                x="158"
+                y={y + 6}
+                width="9"
+                height="8"
+                rx="1.5"
+                fill="none"
+                stroke={c}
+                strokeWidth="1.3"
+              />
+              <path
+                d={`M160 ${y + 6} v-2 a2.5 2.5 0 0 1 5 0 v2`}
+                fill="none"
+                stroke={c}
+                strokeWidth="1.3"
+              />
+            </g>
+          )}
+          <rect
+            x="176"
+            y={y + 6}
+            width={granted ? 96 : 70}
+            height="6"
+            rx="3"
+            fill={`${c}66`}
+          />
+        </g>
+      );
+    })}
   </svg>
 );
 
@@ -288,7 +344,7 @@ export default function ArchitectureSection({
               body={t('arch.card3.body')}
               tech={['Microservices', 'Spring', 'Docker', 'OAuth2']}
               accent={accent}
-              diagram={<DiagramTenants accent={accent} accentB={accentB} />}
+              diagram={<DiagramLicense accent={accent} accentB={accentB} />}
             />
           </Reveal>
         </div>
