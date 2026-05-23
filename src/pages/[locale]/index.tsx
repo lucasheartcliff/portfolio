@@ -53,7 +53,7 @@ const Index = () => {
     ])
       .then(([repos, coding, langs]: any[]) => {
         setProjects(
-          (Array.isArray(repos) ? repos : []).map((v: any, i: number) => ({
+          (Array.isArray(repos) ? repos : []).map((v: any) => ({
             name: v.name,
             desc: v.description || '',
             tags: (v.topics || []).slice(0, 4),
@@ -62,7 +62,7 @@ const Index = () => {
             lang: v.language || '',
             langColor: v.languageColor || getLanguageColor(v.language),
             url: v.url || GITHUB_REPO(username, v.name),
-            featured: i === 0,
+            featured: false,
           }))
         );
 
