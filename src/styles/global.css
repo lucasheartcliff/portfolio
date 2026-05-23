@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 /* ============================================================
-   THEME VARIABLES (ported from the Claude Design export)
-   Dark is the default (:root); light is opt-in via [data-theme="light"].
-   The legacy .dark class is kept in sync for existing `dark:` classes.
+   THEME — Sapphire, dark only (from Claude Design export)
    ============================================================ */
 :root,
 [data-theme='dark'] {
   --bg-base: #0a0e1a;
-  --accent: #10b981;
-  --accent-b: #6366f1;
+  --accent: #1d6df7;
+  --accent-b: #8b5cf6;
+  --color-primary: var(--accent);
   --text-strong: #f1f5f9;
   --text-body: rgba(226, 232, 240, 0.85);
   --text-mute: rgb(148, 163, 184);
@@ -35,46 +34,15 @@
   --rail-bg: rgba(255, 255, 255, 0.05);
   --code-bg: rgba(0, 0, 0, 0.25);
   --orb-dim: 1;
-  --color-primary: var(--accent);
-}
-
-[data-theme='light'] {
-  --bg-base: #f5f4ee;
-  --accent: #047857;
-  --accent-b: #4f46e5;
-  --text-strong: #0f172a;
-  --text-body: rgba(30, 41, 59, 0.88);
-  --text-mute: rgb(71, 85, 105);
-  --text-faint: rgb(100, 116, 139);
-  --glass-bg: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.5) 100%
-  );
-  --glass-border: rgba(15, 23, 42, 0.08);
-  --glass-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 12px 32px -12px rgba(15, 23, 42, 0.18);
-  --glass-hover-border: rgba(15, 23, 42, 0.15);
-  --hairline: rgba(15, 23, 42, 0.08);
-  --toggle-bg: rgba(15, 23, 42, 0.04);
-  --toggle-border: rgba(15, 23, 42, 0.1);
-  --chip-bg: rgba(15, 23, 42, 0.04);
-  --chip-border: rgba(15, 23, 42, 0.08);
-  --input-bg: rgba(255, 255, 255, 0.7);
-  --input-border: rgba(15, 23, 42, 0.1);
-  --rail-bg: rgba(15, 23, 42, 0.06);
-  --code-bg: rgba(15, 23, 42, 0.04);
-  --orb-dim: 0.45;
-  --color-primary: var(--accent);
 }
 
 html,
-body {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+body,
+#__next {
   background: var(--bg-base);
   color: var(--text-body);
-  transition: background-color 0.4s ease, color 0.3s ease;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -87,9 +55,6 @@ body {
   font-family: 'Space Grotesk', system-ui, sans-serif;
   font-feature-settings: 'ss01';
 }
-.font-serif-display {
-  font-family: 'Instrument Serif', Georgia, serif;
-}
 .font-mono {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
@@ -98,12 +63,8 @@ a {
   @apply text-primary;
 }
 
-a:hover {
-  @apply border-b-2 border-primary;
-}
-
 /* ============================================================
-   GLASS SURFACES — driven by the theme vars
+   GLASS SURFACES
    ============================================================ */
 .glass-card {
   background: var(--glass-bg);
@@ -132,34 +93,22 @@ a:hover {
   border: 1px solid var(--toggle-border);
   backdrop-filter: blur(8px);
   color: var(--text-strong);
-  transition: background 0.3s ease, border-color 0.3s ease;
 }
 .glass-btn:hover {
   background: var(--chip-bg);
   border-color: var(--glass-hover-border);
 }
 
-.hover-lift {
-  transition: transform 0.3s ease, border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.hover-lift:hover {
-  transform: translateY(-4px);
+/* Hover lift */
+.proj-card:hover,
+.contact-row:hover {
+  transform: translateY(-2px);
   border-color: var(--glass-hover-border);
 }
-
-/* Accent-tinted pill used for tags / tech tags */
-.tag-chip {
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-}
-
-/* Neutral chip (e.g. dates, secondary meta) */
-.chip-neutral {
-  background: var(--chip-bg);
-  border: 1px solid var(--chip-border);
-  color: var(--text-mute);
+.proj-featured {
+  background: var(--glass-bg),
+    radial-gradient(ellipse at top right, var(--accent), transparent 60%);
+  background-blend-mode: overlay, normal;
 }
 
 /* Form focus */
@@ -170,7 +119,7 @@ textarea:focus {
 }
 
 /* ============================================================
-   ANIMATED BACKGROUND ORBS
+   ANIMATIONS
    ============================================================ */
 @keyframes orbA {
   0%,
@@ -208,7 +157,6 @@ textarea:focus {
 .orb-anim-3 {
   animation: orbC 24s ease-in-out infinite;
 }
-
 @keyframes blink {
   to {
     opacity: 0;
@@ -219,8 +167,22 @@ textarea:focus {
   background: color-mix(in srgb, var(--accent) 35%, transparent);
   color: white;
 }
-[data-theme='light'] ::selection {
-  color: #0f172a;
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--chip-border);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-mute);
+  background-clip: content-box;
 }
 
 section[id] {
@@ -228,64 +190,8 @@ section[id] {
 }
 
 /* ============================================================
-   ARTICLE PROSE (homepage .content + reader .prose / .prose-body)
+   ARTICLE PROSE (reader)
    ============================================================ */
-.content p {
-  @apply my-6;
-}
-
-.content ul {
-  @apply my-6;
-}
-
-.prose {
-  color: var(--text-body);
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 700;
-  color: var(--text-strong);
-}
-
-.prose p {
-  @apply my-4 leading-relaxed;
-}
-
-.prose code {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  background: var(--code-bg);
-  @apply rounded px-1.5 py-0.5 text-sm;
-}
-
-.prose pre {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  background: var(--code-bg);
-  @apply my-4 overflow-x-auto rounded-lg p-4;
-}
-
-.prose img {
-  @apply my-4 rounded-lg;
-}
-
-.prose ul,
-.prose ol {
-  @apply my-4 pl-6;
-}
-
-.prose li {
-  @apply my-1;
-}
-
-.prose blockquote {
-  border-left: 4px solid var(--accent);
-  @apply my-4 pl-4 italic;
-}
-
-/* Article reader rich prose (from Article.html) */
 .prose-body p {
   color: var(--text-body);
 }
@@ -305,9 +211,45 @@ section[id] {
 .prose-body a:hover {
   text-decoration-color: var(--accent);
 }
+.prose-body h1,
+.prose-body h2,
+.prose-body h3,
+.prose-body h4 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+  margin: 1.6em 0 0.6em;
+  font-weight: 600;
+}
+.prose-body h2 {
+  font-size: 1.6em;
+}
+.prose-body h3 {
+  font-size: 1.3em;
+}
+.prose-body p {
+  margin: 1em 0;
+}
+.prose-body ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1em 0;
+}
+.prose-body ul > li {
+  position: relative;
+  padding-left: 1.4rem;
+  margin: 0.5rem 0;
+}
+.prose-body ul > li::before {
+  content: '▍';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
 .prose-body ol {
   counter-reset: list;
   padding-left: 0;
+  margin: 1em 0;
 }
 .prose-body ol > li {
   counter-increment: list;
@@ -326,6 +268,26 @@ section[id] {
   color: var(--accent);
   letter-spacing: 0.05em;
 }
+.prose-body blockquote {
+  margin: 2em 0;
+  padding: 0.5em 0 0.5em 1.5rem;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+  color: var(--text-strong);
+}
+.prose-body img {
+  border-radius: 12px;
+  margin: 1.5em 0;
+}
+.prose-body :not(pre) > code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.4em;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: var(--accent);
+}
 .code-block pre::-webkit-scrollbar {
   height: 8px;
 }
@@ -334,30 +296,7 @@ section[id] {
   border-radius: 4px;
 }
 
-/* Animated gradient text for hero name */
-.animated-gradient-text {
-  background: linear-gradient(90deg, var(--accent), var(--accent-b), var(--accent));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 4s ease-in-out infinite;
-}
-
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animated-gradient-text {
-    animation: none;
-  }
   .orb-anim-1,
   .orb-anim-2,
   .orb-anim-3 {

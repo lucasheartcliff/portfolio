@@ -5,7 +5,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { ConfigProvider, theme } from 'antd';
 import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
 import { getEnvProperties } from '@/utils';
@@ -13,43 +13,27 @@ import { getEnvProperties } from '@/utils';
 export const DarkModeContext = createContext<{
   isDark: boolean;
   toggle: () => void;
-}>({ isDark: false, toggle: () => {} });
+}>({ isDark: true, toggle: () => {} });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = React.useState(true);
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem('darkMode');
-    const prefersDark =
-      stored === 'true' ||
-      (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    setIsDark(prefersDark);
-    // The blocking script in _document already set these before paint; keep
-    // them in sync here in case storage changed since the last render.
+    // Dark-only design: lock the theme.
     const root = document.documentElement;
-    root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-    root.classList.toggle('dark', prefersDark);
+    root.setAttribute('data-theme', 'dark');
+    root.classList.add('dark');
     setLoading(false);
   }, []);
 
-  const toggle = useCallback(() => {
-    setIsDark((prev) => {
-      const next = !prev;
-      localStorage.setItem('darkMode', String(next));
-      const root = document.documentElement;
-      root.setAttribute('data-theme', next ? 'dark' : 'light');
-      root.classList.toggle('dark', next);
-      return next;
-    });
-  }, []);
+  const toggle = useCallback(() => {}, []);
 
   return (
-    <DarkModeContext.Provider value={{ isDark, toggle }}>
+    <DarkModeContext.Provider value={{ isDark: true, toggle }}>
       <ConfigProvider
         theme={{
-          token: { colorPrimary: isDark ? '#10b981' : '#047857' },
-          algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+          token: { colorPrimary: '#1d6df7' },
+          algorithm: theme.darkAlgorithm,
         }}
       >
         {loading ? <LoadingScreen /> : <Component {...pageProps} />}
