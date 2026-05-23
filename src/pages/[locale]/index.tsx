@@ -4,7 +4,6 @@ import {
   MailOutlined,
   MediumOutlined,
 } from '@ant-design/icons';
-import { Collapse } from 'antd';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -216,21 +215,25 @@ const Index = () => {
                 >
                   <motion.h1
                     variants={heroItemVariants}
-                    className="animated-gradient-text text-4xl font-bold md:text-7xl"
+                    className="animated-gradient-text font-display text-4xl font-bold md:text-7xl"
                   >
                     {t(name)}
                   </motion.h1>
                   <motion.h2
                     variants={heroItemVariants}
-                    className="text-xl font-semibold text-black dark:text-gray-200 md:text-4xl"
+                    className="font-display text-xl font-semibold text-black dark:text-gray-200 md:text-4xl"
                   >
                     <TypedRole />
                   </motion.h2>
                   <motion.span
                     variants={heroItemVariants}
-                    className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200"
+                    className="chip-neutral mt-2 inline-flex items-center gap-1.5 self-start rounded-full px-3 py-1 text-sm font-medium"
+                    style={{ color: 'var(--accent)' }}
                   >
-                    <span className="h-2 w-2 rounded-full bg-green-500" />
+                    <span
+                      className="h-2 w-2 rounded-full"
+                      style={{ background: 'var(--accent)' }}
+                    />
                     {t('Available for opportunities')}
                   </motion.span>
                   <motion.p
@@ -338,7 +341,7 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <div id="about">
+                    <div id="about" className="glass-card p-6 md:p-8">
                       <AnimatedHeading>{t('About')}</AnimatedHeading>
                       <p className="text-pretty text-justify text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
                         {t(bio)}
@@ -353,7 +356,7 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col ">
                   <Reveal>
-                    <div id="languages">
+                    <div id="languages" className="glass-card p-6 md:p-8">
                       <AnimatedHeading>{t('Languages')}</AnimatedHeading>
                       <LanguageChart data={data} />
                     </div>
@@ -379,7 +382,7 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <div id="tech-stack">
+                    <div id="tech-stack" className="glass-card p-6 md:p-8">
                       <AnimatedHeading>{t('Tech Stack')}</AnimatedHeading>
                       <TechStack data={techStack} />
                     </div>
@@ -405,7 +408,7 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col ">
                   <Reveal>
-                    <div id="experience">
+                    <div id="experience" className="glass-card p-6 md:p-8">
                       <AnimatedHeading>{t('Experience')}</AnimatedHeading>
                       <div className="md:hidden">
                         <Timeline data={experience} />
@@ -424,7 +427,7 @@ const Index = () => {
               <Block>
                 <div className="flex flex-1 flex-col">
                   <Reveal>
-                    <div id="education">
+                    <div id="education" className="glass-card p-6 md:p-8">
                       <AnimatedHeading>{t('Education')}</AnimatedHeading>
                       <div className="md:hidden">
                         <Timeline data={education} />
@@ -471,50 +474,36 @@ const Index = () => {
               <Block>
                 <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
                   <Reveal>
-                    <div id="certification" className="min-w-0">
+                    <div
+                      id="certification"
+                      className="glass-card min-w-0 p-6 md:p-8"
+                    >
                       <AnimatedHeading>{t('Certifications')}</AnimatedHeading>
-                      <Collapse
-                        defaultActiveKey={['certifications', 'courses']}
-                        ghost
-                        items={[
-                          {
-                            key: 'certifications',
-                            label: (
-                              <span className="text-lg font-semibold text-black dark:text-white">
-                                {t('Certifications')}
-                              </span>
-                            ),
-                            children: (
-                              <div>
-                                {certification
-                                  ?.filter(
-                                    (v: any) => v.type === 'certification'
-                                  )
-                                  .map((v: any, key: number) => (
-                                    <CertificateCard key={key} {...v} />
-                                  ))}
-                              </div>
-                            ),
-                          },
-                          {
-                            key: 'courses',
-                            label: (
-                              <span className="text-lg font-semibold text-black dark:text-white">
-                                {t('Courses')}
-                              </span>
-                            ),
-                            children: (
-                              <div>
-                                {certification
-                                  ?.filter((v: any) => v.type === 'course')
-                                  .map((v: any, key: number) => (
-                                    <CertificateCard key={key} {...v} />
-                                  ))}
-                              </div>
-                            ),
-                          },
-                        ]}
-                      />
+                      {(
+                        [
+                          { key: 'certification', label: t('Certifications') },
+                          { key: 'course', label: t('Courses') },
+                        ] as const
+                      ).map(({ key, label }) => (
+                        <details key={key} open className="group mt-2">
+                          <summary className="flex cursor-pointer list-none items-center justify-between py-2 text-lg font-semibold text-black dark:text-white">
+                            <span>{label}</span>
+                            <span
+                              className="text-sm transition-transform group-open:rotate-180"
+                              style={{ color: 'var(--text-mute)' }}
+                            >
+                              ▾
+                            </span>
+                          </summary>
+                          <div className="pt-2">
+                            {certification
+                              ?.filter((v: any) => v.type === key)
+                              .map((v: any, idx: number) => (
+                                <CertificateCard key={idx} {...v} />
+                              ))}
+                          </div>
+                        </details>
+                      ))}
                     </div>
                   </Reveal>
                 </div>
@@ -525,7 +514,7 @@ const Index = () => {
                 <Block>
                   <div className="flex min-w-0 flex-1 flex-col">
                     <Reveal>
-                      <div id="articles">
+                      <div id="articles" className="glass-card p-6 md:p-8">
                         <AnimatedHeading>{t('Articles')}</AnimatedHeading>
                         <ArticleGrid articles={articles.slice(0, 6)} />
                       </div>
@@ -539,7 +528,7 @@ const Index = () => {
                 <Block>
                   <div className="flex flex-1 flex-col">
                     <Reveal>
-                      <div id="projects">
+                      <div id="projects" className="glass-card p-6 md:p-8">
                         <AnimatedHeading>{t('Projects')}</AnimatedHeading>
                         <ProjectGrid
                           initialItemsCount={8}

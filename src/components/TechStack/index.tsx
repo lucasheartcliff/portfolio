@@ -59,7 +59,7 @@ export default function TechStack({ data }: Props) {
     <div className="grid grid-cols-1 gap-6 pb-8 md:grid-cols-2">
       {Object.entries(data).map(([category, techs]) => (
         <div key={category}>
-          <h4 className="mb-3 text-lg font-semibold text-black dark:text-white">
+          <h4 className="mb-3 font-display text-lg font-semibold text-black dark:text-white">
             {category}
           </h4>
           <motion.div
@@ -74,7 +74,7 @@ export default function TechStack({ data }: Props) {
                 key={tech}
                 variants={iconVariants}
                 whileHover={{ scale: 1.1 }}
-                className="flex flex-col items-center gap-1 rounded-lg border border-gray-200 p-3 dark:border-gray-700 dark:bg-gray-800"
+                className="glass-card flex flex-col items-center gap-1 p-3"
               >
                 <img
                   src={getDeviconUrl(tech)}
@@ -87,7 +87,7 @@ export default function TechStack({ data }: Props) {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}
                 />
-                <span className="text-xs text-gray-700 dark:text-gray-300">
+                <span className="text-xs" style={{ color: 'var(--text-mute)' }}>
                   {tech}
                 </span>
               </motion.div>
