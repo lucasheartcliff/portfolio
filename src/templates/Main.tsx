@@ -1,19 +1,36 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import type Scrollbars from 'react-custom-scrollbars-2';
 
 import Navbar from '@/components/Navbar';
+import ReadingProgress from '@/components/ReadingProgress';
 import Scroll from '@/components/Scroll';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import heartcliff from '@/utils/log';
+
+export const ScrollRefContext = createContext<RefObject<Scrollbars> | null>(
+  null
+);
+
+export const ScrollTopContext = createContext(0);
 
 type IMainProps = {
   title: string;
   meta: ReactNode;
   children: ReactNode;
+  showLanguageSelector?: boolean;
 };
 
 const Main = (props: IMainProps) => {
   const [isScrollTopVisible, setScrollTopVisible] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0);
   const scrollRef = useRef<Scrollbars>(null);
   useEffect(() => {
     heartcliff();
@@ -22,8 +39,14 @@ const Main = (props: IMainProps) => {
   const handleScroll = () => {
     const ref = scrollRef.current;
     if (!ref) return;
-    const visible = ref.getScrollTop() > 300;
+    const currentScrollTop = ref.getScrollTop();
+    const scrollHeight = ref.getScrollHeight();
+    const clientHeight = ref.getClientHeight();
+    const visible = currentScrollTop > 300;
     if (visible !== isScrollTopVisible) setScrollTopVisible(visible);
+    const maxScroll = scrollHeight - clientHeight;
+    setScrollProgress(maxScroll > 0 ? currentScrollTop / maxScroll : 0);
+    setScrollTop(currentScrollTop);
   };
 
   const scrollToTop = () => {
@@ -33,26 +56,31 @@ const Main = (props: IMainProps) => {
   };
 
   return (
-    <div className="h-screen w-full">
-      {props.meta}
-      <Navbar logoTitle={props.title} scrollRef={scrollRef} />
-      <div
-        style={{ height: 'calc(100% - 77px)' }}
-        className="max-h-screen w-full text-gray-700 antialiased"
-      >
-        <div className="relative h-full text-xl">
-          <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
-            <>
-              {props.children}
-              <ScrollToTopButton
-                isVisible={isScrollTopVisible}
-                scrollToTop={scrollToTop}
-              />
-            </>
-          </Scroll>
+    <ScrollRefContext.Provider value={scrollRef}>
+      <ScrollTopContext.Provider value={scrollTop}>
+        <div className="flex h-screen w-full flex-col overflow-hidden bg-white dark:bg-gray-900">
+          {props.meta}
+          <ReadingProgress progress={scrollProgress} />
+          <Navbar
+            logoTitle={props.title}
+            showLanguageSelector={props.showLanguageSelector}
+          />
+          <div className="min-h-0 w-full flex-1 text-gray-700 antialiased">
+            <div className="relative h-full text-xl">
+              <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
+                <>
+                  {props.children}
+                  <ScrollToTopButton
+                    isVisible={isScrollTopVisible}
+                    scrollToTop={scrollToTop}
+                  />
+                </>
+              </Scroll>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </ScrollTopContext.Provider>
+    </ScrollRefContext.Provider>
   );
 };
 

@@ -1,2 +1,2 @@
-const theme = { primary: '#253db6' };
+const theme = { primary: 'var(--color-primary)' };
 export default theme;

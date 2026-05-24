@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import type { Props as ApexProps } from 'react-apexcharts';
 import ReactApexChart from 'react-apexcharts';
 
+import { DarkModeContext } from '@/pages/_app';
 import { secondToHours } from '@/utils';
 
 interface Props {
@@ -17,7 +18,8 @@ const buildState = (
   data: any[] = [],
   colors: any[] = [],
   labels: any[] = [],
-  messages: { [k: string]: string } = {}
+  messages: { [k: string]: string } = {},
+  isDark: boolean = false
 ): ApexProps => ({
   series: [
     {
@@ -33,6 +35,9 @@ const buildState = (
       toolbar: {
         show: false,
       },
+    },
+    theme: {
+      mode: isDark ? 'dark' : 'light',
     },
     plotOptions: {
       bar: {
@@ -50,14 +55,6 @@ const buildState = (
     colors,
     dataLabels: {
       enabled: false,
-
-      style: {
-        fontSize: '16px',
-      },
-      formatter(value, { seriesIndex, dataPointIndex, w }) {
-        const barValue = w.globals.series[seriesIndex][dataPointIndex];
-        return `${displayNormalizedData(barValue)?.toFixed(0)} h`;
-      },
     },
     tooltip: {
       enabled: true,
@@ -88,6 +85,7 @@ const buildState = (
         offsetX: 7,
         style: {
           cssClass: 'text-base md:text-xl mr-5',
+          colors: isDark ? '#e5e7eb' : '#374151',
         },
       },
     },
@@ -96,30 +94,40 @@ const buildState = (
       categories: labels,
       offsetX: 10,
       title: {
-        offsetY: 10,
         text: `${messages.timeWorked} (h)`,
-        style: { cssClass: 'text-base md:text-xl' },
+        offsetY: 10,
+        style: {
+          cssClass: 'text-sm md:text-base',
+          color: isDark ? '#f3f4f6' : '#111827',
+        },
       },
-
       labels: {
         show: true,
-        rotate: -45,
-        rotateAlways: false,
         hideOverlappingLabels: true,
-        showDuplicates: false,
-        trim: false,
+        trim: true,
+        maxHeight: 60,
         style: {
-          cssClass: 'text-base md:text-xl',
+          cssClass: 'text-[9px] md:text-[10px]',
+          colors: isDark ? '#e5e7eb' : '#374151',
+          fontSize: '9px',
         },
         formatter(value: any) {
           return `${displayNormalizedData(value).toFixed(0)} h`;
         },
       },
+      axisBorder: {
+        show: true,
+      },
+      axisTicks: {
+        show: true,
+      },
+      tickAmount: 5,
     },
   },
 });
 
 export default function LanguageChart(props: Props) {
+  const { isDark } = useContext(DarkModeContext);
   const [state, setState] = useState<ApexProps>(buildState());
   const router = useRouter();
   const { locale } = router.query;
@@ -132,8 +140,8 @@ export default function LanguageChart(props: Props) {
     const labels = [];
     const colors = [];
     const messages = {
-      timeWorked: t('Time worked'),
-      hoursWorked: t('hours worked'),
+      timeWorked: t('Experience time'),
+      hoursWorked: 'h',
     };
 
     for (const v of props.data) {
@@ -142,9 +150,9 @@ export default function LanguageChart(props: Props) {
       labels.push(v.name);
       colors.push(v.color);
     }
-    const newState = buildState(data, colors, labels, messages);
+    const newState = buildState(data, colors, labels, messages, isDark);
     setState(newState);
-  }, [props.data, locale]);
+  }, [props.data, locale, isDark]);
 
   return (
     <div id="chart">
