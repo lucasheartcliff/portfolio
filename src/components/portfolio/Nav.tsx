@@ -7,6 +7,11 @@ import { ACCENT } from './atoms';
 const LangToggle = ({ accent }: { accent: string }) => {
   const router = useRouter();
   const current = (router.query.locale as string) || 'en';
+  // Full reload so the target locale's translations are loaded fresh — a soft
+  // client transition can leave the i18n bundle stale and surface raw keys.
+  const switchTo = (code: string) => {
+    window.location.assign(`/${code}`);
+  };
   return (
     <div
       className="ml-1 flex items-center gap-0.5 rounded-full p-0.5"
@@ -19,7 +24,7 @@ const LangToggle = ({ accent }: { accent: string }) => {
         <button
           key={code}
           type="button"
-          onClick={() => router.push(`/${code}`)}
+          onClick={() => switchTo(code)}
           className="rounded-full px-2 py-1 font-mono text-[10.5px] uppercase tracking-wider transition-all"
           style={{
             background: current === code ? `${accent}22` : 'transparent',
