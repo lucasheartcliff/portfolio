@@ -1,122 +1,43 @@
-import {
-  GithubOutlined,
-  LinkedinOutlined,
-  MailOutlined,
-  MediumOutlined,
-} from '@ant-design/icons';
-import { Collapse } from 'antd';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import AnimatedHeading from '@/components/AnimatedHeading';
-import ArticleGrid from '@/components/ArticleGrid';
-import AsideNav from '@/components/AsideNav';
-import CertificateCard from '@/components/CertificateCard';
-// import ContactForm from '@/components/ContactForm';
-import Footer from '@/components/Footer';
-import Icon from '@/components/Icon';
-import KofiButton from '@/components/KofiButton';
-import { SocialLink } from '@/components/Link';
-import LoadingScreen from '@/components/LoadingScreen';
-import ProjectGrid from '@/components/ProjectGrid';
-import Reveal from '@/components/Reveal';
-import Scroll from '@/components/Scroll';
-import TechStack from '@/components/TechStack';
-import Timeline from '@/components/Timeline';
-import TypedRole from '@/components/TypedRole';
-import Block from '@/layouts/Block';
+import ArchitectureSection from '@/components/portfolio/Architecture';
+import ArticlesSection from '@/components/portfolio/Articles';
+import { ACCENT, ACCENT_B } from '@/components/portfolio/atoms';
+import ContactSection from '@/components/portfolio/Contact';
+import Hero from '@/components/portfolio/Hero';
+import type { LanguageDatum } from '@/components/portfolio/Languages';
+import LanguagesSection from '@/components/portfolio/Languages';
+import Nav from '@/components/portfolio/Nav';
+import type { ProjectDatum } from '@/components/portfolio/Projects';
+import ProjectsSection from '@/components/portfolio/Projects';
+import StackSection from '@/components/portfolio/Stack';
+import ReactiveBackground from '@/components/ReactiveBackground';
 import { Meta } from '@/layouts/Meta';
-import Row from '@/layouts/Row';
-import { DarkModeContext } from '@/pages/_app';
 import profile from '@/public/assets/jsons/profile.json';
 import type { DevtoArticleIndex } from '@/services/devto';
-import { Main, ScrollTopContext } from '@/templates/Main';
-import { capitalize, isProgrammingLanguage, setLocale } from '@/utils';
+import {
+  getLanguageColor,
+  isProgrammingLanguage,
+  secondToHours,
+} from '@/utils';
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
 import { GITHUB_REPO } from '@/utils/url';
 
-const LanguageChart = dynamic(() => import('@/components/LanguageChart'), {
-  ssr: false,
-});
-
-const heroContainerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
-};
-
-const heroItemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-};
-
 const Index = () => {
-  const router = useRouter();
-  const [data, setData] = useState<any[]>([]);
-  const [language, setLanguage] = useState<string>('en');
-  const [pinnedRepos, setPinnedRepos] = useState<any[]>([]);
+  const [languages, setLanguages] = useState<LanguageDatum[]>([]);
+  const [projects, setProjects] = useState<ProjectDatum[]>([]);
   const [articles, setArticles] = useState<DevtoArticleIndex[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { isDark } = useContext(DarkModeContext);
-  const scrollTop = useContext(ScrollTopContext);
-  const prefersReducedMotion = useReducedMotion();
-  const { t } = useTranslation('common');
-  const currentLocale = router.query.locale;
-
-  const SECTIONS = [
-    { key: 'about', label: 'About' },
-    { key: 'languages', label: 'Languages' },
-    { key: 'tech-stack', label: 'Tech Stack' },
-    { key: 'experience', label: 'Experience' },
-    { key: 'education', label: 'Education' },
-    { key: 'certification', label: 'Certifications' },
-    ...(articles.length > 0 ? [{ key: 'articles', label: 'Articles' }] : []),
-    ...(pinnedRepos.length > 0 ? [{ key: 'projects', label: 'Projects' }] : []),
-  ];
-
-  const parallaxY = useMemo(
-    () => (prefersReducedMotion ? 0 : Math.min(scrollTop * -0.15, 0)),
-    [scrollTop, prefersReducedMotion]
-  );
-
-  useEffect(() => {
-    const l = currentLocale as string;
-    setLocale(
-      l,
-      () => {
-        // eslint-disable-next-line no-console
-        console.info(`Change locale to '${l}'`);
-        setLanguage(l);
-      },
-      () => {}
-    );
-  }, [currentLocale]);
-
-  const {
-    firstName,
-    lastName,
-    username,
-    logoTitle,
-    introductionBio,
-    bio,
-    email,
-    experience,
-    education,
-    certification,
-    techStack,
-  } = profile as any;
+  const { firstName, lastName, username, email } = profile as any;
   const name = `${firstName} ${lastName}`.trim();
+
   useEffect(() => {
     fetch('/api/articles')
       .then((res) => (res.ok ? res.json() : []))
-      .then((fetchedArticles: DevtoArticleIndex[]) =>
+      .then((fetched: DevtoArticleIndex[]) =>
         setArticles(
-          [...fetchedArticles].sort(
+          [...fetched].sort(
             (a, b) =>
               new Date(b.published_at).getTime() -
               new Date(a.published_at).getTime()
@@ -130,20 +51,23 @@ const Index = () => {
       fetch('/api/wakatime/coding-time').then((r) => (r.ok ? r.json() : {})),
       fetch('/api/wakatime/languages').then((r) => (r.ok ? r.json() : {})),
     ])
-      .then(([r, c, langs]: any[]) => {
-        setPinnedRepos(
-          (Array.isArray(r) ? r : []).map((v: any) => ({
-            ...v,
-            url: GITHUB_REPO(username, v.name),
-            name: capitalize(v.name?.replace(/-/g, ' ')),
-            description: v.description || '',
-            tags: v.topics || [],
+      .then(([repos, coding, langs]: any[]) => {
+        setProjects(
+          (Array.isArray(repos) ? repos : []).map((v: any) => ({
+            name: v.name,
+            desc: v.description || '',
+            tags: (v.topics || []).slice(0, 4),
+            stars: v.stars ?? 0,
+            forks: v.forks ?? 0,
+            lang: v.language || '',
+            langColor: v.languageColor || getLanguageColor(v.language),
+            url: v.url || GITHUB_REPO(username, v.name),
+            featured: false,
           }))
         );
-        const totalSeconds =
-          c.data?.grand_total?.total_seconds_including_other_language || 0;
 
-        // Fixing data percentage
+        const totalSeconds =
+          coding.data?.grand_total?.total_seconds_including_other_language || 0;
         const totalPercentage =
           langs.data?.reduce((acc: number, curr: any) => {
             let a = acc;
@@ -151,32 +75,29 @@ const Index = () => {
             return a;
           }, 0) || 100;
 
-        const langData = [];
+        const langData: LanguageDatum[] = [];
         for (const l of langs.data || []) {
           if (!isProgrammingLanguage(l.name) || !l.percent) continue;
+          const seconds = (l.percent / totalPercentage) * totalSeconds;
           langData.push({
-            ...l,
-            value: (l.percent / totalPercentage) * totalSeconds,
+            name: l.name,
+            hours: secondToHours(seconds),
+            color: l.color || getLanguageColor(l.name),
           });
         }
-        setData(langData);
+        langData.sort((a, b) => b.hours - a.hours);
+        setLanguages(langData);
       })
-      .catch((err) => {
-        // eslint-disable-next-line no-console
-        console.error(err);
-      })
-      .finally(() => {
-        setTimeout(() => setIsLoading(false), 2000); // Wait 2s to show off the loading animation
-      });
-  }, []);
+      .catch(() => {});
+  }, [username]);
+
   return (
     <>
-      <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen key="loader" name={name} />}
-      </AnimatePresence>
+      <Meta title={name} description={profile.introductionBio} locale="en" />
       <Head>
         <script
           type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
@@ -193,391 +114,47 @@ const Index = () => {
           }}
         />
       </Head>
-      <Main
-        title={logoTitle}
-        meta={
-          <Meta
-            title={name}
-            description={t(introductionBio)}
-            locale={language}
-          />
-        }
-      >
-        <>
-          <AsideNav sections={SECTIONS} />
-          <div className="mx-2 overflow-x-hidden md:mx-14">
-            <Row>
-              <Block>
-                <motion.div
-                  variants={heroContainerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="relative z-10 flex flex-col"
-                >
-                  <motion.h1
-                    variants={heroItemVariants}
-                    className="animated-gradient-text text-4xl font-bold md:text-7xl"
-                  >
-                    {t(name)}
-                  </motion.h1>
-                  <motion.h2
-                    variants={heroItemVariants}
-                    className="text-xl font-semibold text-black dark:text-gray-200 md:text-4xl"
-                  >
-                    <TypedRole />
-                  </motion.h2>
-                  <motion.span
-                    variants={heroItemVariants}
-                    className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-200"
-                  >
-                    <span className="h-2 w-2 rounded-full bg-green-500" />
-                    {t('Available for opportunities')}
-                  </motion.span>
-                  <motion.p
-                    variants={heroItemVariants}
-                    className="my-5 text-pretty text-justify text-xl text-gray-600 dark:text-gray-400 md:text-3xl"
-                  >
-                    {t(introductionBio)}
-                  </motion.p>
-                  <motion.div
-                    variants={heroItemVariants}
-                    className="flex flex-1 flex-row items-center justify-start text-3xl text-black hover:no-underline dark:text-white"
-                  >
-                    <SocialLink
-                      title="GitHub"
-                      href={`https://github.com/${username}`}
-                    >
-                      <Icon color={'#000000'}>
-                        <GithubOutlined />
-                      </Icon>
-                    </SocialLink>
-                    {/* <SocialLink href={`https://x.com/${username}`}> 
-                      <Icon color={'#00acee'}> 
-                        <TwitterOutlined /> 
-                      </Icon> 
-                    </SocialLink>  */}
-                    <SocialLink
-                      title="LinkedIn"
-                      href={`https://linkedin.com/in/${username}`}
-                    >
-                      <Icon color={'#0e76a8'}>
-                        <LinkedinOutlined />
-                      </Icon>
-                    </SocialLink>
-                    <SocialLink
-                      title="Medium"
-                      href={`https://medium.com/@${username}`}
-                    >
-                      <Icon color={'#000'}>
-                        <MediumOutlined />
-                      </Icon>
-                    </SocialLink>
-                    {/* <SocialLink
-                      title="Instagram"
-                      href={`https://instagram.com/${username}`}
-                    >
-                      <Icon color={'#dd2a7b'}>
-                        <InstagramOutlined />
-                      </Icon>
-                    </SocialLink> */}
-                    <SocialLink
-                      title="Email"
-                      href={`mailto:${email}`}
-                      skipLocaleHandling
-                    >
-                      <Icon color={'#d44638'}>
-                        <MailOutlined />
-                      </Icon>
-                    </SocialLink>
-                  </motion.div>
-                  <motion.div
-                    variants={heroItemVariants}
-                    className="mt-4 flex flex-wrap gap-3"
-                  >
-                    <a
-                      href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
-                      download="Lucas_Morais_Resume.pdf"
-                      className="rounded-lg border-2 border-primary px-6 py-3 text-base font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
-                    >
-                      {t('Download CV')}
-                    </a>
-                  </motion.div>
-                </motion.div>
-              </Block>
-              <Block>
-                <div className="hidden w-full items-center justify-center md:flex ">
-                  <div
-                    className=" border-0 bg-cover"
-                    style={{
-                      height: '30rem',
-                      width: '32rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${
-                        isDark ? 'cover-dark' : 'cover'
-                      }.png)`,
-                    }}
-                  />
-                </div>
-              </Block>
-            </Row>
-            <Row>
-              <Block>
-                <motion.div
-                  style={{ y: parallaxY }}
-                  className="mt-5 flex w-full items-center justify-center md:mt-0"
-                >
-                  <Image
-                    src={`${router.basePath}/assets/images/profile.jpeg`}
-                    alt={name}
-                    width={320}
-                    height={320}
-                    className="h-80 w-80 rounded-full object-cover"
-                    priority
-                  />
-                </motion.div>
-              </Block>
-              <Block>
-                <div className="flex flex-1 flex-col">
-                  <Reveal>
-                    <div id="about">
-                      <AnimatedHeading>{t('About')}</AnimatedHeading>
-                      <p className="text-pretty text-justify text-lg text-gray-600 dark:text-gray-400 md:text-2xl">
-                        {t(bio)}
-                      </p>
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
 
-            <Row>
-              <Block>
-                <div className="flex flex-1 flex-col ">
-                  <Reveal>
-                    <div id="languages">
-                      <AnimatedHeading>{t('Languages')}</AnimatedHeading>
-                      <LanguageChart data={data} />
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-              <Block>
-                <div className="hidden w-full items-center justify-center md:flex ">
-                  <div
-                    className=" border-0 bg-cover"
-                    style={{
-                      height: '36rem',
-                      width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${
-                        isDark ? 'languages-dark' : 'languages'
-                      }.png)`,
-                    }}
-                  />
-                </div>
-              </Block>
-            </Row>
-            <Row>
-              <Block>
-                <div className="flex flex-1 flex-col">
-                  <Reveal>
-                    <div id="tech-stack">
-                      <AnimatedHeading>{t('Tech Stack')}</AnimatedHeading>
-                      <TechStack data={techStack} />
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
-            <Row>
-              <Block>
-                <div className="hidden w-full justify-center md:flex ">
-                  <div
-                    className=" border-0 bg-cover"
-                    style={{
-                      height: '36rem',
-                      width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${
-                        isDark ? 'experience-dark' : 'experience'
-                      }.png)`,
-                    }}
-                  />
-                </div>
-              </Block>
-              <Block>
-                <div className="flex flex-1 flex-col ">
-                  <Reveal>
-                    <div id="experience">
-                      <AnimatedHeading>{t('Experience')}</AnimatedHeading>
-                      <div className="md:hidden">
-                        <Timeline data={experience} />
-                      </div>
-                      <div className="hidden md:block">
-                        <Scroll style={{ height: 500 }}>
-                          <Timeline data={experience} />
-                        </Scroll>
-                      </div>
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
-            <Row>
-              <Block>
-                <div className="flex flex-1 flex-col">
-                  <Reveal>
-                    <div id="education">
-                      <AnimatedHeading>{t('Education')}</AnimatedHeading>
-                      <div className="md:hidden">
-                        <Timeline data={education} />
-                      </div>
-                      <div className="hidden md:block">
-                        <Scroll style={{ height: 500 }}>
-                          <Timeline data={education} />
-                        </Scroll>
-                      </div>
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-              <Block>
-                <div className="mt-10 hidden w-full items-center justify-center md:flex ">
-                  <div
-                    className=" border-0 bg-cover"
-                    style={{
-                      height: '36rem',
-                      width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${
-                        isDark ? 'education-dark' : 'education'
-                      }.png)`,
-                    }}
-                  />
-                </div>
-              </Block>
-            </Row>
-            <Row>
-              <Block>
-                <div className="mt-5 hidden w-full items-center justify-center md:flex ">
-                  <div
-                    className=" border-0 bg-cover"
-                    style={{
-                      height: '28rem',
-                      width: '36rem',
-                      backgroundImage: `url(${router.basePath}/assets/images/${
-                        isDark ? 'certificate-dark' : 'certificate'
-                      }.png)`,
-                    }}
-                  />
-                </div>
-              </Block>
-              <Block>
-                <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-                  <Reveal>
-                    <div id="certification" className="min-w-0">
-                      <AnimatedHeading>{t('Certifications')}</AnimatedHeading>
-                      <Collapse
-                        defaultActiveKey={['certifications', 'courses']}
-                        ghost
-                        items={[
-                          {
-                            key: 'certifications',
-                            label: (
-                              <span className="text-lg font-semibold text-black dark:text-white">
-                                {t('Certifications')}
-                              </span>
-                            ),
-                            children: (
-                              <div>
-                                {certification
-                                  ?.filter(
-                                    (v: any) => v.type === 'certification'
-                                  )
-                                  .map((v: any, key: number) => (
-                                    <CertificateCard key={key} {...v} />
-                                  ))}
-                              </div>
-                            ),
-                          },
-                          {
-                            key: 'courses',
-                            label: (
-                              <span className="text-lg font-semibold text-black dark:text-white">
-                                {t('Courses')}
-                              </span>
-                            ),
-                            children: (
-                              <div>
-                                {certification
-                                  ?.filter((v: any) => v.type === 'course')
-                                  .map((v: any, key: number) => (
-                                    <CertificateCard key={key} {...v} />
-                                  ))}
-                              </div>
-                            ),
-                          },
-                        ]}
-                      />
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
-            {articles.length > 0 && (
-              <Row>
-                <Block>
-                  <div className="flex min-w-0 flex-1 flex-col">
-                    <Reveal>
-                      <div id="articles">
-                        <AnimatedHeading>{t('Articles')}</AnimatedHeading>
-                        <ArticleGrid articles={articles.slice(0, 6)} />
-                      </div>
-                    </Reveal>
-                  </div>
-                </Block>
-              </Row>
-            )}
-            {pinnedRepos.length > 0 && (
-              <Row>
-                <Block>
-                  <div className="flex flex-1 flex-col">
-                    <Reveal>
-                      <div id="projects">
-                        <AnimatedHeading>{t('Projects')}</AnimatedHeading>
-                        <ProjectGrid
-                          initialItemsCount={8}
-                          itemsToAdd={8}
-                          items={pinnedRepos}
-                        />
-                      </div>
-                    </Reveal>
-                  </div>
-                </Block>
-              </Row>
-            )}
-            {/* Contact section hidden until ready
-            <Row>
-              <Block>
-                <div className="flex flex-1 flex-col">
-                  <Reveal>
-                    <div id="contact">
-                      <h3 className="mb-3 text-xl font-semibold text-black dark:text-white md:text-4xl">
-                        {t('Contact')}
-                      </h3>
-                      <p className="mb-6 text-lg text-gray-600 dark:text-gray-400">
-                        {t(
-                          'Have a project in mind or just want to say hello? Feel free to reach out!'
-                        )}
-                      </p>
-                      <ContactForm />
-                    </div>
-                  </Reveal>
-                </div>
-              </Block>
-            </Row>
-            */}
-          </div>
-          <Footer />
-          {!isLoading && <KofiButton username={username} />}
-        </>
-      </Main>
+      <div
+        className="relative min-h-screen overflow-x-hidden"
+        style={{ background: 'var(--bg-base)' }}
+      >
+        <ReactiveBackground
+          accent={ACCENT}
+          accentB={ACCENT_B}
+          density={28}
+          intensity={0.55}
+        />
+
+        <div className="relative" style={{ zIndex: 10 }}>
+          <Nav accent={ACCENT} />
+          <Hero accent={ACCENT} accentB={ACCENT_B} username={username} />
+          <ArchitectureSection accent={ACCENT} accentB={ACCENT_B} />
+          <StackSection accent={ACCENT} accentB={ACCENT_B} />
+          <LanguagesSection
+            data={languages}
+            accent={ACCENT}
+            accentB={ACCENT_B}
+          />
+          <ProjectsSection
+            projects={projects}
+            accent={ACCENT}
+            accentB={ACCENT_B}
+            username={username}
+          />
+          <ArticlesSection
+            articles={articles}
+            accent={ACCENT}
+            accentB={ACCENT_B}
+          />
+          <ContactSection
+            accent={ACCENT}
+            accentB={ACCENT_B}
+            email={email}
+            username={username}
+          />
+        </div>
+      </div>
     </>
   );
 };

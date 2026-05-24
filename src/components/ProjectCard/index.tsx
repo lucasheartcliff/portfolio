@@ -39,7 +39,7 @@ export default function ProjectCard({
       onMouseLeave={onMouseLeave}
       whileHover={{ y: -4 }}
       transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
-      className="relative flex w-full flex-col border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white md:w-72 md:text-xl"
+      className="glass-card relative flex w-full flex-col p-4 text-base transition-all duration-200 dark:text-white md:w-72 md:text-xl"
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -84,10 +84,7 @@ export default function ProjectCard({
       {tags && tags.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1">
           {tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded bg-gray-200 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-            >
+            <span key={tag} className="tag-chip rounded px-2 py-0.5 text-xs">
               {tag}
             </span>
           ))}

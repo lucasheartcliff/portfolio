@@ -16,7 +16,7 @@ export default function AnimatedHeading({ children, className = '' }: Props) {
           transition: { duration: 0.8, ease: 'easeOut' },
         },
       }}
-      className={`relative mb-3 block text-xl font-semibold text-black dark:text-white md:text-4xl ${className}`}
+      className={`relative mb-3 block font-display text-xl font-semibold text-black dark:text-white md:text-4xl ${className}`}
     >
       {children}
       <motion.span
