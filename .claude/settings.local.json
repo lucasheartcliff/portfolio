@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)",
+      "Bash(curl -s http://localhost:3000/api/github/repos)",
+      "Bash(curl -s http://localhost:3000/api/articles)",
+      "Bash(find:*)",
+      "Bash(npx next:*)",
+      "Bash(npx jest:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
