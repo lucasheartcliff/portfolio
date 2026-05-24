@@ -12,7 +12,7 @@ export default function DarkModeToggle({ isDark, toggle }: Props) {
     <button
       onClick={toggle}
       aria-label="Toggle dark mode"
-      className="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full p-2 text-xl text-black transition-colors hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700"
+      className="glass-btn relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full p-2 text-xl"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

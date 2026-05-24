@@ -11,14 +11,24 @@ export default function Logo({ title, onClick }: Props) {
       className="flex flex-row align-middle text-2xl no-underline"
       onClick={onClick}
     >
-      <span className="text-3xl text-gray-500">{'<'}</span>
+      <span
+        className="font-mono text-3xl"
+        style={{ color: 'var(--text-faint)' }}
+      >
+        {'<'}
+      </span>
       <div
-        className="mt-2 pl-0.5 pr-1.5 font-agustina font-bold text-primary"
+        className="mt-2 pl-0.5 pr-1.5 font-display font-bold text-primary"
         style={{ fontVariantLigatures: 'no-common-ligatures' }}
       >
         {title}
       </div>
-      <span className="text-3xl text-gray-500">{'/>'}</span>
+      <span
+        className="font-mono text-3xl"
+        style={{ color: 'var(--text-faint)' }}
+      >
+        {'/>'}
+      </span>
     </div>
   );
 }

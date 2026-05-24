@@ -8,8 +8,14 @@ interface Props {
 export default function Icon({ children, color }: Props) {
   return (
     <div
-      style={{ backgroundColor: color }}
-      className="mx-1 flex h-11 w-11 justify-center rounded-full p-5 align-middle text-white hover:text-gray-400"
+      style={
+        {
+          '--icon-color': color,
+          background: 'color-mix(in srgb, var(--icon-color) 18%, transparent)',
+          borderColor: 'color-mix(in srgb, var(--icon-color) 35%, transparent)',
+        } as React.CSSProperties
+      }
+      className="mx-1 flex h-11 w-11 items-center justify-center rounded-full border p-5 align-middle backdrop-blur transition-transform hover:scale-110"
     >
       {children}
     </div>
