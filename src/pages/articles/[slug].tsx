@@ -134,7 +134,7 @@ const ReadingProgress = ({ accent }: { accent: string }) => {
   return (
     <div>
       <div className="mb-1.5 flex justify-between font-mono text-[10px] uppercase tracking-widest text-slate-500">
-        <span>{t('article.reading')}</span>
+        <span>{t('article.reading', { defaultValue: 'Reading' })}</span>
         <span>{Math.round(p * 100)}%</span>
       </div>
       <div className="h-1 overflow-hidden rounded-full bg-white/5">
@@ -184,7 +184,7 @@ const TocAside = ({
       <Glass className="p-5">
         <div className="mb-4 flex items-center justify-between">
           <div className="font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
-            {t('article.contents')}
+            {t('article.contents', { defaultValue: 'Contents' })}
           </div>
           <div className="flex items-center gap-1 font-mono text-[10.5px]">
             <button
@@ -239,10 +239,10 @@ const TocAside = ({
 const ArticleNav = ({ accent }: { accent: string }) => {
   const { t } = useTranslation('common');
   const items: [string, string][] = [
-    [t('nav.about'), '/#about'],
-    [t('nav.architecture'), '/#architecture'],
-    [t('nav.projects'), '/#projects'],
-    [t('nav.writing'), '/#writing'],
+    [t('nav.about', { defaultValue: 'About' }), '/#about'],
+    [t('nav.architecture', { defaultValue: 'Architecture' }), '/#architecture'],
+    [t('nav.projects', { defaultValue: 'Projects' }), '/#projects'],
+    [t('nav.writing', { defaultValue: 'Writing' }), '/#writing'],
   ];
   return (
     <nav
@@ -277,7 +277,11 @@ const ArticleNav = ({ accent }: { accent: string }) => {
             key={label}
             href={href}
             className="rounded-full px-3 py-1.5 text-[12.5px] text-slate-300 transition-colors hover:text-white"
-            style={label === t('nav.writing') ? { color: accent } : {}}
+            style={
+              label === t('nav.writing', { defaultValue: 'Writing' })
+                ? { color: accent }
+                : {}
+            }
           >
             {label}
           </a>
@@ -292,7 +296,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
           boxShadow: `0 4px 24px ${accent}44`,
         }}
       >
-        {t('cta.hireMe')}
+        {t('cta.hireMe', { defaultValue: 'Hire me' })}
       </Link>
     </nav>
   );
@@ -318,11 +322,11 @@ const Related = ({
           className="font-mono text-xs uppercase tracking-[0.2em]"
           style={{ color: accent }}
         >
-          {t('article.relatedLabel')}
+          {t('article.relatedLabel', { defaultValue: 'more' })}
         </span>
         <span className="h-px w-12" style={{ background: `${accent}88` }} />
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
-          {t('article.relatedTitle')}
+          {t('article.relatedTitle', { defaultValue: 'Recent writing' })}
         </span>
       </div>
       <div className="grid gap-5 md:grid-cols-3">
@@ -494,7 +498,7 @@ export default function ArticlePage() {
               >
                 <path d="m15 18-6-6 6-6" />
               </svg>
-              {t('cta.backToPortfolio')}
+              {t('cta.backToPortfolio', { defaultValue: 'back to portfolio' })}
             </Link>
           </Reveal>
 
