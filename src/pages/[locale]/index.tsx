@@ -91,9 +91,6 @@ const Index = () => {
       .catch(() => {});
   }, [username]);
 
-  const writingHref =
-    articles.length > 0 ? `/articles/${articles[0]!.slug}` : '#writing';
-
   return (
     <>
       <Meta title={name} description={profile.introductionBio} locale="en" />
@@ -130,7 +127,7 @@ const Index = () => {
         />
 
         <div className="relative" style={{ zIndex: 10 }}>
-          <Nav accent={ACCENT} writingHref={writingHref} />
+          <Nav accent={ACCENT} />
           <Hero accent={ACCENT} accentB={ACCENT_B} username={username} />
           <ArchitectureSection accent={ACCENT} accentB={ACCENT_B} />
           <StackSection accent={ACCENT} accentB={ACCENT_B} />

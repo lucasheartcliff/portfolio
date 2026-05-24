@@ -135,8 +135,8 @@
   "hero": {
     "available": "Available for opportunities",
     "line1": "Lucas Morais",
-    "line2": "builds systems",
-    "line3": "that scale.",
+    "line2": "building scalable",
+    "line3": "systems.",
     "bio": "Software Engineer specializing in {b}backend architecture{/b} and system scalability. Since 2017, building resilient platforms for oil & gas and logistics — modernizing legacy systems, designing microservices, and making operations measurably faster.",
     "viewProjects": "View Projects →",
     "downloadCV": "Download CV",

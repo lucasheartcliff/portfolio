@@ -36,10 +36,9 @@ const LangToggle = ({ accent }: { accent: string }) => {
 
 interface Props {
   accent?: string;
-  writingHref?: string;
 }
 
-export default function Nav({ accent = ACCENT, writingHref = '#' }: Props) {
+export default function Nav({ accent = ACCENT }: Props) {
   const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
   const links: [string, string][] = [
@@ -48,7 +47,7 @@ export default function Nav({ accent = ACCENT, writingHref = '#' }: Props) {
     [t('nav.stack'), '#stack'],
     [t('nav.languages'), '#languages'],
     [t('nav.projects'), '#projects'],
-    [t('nav.writing'), writingHref],
+    [t('nav.writing'), '#writing'],
     [t('nav.contact'), '#contact'],
   ];
 
@@ -73,7 +72,7 @@ export default function Nav({ accent = ACCENT, writingHref = '#' }: Props) {
             style={{ background: accent, boxShadow: `0 0 12px ${accent}` }}
           />
           <span className="font-mono text-[13px] tracking-tight text-slate-200">
-            lucas<span style={{ color: accent }}>.</span>heartcliff
+            lucasheartcliff
           </span>
         </div>
         <div className="flex items-center gap-0.5">
@@ -109,7 +108,7 @@ export default function Nav({ accent = ACCENT, writingHref = '#' }: Props) {
             style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
           />
           <span className="font-mono text-[12.5px] tracking-tight text-slate-200">
-            lucas<span style={{ color: accent }}>.</span>heartcliff
+            lucasheartcliff
           </span>
         </div>
         <button

@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next';
 import React from 'react';
 
-import { ACCENT, ACCENT_B, Glass, Reveal, SectionLabel } from './atoms';
+import { ACCENT, Glass, Reveal, SectionLabel } from './atoms';
 
 export interface ProjectDatum {
   name: string;
@@ -15,15 +15,7 @@ export interface ProjectDatum {
   featured?: boolean;
 }
 
-const ProjectCard = ({
-  p,
-  accent,
-  accentB,
-}: {
-  p: ProjectDatum;
-  accent: string;
-  accentB: string;
-}) => {
+const ProjectCard = ({ p, accent }: { p: ProjectDatum; accent: string }) => {
   const { t } = useTranslation('common');
   return (
     <a href={p.url} target="_blank" rel="noreferrer" className="block h-full">
@@ -71,9 +63,9 @@ const ProjectCard = ({
                 key={tg}
                 className="rounded px-2 py-0.5 font-mono text-[10.5px]"
                 style={{
-                  color: accentB,
-                  background: `${accentB}11`,
-                  border: `1px solid ${accentB}33`,
+                  color: accent,
+                  background: `${accent}11`,
+                  border: `1px solid ${accent}33`,
                 }}
               >
                 {tg}
@@ -130,7 +122,6 @@ interface Props {
 export default function ProjectsSection({
   projects,
   accent = ACCENT,
-  accentB = ACCENT_B,
   username = 'lucasheartcliff',
 }: Props) {
   const { t } = useTranslation('common');
@@ -160,7 +151,7 @@ export default function ProjectsSection({
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {projects.map((p, i) => (
             <Reveal key={p.name} delay={100 + i * 60}>
-              <ProjectCard p={p} accent={accent} accentB={accentB} />
+              <ProjectCard p={p} accent={accent} />
             </Reveal>
           ))}
         </div>

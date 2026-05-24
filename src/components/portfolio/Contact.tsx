@@ -137,7 +137,8 @@ export default function ContactSection({
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch('/api/contact', {
+      // Trailing slash avoids a 308 redirect from Next's `trailingSlash: true`.
+      const res = await fetch('/api/contact/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

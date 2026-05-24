@@ -135,8 +135,8 @@
   "hero": {
     "available": "Disponível para oportunidades",
     "line1": "Lucas Morais",
-    "line2": "constrói sistemas",
-    "line3": "que escalam.",
+    "line2": "construindo",
+    "line3": "sistemas escaláveis.",
     "bio": "Engenheiro de Software especializado em {b}arquitetura backend{/b} e escalabilidade de sistemas. Desde 2017, construindo plataformas resilientes para óleo & gás e logística — modernizando sistemas legados, projetando microsserviços e tornando operações mensuravelmente mais rápidas.",
     "viewProjects": "Ver projetos →",
     "downloadCV": "Baixar CV",
