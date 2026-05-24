@@ -242,7 +242,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
     [t('nav.about'), '/#about'],
     [t('nav.architecture'), '/#architecture'],
     [t('nav.projects'), '/#projects'],
-    [t('nav.writing'), '#'],
+    [t('nav.writing'), '/#writing'],
   ];
   return (
     <nav
@@ -268,7 +268,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
           style={{ background: accent, boxShadow: `0 0 12px ${accent}` }}
         />
         <span className="font-mono text-[13px] tracking-tight text-slate-200">
-          lucas<span style={{ color: accent }}>.</span>heartcliff
+          lucasheartcliff
         </span>
       </Link>
       <div className="ml-1 flex items-center gap-0.5">
