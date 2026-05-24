@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -249,7 +248,8 @@ const ArticleNav = ({ accent }: { accent: string }) => {
       className="glass-nav fixed left-1/2 top-4 z-50 hidden -translate-x-1/2 items-center gap-1 rounded-full p-2 lg:flex"
       style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
-      <Link
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full reload reloads i18n */}
+      <a
         href="/"
         className="flex items-center gap-2 py-1 pl-3 pr-2 hover:opacity-90"
       >
@@ -270,7 +270,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
         <span className="font-mono text-[13px] tracking-tight text-slate-200">
           lucasheartcliff
         </span>
-      </Link>
+      </a>
       <div className="ml-1 flex items-center gap-0.5">
         {items.map(([label, href]) => (
           <a
@@ -287,7 +287,8 @@ const ArticleNav = ({ accent }: { accent: string }) => {
           </a>
         ))}
       </div>
-      <Link
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full reload reloads i18n */}
+      <a
         href="/#contact"
         className="ml-1 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all"
         style={{
@@ -297,7 +298,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
         }}
       >
         {t('cta.hireMe', { defaultValue: 'Hire me' })}
-      </Link>
+      </a>
     </nav>
   );
 };
@@ -484,7 +485,8 @@ export default function ArticlePage() {
       <header className="px-5 pb-10 pt-28 sm:px-6 sm:pb-12 sm:pt-32">
         <div className="mx-auto max-w-3xl">
           <Reveal>
-            <Link
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full reload reloads i18n */}
+            <a
               href="/"
               className="mb-8 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-widest text-slate-500 transition hover:text-slate-200"
             >
@@ -499,7 +501,7 @@ export default function ArticlePage() {
                 <path d="m15 18-6-6 6-6" />
               </svg>
               {t('cta.backToPortfolio', { defaultValue: 'back to portfolio' })}
-            </Link>
+            </a>
           </Reveal>
 
           <Reveal delay={60}>
