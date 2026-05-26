@@ -63,10 +63,12 @@ export const Reveal = ({
   children,
   delay = 0,
   y = 24,
+  className = '',
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
+  className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
@@ -90,6 +92,7 @@ export const Reveal = ({
   return (
     <div
       ref={ref}
+      className={className}
       style={{
         transform: shown ? 'translateY(0)' : `translateY(${y}px)`,
         opacity: shown ? 1 : 0,
