@@ -11,6 +11,9 @@ const customJestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
 
     '^@/public/(.*)$': '<rootDir>/public/$1',
+
+    // @vercel/analytics ships ESM that jest doesn't transform; stub it.
+    '^@vercel/analytics/next$': '<rootDir>/__mocks__/vercelAnalytics.tsx',
   },
   setupFilesAfterEnv: ['./jest.setup.js'],
   clearMocks: true,

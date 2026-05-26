@@ -20,6 +20,10 @@ const config = {
     },
     fontFamily: {
       agustina: ['Agustina Regular'],
+      sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+      display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+      mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+      serifDisplay: ['Instrument Serif', 'Georgia', 'serif'],
     },
     extend: {
       colors: {
@@ -46,6 +50,8 @@ const config = {
           900: '#2a4365',
         },
         primary: 'var(--color-primary)',
+        accent: 'var(--accent)',
+        'accent-b': 'var(--accent-b)',
       },
     },
   },

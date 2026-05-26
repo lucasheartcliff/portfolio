@@ -32,7 +32,11 @@ export default function ArticleGrid({ articles }: Props) {
         className="my-2 flex w-full flex-wrap justify-start gap-1.5"
       >
         {articles.map((article) => (
-          <motion.div key={article.id} variants={itemVariants} className="min-w-0 w-full md:w-auto">
+          <motion.div
+            key={article.id}
+            variants={itemVariants}
+            className="w-full min-w-0 md:w-auto"
+          >
             <ArticleCard article={article} />
           </motion.div>
         ))}

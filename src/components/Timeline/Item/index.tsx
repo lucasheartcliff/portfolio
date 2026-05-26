@@ -82,7 +82,7 @@ export default function Item(props: Props) {
           {techTags.map((tag) => (
             <span
               key={tag}
-              className="bg-primary/10 rounded px-2 py-0.5 text-xs font-medium text-primary"
+              className="tag-chip rounded px-2 py-0.5 text-xs font-medium"
             >
               {tag}
             </span>
