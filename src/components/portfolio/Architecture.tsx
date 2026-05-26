@@ -297,7 +297,7 @@ export default function ArchitectureSection({
           <SectionLabel num="01" label={t('arch.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="-ml-[2px] mb-4 max-w-3xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:-ml-[3px] sm:text-5xl">
+          <h2 className="mb-4 max-w-3xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
             {t('arch.title1')}{' '}
             <span
               style={{

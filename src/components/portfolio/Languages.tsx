@@ -174,7 +174,7 @@ export default function LanguagesSection({ data, accent = ACCENT }: Props) {
         </Reveal>
         <Reveal delay={80}>
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="-ml-[2px] max-w-xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:-ml-[3px] sm:text-5xl">
+            <h2 className="max-w-xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
               {t('lang.title')}
             </h2>
             <div className="flex items-center gap-2 font-mono text-[12px] text-slate-500">
