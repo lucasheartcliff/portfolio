@@ -303,7 +303,7 @@ export default function Hero({
         </Reveal>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-widest text-slate-500 sm:flex">
+      <div className="absolute bottom-3 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-widest text-slate-500 sm:flex">
         <span>{t('hero.scroll')}</span>
         <div className="h-10 w-px bg-gradient-to-b from-slate-500 to-transparent" />
       </div>
