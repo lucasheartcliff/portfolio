@@ -202,7 +202,7 @@ export default function Hero({
           </Reveal>
 
           <Reveal delay={80}>
-            <h1 className="font-display -ml-[2px] text-[clamp(40px,11vw,104px)] font-semibold leading-[0.95] tracking-[-0.03em] sm:-ml-[3px]">
+            <h1 className="font-display text-[clamp(40px,11vw,104px)] font-semibold leading-[0.95] tracking-[-0.03em]">
               <span className="block text-slate-100">{t('hero.line1')}</span>
               <span
                 className="block -mb-[0.12em] pb-[0.12em]"

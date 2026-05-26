@@ -181,7 +181,7 @@ export default function ContactSection({
           <SectionLabel num="06" label={t('contact.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="-ml-[2px] mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:-ml-[3px] sm:text-6xl">
+          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-6xl">
             {t('contact.title1')}{' '}
             <span
               style={{
