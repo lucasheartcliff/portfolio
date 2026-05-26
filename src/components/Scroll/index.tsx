@@ -1,14 +1,10 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 import type { ScrollbarProps } from 'react-custom-scrollbars-2';
 import { Scrollbars } from 'react-custom-scrollbars-2';
-
-import { DarkModeContext } from '@/pages/_app';
 
 interface Props extends ScrollbarProps {}
 
 function Scroll({ children, ...props }: Props, ref: any) {
-  const { isDark } = useContext(DarkModeContext);
-
   return (
     <Scrollbars
       ref={ref}
@@ -23,7 +19,7 @@ function Scroll({ children, ...props }: Props, ref: any) {
             top: 2,
             bottom: 2,
             borderRadius: 4,
-            background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+            background: 'transparent',
           }}
         />
       )}
@@ -33,8 +29,8 @@ function Scroll({ children, ...props }: Props, ref: any) {
           className="thumb-vertical"
           style={{
             ...p.style,
-            borderRadius: 4,
-            background: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
+            borderRadius: 5,
+            background: 'var(--chip-border)',
           }}
         />
       )}

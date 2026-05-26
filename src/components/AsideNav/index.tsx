@@ -98,8 +98,8 @@ export default function AsideNav({
     <div className="fixed left-0 top-1/2 z-50 block -translate-y-1/2">
       <button
         onClick={() => setOpen((v) => !v)}
-        style={{ left: open ? panelWidth : 0 }}
-        className="absolute top-1/2 -translate-y-1/2 rounded-r-lg border-0 bg-white p-2.5 text-gray-600 shadow-md transition-all duration-300 hover:text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:shadow-gray-900/50 dark:hover:text-gray-200"
+        style={{ left: open ? panelWidth : 0, color: 'var(--text-mute)' }}
+        className="glass-nav absolute top-1/2 -translate-y-1/2 rounded-r-lg p-2.5 transition-all duration-300"
         aria-label={open ? 'Hide menu' : 'Show menu'}
       >
         {open ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
@@ -107,7 +107,7 @@ export default function AsideNav({
 
       <nav
         style={{ width: panelWidth }}
-        className={`rounded-r-lg bg-white/95 shadow-lg backdrop-blur-sm transition-all duration-300 dark:bg-gray-800/95 dark:shadow-gray-900/50 ${
+        className={`glass-nav rounded-r-lg transition-all duration-300 ${
           open
             ? 'pointer-events-auto translate-x-0 opacity-100'
             : 'pointer-events-none -translate-x-full opacity-0'
@@ -141,12 +141,19 @@ export default function AsideNav({
                 >
                   <button
                     onClick={() => scrollTo(key)}
+                    style={
+                      active === key
+                        ? {
+                            color: 'var(--accent)',
+                            background:
+                              'color-mix(in srgb, var(--accent) 12%, transparent)',
+                          }
+                        : { color: 'var(--text-mute)' }
+                    }
                     className={`truncate rounded-md border-0 py-1.5 pr-3 text-left transition-colors ${
                       INDENT[level] || 'pl-3'
                     } ${level <= 2 ? 'text-sm' : 'text-xs'} ${
-                      active === key
-                        ? 'bg-primary/10 font-semibold text-primary'
-                        : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200'
+                      active === key ? 'font-semibold' : 'hover:opacity-80'
                     }`}
                   >
                     {text}

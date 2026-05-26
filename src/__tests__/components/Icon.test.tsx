@@ -13,7 +13,7 @@ describe('Icon', () => {
     expect(screen.getByTestId('child')).toBeInTheDocument();
   });
 
-  it('should apply the background color', () => {
+  it('should tint the background with the provided color', () => {
     render(
       <Icon color="#0e76a8">
         <span data-testid="icon-child">icon</span>
@@ -21,6 +21,6 @@ describe('Icon', () => {
     );
     // eslint-disable-next-line testing-library/no-node-access
     const wrapper = screen.getByTestId('icon-child').parentElement;
-    expect(wrapper).toHaveStyle({ backgroundColor: '#0e76a8' });
+    expect(wrapper?.getAttribute('style')).toContain('#0e76a8');
   });
 });

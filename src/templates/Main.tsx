@@ -27,6 +27,37 @@ type IMainProps = {
   showLanguageSelector?: boolean;
 };
 
+/** Fixed, non-interactive animated orbs rendered behind the scroll container. */
+const OrbBackground = () => (
+  <div
+    aria-hidden
+    className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+    style={{ opacity: 'var(--orb-dim)' }}
+  >
+    <div
+      className="orb-anim-1 absolute -left-32 -top-32 h-[28rem] w-[28rem] rounded-full blur-3xl"
+      style={{
+        background:
+          'radial-gradient(circle, color-mix(in srgb, var(--accent) 28%, transparent), transparent 70%)',
+      }}
+    />
+    <div
+      className="orb-anim-2 absolute right-[-10rem] top-1/3 h-[32rem] w-[32rem] rounded-full blur-3xl"
+      style={{
+        background:
+          'radial-gradient(circle, color-mix(in srgb, var(--accent-b) 26%, transparent), transparent 70%)',
+      }}
+    />
+    <div
+      className="orb-anim-3 absolute bottom-[-12rem] left-1/3 h-[26rem] w-[26rem] rounded-full blur-3xl"
+      style={{
+        background:
+          'radial-gradient(circle, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%)',
+      }}
+    />
+  </div>
+);
+
 const Main = (props: IMainProps) => {
   const [isScrollTopVisible, setScrollTopVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -58,14 +89,21 @@ const Main = (props: IMainProps) => {
   return (
     <ScrollRefContext.Provider value={scrollRef}>
       <ScrollTopContext.Provider value={scrollTop}>
-        <div className="flex h-screen w-full flex-col overflow-hidden bg-white dark:bg-gray-900">
+        <div
+          className="relative flex h-screen w-full flex-col overflow-hidden"
+          style={{ background: 'var(--bg-base)' }}
+        >
+          <OrbBackground />
           {props.meta}
           <ReadingProgress progress={scrollProgress} />
           <Navbar
             logoTitle={props.title}
             showLanguageSelector={props.showLanguageSelector}
           />
-          <div className="min-h-0 w-full flex-1 text-gray-700 antialiased">
+          <div
+            className="relative z-10 min-h-0 w-full flex-1 antialiased"
+            style={{ color: 'var(--text-body)' }}
+          >
             <div className="relative h-full text-xl">
               <Scroll ref={scrollRef} onScroll={() => handleScroll()}>
                 <>

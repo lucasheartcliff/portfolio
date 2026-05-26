@@ -26,7 +26,7 @@ export default function CertificateCard({ name, platform, url }: Props) {
       onMouseLeave={onMouseLeave}
       whileHover={{ y: -4 }}
       transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
-      className="relative flex h-20 w-full flex-row items-center justify-center overflow-hidden border border-gray-200 p-4 text-base shadow-md transition-shadow duration-200 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800 md:text-xl"
+      className="glass-card relative mb-3 flex h-20 w-full flex-row items-center justify-center overflow-hidden p-4 text-base transition-all duration-200 md:text-xl"
     >
       <div
         className="pointer-events-none absolute inset-0"

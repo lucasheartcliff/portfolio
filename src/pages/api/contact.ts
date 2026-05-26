@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 const RATE_LIMIT_MS = 60_000;
 const lastSent = new Map<string, number>();
@@ -43,34 +43,32 @@ export default async function handler(
       .json({ error: 'Please wait before sending another message' });
   }
 
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
-  const contactTo = process.env.CONTACT_EMAIL || smtpUser;
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM || 'onboarding@resend.dev';
+  const to = process.env.CONTACT_EMAIL || 'lucascdemorais@gmail.com';
 
-  if (!smtpUser || !smtpPass) {
+  if (!apiKey) {
+    // eslint-disable-next-line no-console
     console.error(
-      '[API] POST /api/contact failed: SMTP credentials not configured'
+      '[API] POST /api/contact failed: RESEND_API_KEY not configured'
     );
     return res.status(500).json({ error: 'Email service not configured' });
   }
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user: smtpUser, pass: smtpPass },
-  });
+  const resend = new Resend(apiKey);
 
   try {
-    await transporter.sendMail({
-      from: `"${name}" <${smtpUser}>`,
+    const { error } = await resend.emails.send({
+      from,
+      to,
       replyTo: email,
-      to: contactTo,
       subject: subject
         ? `[Portfolio] ${subject}`
         : `[Portfolio] Message from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
       html: `
         <div style="font-family: sans-serif; max-width: 600px;">
-          <h2 style="color: #253db6;">New message from your portfolio</h2>
+          <h2 style="color: #1d6df7;">New message from your portfolio</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>
           <p><strong>Email:</strong> ${escapeHtml(email)}</p>
           ${
@@ -84,10 +82,17 @@ export default async function handler(
       `,
     });
 
+    if (error) {
+      // eslint-disable-next-line no-console
+      console.error('[API] POST /api/contact failed:', error);
+      return res.status(500).json({ error: 'Failed to send email' });
+    }
+
     lastSent.set(ip, now);
     return res.status(200).json({ success: true });
-  } catch (error) {
-    console.error('[API] POST /api/contact failed:', error);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[API] POST /api/contact failed:', err);
     return res.status(500).json({ error: 'Failed to send email' });
   }
 }

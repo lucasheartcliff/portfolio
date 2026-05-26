@@ -29,8 +29,9 @@ const buildState = (
   options: {
     chart: {
       type: 'bar',
+      background: 'transparent',
       fontFamily:
-        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+        '"Space Grotesk", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       height: 600,
       toolbar: {
         show: false,
@@ -85,7 +86,7 @@ const buildState = (
         offsetX: 7,
         style: {
           cssClass: 'text-base md:text-xl mr-5',
-          colors: isDark ? '#e5e7eb' : '#374151',
+          colors: isDark ? '#cbd5e1' : '#334155',
         },
       },
     },
@@ -98,7 +99,7 @@ const buildState = (
         offsetY: 10,
         style: {
           cssClass: 'text-sm md:text-base',
-          color: isDark ? '#f3f4f6' : '#111827',
+          color: isDark ? '#e2e8f0' : '#0f172a',
         },
       },
       labels: {
@@ -108,7 +109,7 @@ const buildState = (
         maxHeight: 60,
         style: {
           cssClass: 'text-[9px] md:text-[10px]',
-          colors: isDark ? '#e5e7eb' : '#374151',
+          colors: isDark ? '#cbd5e1' : '#334155',
           fontSize: '9px',
         },
         formatter(value: any) {
