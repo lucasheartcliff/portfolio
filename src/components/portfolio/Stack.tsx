@@ -88,7 +88,7 @@ export default function StackSection({
           <SectionLabel num="02" label={t('stack.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+          <h2 className="-ml-[2px] mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:-ml-[3px] sm:text-5xl">
             {t('stack.title')}
           </h2>
         </Reveal>
