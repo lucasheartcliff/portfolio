@@ -2,6 +2,7 @@ import '../styles/global.css';
 import 'node_modules/flag-icons/css/flag-icons.min.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Analytics } from '@vercel/analytics/next';
 import { ConfigProvider, theme } from 'antd';
 import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
@@ -37,6 +38,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         }}
       >
         {loading ? <LoadingScreen /> : <Component {...pageProps} />}
+        <Analytics />
         <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
       </ConfigProvider>
     </DarkModeContext.Provider>
