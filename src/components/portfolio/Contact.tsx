@@ -176,12 +176,12 @@ export default function ContactSection({
 
   return (
     <section id="contact" className="relative py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl px-5 sm:px-6">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <Reveal>
           <SectionLabel num="06" label={t('contact.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-6xl">
+          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
             {t('contact.title1')}{' '}
             <span
               style={{
@@ -201,8 +201,8 @@ export default function ContactSection({
         </Reveal>
 
         <div className="grid gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-6">
-          <Reveal delay={180}>
-            <Glass className="p-5 sm:p-7">
+          <Reveal delay={180} className="h-full">
+            <Glass className="h-full p-5 sm:p-7">
               <form onSubmit={submit} className="space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field

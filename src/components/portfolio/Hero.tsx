@@ -205,7 +205,7 @@ export default function Hero({
             <h1 className="font-display text-[clamp(40px,11vw,104px)] font-semibold leading-[0.95] tracking-[-0.03em]">
               <span className="block text-slate-100">{t('hero.line1')}</span>
               <span
-                className="block"
+                className="block -mb-[0.12em] pb-[0.12em]"
                 style={{
                   background: `linear-gradient(120deg, ${accent}, ${accentB})`,
                   WebkitBackgroundClip: 'text',
@@ -303,7 +303,7 @@ export default function Hero({
         </Reveal>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-widest text-slate-500 sm:flex">
+      <div className="absolute bottom-3 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-widest text-slate-500 sm:flex">
         <span>{t('hero.scroll')}</span>
         <div className="h-10 w-px bg-gradient-to-b from-slate-500 to-transparent" />
       </div>
