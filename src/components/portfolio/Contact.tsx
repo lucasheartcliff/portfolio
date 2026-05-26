@@ -176,7 +176,7 @@ export default function ContactSection({
 
   return (
     <section id="contact" className="relative py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl px-5 sm:px-6">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <Reveal>
           <SectionLabel num="06" label={t('contact.label')} accent={accent} />
         </Reveal>
