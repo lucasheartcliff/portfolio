@@ -47,8 +47,15 @@ export default function CertificateCard({ name, platform, url }: Props) {
       </div>
 
       <div className="ml-5 items-end justify-center font-bold no-underline hover:no-underline">
-        <Link target="_blank" href={url}>
-          <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
+        <Link
+          target="_blank"
+          href={url}
+          aria-label={`Open ${t(name)} certificate`}
+        >
+          <ExportOutlined
+            aria-hidden
+            className="text-base font-extrabold text-black dark:text-white"
+          />
         </Link>
       </div>
     </motion.div>

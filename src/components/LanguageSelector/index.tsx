@@ -8,13 +8,15 @@ import Link from '../Link';
 
 interface FlagIconProps {
   countryCode: string;
+  'aria-hidden'?: boolean;
 }
 
-function FlagIcon({ countryCode = '' }: FlagIconProps) {
+function FlagIcon({ countryCode = '', ...rest }: FlagIconProps) {
   const clazz = `fi-${countryCode}`;
   return (
     <span
       className={`fi fis ${clazz} inline-block h-6 w-6 rounded-full text-2xl`}
+      {...rest}
     />
   );
 }
@@ -73,8 +75,9 @@ export default function LanguageSelector() {
                 id={LANGUAGE_SELECTOR_ID}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
+                aria-label={selectedLanguage.name}
               >
-                <FlagIcon countryCode={selectedLanguage.key} />
+                <FlagIcon countryCode={selectedLanguage.key} aria-hidden />
               </button>
             </Tooltip>
           </div>
@@ -107,7 +110,7 @@ export default function LanguageSelector() {
                         }`}
                         role="menuitem"
                       >
-                        <FlagIcon countryCode={language.key} />
+                        <FlagIcon countryCode={language.key} aria-hidden />
                         <span className="ml-2 truncate">{language.name}</span>
                       </button>
                     </Link>

@@ -124,7 +124,11 @@ export default function ContactForm() {
         />
       </div>
 
-      <div className="flex items-center gap-4">
+      <div
+        className="flex items-center gap-4"
+        role={status === 'error' ? 'alert' : 'status'}
+        aria-live={status === 'error' ? 'assertive' : 'polite'}
+      >
         <motion.button
           type="submit"
           disabled={status === 'sending'}

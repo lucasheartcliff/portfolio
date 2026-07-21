@@ -247,5 +247,8 @@
     "reading": "Leitura",
     "relatedLabel": "mais",
     "relatedTitle": "Artigos recentes"
+  },
+  "a11y": {
+    "skipToContent": "Pular para o conteúdo"
   }
 }

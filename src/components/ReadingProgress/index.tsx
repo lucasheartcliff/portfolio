@@ -10,6 +10,11 @@ export default function ReadingProgress({ progress }: Props) {
 
   return (
     <motion.div
+      role="progressbar"
+      aria-label="Reading progress"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(progress * 100)}
       style={{ scaleX: progress }}
       transition={
         prefersReducedMotion

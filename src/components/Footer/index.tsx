@@ -11,7 +11,7 @@ const Footer = () => {
     >
       <div className="flex items-center justify-center">
         <p className="mr-2">{t('Made with')}</p>
-        <HeartFilled className="text-red-700" />
+        <HeartFilled className="text-red-700" aria-hidden />
         <p className="ml-2">{t('by Lucas Morais')}</p>
       </div>
     </footer>
