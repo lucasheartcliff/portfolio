@@ -68,8 +68,12 @@ export default function ArticleCard({ article }: Props) {
             target="_blank"
             href={`/articles/${article.slug}`}
             skipLocaleHandling
+            aria-label={`Read article: ${article.title}`}
           >
-            <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
+            <ExportOutlined
+              aria-hidden
+              className="text-base font-extrabold text-black dark:text-white"
+            />
           </Link>
         </div>
       </div>

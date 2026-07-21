@@ -421,6 +421,12 @@ export default function ArticlePage() {
   const shell = (children: React.ReactNode, meta?: React.ReactNode) => (
     <>
       {meta}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
+      >
+        {t('a11y.skipToContent', { defaultValue: 'Skip to content' })}
+      </a>
       <div
         className="relative min-h-screen overflow-x-hidden"
         style={{ background: 'var(--bg-base)' }}
@@ -433,7 +439,7 @@ export default function ArticlePage() {
         />
         <div className="relative" style={{ zIndex: 10 }}>
           <ArticleNav accent={ACCENT} />
-          {children}
+          <main id="main-content">{children}</main>
         </div>
       </div>
     </>

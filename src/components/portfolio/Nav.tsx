@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ACCENT } from './atoms';
 
@@ -46,6 +46,8 @@ interface Props {
 export default function Nav({ accent = ACCENT }: Props) {
   const { t } = useTranslation('common');
   const [open, setOpen] = useState(false);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const links: [string, string][] = [
     [t('nav.about'), '#about'],
     [t('nav.architecture'), '#architecture'],
@@ -59,8 +61,17 @@ export default function Nav({ accent = ACCENT }: Props) {
   useEffect(() => {
     if (!open) return undefined;
     document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+
     return () => {
       document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKeyDown);
+      openButtonRef.current?.focus();
     };
   }, [open]);
 
@@ -68,6 +79,7 @@ export default function Nav({ accent = ACCENT }: Props) {
     <>
       {/* Desktop nav */}
       <nav
+        aria-label="Primary"
         className="glass-nav fixed left-1/2 top-4 z-50 hidden -translate-x-1/2 items-center gap-1 rounded-full p-2 lg:flex"
         style={{ maxWidth: 'calc(100vw - 32px)' }}
       >
@@ -106,7 +118,10 @@ export default function Nav({ accent = ACCENT }: Props) {
       </nav>
 
       {/* Mobile top bar */}
-      <nav className="glass-nav fixed inset-x-3 top-3 z-50 flex items-center justify-between rounded-full p-2 lg:hidden">
+      <nav
+        aria-label="Primary"
+        className="glass-nav fixed inset-x-3 top-3 z-50 flex items-center justify-between rounded-full p-2 lg:hidden"
+      >
         <div className="flex items-center gap-2 py-1 pl-2">
           <span
             className="inline-block h-2 w-2 rounded-full"
@@ -117,9 +132,12 @@ export default function Nav({ accent = ACCENT }: Props) {
           </span>
         </div>
         <button
+          ref={openButtonRef}
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Open menu"
+          aria-haspopup="dialog"
+          aria-expanded={open}
           className="flex h-9 w-9 items-center justify-center rounded-full"
           style={{
             background: 'var(--toggle-bg)',
@@ -158,7 +176,9 @@ export default function Nav({ accent = ACCENT }: Props) {
             className="glass-nav absolute inset-y-0 right-0 flex w-[82vw] max-w-sm flex-col"
             style={{ borderRadius: '16px 0 0 16px' }}
             onClick={(e) => e.stopPropagation()}
-            role="presentation"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
           >
             <div
               className="flex items-center justify-between border-b p-5"
@@ -166,6 +186,7 @@ export default function Nav({ accent = ACCENT }: Props) {
             >
               <span className="font-mono text-[13px] text-slate-200">menu</span>
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"

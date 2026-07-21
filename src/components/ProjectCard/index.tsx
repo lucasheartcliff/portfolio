@@ -71,8 +71,15 @@ export default function ProjectCard({
         </div>
 
         <div className="ml-3 mt-1 flex shrink-0 items-center justify-center">
-          <Link target="_blank" href={url}>
-            <ExportOutlined className="text-base font-extrabold text-black dark:text-white" />
+          <Link
+            target="_blank"
+            href={url}
+            aria-label={`Open ${name} on GitHub`}
+          >
+            <ExportOutlined
+              aria-hidden
+              className="text-base font-extrabold text-black dark:text-white"
+            />
           </Link>
         </div>
       </div>

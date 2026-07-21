@@ -11,6 +11,7 @@ interface Props extends LinkProps {
   target?: string;
   className?: string;
   children?: React.ReactNode;
+  'aria-label'?: string;
 }
 
 const LinkComponent = ({

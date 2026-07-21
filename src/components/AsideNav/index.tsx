@@ -106,6 +106,9 @@ export default function AsideNav({
       </button>
 
       <nav
+        aria-label={t('Table of contents', {
+          defaultValue: 'Table of contents',
+        })}
         style={{ width: panelWidth }}
         className={`glass-nav rounded-r-lg transition-all duration-300 ${
           open
@@ -141,6 +144,7 @@ export default function AsideNav({
                 >
                   <button
                     onClick={() => scrollTo(key)}
+                    aria-current={active === key ? 'location' : undefined}
                     style={
                       active === key
                         ? {

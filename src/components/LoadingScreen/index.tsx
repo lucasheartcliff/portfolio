@@ -10,6 +10,9 @@ type Props = {
 const LoadingScreen = ({ name }: Props) => {
   return (
     <motion.div
+      role="status"
+      aria-live="polite"
+      aria-label="Loading"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
