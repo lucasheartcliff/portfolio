@@ -18,7 +18,9 @@
     "e2e": "start-server-and-test dev http://localhost:3000 cypress",
     "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
     "prepare": "husky install",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "lighthouse": "run-s build lighthouse:ci",
+    "lighthouse:ci": "lhci autorun"
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.0",
