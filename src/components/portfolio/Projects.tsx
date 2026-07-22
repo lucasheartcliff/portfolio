@@ -114,6 +114,7 @@ const ProjectCard = ({ p, accent }: { p: ProjectDatum; accent: string }) => {
 
 interface Props {
   projects: ProjectDatum[];
+  error?: boolean;
   accent?: string;
   accentB?: string;
   username?: string;
@@ -121,11 +122,12 @@ interface Props {
 
 export default function ProjectsSection({
   projects,
+  error = false,
   accent = ACCENT,
   username = 'lucasheartcliff',
 }: Props) {
   const { t } = useTranslation('common');
-  if (!projects.length) return null;
+  if (!projects.length && !error) return null;
   return (
     <section id="projects" className="relative py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
@@ -148,13 +150,21 @@ export default function ProjectsSection({
           </div>
         </Reveal>
 
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-          {projects.map((p, i) => (
-            <Reveal key={p.name} delay={100 + i * 60}>
-              <ProjectCard p={p} accent={accent} />
-            </Reveal>
-          ))}
-        </div>
+        {error ? (
+          <Glass className="p-6 text-center text-[13px] text-slate-400">
+            {t('proj.error', {
+              defaultValue: "Couldn't load projects right now.",
+            })}
+          </Glass>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+            {projects.map((p, i) => (
+              <Reveal key={p.name} delay={100 + i * 60}>
+                <ProjectCard p={p} accent={accent} />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
