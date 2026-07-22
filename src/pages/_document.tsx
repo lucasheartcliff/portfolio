@@ -14,7 +14,6 @@ class MyDocument extends Document {
       <Html lang={currentLocale}>
         <>
           <Head>
-            <link rel="stylesheet" href="/assets/css/index.css" />
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link
               rel="preconnect"
