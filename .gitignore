@@ -19,6 +19,9 @@ cypress/videos
 /.next
 /out
 
+# lighthouse ci
+.lighthouseci
+
 # next-sitemap
 public/robots.txt
 public/sitemap.xml
