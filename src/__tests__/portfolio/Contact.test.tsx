@@ -52,21 +52,24 @@ describe('ContactSection', () => {
 
   it('renders all form fields', () => {
     render(<ContactSection />);
-    expect(screen.getByLabelText('Name')).toBeInTheDocument();
-    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    // Name/Email/Message are marked required, which renders a trailing
+    // " *" inside the label (see Field in Contact.tsx) — match by prefix
+    // instead of the exact visible string.
+    expect(screen.getByLabelText(/^Name/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Email/)).toBeInTheDocument();
     expect(screen.getByLabelText('Subject')).toBeInTheDocument();
-    expect(screen.getByLabelText('Message')).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Message/)).toBeInTheDocument();
   });
 
   it('submits the form to the contact API and shows a success state', async () => {
     render(<ContactSection />);
-    fireEvent.change(screen.getByLabelText('Name'), {
+    fireEvent.change(screen.getByLabelText(/^Name/), {
       target: { value: 'Ada Lovelace' },
     });
-    fireEvent.change(screen.getByLabelText('Email'), {
+    fireEvent.change(screen.getByLabelText(/^Email/), {
       target: { value: 'ada@example.com' },
     });
-    fireEvent.change(screen.getByLabelText('Message'), {
+    fireEvent.change(screen.getByLabelText(/^Message/), {
       target: { value: 'Hi there' },
     });
     fireEvent.click(screen.getByText('Send'));
@@ -90,6 +93,18 @@ describe('ContactSection', () => {
   it('shows an error state when the request fails', async () => {
     (global.fetch as jest.Mock).mockResolvedValue({ ok: false });
     render(<ContactSection />);
+    // Name/Email/Message are required inputs, so the form needs them filled
+    // in or the browser's native constraint validation blocks submission
+    // (onSubmit never fires) before the fetch mock is ever reached.
+    fireEvent.change(screen.getByLabelText(/^Name/), {
+      target: { value: 'Ada Lovelace' },
+    });
+    fireEvent.change(screen.getByLabelText(/^Email/), {
+      target: { value: 'ada@example.com' },
+    });
+    fireEvent.change(screen.getByLabelText(/^Message/), {
+      target: { value: 'Hi there' },
+    });
     fireEvent.click(screen.getByText('Send'));
     expect(await screen.findByText('Something went wrong')).toBeInTheDocument();
   });
