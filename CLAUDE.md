@@ -23,9 +23,9 @@ Commit messages follow Conventional Commits (`@commitlint/config-conventional`).
 
 **i18n**: next-i18next with two locales (`en`, `pt`). Translation files at `public/locales/{en,pt}/common.json`. All user-visible text uses `t()` from `useTranslation('common')`. SSG pages use `getStaticPaths` to generate per-locale paths and `getStaticProps` with `serverSideTranslations`.
 
-**Dark mode**: Class-based Tailwind (`dark:` prefix). `DarkModeContext` in `_app.tsx` manages state, persists to localStorage, toggles `dark` class on `<html>`, and switches AntD's ConfigProvider algorithm. Primary color changes between light (`#253db6`) and dark (`#5c7cfa`).
+**Dark mode**: Dark-only design, locked in `_app.tsx` (sets `data-theme="dark"` and the `dark` class on `<html>` on mount, before which `_document.tsx` already stamps it to avoid a flash). AntD's `ConfigProvider` always uses `theme.darkAlgorithm`. There is no light mode or user-facing toggle.
 
-**Layout hierarchy**: `_app.tsx` (DarkModeContext + AntD ConfigProvider + i18n HOC) → `Main.tsx` template (Navbar + custom Scrollbar + ScrollToTopButton) → page content using `Row`/`Block` layout components.
+**Page composition**: `_app.tsx` (AntD ConfigProvider + i18n HOC) → page (`pages/[locale]/index.tsx` or `pages/articles/[slug].tsx`) → section components from `src/components/portfolio/*` (`Nav`, `Hero`, `Architecture`, `Stack`, `Languages`, `Projects`, `Articles`, `Contact`), each a self-contained `<section>` composed directly in the page — no shared page template or generic layout components. Shared small pieces (`Glass`, `Reveal`, `SectionLabel`, `Tag`, `Trans`, the `ACCENT`/`ACCENT_B` colors) live in `src/components/portfolio/atoms.tsx`.
 
 **Profile data**: Static JSON at `public/assets/jsons/profile.json` imported directly. Dynamic data (GitHub repos, WakaTime stats, Dev.to articles) fetched client-side from API routes.
 
@@ -35,7 +35,9 @@ Commit messages follow Conventional Commits (`@commitlint/config-conventional`).
 - `/api/wakatime/[stat]` — WakaTime stats proxy (languages, coding-time, activity, editors, code-activity)
 - `/api/contact` — Email via nodemailer with rate limiting (1/min per IP)
 
-**Animations**: `Reveal` component wraps sections with Framer Motion scroll-triggered fade+slide. `TypedRole` animates rotating role titles.
+**Animations**: `Reveal` (in `atoms.tsx`) wraps sections with an IntersectionObserver-triggered fade+slide-up. `RotatingRole` (in `Hero.tsx`) animates rotating role titles.
+
+**Legacy code**: `src/components/` also has a handful of top-level components (`ProjectCard`, `ArticleCard`, `Navbar`, `Timeline`, etc.) from an earlier version of the site. Before touching one, confirm it's actually imported from a page — several are orphaned and never render. `ImageLightbox`, `LoadingScreen`, and `ReactiveBackground` are the ones still live outside of `portfolio/*`.
 
 ## Path Aliases
 
