@@ -24,17 +24,25 @@ import {
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
 import { GITHUB_REPO } from '@/utils/url';
 
+function fetchJson(url: string) {
+  return fetch(url).then((res) => {
+    if (!res.ok) throw new Error(`Request to ${url} failed: ${res.status}`);
+    return res.json();
+  });
+}
+
 const Index = () => {
   const [languages, setLanguages] = useState<LanguageDatum[]>([]);
   const [projects, setProjects] = useState<ProjectDatum[]>([]);
   const [articles, setArticles] = useState<DevtoArticleIndex[]>([]);
+  const [articlesError, setArticlesError] = useState(false);
+  const [dataError, setDataError] = useState(false);
 
   const { firstName, lastName, username, email } = profile as any;
   const name = `${firstName} ${lastName}`.trim();
 
   useEffect(() => {
-    fetch('/api/articles')
-      .then((res) => (res.ok ? res.json() : []))
+    fetchJson('/api/articles')
       .then((fetched: DevtoArticleIndex[]) =>
         setArticles(
           [...fetched].sort(
@@ -44,12 +52,12 @@ const Index = () => {
           )
         )
       )
-      .catch(() => {});
+      .catch(() => setArticlesError(true));
 
     Promise.all([
-      fetch('/api/github/repos').then((r) => (r.ok ? r.json() : [])),
-      fetch('/api/wakatime/coding-time').then((r) => (r.ok ? r.json() : {})),
-      fetch('/api/wakatime/languages').then((r) => (r.ok ? r.json() : {})),
+      fetchJson('/api/github/repos'),
+      fetchJson('/api/wakatime/coding-time'),
+      fetchJson('/api/wakatime/languages'),
     ])
       .then(([repos, coding, langs]: any[]) => {
         setProjects(
@@ -88,7 +96,7 @@ const Index = () => {
         langData.sort((a, b) => b.hours - a.hours);
         setLanguages(langData);
       })
-      .catch(() => {});
+      .catch(() => setDataError(true));
   }, [username]);
 
   return (
@@ -133,17 +141,20 @@ const Index = () => {
           <StackSection accent={ACCENT} accentB={ACCENT_B} />
           <LanguagesSection
             data={languages}
+            error={dataError}
             accent={ACCENT}
             accentB={ACCENT_B}
           />
           <ProjectsSection
             projects={projects}
+            error={dataError}
             accent={ACCENT}
             accentB={ACCENT_B}
             username={username}
           />
           <ArticlesSection
             articles={articles}
+            error={articlesError}
             accent={ACCENT}
             accentB={ACCENT_B}
           />

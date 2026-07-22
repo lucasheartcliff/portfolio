@@ -198,18 +198,21 @@
     "years": "anos",
     "summary": "≈ {y} anos de tempo de teclado em {n} linguagens.",
     "thisWeek": "Esta semana",
-    "byLang": "POR LING"
+    "byLang": "POR LING",
+    "error": "Não foi possível carregar as estatísticas de linguagens agora."
   },
   "proj": {
     "label": "Projetos em Destaque",
     "title": "Open source & experimentos.",
     "allRepos": "Todos os repos no GitHub →",
-    "pinned": "★ FIXADO"
+    "pinned": "★ FIXADO",
+    "error": "Não foi possível carregar os projetos agora."
   },
   "writing": {
     "label": "Artigos",
     "title": "Notas & aprofundamentos.",
-    "all": "Todos os artigos →"
+    "all": "Todos os artigos →",
+    "error": "Não foi possível carregar os artigos agora."
   },
   "contact": {
     "label": "Contato",
