@@ -62,10 +62,12 @@ describe('Nav', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).location = { assign: jest.fn() };
 
-    render(<Nav />);
-    fireEvent.click(screen.getAllByText('pt')[0]!);
-    expect(window.location.assign).toHaveBeenCalledWith('/pt');
-
-    window.location = original;
+    try {
+      render(<Nav />);
+      fireEvent.click(screen.getAllByText('pt')[0]!);
+      expect(window.location.assign).toHaveBeenCalledWith('/pt');
+    } finally {
+      window.location = original;
+    }
   });
 });

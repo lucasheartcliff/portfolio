@@ -38,6 +38,16 @@ jest.mock('next-i18next', () => ({
 describe('ContactSection', () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockResolvedValue({ ok: true });
+    // ContactSection resets its status back to 'idle' via a 3.5s setTimeout
+    // after every submit. Fake timers (auto-advancing, so waitFor/findByText
+    // still work without manual jest.advanceTimersByTime calls) keep that
+    // timer from outliving the test and firing a state update on an
+    // unmounted component.
+    jest.useFakeTimers({ advanceTimers: true });
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   it('renders all form fields', () => {

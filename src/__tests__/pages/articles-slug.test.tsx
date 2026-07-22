@@ -67,7 +67,7 @@ const fullArticle: DevtoArticleFull = {
 
 function mockFetchWith(articleResponse: Response) {
   global.fetch = jest.fn((url: string) => {
-    if (url.startsWith('/api/articles/understanding-backpressure')) {
+    if (url === '/api/articles/understanding-backpressure') {
       return Promise.resolve(articleResponse);
     }
     return Promise.resolve({ ok: true, json: async () => [] } as Response);
