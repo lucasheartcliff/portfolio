@@ -52,6 +52,7 @@
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
     "@commitlint/cz-commitlint": "^17.5.0",
+    "@lhci/cli": "^0.15.1",
     "@netlify/plugin-nextjs": "^5.11.6",
     "@next/bundle-analyzer": "^13.3.0",
     "@percy/cli": "^1.22.0",
@@ -135,5 +136,12 @@
       "@semantic-release/github"
     ]
   },
-  "author": "Lucas Morais (https://github.com/lucasheartcliff)"
+  "author": "Lucas Morais (https://github.com/lucasheartcliff)",
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11",
+    "not op_mini all"
+  ]
 }

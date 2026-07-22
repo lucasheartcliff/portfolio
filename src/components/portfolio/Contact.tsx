@@ -346,7 +346,7 @@ export default function ContactSection({
           </Reveal>
         </div>
 
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 font-mono text-[12px] text-slate-500">
+        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 font-mono text-[12px] text-slate-400">
           <span>
             © {new Date().getFullYear()} Lucas Morais · {t('footer.built')}
           </span>
