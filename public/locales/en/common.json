@@ -247,5 +247,8 @@
     "reading": "Reading",
     "relatedLabel": "more",
     "relatedTitle": "Recent writing"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content"
   }
 }
