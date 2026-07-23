@@ -8,20 +8,18 @@ import { appWithTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 import { jetbrainsMono, spaceGrotesk } from '@/styles/fonts';
 import { getEnvProperties } from '@/utils';
 
 const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const AppShell = ({ Component, pageProps }: AppProps) => {
+  const { theme: activeTheme } = useTheme();
   const [loading, setLoading] = React.useState(true);
   const { googleAnalytics } = getEnvProperties();
 
   useEffect(() => {
-    // Dark-only design: lock the theme.
-    const root = document.documentElement;
-    root.setAttribute('data-theme', 'dark');
-    root.classList.add('dark');
     setLoading(false);
   }, []);
 
@@ -29,7 +27,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <ConfigProvider
       theme={{
         token: { colorPrimary: '#1d6df7' },
-        algorithm: theme.darkAlgorithm,
+        algorithm:
+          activeTheme === 'light'
+            ? theme.defaultAlgorithm
+            : theme.darkAlgorithm,
       }}
     >
       <div className={fontVariables}>
@@ -40,5 +41,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     </ConfigProvider>
   );
 };
+
+const MyApp = (props: AppProps) => (
+  <ThemeProvider>
+    <AppShell {...props} />
+  </ThemeProvider>
+);
 
 export default appWithTranslation(MyApp);

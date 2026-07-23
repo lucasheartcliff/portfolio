@@ -34,6 +34,38 @@
   --rail-bg: rgba(255, 255, 255, 0.05);
   --code-bg: rgba(0, 0, 0, 0.25);
   --orb-dim: 1;
+  --success-text: #6ee7b7;
+}
+
+[data-theme='light'] {
+  --bg-base: #f5f7fb;
+  --accent: #1d6df7;
+  --accent-b: #7c3aed;
+  --color-primary: var(--accent);
+  --text-strong: #0f172a;
+  --text-body: rgba(15, 23, 42, 0.82);
+  --text-mute: rgb(71, 85, 105);
+  --text-faint: rgb(100, 116, 139);
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.035) 0%,
+    rgba(15, 23, 42, 0.012) 100%
+  );
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 20px 50px -20px rgba(15, 23, 42, 0.15);
+  --glass-hover-border: rgba(15, 23, 42, 0.14);
+  --hairline: rgba(15, 23, 42, 0.08);
+  --toggle-bg: rgba(15, 23, 42, 0.035);
+  --toggle-border: rgba(15, 23, 42, 0.1);
+  --chip-bg: rgba(15, 23, 42, 0.04);
+  --chip-border: rgba(15, 23, 42, 0.08);
+  --input-bg: rgba(15, 23, 42, 0.03);
+  --input-border: rgba(15, 23, 42, 0.12);
+  --rail-bg: rgba(15, 23, 42, 0.05);
+  --code-bg: rgba(15, 23, 42, 0.05);
+  --orb-dim: 0.35;
+  --success-text: #047857;
 }
 
 html,
@@ -185,7 +217,7 @@ textarea:focus {
 
 ::selection {
   background: color-mix(in srgb, var(--accent) 35%, transparent);
-  color: white;
+  color: var(--text-strong);
 }
 
 ::-webkit-scrollbar {
@@ -304,8 +336,8 @@ section[id] {
   font-size: 0.9em;
   padding: 0.1em 0.4em;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
   color: var(--accent);
 }
 .code-block pre::-webkit-scrollbar {

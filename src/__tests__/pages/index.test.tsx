@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import Index from '@/pages/[locale]/index';
 
 const translations: Record<string, string> = {
@@ -34,13 +35,21 @@ describe('Index page', () => {
   });
 
   it('renders the hero headline and the primary nav', () => {
-    render(<Index />);
+    render(
+      <ThemeProvider>
+        <Index />
+      </ThemeProvider>
+    );
     expect(screen.getByText('Line one')).toBeInTheDocument();
     expect(screen.getAllByText('lucasheartcliff').length).toBeGreaterThan(0);
   });
 
   it('renders every top-level section landmark', () => {
-    render(<Index />);
+    render(
+      <ThemeProvider>
+        <Index />
+      </ThemeProvider>
+    );
     ['about', 'architecture', 'stack', 'contact'].forEach((id) => {
       // eslint-disable-next-line testing-library/no-node-access
       expect(document.getElementById(id)).toBeInTheDocument();
@@ -48,7 +57,11 @@ describe('Index page', () => {
   });
 
   it('fetches articles, GitHub repos, and WakaTime stats on mount', () => {
-    render(<Index />);
+    render(
+      <ThemeProvider>
+        <Index />
+      </ThemeProvider>
+    );
     const urls = (global.fetch as jest.Mock).mock.calls.map((c) => c[0]);
     expect(urls).toEqual(
       expect.arrayContaining([
