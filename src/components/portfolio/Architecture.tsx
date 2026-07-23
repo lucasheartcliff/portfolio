@@ -65,7 +65,7 @@ const DiagramPipeline = ({
         width="60"
         height="16"
         rx="3"
-        fill="rgba(255,255,255,0.06)"
+        className="fill-chip"
         stroke={`${accentB}44`}
       />
     ))}
@@ -108,7 +108,7 @@ const DiagramEntities = ({
             width="24"
             height="12"
             rx="2"
-            fill="rgba(255,255,255,0.05)"
+            className="fill-chip"
             stroke={`${accentB}55`}
           />
         </g>
@@ -190,7 +190,7 @@ const DiagramLicense = ({
             width="138"
             height="18"
             rx="4"
-            fill="rgba(255,255,255,0.04)"
+            className="fill-chip"
             stroke={`${granted ? accentB : c}55`}
           />
           {granted ? (
@@ -252,10 +252,7 @@ const ArchCard = ({
   diagram: React.ReactNode;
 }) => (
   <Glass className="group flex h-full flex-col p-5">
-    <div
-      className="relative mb-4 h-32 overflow-hidden rounded-lg"
-      style={{ background: 'rgba(255,255,255,0.015)' }}
-    >
+    <div className="relative mb-4 h-32 overflow-hidden rounded-lg bg-chip">
       {diagram}
     </div>
     <div
@@ -264,10 +261,10 @@ const ArchCard = ({
     >
       {tag}
     </div>
-    <div className="mb-2 font-display text-lg tracking-tight text-slate-100">
+    <div className="mb-2 font-display text-lg tracking-tight text-fg">
       {title}
     </div>
-    <div className="mb-4 flex-1 text-[13px] leading-relaxed text-slate-400">
+    <div className="mb-4 flex-1 text-[13px] leading-relaxed text-muted">
       {body}
     </div>
     <div className="flex flex-wrap gap-1.5">
@@ -297,7 +294,7 @@ export default function ArchitectureSection({
           <SectionLabel num="01" label={t('arch.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mb-4 max-w-3xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+          <h2 className="mb-4 max-w-3xl font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
             {t('arch.title1')}{' '}
             <span
               style={{
@@ -313,7 +310,7 @@ export default function ArchitectureSection({
           </h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="mb-12 max-w-2xl text-[15px] leading-relaxed text-slate-400">
+          <p className="mb-12 max-w-2xl text-[15px] leading-relaxed text-muted">
             {t('arch.body')}
           </p>
         </Reveal>

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import ArticlePage from '@/pages/articles/[slug]';
 import type { DevtoArticleFull } from '@/services/devto';
 
@@ -77,7 +78,11 @@ function mockFetchWith(articleResponse: Response) {
 describe('ArticlePage', () => {
   it('renders the article title and body once loaded', async () => {
     mockFetchWith({ ok: true, json: async () => fullArticle } as Response);
-    render(<ArticlePage />);
+    render(
+      <ThemeProvider>
+        <ArticlePage />
+      </ThemeProvider>
+    );
     expect(
       await screen.findByText('Understanding Backpressure')
     ).toBeInTheDocument();
@@ -86,7 +91,24 @@ describe('ArticlePage', () => {
 
   it('shows a not-found state when the article fails to load', async () => {
     mockFetchWith({ ok: false, json: async () => null } as Response);
-    render(<ArticlePage />);
+    render(
+      <ThemeProvider>
+        <ArticlePage />
+      </ThemeProvider>
+    );
     expect(await screen.findByText('Article not found.')).toBeInTheDocument();
+  });
+
+  it('renders a theme toggle', async () => {
+    mockFetchWith({ ok: true, json: async () => fullArticle } as Response);
+    render(
+      <ThemeProvider>
+        <ArticlePage />
+      </ThemeProvider>
+    );
+    await screen.findByText('Understanding Backpressure');
+    expect(
+      screen.getAllByLabelText(/switch to (light|dark) theme/i).length
+    ).toBeGreaterThan(0);
   });
 });

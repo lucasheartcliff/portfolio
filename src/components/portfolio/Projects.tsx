@@ -25,7 +25,7 @@ const ProjectCard = ({ p, accent }: { p: ProjectDatum; accent: string }) => {
         }`}
       >
         <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-slate-300">
+          <div className="flex items-center gap-2 text-soft">
             <svg
               width="16"
               height="16"
@@ -53,7 +53,7 @@ const ProjectCard = ({ p, accent }: { p: ProjectDatum; accent: string }) => {
             </span>
           )}
         </div>
-        <p className="mb-4 flex-1 text-[13px] leading-relaxed text-slate-400">
+        <p className="mb-4 flex-1 text-[13px] leading-relaxed text-muted">
           {p.desc}
         </p>
         {p.tags.length > 0 && (
@@ -73,7 +73,7 @@ const ProjectCard = ({ p, accent }: { p: ProjectDatum; accent: string }) => {
             ))}
           </div>
         )}
-        <div className="flex items-center gap-4 border-t border-white/5 pt-3 text-[11.5px] text-slate-500">
+        <div className="flex items-center gap-4 border-t border-hairline pt-3 text-[11.5px] text-faint">
           {p.lang && (
             <span className="flex items-center gap-1.5">
               <span
@@ -136,14 +136,14 @@ export default function ProjectsSection({
         </Reveal>
         <Reveal delay={80}>
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+            <h2 className="font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
               {t('proj.title')}
             </h2>
             <a
               href={`https://github.com/${username}`}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 font-mono text-[12px] text-slate-400 transition hover:text-white"
+              className="flex items-center gap-2 font-mono text-[12px] text-muted transition hover:text-fg"
             >
               {t('proj.allRepos')}
             </a>
@@ -151,7 +151,7 @@ export default function ProjectsSection({
         </Reveal>
 
         {error ? (
-          <Glass className="p-6 text-center text-[13px] text-slate-400">
+          <Glass className="p-6 text-center text-[13px] text-muted">
             {t('proj.error', {
               defaultValue: "Couldn't load projects right now.",
             })}

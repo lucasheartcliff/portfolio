@@ -48,10 +48,10 @@ const ArticleCard = ({
             </span>
           )}
         </div>
-        <div className="mb-4 flex-1 font-display text-[17px] leading-snug tracking-tight text-slate-100">
+        <div className="mb-4 flex-1 font-display text-[17px] leading-snug tracking-tight text-fg">
           {article.title}
         </div>
-        <div className="flex items-center justify-between border-t border-white/5 pt-3 font-mono text-[11px] text-slate-500">
+        <div className="flex items-center justify-between border-t border-hairline pt-3 font-mono text-[11px] text-faint">
           <span>
             {new Date(article.published_at).toLocaleDateString(locale, {
               month: 'short',
@@ -92,14 +92,14 @@ export default function ArticlesSection({
         </Reveal>
         <Reveal delay={80}>
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+            <h2 className="font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
               {t('writing.title')}
             </h2>
           </div>
         </Reveal>
 
         {error ? (
-          <Glass className="p-6 text-center text-[13px] text-slate-400">
+          <Glass className="p-6 text-center text-[13px] text-muted">
             {t('writing.error', {
               defaultValue: "Couldn't load articles right now.",
             })}

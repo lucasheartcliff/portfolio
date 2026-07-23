@@ -4,6 +4,7 @@ interface DotGridProps {
   accent?: string;
   accentB?: string;
   density?: number;
+  dim?: number;
 }
 
 interface Dot {
@@ -27,6 +28,7 @@ const ReactiveDotGrid = ({
   accent = '#1d6df7',
   accentB = '#8b5cf6',
   density = 28,
+  dim = 1,
 }: DotGridProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef(0);
@@ -92,7 +94,7 @@ const ReactiveDotGrid = ({
         const r = Math.round(dotA[0] * (1 - tx) + dotB[0] * tx);
         const g = Math.round(dotA[1] * (1 - tx) + dotB[1] * tx);
         const b = Math.round(dotA[2] * (1 - tx) + dotB[2] * tx);
-        const a = d.base * (0.55 + breathe * 0.45);
+        const a = d.base * dim * (0.55 + breathe * 0.45);
 
         ctx.beginPath();
         ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(1, a)})`;
@@ -133,7 +135,7 @@ const ReactiveDotGrid = ({
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
     };
-  }, [accent, accentB, density]);
+  }, [accent, accentB, density, dim]);
 
   return (
     <canvas
@@ -147,15 +149,17 @@ const ReactiveDotGrid = ({
 interface OrbsProps {
   palette?: string[];
   intensity?: number;
+  dim?: number;
 }
 
 const AmbientOrbs = ({
   palette = ['#1d6df7', '#8b5cf6', '#8b5cf6'],
   intensity = 0.55,
+  dim = 1,
 }: OrbsProps) => (
   <div
     className="pointer-events-none fixed inset-0 overflow-hidden"
-    style={{ zIndex: 0, opacity: intensity }}
+    style={{ zIndex: 0, opacity: intensity * dim }}
   >
     {/*
       will-change promotes each orb to its own compositor layer up front
@@ -218,6 +222,7 @@ interface Props {
   accentB?: string;
   density?: number;
   intensity?: number;
+  dim?: number;
 }
 
 /** Fixed animated background: ambient orbs + breathing dot grid + readability overlay. */
@@ -226,14 +231,21 @@ export default function ReactiveBackground({
   accentB = '#8b5cf6',
   density = 28,
   intensity = 0.55,
+  dim = 1,
 }: Props) {
   return (
     <>
       <AmbientOrbs
         palette={[accent, accentB, '#8b5cf6']}
         intensity={intensity}
+        dim={dim}
       />
-      <ReactiveDotGrid accent={accent} accentB={accentB} density={density} />
+      <ReactiveDotGrid
+        accent={accent}
+        accentB={accentB}
+        density={density}
+        dim={dim}
+      />
       <div
         className="pointer-events-none fixed inset-0"
         style={{

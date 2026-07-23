@@ -53,10 +53,10 @@ const Metric = ({
 }) => (
   <div>
     <div className="mb-1 flex justify-between">
-      <span className="text-[10px] text-slate-500">{label}</span>
-      <span className="text-[10px] text-slate-200">{value}</span>
+      <span className="text-[10px] text-faint">{label}</span>
+      <span className="text-[10px] text-fg">{value}</span>
     </div>
-    <div className="h-1 overflow-hidden rounded-full bg-white/5">
+    <div className="h-1 overflow-hidden rounded-full bg-chip">
       <div
         className="h-full rounded-full transition-all duration-700"
         style={{
@@ -92,18 +92,18 @@ const HeroPanel = ({
           <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
           <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
         </div>
-        <span className="font-mono text-[10.5px] tracking-wider text-slate-500">
+        <span className="font-mono text-[10.5px] tracking-wider text-faint">
           ~/system-status.sh
         </span>
       </div>
 
-      <div className="font-mono text-[11.5px] leading-[1.85] text-slate-300/90">
+      <div className="font-mono text-[11.5px] leading-[1.85] text-soft">
         <div>
-          <span className="text-slate-500">$</span> uptime
+          <span className="text-faint">$</span> uptime
         </div>
-        <div className="pl-3 text-slate-400">→ 9y 4mo · 99.97% SLA</div>
+        <div className="pl-3 text-muted">→ 9y 4mo · 99.97% SLA</div>
         <div className="mt-2">
-          <span className="text-slate-500">$</span> services --status
+          <span className="text-faint">$</span> services --status
         </div>
         <div className="mt-1 flex flex-col gap-1 pl-3">
           {[
@@ -113,7 +113,7 @@ const HeroPanel = ({
             ['risk-advisor', 'healthy'],
           ].map(([s, st]) => (
             <div key={s} className="flex items-center justify-between">
-              <span className="text-slate-400">{s}</span>
+              <span className="text-muted">{s}</span>
               <span className="flex items-center gap-1.5">
                 <span
                   className="h-1.5 w-1.5 rounded-full"
@@ -128,7 +128,7 @@ const HeroPanel = ({
           ))}
         </div>
 
-        <div className="mt-3 grid grid-cols-3 gap-3 border-t border-white/5 pt-3">
+        <div className="mt-3 grid grid-cols-3 gap-3 border-t border-hairline pt-3">
           <Metric
             label="CPU"
             value={`${cpu.toFixed(0)}%`}
@@ -149,7 +149,7 @@ const HeroPanel = ({
           />
         </div>
 
-        <div className="mt-3 text-[10.5px] text-slate-500">
+        <div className="mt-3 text-[10.5px] text-faint">
           <span style={{ color: accent }}>▍</span> Building scalable systems @
           Intelie
         </div>
@@ -203,9 +203,9 @@ export default function Hero({
 
           <Reveal delay={80}>
             <h1 className="font-display text-[clamp(40px,11vw,104px)] font-semibold leading-[0.95] tracking-[-0.03em]">
-              <span className="block text-slate-100">{t('hero.line1')}</span>
+              <span className="block text-fg">{t('hero.line1')}</span>
               <span
-                className="block -mb-[0.12em] pb-[0.12em]"
+                className="-mb-[0.12em] block pb-[0.12em]"
                 style={{
                   background: `linear-gradient(120deg, ${accent}, ${accentB})`,
                   backgroundClip: 'text',
@@ -216,14 +216,14 @@ export default function Hero({
               >
                 {t('hero.line2')}
               </span>
-              <span className="block text-slate-100">{t('hero.line3')}</span>
+              <span className="block text-fg">{t('hero.line3')}</span>
             </h1>
           </Reveal>
 
           <Reveal delay={160}>
             <div className="mt-8 max-w-xl">
               <RotatingRole accent={accent} />
-              <p className="mt-5 text-[15.5px] leading-relaxed text-slate-300/90">
+              <p className="mt-5 text-[15.5px] leading-relaxed text-soft">
                 <Trans k="hero.bio" />
               </p>
             </div>
@@ -245,14 +245,14 @@ export default function Hero({
               <a
                 href={`${router.basePath}/assets/pdfs/CV ATS Model.pdf`}
                 download="Lucas_Morais_Resume.pdf"
-                className="glass-btn rounded-xl px-5 py-3 text-[13.5px] font-medium text-slate-200 transition-all"
+                className="glass-btn rounded-xl px-5 py-3 text-[13.5px] font-medium text-fg transition-all"
               >
                 {t('hero.downloadCV')}
               </a>
-              <div className="ml-2 flex items-center gap-3 text-slate-400">
+              <div className="ml-2 flex items-center gap-3 text-muted">
                 <a
                   href={`https://github.com/${username}`}
-                  className="transition hover:text-white"
+                  className="transition hover:text-fg"
                   aria-label="GitHub"
                 >
                   <svg
@@ -266,7 +266,7 @@ export default function Hero({
                 </a>
                 <a
                   href={`https://linkedin.com/in/${username}`}
-                  className="transition hover:text-white"
+                  className="transition hover:text-fg"
                   aria-label="LinkedIn"
                 >
                   <svg
@@ -280,7 +280,7 @@ export default function Hero({
                 </a>
                 <a
                   href="#contact"
-                  className="transition hover:text-white"
+                  className="transition hover:text-fg"
                   aria-label="Email"
                 >
                   <svg
@@ -305,7 +305,7 @@ export default function Hero({
         </Reveal>
       </div>
 
-      <div className="absolute bottom-3 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-widest text-slate-500 sm:flex">
+      <div className="absolute bottom-3 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[11px] tracking-widest text-faint sm:flex">
         <span>{t('hero.scroll')}</span>
         <div className="h-10 w-px bg-gradient-to-b from-slate-500 to-transparent" />
       </div>
