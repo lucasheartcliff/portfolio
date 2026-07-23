@@ -9,7 +9,10 @@ import { appWithTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
+import { jetbrainsMono, spaceGrotesk } from '@/styles/fonts';
 import { getEnvProperties } from '@/utils';
+
+const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = React.useState(true);
@@ -29,9 +32,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         algorithm: theme.darkAlgorithm,
       }}
     >
-      {loading ? <LoadingScreen /> : <Component {...pageProps} />}
-      <Analytics />
-      <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
+      <div className={fontVariables}>
+        {loading ? <LoadingScreen /> : <Component {...pageProps} />}
+        <Analytics />
+        <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
+      </div>
     </ConfigProvider>
   );
 };

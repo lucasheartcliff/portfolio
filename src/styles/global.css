@@ -54,18 +54,18 @@ html {
 }
 
 body {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 .font-display {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-feature-settings: 'ss01';
 }
 .font-mono {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
 a {
@@ -225,7 +225,7 @@ section[id] {
 .prose-body h2,
 .prose-body h3,
 .prose-body h4 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
   color: var(--text-strong);
   letter-spacing: -0.02em;
   margin: 1.6em 0 0.6em;
@@ -273,7 +273,7 @@ section[id] {
   position: absolute;
   left: 0;
   top: 0.05em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.8em;
   color: var(--accent);
   letter-spacing: 0.05em;
@@ -290,7 +290,7 @@ section[id] {
   margin: 1.5em 0;
 }
 .prose-body :not(pre) > code {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
   font-size: 0.9em;
   padding: 0.1em 0.4em;
   border-radius: 6px;

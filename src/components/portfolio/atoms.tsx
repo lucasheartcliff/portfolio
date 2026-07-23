@@ -64,15 +64,22 @@ export const Reveal = ({
   delay = 0,
   y = 24,
   className = '',
+  eager = false,
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
   className?: string;
+  /** Skip the scroll-triggered hide/fade-in — for content already in the
+   * initial viewport (e.g. the hero), where "revealing on scroll" is
+   * meaningless and only delays paint until hydration + IntersectionObserver
+   * fire. */
+  eager?: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(eager);
   useEffect(() => {
+    if (eager) return undefined;
     const el = ref.current;
     if (!el) return undefined;
     const io = new IntersectionObserver(
@@ -88,16 +95,20 @@ export const Reveal = ({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [eager]);
   return (
     <div
       ref={ref}
       className={className}
-      style={{
-        transform: shown ? 'translateY(0)' : `translateY(${y}px)`,
-        opacity: shown ? 1 : 0,
-        transition: `all 0.9s cubic-bezier(.2,.7,.2,1) ${delay}ms`,
-      }}
+      style={
+        eager
+          ? undefined
+          : {
+              transform: shown ? 'translateY(0)' : `translateY(${y}px)`,
+              opacity: shown ? 1 : 0,
+              transition: `all 0.9s cubic-bezier(.2,.7,.2,1) ${delay}ms`,
+            }
+      }
     >
       {children}
     </div>
