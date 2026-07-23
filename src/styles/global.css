@@ -101,6 +101,7 @@ a {
   background: var(--toggle-bg);
   border: 1px solid var(--toggle-border);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text-strong);
 }
 .glass-btn:hover {
