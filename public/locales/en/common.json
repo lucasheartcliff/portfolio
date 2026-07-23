@@ -198,18 +198,21 @@
     "years": "years",
     "summary": "≈ {y} years of keyboard time across {n} languages.",
     "thisWeek": "This week",
-    "byLang": "BY LANG"
+    "byLang": "BY LANG",
+    "error": "Couldn't load language stats right now."
   },
   "proj": {
     "label": "Featured Projects",
     "title": "Open source & experiments.",
     "allRepos": "All repos on GitHub →",
-    "pinned": "★ PINNED"
+    "pinned": "★ PINNED",
+    "error": "Couldn't load projects right now."
   },
   "writing": {
     "label": "Writing",
     "title": "Notes & deep dives.",
-    "all": "All articles →"
+    "all": "All articles →",
+    "error": "Couldn't load articles right now."
   },
   "contact": {
     "label": "Contact",
@@ -247,5 +250,8 @@
     "reading": "Reading",
     "relatedLabel": "more",
     "relatedTitle": "Recent writing"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content"
   }
 }

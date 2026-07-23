@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
 import ArchitectureSection from '@/components/portfolio/Architecture';
@@ -24,17 +25,26 @@ import {
 import { getStaticPaths, makeStaticProps } from '@/utils/getStatic';
 import { GITHUB_REPO } from '@/utils/url';
 
+function fetchJson(url: string) {
+  return fetch(url).then((res) => {
+    if (!res.ok) throw new Error(`Request to ${url} failed: ${res.status}`);
+    return res.json();
+  });
+}
+
 const Index = () => {
+  const { t } = useTranslation('common');
   const [languages, setLanguages] = useState<LanguageDatum[]>([]);
   const [projects, setProjects] = useState<ProjectDatum[]>([]);
   const [articles, setArticles] = useState<DevtoArticleIndex[]>([]);
+  const [articlesError, setArticlesError] = useState(false);
+  const [dataError, setDataError] = useState(false);
 
   const { firstName, lastName, username, email } = profile as any;
   const name = `${firstName} ${lastName}`.trim();
 
   useEffect(() => {
-    fetch('/api/articles')
-      .then((res) => (res.ok ? res.json() : []))
+    fetchJson('/api/articles')
       .then((fetched: DevtoArticleIndex[]) =>
         setArticles(
           [...fetched].sort(
@@ -44,12 +54,12 @@ const Index = () => {
           )
         )
       )
-      .catch(() => {});
+      .catch(() => setArticlesError(true));
 
     Promise.all([
-      fetch('/api/github/repos').then((r) => (r.ok ? r.json() : [])),
-      fetch('/api/wakatime/coding-time').then((r) => (r.ok ? r.json() : {})),
-      fetch('/api/wakatime/languages').then((r) => (r.ok ? r.json() : {})),
+      fetchJson('/api/github/repos'),
+      fetchJson('/api/wakatime/coding-time'),
+      fetchJson('/api/wakatime/languages'),
     ])
       .then(([repos, coding, langs]: any[]) => {
         setProjects(
@@ -88,7 +98,7 @@ const Index = () => {
         langData.sort((a, b) => b.hours - a.hours);
         setLanguages(langData);
       })
-      .catch(() => {});
+      .catch(() => setDataError(true));
   }, [username]);
 
   return (
@@ -115,6 +125,13 @@ const Index = () => {
         />
       </Head>
 
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
+      >
+        {t('a11y.skipToContent', { defaultValue: 'Skip to content' })}
+      </a>
+
       <div
         className="relative min-h-screen overflow-x-hidden"
         style={{ background: 'var(--bg-base)' }}
@@ -128,31 +145,36 @@ const Index = () => {
 
         <div className="relative" style={{ zIndex: 10 }}>
           <Nav accent={ACCENT} />
-          <Hero accent={ACCENT} accentB={ACCENT_B} username={username} />
-          <ArchitectureSection accent={ACCENT} accentB={ACCENT_B} />
-          <StackSection accent={ACCENT} accentB={ACCENT_B} />
-          <LanguagesSection
-            data={languages}
-            accent={ACCENT}
-            accentB={ACCENT_B}
-          />
-          <ProjectsSection
-            projects={projects}
-            accent={ACCENT}
-            accentB={ACCENT_B}
-            username={username}
-          />
-          <ArticlesSection
-            articles={articles}
-            accent={ACCENT}
-            accentB={ACCENT_B}
-          />
-          <ContactSection
-            accent={ACCENT}
-            accentB={ACCENT_B}
-            email={email}
-            username={username}
-          />
+          <main id="main-content">
+            <Hero accent={ACCENT} accentB={ACCENT_B} username={username} />
+            <ArchitectureSection accent={ACCENT} accentB={ACCENT_B} />
+            <StackSection accent={ACCENT} accentB={ACCENT_B} />
+            <LanguagesSection
+              data={languages}
+              error={dataError}
+              accent={ACCENT}
+              accentB={ACCENT_B}
+            />
+            <ProjectsSection
+              projects={projects}
+              error={dataError}
+              accent={ACCENT}
+              accentB={ACCENT_B}
+              username={username}
+            />
+            <ArticlesSection
+              articles={articles}
+              error={articlesError}
+              accent={ACCENT}
+              accentB={ACCENT_B}
+            />
+            <ContactSection
+              accent={ACCENT}
+              accentB={ACCENT_B}
+              email={email}
+              username={username}
+            />
+          </main>
         </div>
       </div>
     </>

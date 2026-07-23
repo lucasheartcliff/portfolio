@@ -130,11 +130,16 @@ const DonutChart = ({
 
 interface Props {
   data: LanguageDatum[];
+  error?: boolean;
   accent?: string;
   accentB?: string;
 }
 
-export default function LanguagesSection({ data, accent = ACCENT }: Props) {
+export default function LanguagesSection({
+  data,
+  error = false,
+  accent = ACCENT,
+}: Props) {
   const { t } = useTranslation('common');
   const ref = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
@@ -158,7 +163,29 @@ export default function LanguagesSection({ data, accent = ACCENT }: Props) {
     return () => io.disconnect();
   }, [data.length]);
 
-  if (!data.length) return null;
+  if (!data.length && !error) return null;
+
+  if (error) {
+    return (
+      <section id="languages" className="relative py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
+          <Reveal>
+            <SectionLabel num="03" label={t('lang.label')} accent={accent} />
+          </Reveal>
+          <Reveal delay={80}>
+            <h2 className="mb-12 max-w-xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+              {t('lang.title')}
+            </h2>
+          </Reveal>
+          <Glass className="p-6 text-center text-[13px] text-slate-400">
+            {t('lang.error', {
+              defaultValue: "Couldn't load language stats right now.",
+            })}
+          </Glass>
+        </div>
+      </section>
+    );
+  }
 
   const max = Math.max(...data.map((l) => l.hours));
   const total = data.reduce((s, l) => s + l.hours, 0);
