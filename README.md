@@ -1,5 +1,7 @@
 # Portfolio
 
+[![Build & Deploy](https://github.com/lucasheartcliff/portfolio/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/lucasheartcliff/portfolio/actions/workflows/deploy.yml)
+
 A personal portfolio website built with Next.js 13, TypeScript, and Tailwind CSS. Showcases professional experience, technical skills, certifications, articles, and open-source projects with bilingual support (English and Portuguese).
 
 **Live**: [lucasheartcliff.com.br](https://lucasheartcliff.com.br)
