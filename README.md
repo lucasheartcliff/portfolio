@@ -125,15 +125,15 @@ Enforced in CI via the **Lighthouse CI** workflow (badge above) on every push/PR
 
 ## Browser Support
 
-Targets are defined by the [`browserslist`](package.json) config (`> 0.5%, last 2 versions, not dead, not ie 11, not op_mini all`) and enforced at build time via Autoprefixer/PostCSS.
+Targets are defined by the [`browserslist`](package.json) config and enforced at build time via Autoprefixer/PostCSS.
 
 | Browser | Notes |
 |---------|-------|
-| Chrome / Edge (Chromium) | Primary development and testing target |
-| Firefox | Supported — includes Firefox-specific CSS fallbacks (`scrollbar-width`, native `background-clip: text`, `-moz-osx-font-smoothing`) |
-| Safari (macOS / iOS) | Supported — includes `-webkit-` prefixes for `backdrop-filter` and gradient text |
+| Chrome / Edge (Chromium) | ✅ Supported — primary development and testing target |
+| Firefox (desktop) | ⚠️ **Not officially supported for now** — noticeable scroll/animation jank (likely `backdrop-filter`/`filter: blur()` compositing cost on the animated background and glass-card surfaces) that hasn't been resolved yet |
+| Safari (macOS / iOS) | ⚠️ **Not officially supported for now** — not verified against real hardware; excluded alongside Firefox out of caution rather than a confirmed issue |
 
-Internet Explorer 11 and Opera Mini are explicitly excluded.
+Firefox and Safari are explicitly excluded from the `browserslist` targets while this is being worked on, alongside Internet Explorer 11 and Opera Mini. This is a temporary state, not a permanent decision — revisit once the Firefox performance issue is diagnosed and fixed.
 
 ---
 
