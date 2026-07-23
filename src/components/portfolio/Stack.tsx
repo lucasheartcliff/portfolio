@@ -152,7 +152,9 @@ export default function StackSection({
                       i % 2 === 0
                         ? `linear-gradient(120deg, ${accent}, ${accentB})`
                         : `linear-gradient(120deg, ${accentB}, ${accent})`,
+                    backgroundClip: 'text',
                     WebkitBackgroundClip: 'text',
+                    color: 'transparent',
                     WebkitTextFillColor: 'transparent',
                   }}
                 >
