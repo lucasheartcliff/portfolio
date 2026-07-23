@@ -244,7 +244,7 @@ export default function Hero({
                 className="rounded-xl px-5 py-3 text-[13.5px] font-medium transition-all"
                 style={{
                   background: `linear-gradient(135deg, ${accent}, ${accentB})`,
-                  color: '#0b1020',
+                  color: '#ffffff',
                   boxShadow: `0 10px 40px ${accent}33`,
                 }}
               >

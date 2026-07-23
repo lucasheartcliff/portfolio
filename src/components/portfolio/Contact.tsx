@@ -163,7 +163,7 @@ export default function ContactSection({
   const errored = status === 'error';
 
   let btnBg = `linear-gradient(135deg, ${accent}, ${accentB})`;
-  let btnColor = '#0b1020';
+  let btnColor = '#ffffff';
   let btnBorder = 'none';
   if (sent) {
     btnBg = 'rgba(16,185,129,0.2)';
@@ -362,7 +362,7 @@ export default function ContactSection({
             © {new Date().getFullYear()} Lucas Morais · {t('footer.built')}
           </span>
           <span>
-            <span style={{ color: accent }}>▍</span> v2.0 · dark mode
+            <span style={{ color: accent }}>▍</span> v2.0
           </span>
         </div>
       </div>
