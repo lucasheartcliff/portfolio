@@ -320,7 +320,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
           className="ml-1 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all"
           style={{
             background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-            color: '#0b1020',
+            color: '#ffffff',
             boxShadow: `0 4px 24px ${accent}44`,
           }}
         >
@@ -466,7 +466,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
                 className="w-full rounded-full px-4 py-2 text-center text-[12.5px] font-medium"
                 style={{
                   background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-                  color: '#0b1020',
+                  color: '#ffffff',
                 }}
               >
                 {t('cta.hireMe', { defaultValue: 'Hire me' })}

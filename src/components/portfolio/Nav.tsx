@@ -111,7 +111,7 @@ export default function Nav({ accent = ACCENT }: Props) {
           className="ml-1 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all"
           style={{
             background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-            color: '#0b1020',
+            color: '#ffffff',
             boxShadow: `0 4px 24px ${accent}44`,
           }}
         >
@@ -254,7 +254,7 @@ export default function Nav({ accent = ACCENT }: Props) {
                 className="rounded-full px-4 py-2 text-[12.5px] font-medium"
                 style={{
                   background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-                  color: '#0b1020',
+                  color: '#ffffff',
                 }}
               >
                 {t('cta.getInTouch')}
