@@ -1,5 +1,4 @@
 import '../styles/global.css';
-import 'node_modules/flag-icons/css/flag-icons.min.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/next';
@@ -10,11 +9,15 @@ import React, { useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+import { jetbrainsMono, spaceGrotesk } from '@/styles/fonts';
 import { getEnvProperties } from '@/utils';
+
+const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
 
 const AppShell = ({ Component, pageProps }: AppProps) => {
   const { theme: activeTheme } = useTheme();
   const [loading, setLoading] = React.useState(true);
+  const { googleAnalytics } = getEnvProperties();
 
   useEffect(() => {
     setLoading(false);
@@ -30,9 +33,11 @@ const AppShell = ({ Component, pageProps }: AppProps) => {
             : theme.darkAlgorithm,
       }}
     >
-      {loading ? <LoadingScreen /> : <Component {...pageProps} />}
-      <Analytics />
-      <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
+      <div className={fontVariables}>
+        {loading ? <LoadingScreen /> : <Component {...pageProps} />}
+        <Analytics />
+        {googleAnalytics && <GoogleAnalytics gaId={googleAnalytics} />}
+      </div>
     </ConfigProvider>
   );
 };
