@@ -58,6 +58,7 @@ function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
       <img
         src={src}
         alt={alt || ''}
+        decoding="async"
         onClick={(e) => {
           e.stopPropagation();
           setZoomed((z) => !z);
@@ -93,9 +94,18 @@ export function ClickableImage({ src, alt, className }: ClickableImageProps) {
 
   return (
     <>
+      {/*
+        Plain <img>, not next/image: this renders arbitrary external URLs
+        from Dev.to article markdown (and the article cover image), so
+        there's no fixed set of remote hosts to allowlist in next.config.js,
+        and no known intrinsic size to satisfy next/image's width/height
+        requirement. Native lazy loading covers the real win here.
+      */}
       <img
         src={src}
         alt={alt || ''}
+        loading="lazy"
+        decoding="async"
         className={className}
         onClick={() => setOpen(true)}
         role="button"

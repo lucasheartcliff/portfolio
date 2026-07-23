@@ -69,19 +69,21 @@ const ArticleCard = ({
 
 interface Props {
   articles: DevtoArticleIndex[];
+  error?: boolean;
   accent?: string;
   accentB?: string;
 }
 
 export default function ArticlesSection({
   articles,
+  error = false,
   accent = ACCENT,
   accentB = ACCENT_B,
 }: Props) {
   const { t } = useTranslation('common');
   const router = useRouter();
   const locale = (router.query.locale as string) || 'en';
-  if (!articles.length) return null;
+  if (!articles.length && !error) return null;
   return (
     <section id="writing" className="relative py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
@@ -96,18 +98,26 @@ export default function ArticlesSection({
           </div>
         </Reveal>
 
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-          {articles.slice(0, 6).map((article, i) => (
-            <Reveal key={article.id} delay={100 + i * 60}>
-              <ArticleCard
-                article={article}
-                accent={accent}
-                accentB={accentB}
-                locale={locale}
-              />
-            </Reveal>
-          ))}
-        </div>
+        {error ? (
+          <Glass className="p-6 text-center text-[13px] text-slate-400">
+            {t('writing.error', {
+              defaultValue: "Couldn't load articles right now.",
+            })}
+          </Glass>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+            {articles.slice(0, 6).map((article, i) => (
+              <Reveal key={article.id} delay={100 + i * 60}>
+                <ArticleCard
+                  article={article}
+                  accent={accent}
+                  accentB={accentB}
+                  locale={locale}
+                />
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

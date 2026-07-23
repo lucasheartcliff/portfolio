@@ -6,15 +6,10 @@ import { Analytics } from '@vercel/analytics/next';
 import { ConfigProvider, theme } from 'antd';
 import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
-import React, { createContext, useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
 import { getEnvProperties } from '@/utils';
-
-export const DarkModeContext = createContext<{
-  isDark: boolean;
-  toggle: () => void;
-}>({ isDark: true, toggle: () => {} });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = React.useState(true);
@@ -27,21 +22,17 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     setLoading(false);
   }, []);
 
-  const toggle = useCallback(() => {}, []);
-
   return (
-    <DarkModeContext.Provider value={{ isDark: true, toggle }}>
-      <ConfigProvider
-        theme={{
-          token: { colorPrimary: '#1d6df7' },
-          algorithm: theme.darkAlgorithm,
-        }}
-      >
-        {loading ? <LoadingScreen /> : <Component {...pageProps} />}
-        <Analytics />
-        <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
-      </ConfigProvider>
-    </DarkModeContext.Provider>
+    <ConfigProvider
+      theme={{
+        token: { colorPrimary: '#1d6df7' },
+        algorithm: theme.darkAlgorithm,
+      }}
+    >
+      {loading ? <LoadingScreen /> : <Component {...pageProps} />}
+      <Analytics />
+      <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
+    </ConfigProvider>
   );
 };
 

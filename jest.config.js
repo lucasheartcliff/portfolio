@@ -7,10 +7,13 @@ const createJestConfig = nextJest({
 
 const customJestConfig = {
   moduleNameMapper: {
+    // More specific alias first: @/public/* must not fall through to the
+    // general @/* rule below, or it resolves into src/public instead of
+    // the real public/ directory.
+    '^@/public/(.*)$': '<rootDir>/public/$1',
+
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/(.*)$': '<rootDir>/src/$1',
-
-    '^@/public/(.*)$': '<rootDir>/public/$1',
 
     // @vercel/analytics ships ESM that jest doesn't transform; stub it.
     '^@vercel/analytics/next$': '<rootDir>/__mocks__/vercelAnalytics.tsx',

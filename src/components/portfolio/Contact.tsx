@@ -10,6 +10,7 @@ const Field = ({
   placeholder,
   type = 'text',
   multiline,
+  required,
 }: {
   label: string;
   value: string;
@@ -19,10 +20,12 @@ const Field = ({
   placeholder: string;
   type?: string;
   multiline?: boolean;
+  required?: boolean;
 }) => (
   <label className="block">
     <span className="mb-1.5 block font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
       {label}
+      {required && <span aria-hidden> *</span>}
     </span>
     {multiline ? (
       <textarea
@@ -30,6 +33,7 @@ const Field = ({
         onChange={onChange}
         placeholder={placeholder}
         rows={4}
+        required={required}
         className="w-full rounded-lg px-3 py-2.5 text-[13.5px] text-slate-100 transition-colors focus:outline-none"
         style={{
           background: 'rgba(255,255,255,0.03)',
@@ -42,6 +46,7 @@ const Field = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        required={required}
         className="w-full rounded-lg px-3 py-2.5 text-[13.5px] text-slate-100 transition-colors focus:outline-none"
         style={{
           background: 'rgba(255,255,255,0.03)',
@@ -210,6 +215,7 @@ export default function ContactSection({
                     value={form.name}
                     onChange={set('name')}
                     placeholder={t('contact.namePh')}
+                    required
                   />
                   <Field
                     label={t('contact.email')}
@@ -217,6 +223,7 @@ export default function ContactSection({
                     onChange={set('email')}
                     placeholder={t('contact.emailPh')}
                     type="email"
+                    required
                   />
                 </div>
                 <Field
@@ -231,6 +238,7 @@ export default function ContactSection({
                   onChange={set('message')}
                   placeholder={t('contact.messagePh')}
                   multiline
+                  required
                 />
                 <div className="flex items-center justify-between pt-2">
                   <span className="font-mono text-[11px] text-slate-500">
@@ -239,6 +247,7 @@ export default function ContactSection({
                   <button
                     type="submit"
                     disabled={sending}
+                    aria-live="polite"
                     className="rounded-lg px-5 py-2.5 text-[13px] font-medium transition-all"
                     style={{
                       background: btnBg,
@@ -346,7 +355,7 @@ export default function ContactSection({
           </Reveal>
         </div>
 
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 font-mono text-[12px] text-slate-500">
+        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 font-mono text-[12px] text-slate-400">
           <span>
             © {new Date().getFullYear()} Lucas Morais · {t('footer.built')}
           </span>
