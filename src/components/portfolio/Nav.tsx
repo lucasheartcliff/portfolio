@@ -179,7 +179,10 @@ export default function Nav({ accent = ACCENT }: Props) {
           />
           <div
             className="glass-nav absolute inset-y-0 right-0 flex w-[82vw] max-w-sm flex-col"
-            style={{ borderRadius: '16px 0 0 16px' }}
+            style={{
+              borderRadius: '16px 0 0 16px',
+              background: 'color-mix(in srgb, var(--bg-base) 96%, transparent)',
+            }}
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
