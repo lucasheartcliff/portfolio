@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { ACCENT } from './atoms';
+import ThemeToggle from './ThemeToggle';
 
 const LangToggle = ({ accent }: { accent: string }) => {
   const router = useRouter();
@@ -88,7 +89,7 @@ export default function Nav({ accent = ACCENT }: Props) {
             className="inline-block h-2 w-2 rounded-full"
             style={{ background: accent, boxShadow: `0 0 12px ${accent}` }}
           />
-          <span className="font-mono text-[13px] tracking-tight text-slate-200">
+          <span className="font-mono text-[13px] tracking-tight text-fg">
             lucasheartcliff
           </span>
         </div>
@@ -97,19 +98,20 @@ export default function Nav({ accent = ACCENT }: Props) {
             <a
               key={href}
               href={href}
-              className="rounded-full px-2.5 py-1.5 text-[12.5px] text-slate-300 transition-colors hover:text-white"
+              className="rounded-full px-2.5 py-1.5 text-[12.5px] text-soft transition-colors hover:text-fg"
             >
               {label}
             </a>
           ))}
         </div>
         <LangToggle accent={accent} />
+        <ThemeToggle />
         <a
           href="#contact"
           className="ml-1 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all"
           style={{
             background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-            color: '#0b1020',
+            color: '#ffffff',
             boxShadow: `0 4px 24px ${accent}44`,
           }}
         >
@@ -127,35 +129,38 @@ export default function Nav({ accent = ACCENT }: Props) {
             className="inline-block h-2 w-2 rounded-full"
             style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
           />
-          <span className="font-mono text-[12.5px] tracking-tight text-slate-200">
+          <span className="font-mono text-[12.5px] tracking-tight text-fg">
             lucasheartcliff
           </span>
         </div>
-        <button
-          ref={openButtonRef}
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          aria-haspopup="dialog"
-          aria-expanded={open}
-          className="flex h-9 w-9 items-center justify-center rounded-full"
-          style={{
-            background: 'var(--toggle-bg)',
-            border: '1px solid var(--toggle-border)',
-            color: accent,
-          }}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            ref={openButtonRef}
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            className="flex h-9 w-9 items-center justify-center rounded-full"
+            style={{
+              background: 'var(--toggle-bg)',
+              border: '1px solid var(--toggle-border)',
+              color: accent,
+            }}
           >
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        </button>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}
@@ -174,7 +179,10 @@ export default function Nav({ accent = ACCENT }: Props) {
           />
           <div
             className="glass-nav absolute inset-y-0 right-0 flex w-[82vw] max-w-sm flex-col"
-            style={{ borderRadius: '16px 0 0 16px' }}
+            style={{
+              borderRadius: '16px 0 0 16px',
+              background: 'color-mix(in srgb, var(--bg-base) 96%, transparent)',
+            }}
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -184,7 +192,7 @@ export default function Nav({ accent = ACCENT }: Props) {
               className="flex items-center justify-between border-b p-5"
               style={{ borderColor: 'var(--hairline)' }}
             >
-              <span className="font-mono text-[13px] text-slate-200">menu</span>
+              <span className="font-mono text-[13px] text-fg">menu</span>
               <button
                 ref={closeButtonRef}
                 type="button"
@@ -216,7 +224,7 @@ export default function Nav({ accent = ACCENT }: Props) {
                     key={href}
                     href={href}
                     onClick={() => setOpen(false)}
-                    className="rounded-lg p-3 text-[15px] text-slate-200 transition-colors"
+                    className="rounded-lg p-3 text-[15px] text-fg transition-colors"
                     style={{
                       background: i === 0 ? 'var(--chip-bg)' : 'transparent',
                     }}
@@ -236,14 +244,17 @@ export default function Nav({ accent = ACCENT }: Props) {
               className="flex items-center justify-between border-t p-5"
               style={{ borderColor: 'var(--hairline)' }}
             >
-              <LangToggle accent={accent} />
+              <div className="flex items-center gap-2">
+                <LangToggle accent={accent} />
+                <ThemeToggle />
+              </div>
               <a
                 href="#contact"
                 onClick={() => setOpen(false)}
                 className="rounded-full px-4 py-2 text-[12.5px] font-medium"
                 style={{
                   background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-                  color: '#0b1020',
+                  color: '#ffffff',
                 }}
               >
                 {t('cta.getInTouch')}

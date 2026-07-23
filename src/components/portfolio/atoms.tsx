@@ -23,9 +23,9 @@ export const Tag = ({
   <span
     className="inline-flex items-center rounded-md px-2.5 py-1 text-[11px] font-medium tracking-wide"
     style={{
-      background: 'rgba(255,255,255,0.04)',
-      border: '1px solid rgba(255,255,255,0.08)',
-      color: 'rgba(226,232,240,0.85)',
+      background: 'var(--chip-bg)',
+      border: '1px solid var(--chip-border)',
+      color: 'var(--text-body)',
     }}
   >
     <span
@@ -53,7 +53,7 @@ export const SectionLabel = ({
       {num}
     </span>
     <span className="h-px w-12" style={{ background: `${accent}88` }} />
-    <span className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
+    <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
       {label}
     </span>
   </div>
@@ -124,7 +124,7 @@ export const Trans = ({ k }: { k: string }) => {
     if (m)
       return (
         // eslint-disable-next-line react/no-array-index-key
-        <strong key={i} className="font-medium text-slate-100">
+        <strong key={i} className="font-medium text-fg">
           {m[1]}
         </strong>
       );

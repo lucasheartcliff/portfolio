@@ -7,7 +7,9 @@ import ReactMarkdown from 'react-markdown';
 
 import { ClickableImage } from '@/components/ImageLightbox';
 import { ACCENT, ACCENT_B, Glass, Reveal } from '@/components/portfolio/atoms';
+import ThemeToggle from '@/components/portfolio/ThemeToggle';
 import ReactiveBackground from '@/components/ReactiveBackground';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Meta } from '@/layouts/Meta';
 import type { DevtoArticleFull, DevtoArticleIndex } from '@/services/devto';
 import { normalizeTags } from '@/services/devto';
@@ -74,7 +76,7 @@ const CodeBlock = ({ children }: { children?: React.ReactNode }) => {
       className="code-block my-7 overflow-hidden"
       style={{ borderRadius: 12 }}
     >
-      <div className="flex items-center justify-between border-b border-white/5 px-4 py-2.5">
+      <div className="flex items-center justify-between border-b border-hairline px-4 py-2.5">
         <div className="flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-red-500/60" />
           <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/60" />
@@ -83,14 +85,14 @@ const CodeBlock = ({ children }: { children?: React.ReactNode }) => {
         <button
           type="button"
           onClick={copy}
-          className="font-mono text-[10.5px] text-slate-500 transition hover:text-slate-200"
+          className="font-mono text-[10.5px] text-faint transition hover:text-fg"
         >
           {copied ? '✓ copied' : 'copy'}
         </button>
       </div>
       <pre
-        className="overflow-x-auto p-4 font-mono text-[12.5px] leading-[1.65] text-slate-300"
-        style={{ background: 'rgba(0,0,0,0.25)' }}
+        className="overflow-x-auto p-4 font-mono text-[12.5px] leading-[1.65] text-soft"
+        style={{ background: 'var(--code-bg)' }}
       >
         {children}
       </pre>
@@ -138,11 +140,11 @@ const ReadingProgress = ({ accent }: { accent: string }) => {
   }, []);
   return (
     <div>
-      <div className="mb-1.5 flex justify-between font-mono text-[10px] uppercase tracking-widest text-slate-500">
+      <div className="mb-1.5 flex justify-between font-mono text-[10px] uppercase tracking-widest text-faint">
         <span>{t('article.reading', { defaultValue: 'Reading' })}</span>
         <span>{Math.round(p * 100)}%</span>
       </div>
-      <div className="h-1 overflow-hidden rounded-full bg-white/5">
+      <div className="h-1 overflow-hidden rounded-full bg-chip">
         <div
           className="h-full rounded-full transition-all"
           style={{ width: `${p * 100}%`, background: accent }}
@@ -194,15 +196,14 @@ const TocAside = ({
     >
       <Glass className="p-5">
         <div className="mb-4 flex items-center justify-between">
-          <div className="font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
+          <div className="font-mono text-[10.5px] uppercase tracking-widest text-faint">
             {t('article.contents', { defaultValue: 'Contents' })}
           </div>
           <div className="flex items-center gap-1 font-mono text-[10.5px]">
             <button
               type="button"
               onClick={() => setFontSize(Math.max(FONT_MIN, fontSize - 1))}
-              className="h-6 w-6 rounded text-slate-400 transition hover:text-white"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
+              className="h-6 w-6 rounded bg-chip text-muted transition hover:text-fg"
               aria-label="Decrease font"
             >
               A−
@@ -210,8 +211,7 @@ const TocAside = ({
             <button
               type="button"
               onClick={() => setFontSize(Math.min(FONT_MAX, fontSize + 1))}
-              className="h-6 w-6 rounded text-slate-400 transition hover:text-white"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
+              className="h-6 w-6 rounded bg-chip text-muted transition hover:text-fg"
               aria-label="Increase font"
             >
               A+
@@ -227,9 +227,11 @@ const TocAside = ({
                   href={`#${item.id}`}
                   className="relative block py-1 pl-3 text-[12.5px] leading-snug transition-colors"
                   style={{
-                    color: isActive ? '#e2e8f0' : 'rgb(100, 116, 139)',
+                    color: isActive
+                      ? 'var(--text-strong)'
+                      : 'var(--text-faint)',
                     borderLeft: `2px solid ${
-                      isActive ? accent : 'rgba(255,255,255,0.06)'
+                      isActive ? accent : 'var(--hairline)'
                     }`,
                   }}
                 >
@@ -239,7 +241,7 @@ const TocAside = ({
             );
           })}
         </ul>
-        <div className="mt-5 border-t border-white/5 pt-4">
+        <div className="mt-5 border-t border-hairline pt-4">
           <ReadingProgress accent={accent} />
         </div>
       </Glass>
@@ -291,7 +293,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
             className="inline-block h-2 w-2 rounded-full"
             style={{ background: accent, boxShadow: `0 0 12px ${accent}` }}
           />
-          <span className="font-mono text-[13px] tracking-tight text-slate-200">
+          <span className="font-mono text-[13px] tracking-tight text-fg">
             lucasheartcliff
           </span>
         </a>
@@ -300,7 +302,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
             <a
               key={label}
               href={href}
-              className="rounded-full px-3 py-1.5 text-[12.5px] text-slate-300 transition-colors hover:text-white"
+              className="rounded-full px-3 py-1.5 text-[12.5px] text-soft transition-colors hover:text-fg"
               style={
                 label === t('nav.writing', { defaultValue: 'Writing' })
                   ? { color: accent }
@@ -311,13 +313,14 @@ const ArticleNav = ({ accent }: { accent: string }) => {
             </a>
           ))}
         </div>
+        <ThemeToggle />
         {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full reload reloads i18n */}
         <a
           href="/#contact"
           className="ml-1 rounded-full px-3.5 py-1.5 text-[12.5px] font-medium transition-all"
           style={{
             background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-            color: '#0b1020',
+            color: '#ffffff',
             boxShadow: `0 4px 24px ${accent}44`,
           }}
         >
@@ -346,32 +349,35 @@ const ArticleNav = ({ accent }: { accent: string }) => {
             className="inline-block h-2 w-2 rounded-full"
             style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
           />
-          <span className="font-mono text-[12.5px] tracking-tight text-slate-200">
+          <span className="font-mono text-[12.5px] tracking-tight text-fg">
             lucasheartcliff
           </span>
         </a>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          className="flex h-9 w-9 items-center justify-center rounded-full"
-          style={{
-            background: 'var(--toggle-bg)',
-            border: '1px solid var(--toggle-border)',
-            color: accent,
-          }}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className="flex h-9 w-9 items-center justify-center rounded-full"
+            style={{
+              background: 'var(--toggle-bg)',
+              border: '1px solid var(--toggle-border)',
+              color: accent,
+            }}
           >
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        </button>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile drawer */}
@@ -390,7 +396,10 @@ const ArticleNav = ({ accent }: { accent: string }) => {
           />
           <div
             className="glass-nav absolute inset-y-0 right-0 flex w-[82vw] max-w-sm flex-col"
-            style={{ borderRadius: '16px 0 0 16px' }}
+            style={{
+              borderRadius: '16px 0 0 16px',
+              background: 'color-mix(in srgb, var(--bg-base) 96%, transparent)',
+            }}
             onClick={(e) => e.stopPropagation()}
             role="presentation"
           >
@@ -398,7 +407,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
               className="flex items-center justify-between border-b p-5"
               style={{ borderColor: 'var(--hairline)' }}
             >
-              <span className="font-mono text-[13px] text-slate-200">menu</span>
+              <span className="font-mono text-[13px] text-fg">menu</span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -429,7 +438,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
                     key={label}
                     href={href}
                     onClick={() => setOpen(false)}
-                    className="rounded-lg p-3 text-[15px] text-slate-200 transition-colors"
+                    className="rounded-lg p-3 text-[15px] text-fg transition-colors"
                     style={{
                       background: i === 0 ? 'var(--chip-bg)' : 'transparent',
                     }}
@@ -446,9 +455,10 @@ const ArticleNav = ({ accent }: { accent: string }) => {
               </div>
             </div>
             <div
-              className="flex items-center border-t p-5"
+              className="flex items-center gap-3 border-t p-5"
               style={{ borderColor: 'var(--hairline)' }}
             >
+              <ThemeToggle />
               {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full reload reloads i18n */}
               <a
                 href="/#contact"
@@ -456,7 +466,7 @@ const ArticleNav = ({ accent }: { accent: string }) => {
                 className="w-full rounded-full px-4 py-2 text-center text-[12.5px] font-medium"
                 style={{
                   background: `linear-gradient(135deg, ${accent}, ${accent}aa)`,
-                  color: '#0b1020',
+                  color: '#ffffff',
                 }}
               >
                 {t('cta.hireMe', { defaultValue: 'Hire me' })}
@@ -492,7 +502,7 @@ const Related = ({
           {t('article.relatedLabel', { defaultValue: 'more' })}
         </span>
         <span className="h-px w-12" style={{ background: `${accent}88` }} />
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-slate-400">
+        <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
           {t('article.relatedTitle', { defaultValue: 'Recent writing' })}
         </span>
       </div>
@@ -508,10 +518,10 @@ const Related = ({
                 >
                   #{tags[0] || 'Article'}
                 </div>
-                <div className="mb-4 font-display text-[17px] leading-snug tracking-tight text-slate-100">
+                <div className="mb-4 font-display text-[17px] leading-snug tracking-tight text-fg">
                   {a.title}
                 </div>
-                <div className="flex items-center justify-between font-mono text-[11px] text-slate-500">
+                <div className="flex items-center justify-between font-mono text-[11px] text-faint">
                   <span>
                     {new Date(a.published_at).toLocaleDateString(locale, {
                       month: 'short',
@@ -535,6 +545,7 @@ export default function ArticlePage() {
   const router = useRouter();
   const { slug } = router.query;
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
   const [article, setArticle] = useState<DevtoArticleFull | null>(null);
   const [related, setRelated] = useState<DevtoArticleIndex[]>([]);
   const [loading, setLoading] = useState(true);
@@ -602,6 +613,7 @@ export default function ArticlePage() {
           accentB={ACCENT_B}
           density={32}
           intensity={0.4}
+          dim={theme === 'light' ? 0.4 : 1}
         />
         <div className="relative" style={{ zIndex: 10 }}>
           <ArticleNav accent={ACCENT} />
@@ -614,7 +626,7 @@ export default function ArticlePage() {
   if (loading)
     return shell(
       <div className="flex min-h-screen items-center justify-center">
-        <p className="font-mono text-slate-500">{t('Loading...')}</p>
+        <p className="font-mono text-faint">{t('Loading...')}</p>
       </div>,
       <Meta title="Loading..." description="" locale="en" />
     );
@@ -622,7 +634,7 @@ export default function ArticlePage() {
   if (!article)
     return shell(
       <div className="flex min-h-screen items-center justify-center">
-        <p className="font-mono text-slate-500">{t('Article not found.')}</p>
+        <p className="font-mono text-faint">{t('Article not found.')}</p>
       </div>,
       <Meta title="Article Not Found" description="" locale="en" />
     );
@@ -660,7 +672,7 @@ export default function ArticlePage() {
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full reload reloads i18n */}
             <a
               href="/"
-              className="mb-8 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-widest text-slate-500 transition hover:text-slate-200"
+              className="mb-8 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-widest text-faint transition hover:text-fg"
             >
               <svg
                 width="12"
@@ -690,7 +702,7 @@ export default function ArticlePage() {
                   #{tags[0]}
                 </span>
               )}
-              <span className="font-mono text-[11px] text-slate-500">
+              <span className="font-mono text-[11px] text-faint">
                 {new Date(article.published_at).toLocaleDateString(locale, {
                   year: 'numeric',
                   month: 'long',
@@ -702,21 +714,21 @@ export default function ArticlePage() {
           </Reveal>
 
           <Reveal delay={120}>
-            <h1 className="mb-6 font-display text-[clamp(30px,7vw,64px)] leading-[1.05] tracking-[-0.025em] text-slate-100">
+            <h1 className="mb-6 font-display text-[clamp(30px,7vw,64px)] leading-[1.05] tracking-[-0.025em] text-fg">
               {article.title}
             </h1>
           </Reveal>
 
           {article.description && (
             <Reveal delay={180}>
-              <p className="max-w-2xl text-[16px] leading-relaxed text-slate-300/85 sm:text-[18px]">
+              <p className="max-w-2xl text-[16px] leading-relaxed text-soft sm:text-[18px]">
                 {article.description}
               </p>
             </Reveal>
           )}
 
           <Reveal delay={240}>
-            <div className="mt-8 flex items-center gap-4 border-t border-white/5 pt-6">
+            <div className="mt-8 flex items-center gap-4 border-t border-hairline pt-6">
               <div
                 className="flex h-10 w-10 items-center justify-center rounded-full font-display text-sm"
                 style={{
@@ -727,8 +739,8 @@ export default function ArticlePage() {
                 LM
               </div>
               <div>
-                <div className="text-[14px] text-slate-200">Lucas Morais</div>
-                <div className="font-mono text-[12px] text-slate-500">
+                <div className="text-[14px] text-fg">Lucas Morais</div>
+                <div className="font-mono text-[12px] text-faint">
                   Software Engineer · Backend &amp; Architecture
                 </div>
               </div>

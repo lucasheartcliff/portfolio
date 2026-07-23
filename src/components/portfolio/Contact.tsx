@@ -23,7 +23,7 @@ const Field = ({
   required?: boolean;
 }) => (
   <label className="block">
-    <span className="mb-1.5 block font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
+    <span className="mb-1.5 block font-mono text-[10.5px] uppercase tracking-widest text-faint">
       {label}
       {required && <span aria-hidden> *</span>}
     </span>
@@ -34,10 +34,10 @@ const Field = ({
         placeholder={placeholder}
         rows={4}
         required={required}
-        className="w-full rounded-lg px-3 py-2.5 text-[13.5px] text-slate-100 transition-colors focus:outline-none"
+        className="w-full rounded-lg px-3 py-2.5 text-[13.5px] text-fg transition-colors focus:outline-none"
         style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--input-bg)',
+          border: '1px solid var(--input-border)',
         }}
       />
     ) : (
@@ -47,10 +47,10 @@ const Field = ({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="w-full rounded-lg px-3 py-2.5 text-[13.5px] text-slate-100 transition-colors focus:outline-none"
+        className="w-full rounded-lg px-3 py-2.5 text-[13.5px] text-fg transition-colors focus:outline-none"
         style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'var(--input-bg)',
+          border: '1px solid var(--input-border)',
         }}
       />
     )}
@@ -83,10 +83,10 @@ const ContactRow = ({
         {icon}
       </div>
       <div className="min-w-0 flex-1">
-        <div className="mb-0.5 font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
+        <div className="mb-0.5 font-mono text-[10.5px] uppercase tracking-widest text-faint">
           {label}
         </div>
-        <div className="truncate text-[13.5px] text-slate-200">{value}</div>
+        <div className="truncate text-[13.5px] text-fg">{value}</div>
       </div>
       <svg
         width="14"
@@ -95,7 +95,7 @@ const ContactRow = ({
         fill="none"
         stroke="currentColor"
         strokeWidth="1.6"
-        className="text-slate-500 transition group-hover:text-slate-200"
+        className="text-faint transition group-hover:text-fg"
       >
         <path d="M7 7h10v10M7 17 17 7" />
       </svg>
@@ -163,7 +163,7 @@ export default function ContactSection({
   const errored = status === 'error';
 
   let btnBg = `linear-gradient(135deg, ${accent}, ${accentB})`;
-  let btnColor = '#0b1020';
+  let btnColor = '#ffffff';
   let btnBorder = 'none';
   if (sent) {
     btnBg = 'rgba(16,185,129,0.2)';
@@ -186,7 +186,7 @@ export default function ContactSection({
           <SectionLabel num="06" label={t('contact.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
             {t('contact.title1')}{' '}
             <span
               style={{
@@ -202,7 +202,7 @@ export default function ContactSection({
           </h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="mb-12 max-w-xl text-[15px] leading-relaxed text-slate-400">
+          <p className="mb-12 max-w-xl text-[15px] leading-relaxed text-muted">
             {t('contact.body')}
           </p>
         </Reveal>
@@ -243,7 +243,7 @@ export default function ContactSection({
                   required
                 />
                 <div className="flex items-center justify-between pt-2">
-                  <span className="font-mono text-[11px] text-slate-500">
+                  <span className="font-mono text-[11px] text-faint">
                     {t('contact.replies')}
                   </span>
                   <button
@@ -337,10 +337,10 @@ export default function ContactSection({
                 accent={accentB}
               />
               <Glass className="mt-2 p-5">
-                <div className="mb-2 font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
+                <div className="mb-2 font-mono text-[10.5px] uppercase tracking-widest text-faint">
                   {t('contact.currentStatus')}
                 </div>
-                <div className="flex items-center gap-2 text-[13.5px] text-slate-200">
+                <div className="flex items-center gap-2 text-[13.5px] text-fg">
                   <span
                     className="relative inline-flex h-2 w-2 rounded-full"
                     style={{ background: '#10b981' }}
@@ -357,12 +357,12 @@ export default function ContactSection({
           </Reveal>
         </div>
 
-        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 font-mono text-[12px] text-slate-400">
+        <div className="mt-20 flex flex-wrap items-center justify-between gap-4 border-t border-hairline pt-6 font-mono text-[12px] text-muted">
           <span>
             © {new Date().getFullYear()} Lucas Morais · {t('footer.built')}
           </span>
           <span>
-            <span style={{ color: accent }}>▍</span> v2.0 · dark mode
+            <span style={{ color: accent }}>▍</span> v2.0
           </span>
         </div>
       </div>

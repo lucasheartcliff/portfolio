@@ -88,12 +88,12 @@ export default function StackSection({
           <SectionLabel num="02" label={t('stack.label')} accent={accent} />
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+          <h2 className="mb-4 font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
             {t('stack.title')}
           </h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className="mb-12 max-w-2xl text-[15px] leading-relaxed text-slate-400">
+          <p className="mb-12 max-w-2xl text-[15px] leading-relaxed text-muted">
             {t('stack.body')}
           </p>
         </Reveal>
@@ -115,10 +115,10 @@ export default function StackSection({
                   {items.map((item) => (
                     <span
                       key={item}
-                      className="rounded-md px-2.5 py-1 text-[12px] text-slate-200"
+                      className="rounded-md px-2.5 py-1 text-[12px] text-fg"
                       style={{
-                        background: 'rgba(255,255,255,0.035)',
-                        border: '1px solid rgba(255,255,255,0.06)',
+                        background: 'var(--chip-bg)',
+                        border: '1px solid var(--chip-border)',
                       }}
                     >
                       {item}
@@ -140,11 +140,7 @@ export default function StackSection({
                 ['99.97%', t('stack.metric.sla')],
               ] as [string, string][]
             ).map(([n, l], i) => (
-              <div
-                key={l}
-                className="p-6 text-center"
-                style={{ background: 'rgba(255,255,255,0.012)' }}
-              >
+              <div key={l} className="bg-chip p-6 text-center">
                 <div
                   className="mb-1 font-display text-4xl tracking-tight"
                   style={{
@@ -160,7 +156,7 @@ export default function StackSection({
                 >
                   {n}
                 </div>
-                <div className="font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
+                <div className="font-mono text-[10.5px] uppercase tracking-widest text-faint">
                   {l}
                 </div>
               </div>
