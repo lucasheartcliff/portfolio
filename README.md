@@ -1,6 +1,11 @@
 # Portfolio
 
 [![Build & Deploy](https://github.com/lucasheartcliff/portfolio/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/lucasheartcliff/portfolio/actions/workflows/deploy.yml)
+[![Lighthouse CI](https://github.com/lucasheartcliff/portfolio/actions/workflows/lighthouse.yml/badge.svg?branch=main)](https://github.com/lucasheartcliff/portfolio/actions/workflows/lighthouse.yml)
+[![Performance](https://img.shields.io/badge/Lighthouse%20Performance-97-brightgreen)](#lighthouse-scores)
+[![Accessibility](https://img.shields.io/badge/Lighthouse%20Accessibility-100-brightgreen)](#lighthouse-scores)
+[![Best Practices](https://img.shields.io/badge/Lighthouse%20Best%20Practices-96-brightgreen)](#lighthouse-scores)
+[![SEO](https://img.shields.io/badge/Lighthouse%20SEO-100-brightgreen)](#lighthouse-scores)
 
 A personal portfolio website built with Next.js 13, TypeScript, and Tailwind CSS. Showcases professional experience, technical skills, certifications, articles, and open-source projects with bilingual support (English and Portuguese).
 
@@ -88,6 +93,35 @@ Dedicated page (`/articles/[slug]`) that fetches and renders full Dev.to article
 | **Git Hooks** | Husky, lint-staged, Commitlint (Conventional Commits) |
 | **Build** | Next.js compiler, @next/bundle-analyzer |
 | **Deployment** | Docker (multi-stage), Nginx reverse proxy, GitHub Actions CI/CD |
+
+---
+
+## Lighthouse Scores
+
+Audited locally against a production build (`next build && next start`) using the [`lighthouserc.js`](lighthouserc.js) config — 3 runs each on `/en` and `/pt`, desktop preset, averaged:
+
+| Category | Score |
+|----------|-------|
+| Performance | 97 |
+| Accessibility | 100 |
+| Best Practices | 96 |
+| SEO | 100 |
+
+Enforced in CI via the **Lighthouse CI** workflow (badge above) on every push/PR to `main`/`next`: Accessibility, Best Practices, and SEO are hard-gated (`error`, real `minScore` thresholds) since they're deterministic markup/DOM checks. Performance is `warn`-only — the performance *category* score mixes timing metrics that are sensitive to whatever CPU the audit happens to run on, so it's tracked but doesn't block merges without a dedicated, stable runner behind it. Re-run locally anytime with `yarn lighthouse`.
+
+---
+
+## Browser Support
+
+Targets are defined by the [`browserslist`](package.json) config (`> 0.5%, last 2 versions, not dead, not ie 11, not op_mini all`) and enforced at build time via Autoprefixer/PostCSS.
+
+| Browser | Notes |
+|---------|-------|
+| Chrome / Edge (Chromium) | Primary development and testing target |
+| Firefox | Supported — includes Firefox-specific CSS fallbacks (`scrollbar-width`, native `background-clip: text`, `-moz-osx-font-smoothing`) |
+| Safari (macOS / iOS) | Supported — includes `-webkit-` prefixes for `backdrop-filter` and gradient text |
+
+Internet Explorer 11 and Opera Mini are explicitly excluded.
 
 ---
 
