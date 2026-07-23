@@ -120,10 +120,24 @@ const ReactiveDotGrid = ({
     // are) without a perceptible difference, which matters most while
     // scrolling: this fixed, full-viewport canvas competes with the
     // browser's scroll work on the same thread every frame it redraws.
+    // Skipping the redraw entirely while a scroll is in flight (resuming
+    // ~150ms after it settles) removes that contention for the frames that
+    // matter most instead of just making each one cheaper.
+    let scrolling = false;
+    let scrollEndTimer = 0;
+    const onScroll = () => {
+      scrolling = true;
+      window.clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(() => {
+        scrolling = false;
+      }, 150);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     const FRAME_INTERVAL = 1000 / 30;
     let lastDraw = 0;
     const tick = (t: number) => {
-      if (t - lastDraw >= FRAME_INTERVAL) {
+      if (!scrolling && t - lastDraw >= FRAME_INTERVAL) {
         lastDraw = t;
         draw(t * 0.001);
       }
@@ -133,6 +147,8 @@ const ReactiveDotGrid = ({
 
     return () => {
       cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(scrollEndTimer);
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', resize);
     };
   }, [accent, accentB, density, dim]);
@@ -156,66 +172,122 @@ const AmbientOrbs = ({
   palette = ['#1d6df7', '#8b5cf6', '#8b5cf6'],
   intensity = 0.55,
   dim = 1,
-}: OrbsProps) => (
-  <div
-    className="pointer-events-none fixed inset-0 overflow-hidden"
-    style={{ zIndex: 0, opacity: intensity * dim }}
-  >
-    {/*
-      will-change promotes each orb to its own compositor layer up front
-      instead of on first transform (avoiding a jank spike when the
-      animation starts), and the blur radii are deliberately kept modest:
-      filter: blur() forces the browser to rasterize a bitmap larger than
-      the element's own bounds, and these are large (45-60vw), fixed-position,
-      continuously-animated elements — the single most expensive combination
-      to keep composited every frame, on Firefox in particular.
-    */}
+}: OrbsProps) => {
+  const orbRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const orbs = orbRefs.current.filter(Boolean) as HTMLDivElement[];
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      orbs.forEach((orb) => {
+        // eslint-disable-next-line no-param-reassign
+        orb.style.animationPlayState = 'paused';
+      });
+      return undefined;
+    }
+
+    // filter: blur() on large, fixed-position, continuously-animated
+    // elements is the single most expensive thing to keep composited every
+    // frame, on Firefox in particular. Pausing the animation for the
+    // duration of a scroll (resuming ~150ms after it settles) removes that
+    // cost from exactly the frames where it's competing with scroll work.
+    let scrolling = false;
+    let scrollEndTimer = 0;
+    const onScroll = () => {
+      if (!scrolling) {
+        scrolling = true;
+        orbs.forEach((orb) => {
+          // eslint-disable-next-line no-param-reassign
+          orb.style.animationPlayState = 'paused';
+        });
+      }
+      window.clearTimeout(scrollEndTimer);
+      scrollEndTimer = window.setTimeout(() => {
+        scrolling = false;
+        orbs.forEach((orb) => {
+          // eslint-disable-next-line no-param-reassign
+          orb.style.animationPlayState = 'running';
+        });
+      }, 150);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.clearTimeout(scrollEndTimer);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  return (
     <div
-      className="orb-anim-1 absolute rounded-full"
-      style={{
-        width: '55vw',
-        height: '55vw',
-        top: '-15vw',
-        left: '-10vw',
-        background: `radial-gradient(circle at 30% 30%, ${palette[0]}55, transparent 65%)`,
-        filter: 'blur(45px)',
-        willChange: 'transform',
-      }}
-    />
-    <div
-      className="orb-anim-2 absolute rounded-full"
-      style={{
-        width: '60vw',
-        height: '60vw',
-        top: '20vh',
-        right: '-20vw',
-        background: `radial-gradient(circle at 50% 50%, ${palette[1]}55, transparent 65%)`,
-        filter: 'blur(50px)',
-        willChange: 'transform',
-      }}
-    />
-    <div
-      className="orb-anim-3 absolute rounded-full"
-      style={{
-        width: '45vw',
-        height: '45vw',
-        bottom: '-15vw',
-        left: '20vw',
-        background: `radial-gradient(circle at 50% 50%, ${palette[2]}55, transparent 65%)`,
-        filter: 'blur(45px)',
-        willChange: 'transform',
-      }}
-    />
-    <div
-      className="absolute inset-0"
-      style={{
-        opacity: 0.04,
-        backgroundImage:
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
-      }}
-    />
-  </div>
-);
+      className="pointer-events-none fixed inset-0 overflow-hidden"
+      style={{ zIndex: 0, opacity: intensity * dim }}
+    >
+      {/*
+        will-change promotes each orb to its own compositor layer up front
+        instead of on first transform (avoiding a jank spike when the
+        animation starts), and the blur radii are deliberately kept modest:
+        filter: blur() forces the browser to rasterize a bitmap larger than
+        the element's own bounds, and these are large (45-60vw), fixed-position,
+        continuously-animated elements — the single most expensive combination
+        to keep composited every frame, on Firefox in particular.
+      */}
+      <div
+        ref={(el) => {
+          orbRefs.current[0] = el;
+        }}
+        className="orb-anim-1 absolute rounded-full"
+        style={{
+          width: '55vw',
+          height: '55vw',
+          top: '-15vw',
+          left: '-10vw',
+          background: `radial-gradient(circle at 30% 30%, ${palette[0]}55, transparent 65%)`,
+          filter: 'blur(45px)',
+          willChange: 'transform',
+        }}
+      />
+      <div
+        ref={(el) => {
+          orbRefs.current[1] = el;
+        }}
+        className="orb-anim-2 absolute rounded-full"
+        style={{
+          width: '60vw',
+          height: '60vw',
+          top: '20vh',
+          right: '-20vw',
+          background: `radial-gradient(circle at 50% 50%, ${palette[1]}55, transparent 65%)`,
+          filter: 'blur(50px)',
+          willChange: 'transform',
+        }}
+      />
+      <div
+        ref={(el) => {
+          orbRefs.current[2] = el;
+        }}
+        className="orb-anim-3 absolute rounded-full"
+        style={{
+          width: '45vw',
+          height: '45vw',
+          bottom: '-15vw',
+          left: '20vw',
+          background: `radial-gradient(circle at 50% 50%, ${palette[2]}55, transparent 65%)`,
+          filter: 'blur(45px)',
+          willChange: 'transform',
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          opacity: 0.04,
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+        }}
+      />
+    </div>
+  );
+};
 
 interface Props {
   accent?: string;
