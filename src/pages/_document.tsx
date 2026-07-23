@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable @next/next/no-css-tags */
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 const i18nextConfig = require('../../next-i18next.config');
@@ -14,16 +13,6 @@ class MyDocument extends Document {
       <Html lang={currentLocale}>
         <>
           <Head>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link
-              rel="preconnect"
-              href="https://fonts.gstatic.com"
-              crossOrigin="anonymous"
-            />
-            <link
-              href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-              rel="stylesheet"
-            />
             <script
               // Dark-only design: lock the theme before first paint.
               dangerouslySetInnerHTML={{
