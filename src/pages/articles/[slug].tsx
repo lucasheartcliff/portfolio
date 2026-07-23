@@ -121,10 +121,16 @@ const ReadingProgress = ({ accent }: { accent: string }) => {
   const { t } = useTranslation('common');
   const [p, setP] = useState(0);
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      const h = document.documentElement;
-      const pct = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
-      setP(Math.max(0, Math.min(1, pct)));
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const h = document.documentElement;
+        const pct = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
+        setP(Math.max(0, Math.min(1, pct)));
+        ticking = false;
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -160,13 +166,19 @@ const TocAside = ({
   const { t } = useTranslation('common');
   const [active, setActive] = useState(toc[0]?.id ?? '');
   useEffect(() => {
+    let ticking = false;
     const onScroll = () => {
-      let cur = toc[0]?.id ?? '';
-      toc.forEach((item) => {
-        const el = document.getElementById(item.id);
-        if (el && el.getBoundingClientRect().top < 200) cur = item.id;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        let cur = toc[0]?.id ?? '';
+        toc.forEach((item) => {
+          const el = document.getElementById(item.id);
+          if (el && el.getBoundingClientRect().top < 200) cur = item.id;
+        });
+        setActive(cur);
+        ticking = false;
       });
-      setActive(cur);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();

@@ -80,8 +80,7 @@ const ReactiveDotGrid = ({
     resize();
     window.addEventListener('resize', resize);
 
-    const tick = (t: number) => {
-      const time = t * 0.001;
+    const draw = (time: number) => {
       const { w, h } = sizeRef.current;
       ctx.clearRect(0, 0, w, h);
       const dots = dotsRef.current;
@@ -100,7 +99,32 @@ const ReactiveDotGrid = ({
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
         ctx.fill();
       }
+    };
 
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    if (reduceMotion) {
+      // Static render only: respects the user's preference and skips the
+      // render loop entirely rather than just holding it at a low rate.
+      draw(0);
+      return () => window.removeEventListener('resize', resize);
+    }
+
+    // The breathing effect is a slow sine wave — redrawing ~1300+ dots at a
+    // throttled ~30fps instead of a full 60fps halves this loop's main-thread
+    // cost (canvas 2D drawing isn't compositor-offloaded like CSS transforms
+    // are) without a perceptible difference, which matters most while
+    // scrolling: this fixed, full-viewport canvas competes with the
+    // browser's scroll work on the same thread every frame it redraws.
+    const FRAME_INTERVAL = 1000 / 30;
+    let lastDraw = 0;
+    const tick = (t: number) => {
+      if (t - lastDraw >= FRAME_INTERVAL) {
+        lastDraw = t;
+        draw(t * 0.001);
+      }
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
@@ -133,6 +157,15 @@ const AmbientOrbs = ({
     className="pointer-events-none fixed inset-0 overflow-hidden"
     style={{ zIndex: 0, opacity: intensity }}
   >
+    {/*
+      will-change promotes each orb to its own compositor layer up front
+      instead of on first transform (avoiding a jank spike when the
+      animation starts), and the blur radii are deliberately kept modest:
+      filter: blur() forces the browser to rasterize a bitmap larger than
+      the element's own bounds, and these are large (45-60vw), fixed-position,
+      continuously-animated elements — the single most expensive combination
+      to keep composited every frame, on Firefox in particular.
+    */}
     <div
       className="orb-anim-1 absolute rounded-full"
       style={{
@@ -141,7 +174,8 @@ const AmbientOrbs = ({
         top: '-15vw',
         left: '-10vw',
         background: `radial-gradient(circle at 30% 30%, ${palette[0]}55, transparent 65%)`,
-        filter: 'blur(60px)',
+        filter: 'blur(45px)',
+        willChange: 'transform',
       }}
     />
     <div
@@ -152,7 +186,8 @@ const AmbientOrbs = ({
         top: '20vh',
         right: '-20vw',
         background: `radial-gradient(circle at 50% 50%, ${palette[1]}55, transparent 65%)`,
-        filter: 'blur(70px)',
+        filter: 'blur(50px)',
+        willChange: 'transform',
       }}
     />
     <div
@@ -163,7 +198,8 @@ const AmbientOrbs = ({
         bottom: '-15vw',
         left: '20vw',
         background: `radial-gradient(circle at 50% 50%, ${palette[2]}55, transparent 65%)`,
-        filter: 'blur(60px)',
+        filter: 'blur(45px)',
+        willChange: 'transform',
       }}
     />
     <div
