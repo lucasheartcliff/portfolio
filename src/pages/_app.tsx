@@ -16,6 +16,7 @@ const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = React.useState(true);
+  const { googleAnalytics } = getEnvProperties();
 
   useEffect(() => {
     // Dark-only design: lock the theme.
@@ -35,7 +36,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <div className={fontVariables}>
         {loading ? <LoadingScreen /> : <Component {...pageProps} />}
         <Analytics />
-        <GoogleAnalytics gaId={getEnvProperties().googleAnalytics} />
+        {googleAnalytics && <GoogleAnalytics gaId={googleAnalytics} />}
       </div>
     </ConfigProvider>
   );
