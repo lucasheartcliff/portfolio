@@ -1,5 +1,4 @@
 import '../styles/global.css';
-import 'node_modules/flag-icons/css/flag-icons.min.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/next';
