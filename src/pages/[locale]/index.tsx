@@ -14,6 +14,7 @@ import type { ProjectDatum } from '@/components/portfolio/Projects';
 import ProjectsSection from '@/components/portfolio/Projects';
 import StackSection from '@/components/portfolio/Stack';
 import ReactiveBackground from '@/components/ReactiveBackground';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Meta } from '@/layouts/Meta';
 import profile from '@/public/assets/jsons/profile.json';
 import type { DevtoArticleIndex } from '@/services/devto';
@@ -34,6 +35,7 @@ function fetchJson(url: string) {
 
 const Index = () => {
   const { t } = useTranslation('common');
+  const { theme } = useTheme();
   const [languages, setLanguages] = useState<LanguageDatum[]>([]);
   const [projects, setProjects] = useState<ProjectDatum[]>([]);
   const [articles, setArticles] = useState<DevtoArticleIndex[]>([]);
@@ -141,6 +143,7 @@ const Index = () => {
           accentB={ACCENT_B}
           density={28}
           intensity={0.55}
+          dim={theme === 'light' ? 0.4 : 1}
         />
 
         <div className="relative" style={{ zIndex: 10 }}>

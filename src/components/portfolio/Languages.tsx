@@ -41,7 +41,7 @@ const DonutChart = ({
           cy="70"
           r={r}
           fill="none"
-          stroke="rgba(255,255,255,0.04)"
+          className="stroke-chip"
           strokeWidth="14"
         />
         {data.map((l, i) => {
@@ -80,9 +80,8 @@ const DonutChart = ({
           x="70"
           y="66"
           textAnchor="middle"
-          className="font-mono"
+          className="fill-faint font-mono"
           fontSize="9"
-          fill="#64748b"
         >
           {hovered !== null ? data[hovered]!.name : t('lang.byLang')}
         </text>
@@ -90,9 +89,8 @@ const DonutChart = ({
           x="70"
           y="80"
           textAnchor="middle"
-          className="font-display"
+          className="fill-fg font-display"
           fontSize="14"
-          fill="#e2e8f0"
           style={{ fontWeight: 600 }}
         >
           {hovered !== null
@@ -117,8 +115,8 @@ const DonutChart = ({
               className="h-1.5 w-1.5 rounded-full"
               style={{ background: l.color }}
             />
-            <span className="text-slate-400">{l.name}</span>
-            <span className="ml-auto font-mono text-slate-500">
+            <span className="text-muted">{l.name}</span>
+            <span className="ml-auto font-mono text-faint">
               {((l.hours / total) * 100).toFixed(0)}%
             </span>
           </div>
@@ -173,11 +171,11 @@ export default function LanguagesSection({
             <SectionLabel num="03" label={t('lang.label')} accent={accent} />
           </Reveal>
           <Reveal delay={80}>
-            <h2 className="mb-12 max-w-xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+            <h2 className="mb-12 max-w-xl font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
               {t('lang.title')}
             </h2>
           </Reveal>
-          <Glass className="p-6 text-center text-[13px] text-slate-400">
+          <Glass className="p-6 text-center text-[13px] text-muted">
             {t('lang.error', {
               defaultValue: "Couldn't load language stats right now.",
             })}
@@ -201,10 +199,10 @@ export default function LanguagesSection({
         </Reveal>
         <Reveal delay={80}>
           <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="max-w-xl font-display text-3xl tracking-[-0.02em] text-slate-100 sm:text-5xl">
+            <h2 className="max-w-xl font-display text-3xl tracking-[-0.02em] text-fg sm:text-5xl">
               {t('lang.title')}
             </h2>
-            <div className="flex items-center gap-2 font-mono text-[12px] text-slate-500">
+            <div className="flex items-center gap-2 font-mono text-[12px] text-faint">
               <svg
                 width="14"
                 height="14"
@@ -250,23 +248,20 @@ export default function LanguagesSection({
                                 boxShadow: `0 0 8px ${l.color}`,
                               }}
                             />
-                            <span className="text-[13px] font-medium tracking-tight text-slate-200">
+                            <span className="text-[13px] font-medium tracking-tight text-fg">
                               {l.name}
                             </span>
                           </div>
                           <div className="flex items-center gap-3 font-mono text-[11px]">
-                            <span className="text-slate-500">
+                            <span className="text-faint">
                               {Math.round(l.hours).toLocaleString()}h
                             </span>
-                            <span className="min-w-[3.5em] text-right text-slate-300">
+                            <span className="min-w-[3.5em] text-right text-soft">
                               {formatHours(l.hours)}
                             </span>
                           </div>
                         </div>
-                        <div
-                          className="relative h-1.5 overflow-hidden rounded-full"
-                          style={{ background: 'rgba(255,255,255,0.04)' }}
-                        >
+                        <div className="relative h-1.5 overflow-hidden rounded-full bg-chip">
                           <div
                             className="absolute inset-y-0 left-0 rounded-full"
                             style={{
@@ -286,18 +281,16 @@ export default function LanguagesSection({
 
                 <div className="flex flex-col gap-5">
                   <div>
-                    <div className="mb-1 font-mono text-[10.5px] uppercase tracking-widest text-slate-500">
+                    <div className="mb-1 font-mono text-[10.5px] uppercase tracking-widest text-faint">
                       {t('lang.total')}
                     </div>
-                    <div className="font-display text-[44px] leading-none tracking-[-0.03em] text-slate-100">
+                    <div className="font-display text-[44px] leading-none tracking-[-0.03em] text-fg">
                       {Math.round(total).toLocaleString()}
-                      <span className="ml-2 font-mono text-[18px] text-slate-500">
+                      <span className="ml-2 font-mono text-[18px] text-faint">
                         {t('lang.hours')}
                       </span>
                     </div>
-                    <div className="mt-2 text-[13px] text-slate-400">
-                      {summary}
-                    </div>
+                    <div className="mt-2 text-[13px] text-muted">{summary}</div>
                   </div>
 
                   <DonutChart

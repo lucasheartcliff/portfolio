@@ -25,9 +25,10 @@ class MyDocument extends Document {
               rel="stylesheet"
             />
             <script
-              // Dark-only design: lock the theme before first paint.
+              // Resolve the theme before first paint to avoid a flash:
+              // stored preference wins, otherwise fall back to the OS setting.
               dangerouslySetInnerHTML={{
-                __html: `(function(){var r=document.documentElement;r.setAttribute('data-theme','dark');r.classList.add('dark');})();`,
+                __html: `(function(){try{var s=localStorage.getItem('theme');var t=(s==='light'||s==='dark')?s:((window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark');var r=document.documentElement;r.setAttribute('data-theme',t);r.classList.toggle('dark',t==='dark');}catch(e){}})();`,
               }}
             />
           </Head>
