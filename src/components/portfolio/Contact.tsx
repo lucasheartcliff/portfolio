@@ -191,7 +191,9 @@ export default function ContactSection({
             <span
               style={{
                 background: `linear-gradient(120deg, ${accent}, ${accentB})`,
+                backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
+                color: 'transparent',
                 WebkitTextFillColor: 'transparent',
               }}
             >
