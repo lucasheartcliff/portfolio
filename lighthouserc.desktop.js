@@ -33,7 +33,7 @@ module.exports = {
     },
     upload: {
       target: 'filesystem',
-      outputDir: '.lighthouseci',
+      outputDir: '.lighthouseci/desktop',
     },
   },
 };
