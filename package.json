@@ -31,7 +31,6 @@
     "antd": "5.11.5",
     "apexcharts": "3.28.1",
     "fetch-jsonp": "1.2.3",
-    "flag-icons": "^7.1.0",
     "i18next": "^23.10.0",
     "lucide-react": "^0.577.0",
     "moment": "^2.30.1",
