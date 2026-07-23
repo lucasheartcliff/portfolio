@@ -1,5 +1,6 @@
 # Portfolio
 
+[![Tests](https://github.com/lucasheartcliff/portfolio/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/lucasheartcliff/portfolio/actions/workflows/test.yml)
 [![Build & Deploy](https://github.com/lucasheartcliff/portfolio/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/lucasheartcliff/portfolio/actions/workflows/deploy.yml)
 [![Lighthouse CI](https://github.com/lucasheartcliff/portfolio/actions/workflows/lighthouse.yml/badge.svg?branch=main)](https://github.com/lucasheartcliff/portfolio/actions/workflows/lighthouse.yml)
 [![Performance](https://img.shields.io/badge/Lighthouse%20Performance-97-brightgreen)](#lighthouse-scores)
@@ -252,11 +253,12 @@ docker run -p 3000:3000 --env-file .env.local portfolio
 
 ### CI/CD
 
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) runs on push to `main`/`next`:
-
-1. **Test** — Install, lint, run unit tests
-2. **Build & Push** — Build Docker image, push to GitHub Container Registry (GHCR)
-3. **Deploy** — SSH into server, pull latest image, restart with `docker compose`
+- **`.github/workflows/test.yml`** — Install, lint, run unit tests. Runs on push/PR to `main`/`next`; this is the **Tests** badge above.
+- **`.github/workflows/deploy.yml`** — Runs on push to `main`/`next`:
+  1. **Test** — Install, lint, run unit tests (duplicated from `test.yml` so `build-and-push`/`deploy` can depend on it within the same workflow run)
+  2. **Build & Push** — Build Docker image, push to GitHub Container Registry (GHCR)
+  3. **Deploy** — SSH into server, pull latest image, restart with `docker compose`
+- **`.github/workflows/lighthouse.yml`** — Runs `yarn lighthouse` (Lighthouse CI) on push/PR to `main`/`next`; this is the **Lighthouse CI** badge above.
 
 ---
 
