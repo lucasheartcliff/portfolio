@@ -172,6 +172,16 @@ textarea:focus {
     opacity: 0;
   }
 }
+@keyframes loadingTextIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 ::selection {
   background: color-mix(in srgb, var(--accent) 35%, transparent);
