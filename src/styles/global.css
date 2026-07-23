@@ -45,9 +45,18 @@ body,
   overflow-x: hidden;
 }
 
+/* Firefox doesn't support ::-webkit-scrollbar; this is its native
+   equivalent for the same thin, muted scrollbar (see ::-webkit-scrollbar
+   below). Chromium/Safari ignore these two properties. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--chip-border) transparent;
+}
+
 body {
   font-family: 'Space Grotesk', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
@@ -92,6 +101,7 @@ a {
   background: var(--toggle-bg);
   border: 1px solid var(--toggle-border);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text-strong);
 }
 .glass-btn:hover {
@@ -294,6 +304,10 @@ section[id] {
 .code-block pre::-webkit-scrollbar-thumb {
   background: var(--chip-border);
   border-radius: 4px;
+}
+.code-block pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--chip-border) transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {

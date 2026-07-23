@@ -208,7 +208,9 @@ export default function Hero({
                 className="block -mb-[0.12em] pb-[0.12em]"
                 style={{
                   background: `linear-gradient(120deg, ${accent}, ${accentB})`,
+                  backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
+                  color: 'transparent',
                   WebkitTextFillColor: 'transparent',
                 }}
               >
