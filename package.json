@@ -143,6 +143,10 @@
     "last 2 versions",
     "not dead",
     "not ie 11",
-    "not op_mini all"
+    "not op_mini all",
+    "not firefox > 0",
+    "not and_ff > 0",
+    "not safari > 0",
+    "not ios_saf > 0"
   ]
 }
