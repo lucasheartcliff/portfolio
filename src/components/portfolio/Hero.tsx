@@ -122,7 +122,12 @@ const HeroPanel = ({
                     boxShadow: '0 0 8px #10b981',
                   }}
                 />
-                <span className="text-[10.5px] text-emerald-400/80">{st}</span>
+                <span
+                  className="text-[10.5px]"
+                  style={{ color: 'var(--success-text)' }}
+                >
+                  {st}
+                </span>
               </span>
             </div>
           ))}
@@ -195,7 +200,10 @@ export default function Hero({
                   style={{ background: '#10b981', opacity: 0.6 }}
                 />
               </span>
-              <span className="text-[12px] tracking-wide text-emerald-300/90">
+              <span
+                className="text-[12px] tracking-wide"
+                style={{ color: 'var(--success-text)' }}
+              >
                 {t('hero.available')}
               </span>
             </div>
