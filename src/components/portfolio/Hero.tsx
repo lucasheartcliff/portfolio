@@ -183,7 +183,7 @@ export default function Hero({
     >
       <div className="mx-auto grid w-full max-w-6xl items-center gap-8 px-5 sm:px-6 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
         <div>
-          <Reveal>
+          <Reveal eager>
             <div
               className="mb-8 inline-flex items-center gap-2 rounded-full px-3 py-1.5"
               style={{
@@ -209,7 +209,7 @@ export default function Hero({
             </div>
           </Reveal>
 
-          <Reveal delay={80}>
+          <Reveal eager delay={80}>
             <h1 className="font-display text-[clamp(40px,11vw,104px)] font-semibold leading-[0.95] tracking-[-0.03em]">
               <span className="block text-fg">{t('hero.line1')}</span>
               <span
@@ -228,7 +228,7 @@ export default function Hero({
             </h1>
           </Reveal>
 
-          <Reveal delay={160}>
+          <Reveal eager delay={160}>
             <div className="mt-8 max-w-xl">
               <RotatingRole accent={accent} />
               <p className="mt-5 text-[15.5px] leading-relaxed text-soft">
@@ -237,7 +237,7 @@ export default function Hero({
             </div>
           </Reveal>
 
-          <Reveal delay={240}>
+          <Reveal eager delay={240}>
             <div className="mt-10 flex flex-wrap items-center gap-3">
               <a
                 href="#projects"
@@ -308,7 +308,7 @@ export default function Hero({
           </Reveal>
         </div>
 
-        <Reveal delay={320} y={32}>
+        <Reveal eager delay={320} y={32}>
           <HeroPanel accent={accent} accentB={accentB} />
         </Reveal>
       </div>

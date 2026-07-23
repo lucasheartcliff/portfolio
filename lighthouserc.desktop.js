@@ -7,7 +7,7 @@ module.exports = {
       startServerCommand: 'npm run start',
       startServerReadyPattern: 'Ready in',
       startServerReadyTimeout: 30000,
-      url: ['http://localhost:3000/en', 'http://localhost:3000/pt'],
+      url: ['http://localhost:3000/en/', 'http://localhost:3000/pt/'],
       numberOfRuns: 3,
       settings: {
         preset: 'desktop',
@@ -33,7 +33,7 @@ module.exports = {
     },
     upload: {
       target: 'filesystem',
-      outputDir: '.lighthouseci',
+      outputDir: '.lighthouseci/desktop',
     },
   },
 };
