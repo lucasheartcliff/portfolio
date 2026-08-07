@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -9,23 +10,40 @@ export interface LanguageDatum {
   color: string;
 }
 
-const formatHours = (h: number, yearLabel: string, monthLabel: string) => {
+const formatHours = (
+  h: number,
+  locale: string,
+  yearLabel: string,
+  monthLabel: string
+) => {
   const yrs = h / (40 * 52);
-  if (yrs >= 1) return `${yrs.toFixed(1)} ${yearLabel}`;
+  if (yrs >= 1)
+    return `${yrs.toLocaleString(locale, {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    })} ${yearLabel}`;
   const mo = h / (40 * 4.33);
-  return `${mo.toFixed(0)} ${monthLabel}`;
+  return `${Math.round(mo).toLocaleString(locale)} ${monthLabel}`;
 };
+
+const formatPercent = (value: number, locale: string, fractionDigits = 0) =>
+  value.toLocaleString(locale, {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  });
 
 const DonutChart = ({
   data,
   animate,
   hovered,
   setHovered,
+  locale,
 }: {
   data: LanguageDatum[];
   animate: boolean;
   hovered: number | null;
   setHovered: (i: number | null) => void;
+  locale: string;
 }) => {
   const { t } = useTranslation('common');
   const total = data.reduce((s, l) => s + l.hours, 0) || 1;
@@ -94,8 +112,12 @@ const DonutChart = ({
           style={{ fontWeight: 600 }}
         >
           {hovered !== null
-            ? `${((data[hovered]!.hours / total) * 100).toFixed(1)}%`
-            : `${data.length}`}
+            ? `${formatPercent(
+                (data[hovered]!.hours / total) * 100,
+                locale,
+                1
+              )}%`
+            : data.length.toLocaleString(locale)}
         </text>
       </svg>
       <div className="flex flex-col gap-1 text-[11px]">
@@ -117,7 +139,7 @@ const DonutChart = ({
             />
             <span className="text-muted">{l.name}</span>
             <span className="ml-auto font-mono text-faint">
-              {((l.hours / total) * 100).toFixed(0)}%
+              {formatPercent((l.hours / total) * 100, locale)}%
             </span>
           </div>
         ))}
@@ -139,6 +161,8 @@ export default function LanguagesSection({
   accent = ACCENT,
 }: Props) {
   const { t } = useTranslation('common');
+  const router = useRouter();
+  const locale = (router.query.locale as string) || 'en';
   const ref = useRef<HTMLDivElement>(null);
   const [animate, setAnimate] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -188,8 +212,14 @@ export default function LanguagesSection({
   const max = Math.max(...data.map((l) => l.hours));
   const total = data.reduce((s, l) => s + l.hours, 0);
   const summary = t('lang.summary')
-    .replace('{y}', (total / (40 * 52)).toFixed(1))
-    .replace('{n}', String(data.length));
+    .replace(
+      '{y}',
+      (total / (40 * 52)).toLocaleString(locale, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      })
+    )
+    .replace('{n}', data.length.toLocaleString(locale));
 
   return (
     <section id="languages" className="relative py-20 sm:py-28">
@@ -254,10 +284,15 @@ export default function LanguagesSection({
                           </div>
                           <div className="flex items-center gap-3 font-mono text-[11px]">
                             <span className="text-faint">
-                              {Math.round(l.hours).toLocaleString()}h
+                              {Math.round(l.hours).toLocaleString(locale)}h
                             </span>
                             <span className="min-w-[3.5em] text-right text-soft">
-                              {formatHours(l.hours, t('years'), t('months'))}
+                              {formatHours(
+                                l.hours,
+                                locale,
+                                t('years'),
+                                t('months')
+                              )}
                             </span>
                           </div>
                         </div>
@@ -285,7 +320,7 @@ export default function LanguagesSection({
                       {t('lang.total')}
                     </div>
                     <div className="font-display text-[44px] leading-none tracking-[-0.03em] text-fg">
-                      {Math.round(total).toLocaleString()}
+                      {Math.round(total).toLocaleString(locale)}
                       <span className="ml-2 font-mono text-[18px] text-faint">
                         {t('lang.hours')}
                       </span>
@@ -298,6 +333,7 @@ export default function LanguagesSection({
                     animate={animate}
                     hovered={hovered}
                     setHovered={setHovered}
+                    locale={locale}
                   />
                 </div>
               </div>
