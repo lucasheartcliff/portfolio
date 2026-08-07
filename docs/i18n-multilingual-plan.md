@@ -1,10 +1,12 @@
-# Plan: Add Spanish, Italian, French, and German
+# Plan: Add Spanish, Italian, French, German, Chinese, Russian, and Japanese
 
-Goal: extend the site from `en`/`pt` to six locales — `en`, `pt`, `es`, `it`, `fr`, `de` — using the existing next-i18next + locale-prefixed-route architecture, with no new i18n framework or routing model.
+Goal: extend the site from `en`/`pt` to nine locales — `en`, `pt`, `es`, `it`, `fr`, `de`, `zh`, `ru`, `ja` — using the existing next-i18next + locale-prefixed-route architecture, with no new i18n framework or routing model.
+
+> **Update:** the plumbing (config, translation scaffolding, switcher redesign, Meta locale fix) has since shipped for all nine locales, including a follow-up extending the original `es`/`it`/`fr`/`de` batch with `zh` (Simplified Chinese), `ru` (Russian), and `ja` (Japanese). The sections below are kept as originally written for the first four locales; the additions applied the same pattern one-for-one — see the "Chinese, Russian, Japanese" callouts inline.
 
 ## 1. Locale codes
 
-Use plain ISO 639-1 codes to match the existing `en`/`pt` convention (no region suffixes): `es`, `it`, `fr`, `de`. This also matches the locale map already present (and unused beyond moment.js) in `src/utils/index.ts:61-77`, which already has `es`, `it`, `fr`, `de` entries — a sign the codes were anticipated.
+Use plain ISO 639-1 codes to match the existing `en`/`pt` convention (no region suffixes): `es`, `it`, `fr`, `de`, and later `zh` (Simplified Chinese — no region suffix; a `zh-Hant` variant for Traditional Chinese would be a separate future locale, not addressed here), `ru`, `ja`. This also matches the locale map already present (and unused beyond moment.js) in `src/utils/index.ts:61-77`, which already had `es`, `it`, `fr`, `de`, `ja`, `zh` entries before this work started — a sign most of these codes were anticipated; `ru` was the one gap, added alongside the new locale.
 
 ## 2. Config
 
@@ -38,11 +40,27 @@ Use plain ISO 639-1 codes to match the existing `en`/`pt` convention (no region 
 
 ## 7. Date formatting
 
-Already locale-aware and needs no change: `toLocaleDateString(locale, ...)` calls in `articles/[slug].tsx` (`:526`, `:706`) take whatever locale string is passed in — once step 5's locale threading lands, dates will format correctly in all 6 locales automatically via `Intl`.
+Already locale-aware and needs no change: `toLocaleDateString(locale, ...)` calls in `articles/[slug].tsx` (`:526`, `:706`) take whatever locale string is passed in — once step 5's locale threading lands, dates will format correctly in all locales automatically via `Intl`.
+
+Verified directly against Node's `Intl` (same engine Next.js runs on) for all nine locale codes, including the CJK/Cyrillic batch where format conventions differ most from `en`:
+
+| locale | `{ year: 'numeric', month: 'long', day: 'numeric' }` |
+| --- | --- |
+| `en` | August 7, 2026 |
+| `pt` | 7 de agosto de 2026 |
+| `es` | 7 de agosto de 2026 |
+| `it` | 7 agosto 2026 |
+| `fr` | 7 août 2026 |
+| `de` | 7. August 2026 |
+| `zh` | 2026年8月7日 |
+| `ru` | 7 августа 2026 г. |
+| `ja` | 2026年8月7日 |
+
+No date-formatting code changes were needed for `zh`/`ru`/`ja` — `Intl` produces the correct native convention (Chinese/Japanese year-month-day with no separators, Russian genitive month form) purely from passing the plain locale string through.
 
 ## 8. Legacy `moment` locale mapping
 
-`mapLocaleToMoment` (`src/utils/index.ts:61-77`) and `setLocale` are dead code from an earlier version (only referenced by tests, not by any live component per `CLAUDE.md`'s note on orphaned legacy components). No action needed unless `Timeline.tsx` or similar gets revived — the mapping already covers `es`/`it`/`fr`/`de`.
+`mapLocaleToMoment` (`src/utils/index.ts:61-77`) and `setLocale` are dead code from an earlier version (only referenced by tests, not by any live component per `CLAUDE.md`'s note on orphaned legacy components). No action needed unless `Timeline.tsx` or similar gets revived — the mapping already covered `es`/`it`/`fr`/`de`/`ja`/`zh`; `ru` was added to close the one gap for parity.
 
 ## 9. Tests
 

@@ -10,6 +10,9 @@ module.exports = {
       'it', // Italian
       'fr', // French
       'de', // German
+      'zh', // Chinese (Simplified)
+      'ru', // Russian
+      'ja', // Japanese
     ],
     localeDetection: true,
     reloadOnPrerender: process.env.NODE_ENV === 'development',

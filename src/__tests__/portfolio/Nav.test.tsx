@@ -111,7 +111,7 @@ describe('Nav', () => {
       </ThemeProvider>
     );
     fireEvent.click(screen.getAllByLabelText('Change language')[0]!);
-    ['en', 'pt', 'es', 'it', 'fr', 'de'].forEach((code) => {
+    ['en', 'pt', 'es', 'it', 'fr', 'de', 'zh', 'ru', 'ja'].forEach((code) => {
       expect(screen.getAllByText(code).length).toBeGreaterThan(0);
     });
   });
