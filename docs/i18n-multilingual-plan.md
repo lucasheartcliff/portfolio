@@ -70,6 +70,8 @@ No date-formatting code changes were needed for `zh`/`ru`/`ja`/`ko` — `Intl` p
 - Add a small test/script (see step 3) asserting all locale JSON files have matching key sets.
 - Cypress E2E: add/extend a locale-switch flow test (currently none reference `/pt` or `/en` per repo scan) covering switching to at least one new locale and asserting URL + a translated string changes.
 
+> **Done:** `cypress/e2e/LanguageSwitcher.cy.ts` covers this — dropdown lists all 10 locales, desktop switch flow (URL + translated nav link, including the non-Latin-script `ja` locale), and the mobile drawer's upward-opening dropdown. `Navigation.cy.ts`/`SeoMetadata.cy.ts` were pure starter-template boilerplate referencing a nonexistent `/about` route and were rewritten against the real app in the same pass. Every assertion in all three specs was verified against a live dev server via Playwright (Cypress's own browser binary couldn't be downloaded in the sandboxed environment this work ran in — its CDN is network-blocked). That verification caught and fixed a real bug: the homepage's meta description was always the English bio regardless of locale (`profile.introductionBio` passed to `Meta` without going through `t()`, even though a matching translated string already existed under that exact English text as the key in every locale's `common.json`).
+
 ## 10. Rollout
 
 1. Land config + empty/machine-translated JSON files behind the existing branch, verify build (`npm run build`) generates all `/en /pt /es /it /fr /de` static paths.
