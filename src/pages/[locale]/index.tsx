@@ -110,7 +110,7 @@ const Index = () => {
     <>
       <Meta
         title={name}
-        description={profile.introductionBio}
+        description={t(profile.introductionBio)}
         locale={locale}
       />
       <Head>
