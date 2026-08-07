@@ -13,6 +13,7 @@ module.exports = {
       'zh', // Chinese (Simplified)
       'ru', // Russian
       'ja', // Japanese
+      'ko', // Korean
     ],
     localeDetection: true,
     reloadOnPrerender: process.env.NODE_ENV === 'development',
