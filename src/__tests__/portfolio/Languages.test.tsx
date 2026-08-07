@@ -25,4 +25,11 @@ describe('LanguagesSection', () => {
     expect(screen.getAllByText('Java').length).toBeGreaterThan(0);
     expect(screen.getByText(/6,?500/)).toBeInTheDocument();
   });
+
+  it('formats the per-language time with translated unit labels', () => {
+    render(<LanguagesSection data={data} />);
+    // 4000h and 2500h are both over a year (2080h/yr), so the "years" key
+    // (translated, not the hardcoded "yr") should back the displayed unit.
+    expect(screen.getAllByText(/years$/).length).toBeGreaterThan(0);
+  });
 });

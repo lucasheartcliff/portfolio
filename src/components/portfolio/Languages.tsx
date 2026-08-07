@@ -9,11 +9,11 @@ export interface LanguageDatum {
   color: string;
 }
 
-const formatHours = (h: number) => {
+const formatHours = (h: number, yearLabel: string, monthLabel: string) => {
   const yrs = h / (40 * 52);
-  if (yrs >= 1) return `${yrs.toFixed(1)} yr`;
+  if (yrs >= 1) return `${yrs.toFixed(1)} ${yearLabel}`;
   const mo = h / (40 * 4.33);
-  return `${mo.toFixed(0)} mo`;
+  return `${mo.toFixed(0)} ${monthLabel}`;
 };
 
 const DonutChart = ({
@@ -257,7 +257,7 @@ export default function LanguagesSection({
                               {Math.round(l.hours).toLocaleString()}h
                             </span>
                             <span className="min-w-[3.5em] text-right text-soft">
-                              {formatHours(l.hours)}
+                              {formatHours(l.hours, t('years'), t('months'))}
                             </span>
                           </div>
                         </div>
