@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
@@ -35,6 +36,8 @@ function fetchJson(url: string) {
 
 const Index = () => {
   const { t } = useTranslation('common');
+  const router = useRouter();
+  const locale = (router.query.locale as string) || 'en';
   const { theme } = useTheme();
   const [languages, setLanguages] = useState<LanguageDatum[]>([]);
   const [projects, setProjects] = useState<ProjectDatum[]>([]);
@@ -105,7 +108,11 @@ const Index = () => {
 
   return (
     <>
-      <Meta title={name} description={profile.introductionBio} locale="en" />
+      <Meta
+        title={name}
+        description={profile.introductionBio}
+        locale={locale}
+      />
       <Head>
         <script
           type="application/ld+json"

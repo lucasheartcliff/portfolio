@@ -6,6 +6,10 @@ module.exports = {
     locales: [
       'pt', // Portuguese (Brazil)
       'en', // English (USA)
+      'es', // Spanish
+      'it', // Italian
+      'fr', // French
+      'de', // German
     ],
     localeDetection: true,
     reloadOnPrerender: process.env.NODE_ENV === 'development',

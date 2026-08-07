@@ -96,10 +96,23 @@ describe('Nav', () => {
           <Nav />
         </ThemeProvider>
       );
+      fireEvent.click(screen.getAllByLabelText('Change language')[0]!);
       fireEvent.click(screen.getAllByText('pt')[0]!);
       expect(window.location.assign).toHaveBeenCalledWith('/pt');
     } finally {
       window.location = original;
     }
+  });
+
+  it('lists every supported locale in the language dropdown', () => {
+    render(
+      <ThemeProvider>
+        <Nav />
+      </ThemeProvider>
+    );
+    fireEvent.click(screen.getAllByLabelText('Change language')[0]!);
+    ['en', 'pt', 'es', 'it', 'fr', 'de'].forEach((code) => {
+      expect(screen.getAllByText(code).length).toBeGreaterThan(0);
+    });
   });
 });
