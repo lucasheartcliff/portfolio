@@ -1,45 +1,46 @@
 describe('Navigation', () => {
-  describe('Static pages', () => {
-    it('should navigate to the about page', () => {
-      // Start from the index page
-      cy.visit('/');
+  describe('Homepage', () => {
+    it('renders the hero heading and primary nav', () => {
+      cy.visit('/en');
 
-      // The index page should contain an h1
-      cy.findByRole('heading', {
-        name: 'Boilerplate code for your Nextjs project with Tailwind CSS',
-      });
-
-      // Find a link containing "About" text and click it
-      cy.findByRole('link', { name: 'About' }).click();
-
-      // The new url should include "/about"
-      cy.url().should('include', '/about');
-
-      // The new page should contain two "lorem ipsum" paragraphs
-      cy.findAllByText('Lorem ipsum dolor sit amet', { exact: false }).should(
-        'have.length',
-        2
+      cy.findByRole('heading', { level: 1 }).should(
+        'contain.text',
+        'Lucas Morais'
       );
+      cy.findByRole('navigation', { name: 'Primary' }).should('be.visible');
     });
 
-    it('should take screenshot of the homepage', () => {
-      cy.visit('/');
+    it('scrolls to a section when a nav link is clicked', () => {
+      cy.viewport(1280, 900);
+      cy.visit('/en');
 
-      // Wait until the page is displayed
-      cy.findByRole('heading', {
-        name: 'Boilerplate code for your Nextjs project with Tailwind CSS',
-      });
-
-      cy.percySnapshot('Homepage');
+      cy.findByRole('link', { name: 'Projects' }).click();
+      cy.url().should('include', '#projects');
+      cy.get('#projects').should('be.visible');
     });
 
-    it('should take screenshot of the About page', () => {
-      cy.visit('/about');
+    it('opens and closes the mobile menu drawer', () => {
+      cy.viewport('iphone-x');
+      cy.visit('/en');
 
-      // Wait until the page is displayed
-      cy.findByRole('link', { name: 'About' });
+      cy.findByRole('button', { name: 'Open menu' }).click();
+      cy.findByRole('dialog', { name: 'Menu' }).should('be.visible');
 
-      cy.percySnapshot('About');
+      cy.findByRole('button', { name: 'Close menu' }).click();
+      cy.findByRole('dialog', { name: 'Menu' }).should('not.exist');
+    });
+  });
+
+  describe('Article pages', () => {
+    it('shows a not-found message and keeps the brand link home for an unknown slug', () => {
+      cy.visit('/articles/this-slug-does-not-exist');
+
+      cy.findByText('Article not found.').should('be.visible');
+      cy.findByRole('link', { name: 'lucasheartcliff' }).should(
+        'have.attr',
+        'href',
+        '/'
+      );
     });
   });
 });

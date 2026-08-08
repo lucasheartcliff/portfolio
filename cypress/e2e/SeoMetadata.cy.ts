@@ -1,27 +1,34 @@
 describe('Seo metadata', () => {
-  describe('Verify SEO Metadata', () => {
-    it('should render SEO metadata on Index page', () => {
-      cy.visit('/');
+  it('renders a non-empty title and description on the homepage', () => {
+    cy.visit('/en');
 
-      // The Index page should have a page title
-      cy.title().should('not.be.empty');
+    cy.title().should('not.be.empty');
+    cy.get('head meta[name="description"]')
+      .invoke('attr', 'content')
+      .should('not.be.empty');
+  });
 
-      // The Index page should also contain a meta description for SEO
-      cy.get('head meta[name="description"]')
-        .invoke('attr', 'content')
-        .should('not.be.empty');
-    });
+  describe('locale-aware meta tags', () => {
+    const cases: [locale: string, descriptionStart: string][] = [
+      ['en', 'I am a Software Engineer'],
+      ['pt', 'Sou Engenheiro de Software'],
+      ['es', 'Soy Ingeniero de Software'],
+      ['ja', '私はフルスタック開発に強みを持つ'],
+    ];
 
-    it('should render SEO metadata on About page', () => {
-      cy.visit('/about');
+    cases.forEach(([locale, descriptionStart]) => {
+      it(`sets og:locale and a translated description on /${locale}`, () => {
+        cy.visit(`/${locale}`);
 
-      // The About page should have a page title
-      cy.title().should('not.be.empty');
-
-      // The About page should also contain a meta description for SEO
-      cy.get('head meta[name="description"]')
-        .invoke('attr', 'content')
-        .should('not.be.empty');
+        cy.get('head meta[property="og:locale"]').should(
+          'have.attr',
+          'content',
+          locale
+        );
+        cy.get('head meta[name="description"]')
+          .invoke('attr', 'content')
+          .should('include', descriptionStart);
+      });
     });
   });
 });

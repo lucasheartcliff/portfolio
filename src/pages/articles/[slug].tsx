@@ -544,6 +544,7 @@ const Related = ({
 export default function ArticlePage() {
   const router = useRouter();
   const { slug } = router.query;
+  const locale = (router.query.locale as string) || 'en';
   const { t } = useTranslation('common');
   const { theme } = useTheme();
   const [article, setArticle] = useState<DevtoArticleFull | null>(null);
@@ -628,7 +629,7 @@ export default function ArticlePage() {
       <div className="flex min-h-screen items-center justify-center">
         <p className="font-mono text-faint">{t('Loading...')}</p>
       </div>,
-      <Meta title="Loading..." description="" locale="en" />
+      <Meta title="Loading..." description="" locale={locale} />
     );
 
   if (!article)
@@ -636,12 +637,11 @@ export default function ArticlePage() {
       <div className="flex min-h-screen items-center justify-center">
         <p className="font-mono text-faint">{t('Article not found.')}</p>
       </div>,
-      <Meta title="Article Not Found" description="" locale="en" />
+      <Meta title="Article Not Found" description="" locale={locale} />
     );
 
   const tags = normalizeTags(article);
   const ogImage = article.social_image || article.cover_image;
-  const locale = (router.query.locale as string) || 'en';
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -788,7 +788,7 @@ export default function ArticlePage() {
     <Meta
       title={article.title}
       description={article.description}
-      locale="en"
+      locale={locale}
       canonical={article.canonical_url}
       image={ogImage || undefined}
     />

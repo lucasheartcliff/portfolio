@@ -5,37 +5,109 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ACCENT } from './atoms';
 import ThemeToggle from './ThemeToggle';
 
-const LangToggle = ({ accent }: { accent: string }) => {
+const i18nextConfig = require('../../../next-i18next.config');
+
+const LOCALES: string[] = i18nextConfig.i18n.locales;
+
+const LangToggle = ({
+  accent,
+  align = 'down',
+  side = 'right',
+}: {
+  accent: string;
+  align?: 'up' | 'down';
+  side?: 'left' | 'right';
+}) => {
   const router = useRouter();
   const current = (router.query.locale as string) || 'en';
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
   // Full reload so the target locale's translations are loaded fresh — a soft
   // client transition can leave the i18n bundle stale and surface raw keys.
   const switchTo = (code: string) => {
     window.location.assign(`/${code}`);
   };
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onClickOutside = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onClickOutside);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
   return (
-    <div
-      className="ml-1 flex items-center gap-0.5 rounded-full p-0.5"
-      style={{
-        background: 'var(--toggle-bg)',
-        border: '1px solid var(--toggle-border)',
-      }}
-    >
-      {['en', 'pt'].map((code) => (
-        <button
-          key={code}
-          type="button"
-          onClick={() => switchTo(code)}
-          className="rounded-full px-2 py-1 font-mono text-[10.5px] uppercase tracking-wider transition-all"
+    <div className="relative" ref={rootRef}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label="Change language"
+        className="ml-1 flex items-center gap-1 rounded-full px-2.5 py-1.5 font-mono text-[10.5px] uppercase tracking-wider transition-colors"
+        style={{
+          background: 'var(--toggle-bg)',
+          border: '1px solid var(--toggle-border)',
+          color: accent,
+          fontWeight: 600,
+        }}
+      >
+        {current}
+        <svg
+          width="9"
+          height="9"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          style={{ transform: open ? 'rotate(180deg)' : undefined }}
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <div
+          role="listbox"
+          aria-label="Language"
+          className="glass-nav absolute z-10 flex flex-col gap-0.5 rounded-xl p-1.5"
           style={{
-            background: current === code ? `${accent}22` : 'transparent',
-            color: current === code ? accent : 'var(--text-mute)',
-            fontWeight: current === code ? 600 : 400,
+            minWidth: 92,
+            ...(align === 'up'
+              ? { bottom: 'calc(100% + 8px)' }
+              : { top: 'calc(100% + 8px)' }),
+            ...(side === 'left' ? { left: 0 } : { right: 0 }),
           }}
         >
-          {code}
-        </button>
-      ))}
+          {LOCALES.map((code) => (
+            <button
+              key={code}
+              type="button"
+              role="option"
+              aria-selected={current === code}
+              onClick={() => switchTo(code)}
+              className="rounded-lg px-2.5 py-1.5 text-left font-mono text-[10.5px] uppercase tracking-wider transition-colors"
+              style={{
+                background: current === code ? `${accent}22` : 'transparent',
+                color: current === code ? accent : 'var(--text-mute)',
+                fontWeight: current === code ? 600 : 400,
+              }}
+            >
+              {code}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -245,7 +317,7 @@ export default function Nav({ accent = ACCENT }: Props) {
               style={{ borderColor: 'var(--hairline)' }}
             >
               <div className="flex items-center gap-2">
-                <LangToggle accent={accent} />
+                <LangToggle accent={accent} align="up" side="left" />
                 <ThemeToggle />
               </div>
               <a

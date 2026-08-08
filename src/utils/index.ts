@@ -70,6 +70,7 @@ export function mapLocaleToMoment(i18nLocale: string | undefined) {
     it: 'it',
     zh: 'zh-cn',
     ar: 'ar-sa',
+    ru: 'ru',
   };
   const i = i18nLocale || 'en';
 

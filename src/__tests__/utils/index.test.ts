@@ -119,6 +119,8 @@ describe('Utils', () => {
       expect(mapLocaleToMoment('fr')).toBe('fr');
       expect(mapLocaleToMoment('zh')).toBe('zh-cn');
       expect(mapLocaleToMoment('ar')).toBe('ar-sa');
+      expect(mapLocaleToMoment('ru')).toBe('ru');
+      expect(mapLocaleToMoment('ja')).toBe('ja');
     });
 
     it('should default to en for unknown locales', () => {

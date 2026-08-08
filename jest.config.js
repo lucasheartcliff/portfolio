@@ -19,6 +19,7 @@ const customJestConfig = {
     '^@vercel/analytics/next$': '<rootDir>/__mocks__/vercelAnalytics.tsx',
   },
   setupFilesAfterEnv: ['./jest.setup.js'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/e2e/'],
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
