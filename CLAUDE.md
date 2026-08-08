@@ -13,6 +13,7 @@ npm run check-types  # TypeScript type checking (strict mode)
 npm test             # Run all Jest tests
 npm test -- --testPathPattern=ComponentName  # Run a single test file
 npm run e2e:headless # Cypress E2E tests (starts dev server automatically)
+npm run e2e:playwright # Playwright E2E tests (builds + starts a production server automatically)
 ```
 
 Commit messages follow Conventional Commits (`@commitlint/config-conventional`). Husky runs lint-staged on pre-commit and `tsc --noEmit` on pre-push.

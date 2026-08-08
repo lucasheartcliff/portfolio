@@ -41,6 +41,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "exclude": ["./out/**/*", "./node_modules/**/*", "cypress/**/*.ts"],
+  "exclude": [
+    "./out/**/*",
+    "./node_modules/**/*",
+    "cypress/**/*.ts",
+    "e2e/**/*.ts",
+    "playwright.config.ts"
+  ],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".storybook/*.ts"]
 }
