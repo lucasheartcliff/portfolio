@@ -51,16 +51,26 @@ test.describe('Language switcher — desktop nav', () => {
 test.describe('Language switcher — mobile drawer', () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test('switches locale from the drawer, opening the dropdown upward without clipping', async ({
+  test('switches locale from the drawer, opening the dropdown upward without clipping or overflowing the drawer', async ({
     page,
   }) => {
     await page.goto('/en');
     await page.getByRole('button', { name: 'Open menu' }).click();
-    await expect(page.getByRole('dialog', { name: 'Menu' })).toBeVisible();
+    const dialog = page.getByRole('dialog', { name: 'Menu' });
+    await expect(dialog).toBeVisible();
 
     await page.getByRole('button', { name: 'Change language' }).click();
+    const listbox = page.getByRole('listbox', { name: 'Language' });
     const koOption = page.getByRole('option', { name: 'ko', exact: true });
     await expect(koOption).toBeVisible();
+
+    // The toggle button sits at the drawer's left edge, so the dropdown must
+    // open toward the drawer's interior — not toward the backdrop outside it.
+    const dialogBox = await dialog.boundingBox();
+    const listboxBox = await listbox.boundingBox();
+    expect(dialogBox).not.toBeNull();
+    expect(listboxBox).not.toBeNull();
+    expect(listboxBox!.x).toBeGreaterThanOrEqual(dialogBox!.x - 1);
 
     const box = await koOption.boundingBox();
     expect(box).not.toBeNull();

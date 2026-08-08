@@ -12,9 +12,11 @@ const LOCALES: string[] = i18nextConfig.i18n.locales;
 const LangToggle = ({
   accent,
   align = 'down',
+  side = 'right',
 }: {
   accent: string;
   align?: 'up' | 'down';
+  side?: 'left' | 'right';
 }) => {
   const router = useRouter();
   const current = (router.query.locale as string) || 'en';
@@ -78,12 +80,13 @@ const LangToggle = ({
         <div
           role="listbox"
           aria-label="Language"
-          className="glass-nav absolute right-0 z-10 flex flex-col gap-0.5 rounded-xl p-1.5"
+          className="glass-nav absolute z-10 flex flex-col gap-0.5 rounded-xl p-1.5"
           style={{
             minWidth: 92,
             ...(align === 'up'
               ? { bottom: 'calc(100% + 8px)' }
               : { top: 'calc(100% + 8px)' }),
+            ...(side === 'left' ? { left: 0 } : { right: 0 }),
           }}
         >
           {LOCALES.map((code) => (
@@ -314,7 +317,7 @@ export default function Nav({ accent = ACCENT }: Props) {
               style={{ borderColor: 'var(--hairline)' }}
             >
               <div className="flex items-center gap-2">
-                <LangToggle accent={accent} align="up" />
+                <LangToggle accent={accent} align="up" side="left" />
                 <ThemeToggle />
               </div>
               <a

@@ -44,14 +44,26 @@ describe('Language switcher', () => {
       cy.viewport('iphone-x');
     });
 
-    it('switches locale from the drawer, opening the dropdown upward without clipping', () => {
+    it('switches locale from the drawer, opening the dropdown upward without clipping or overflowing the drawer', () => {
       cy.visit('/en');
       cy.findByRole('button', { name: 'Open menu' }).click();
       cy.findByRole('dialog', { name: 'Menu' }).should('be.visible');
 
       cy.findByRole('button', { name: 'Change language' }).click();
-      cy.findByRole('option', { name: 'ko' }).should('be.visible').click();
+      cy.findByRole('option', { name: 'ko' }).should('be.visible');
 
+      // The toggle button sits at the drawer's left edge, so the dropdown
+      // must open toward the drawer's interior — not toward the backdrop
+      // outside it.
+      cy.findByRole('dialog', { name: 'Menu' }).then(($dialog) => {
+        const dialogLeft = $dialog[0]!.getBoundingClientRect().left;
+        cy.findByRole('listbox', { name: 'Language' }).then(($listbox) => {
+          const listboxLeft = $listbox[0]!.getBoundingClientRect().left;
+          expect(listboxLeft).to.be.at.least(dialogLeft - 1);
+        });
+      });
+
+      cy.findByRole('option', { name: 'ko' }).click();
       cy.url().should('include', '/ko');
     });
   });
