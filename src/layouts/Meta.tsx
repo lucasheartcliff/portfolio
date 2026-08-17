@@ -5,18 +5,35 @@ import { NextSeo } from 'next-seo';
 import profile from '@/public/assets/jsons/profile.json';
 import { getEnvProperties } from '@/utils';
 
+const i18nextConfig = require('../../next-i18next.config');
+
 type IMetaProps = {
   title: string;
   description: string;
   locale: string;
   canonical?: string;
   image?: string;
+  showLanguageAlternates?: boolean;
 };
 
 const Meta = (props: IMetaProps) => {
   const router = useRouter();
   const { url } = getEnvProperties();
-  const canonicalUrl = props.canonical || url;
+  const canonicalUrl =
+    props.canonical || (props.locale ? `${url}/${props.locale}/` : url);
+
+  const languageAlternates = props.showLanguageAlternates
+    ? [
+        ...i18nextConfig.i18n.locales.map((loc: string) => ({
+          hrefLang: loc,
+          href: `${url}/${loc}/`,
+        })),
+        {
+          hrefLang: 'x-default',
+          href: `${url}/${i18nextConfig.i18n.defaultLocale}/`,
+        },
+      ]
+    : undefined;
 
   return (
     <>
@@ -67,6 +84,10 @@ const Meta = (props: IMetaProps) => {
         title={props.title}
         description={props.description}
         canonical={canonicalUrl}
+        languageAlternates={languageAlternates}
+        twitter={{
+          cardType: 'summary_large_image',
+        }}
         openGraph={{
           profile: {
             firstName: profile.firstName,

@@ -13,6 +13,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { Meta } from '@/layouts/Meta';
 import type { DevtoArticleFull, DevtoArticleIndex } from '@/services/devto';
 import { normalizeTags } from '@/services/devto';
+import { getEnvProperties } from '@/utils';
 
 const USERNAME = process.env.NEXT_PUBLIC_DEVTO_USERNAME || 'lucasheartcliff';
 
@@ -101,7 +102,7 @@ const CodeBlock = ({ children }: { children?: React.ReactNode }) => {
 };
 
 const markdownComponents = {
-  h1: heading(1),
+  h1: heading(2),
   h2: heading(2),
   h3: heading(3),
   h4: heading(4),
@@ -642,6 +643,7 @@ export default function ArticlePage() {
 
   const tags = normalizeTags(article);
   const ogImage = article.social_image || article.cover_image;
+  const { url } = getEnvProperties();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -655,6 +657,30 @@ export default function ArticlePage() {
       url: `https://dev.to/${USERNAME}`,
     },
   };
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${url}/${locale}/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Articles',
+        item: `${url}/${locale}/#articles`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: article.title,
+        item: article.canonical_url,
+      },
+    ],
+  };
 
   return shell(
     <>
@@ -663,6 +689,11 @@ export default function ArticlePage() {
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
       </Head>
 
