@@ -11,6 +11,18 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# NEXT_PUBLIC_* vars are inlined into the client bundle and into
+# statically-generated pages at build time, so they must be provided here —
+# setting them only at container runtime (e.g. via docker-compose env_file)
+# has no effect on already-built output.
+ARG NEXT_PUBLIC_URL=https://lucasheartcliff.com.br
+ARG NEXT_PUBLIC_ANALYTICS_ID
+ARG NEXT_PUBLIC_DEVTO_USERNAME=lucasheartcliff
+ENV NEXT_PUBLIC_URL=$NEXT_PUBLIC_URL
+ENV NEXT_PUBLIC_ANALYTICS_ID=$NEXT_PUBLIC_ANALYTICS_ID
+ENV NEXT_PUBLIC_DEVTO_USERNAME=$NEXT_PUBLIC_DEVTO_USERNAME
+
 RUN yarn build
 
 # Stage 3: Runner
