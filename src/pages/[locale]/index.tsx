@@ -112,6 +112,7 @@ const Index = () => {
         title={name}
         description={t(profile.introductionBio)}
         locale={locale}
+        showLanguageAlternates
       />
       <Head>
         <script
@@ -128,7 +129,15 @@ const Index = () => {
               sameAs: [
                 `https://github.com/${username}`,
                 `https://linkedin.com/in/${username}`,
+                `https://dev.to/${username}`,
               ],
+              knowsAbout: (profile as any).skills || [],
+              alumniOf: ((profile as any).education || []).map(
+                (edu: { title: string }) => ({
+                  '@type': 'EducationalOrganization',
+                  name: edu.title,
+                })
+              ),
             }),
           }}
         />

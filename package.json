@@ -19,7 +19,7 @@
     "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
     "e2e:playwright": "playwright test",
     "prepare": "husky install",
-    "postbuild": "next-sitemap",
+    "postbuild": "next-sitemap && node scripts/generate-llms-txt.js",
     "lighthouse": "run-s build lighthouse:ci",
     "lighthouse:ci": "run-s lighthouse:desktop lighthouse:mobile",
     "lighthouse:desktop": "lhci autorun --config=lighthouserc.desktop.js",
