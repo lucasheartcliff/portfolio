@@ -18,7 +18,8 @@ type IMetaProps = {
 
 const Meta = (props: IMetaProps) => {
   const router = useRouter();
-  const { url } = getEnvProperties();
+  const { url: rawUrl } = getEnvProperties();
+  const url = rawUrl.replace(/\/+$/, '');
   const canonicalUrl =
     props.canonical || (props.locale ? `${url}/${props.locale}/` : url);
 

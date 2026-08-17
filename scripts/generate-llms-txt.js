@@ -4,8 +4,9 @@ const path = require('path');
 
 const profile = require('../public/assets/jsons/profile.json');
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_URL || 'https://lucasheartcliff.com.br';
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_URL || 'https://lucasheartcliff.com.br'
+).replace(/\/+$/, '');
 
 function buildLlmsTxt() {
   const name = `${profile.firstName} ${profile.lastName}`.trim();
