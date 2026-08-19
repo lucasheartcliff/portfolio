@@ -62,6 +62,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL || 'https://lucasheartcliff.com.br' }}
+            NEXT_PUBLIC_ANALYTICS_ID=${{ vars.NEXT_PUBLIC_ANALYTICS_ID }}
+            NEXT_PUBLIC_DEVTO_USERNAME=${{ vars.NEXT_PUBLIC_DEVTO_USERNAME || 'lucasheartcliff' }}
 
   deploy:
     needs: build-and-push

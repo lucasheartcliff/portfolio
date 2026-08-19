@@ -34,7 +34,8 @@ const AppShell = ({ Component, pageProps }: AppProps) => {
       }}
     >
       <div className={fontVariables}>
-        {loading ? <LoadingScreen /> : <Component {...pageProps} />}
+        <Component {...pageProps} />
+        {loading && <LoadingScreen />}
         <Analytics />
         {googleAnalytics && <GoogleAnalytics gaId={googleAnalytics} />}
       </div>
