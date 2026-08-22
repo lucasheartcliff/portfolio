@@ -51,6 +51,7 @@
     {
       "title": "Intelie",
       "startDate": "2020-02-01T00:00:00.000Z",
+      "description": "Acted as interim technical lead during manager's leave, owning corporate stakeholder relationships and co-driving product roadmap prioritization alongside senior leadership — while sustaining full senior engineering responsibilities.\nDrove the client-reported ticket backlog from 24 to 3 open issues within weeks, restoring SLA health through the leadership transition.\nServe as primary technical point of contact for a flagship enterprise client in the oil & gas sector, running recurring discovery sessions to translate operational requirements into engineering solutions.\nRe-architected server-side call orchestration, cutting active instances from 2,000+ to under 150 while preserving full functional coverage — eliminating server overload risk and infrastructure overhead.\nLed standardization of WITSML, an industry-standard oil & gas data-interchange protocol, aligning data ingestion with sector-wide interoperability requirements.",
       "techTags": [
         "Java",
         "Spring Boot",
@@ -59,7 +60,8 @@
         "Kubernetes",
         "React",
         "TypeScript",
-        "Python"
+        "Python",
+        "WITSML"
       ]
     },
     {

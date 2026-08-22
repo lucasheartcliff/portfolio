@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "Je suis Ingénieur Logiciel avec une solide expérience en développement Full-Stack, spécialisé en Architecture Backend et en scalabilité des systèmes. Je suis passionné par la modernisation des systèmes existants et la conception de solutions qui favorisent l'efficacité opérationnelle.",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "Je suis Ingénieur Logiciel spécialisé en développement Full-Stack et en Architecture des Systèmes, avec une solide expérience depuis 2017 dans le développement de solutions évolutives et hautes performances pour les secteurs du pétrole & gaz et de la logistique.\nJ'ai une expertise avancée en Java (Spring Boot), JavaScript/TypeScript (Node, React) et SQL. Mon expérience inclut la modernisation de systèmes existants et la conception d'architectures de microservices, en tirant parti de technologies comme Docker, Kubernetes et PostgreSQL pour construire des environnements robustes et efficaces.",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "Ingénieur Logiciel Confirmé",
   "Senior Software Engineer": "Ingénieur Logiciel Senior",
   "Junior Software Engineer": "Ingénieur Logiciel Junior",
@@ -141,7 +141,7 @@
     "viewProjects": "Voir les Projets →",
     "downloadCV": "Télécharger le CV",
     "scroll": "DÉFILER",
-    "now": "Actuellement : je construis des systèmes évolutifs @ Intelie by Viasat"
+    "now": "Actuellement : je construis des systèmes évolutifs @ Intelie"
   },
   "role": {
     "0": "Architecte Backend",

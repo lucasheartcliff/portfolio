@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "저는 풀스택 개발에 대한 탄탄한 배경을 갖춘 소프트웨어 엔지니어로, 백엔드 아키텍처와 시스템 확장성을 전문으로 합니다. 레거시 시스템을 현대화하고 운영 효율성을 높이는 솔루션을 설계하는 데 열정을 가지고 있습니다.",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "저는 풀스택 개발과 시스템 아키텍처를 전문으로 하는 소프트웨어 엔지니어로, 2017년부터 석유·가스 및 물류 분야를 위한 확장 가능하고 고성능의 솔루션을 개발해 온 확실한 경험을 가지고 있습니다.\nJava(Spring Boot), JavaScript/TypeScript(Node, React), SQL에 대한 고급 전문 지식을 보유하고 있습니다. 레거시 시스템 현대화와 마이크로서비스 아키텍처 설계 경험이 있으며, Docker, Kubernetes, PostgreSQL 등의 기술을 활용해 견고하고 효율적인 환경을 구축해 왔습니다.",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "중급 소프트웨어 엔지니어",
   "Senior Software Engineer": "시니어 소프트웨어 엔지니어",
   "Junior Software Engineer": "주니어 소프트웨어 엔지니어",
@@ -141,7 +141,7 @@
     "viewProjects": "프로젝트 보기 →",
     "downloadCV": "이력서 다운로드",
     "scroll": "스크롤",
-    "now": "현재: Intelie by Viasat에서 확장 가능한 시스템 구축 중"
+    "now": "현재: Intelie에서 확장 가능한 시스템 구축 중"
   },
   "role": {
     "0": "백엔드 아키텍트",
