@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "Sou Engenheiro de Software com sólida formação em desenvolvimento Full-Stack, especializado em Arquitetura de Backend e escalabilidade de sistemas. Sou apaixonado por modernizar sistemas legados e projetar soluções que impulsionem a eficiência operacional.",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "Sou Engenheiro de Software especializado em desenvolvimento Full-Stack e Arquitetura de Sistemas, com sólida experiência desde 2017 no desenvolvimento de soluções escaláveis e de alto desempenho para os setores de óleo e gás e logística.\nTenho ampla expertise em Java (Spring Boot), JavaScript/TypeScript (Node, React) e SQL. Minha experiência inclui a modernização de sistemas legados e o design de arquiteturas de microsserviços, utilizando tecnologias como Docker, Kubernetes e PostgreSQL para construir ambientes robustos e eficientes.",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "Engenheiro de Software Pleno",
   "Senior Software Engineer": "Engenheiro de Software Sênior",
   "Junior Software Engineer": "Engenheiro de Software Júnior",
@@ -141,7 +141,7 @@
     "viewProjects": "Ver projetos →",
     "downloadCV": "Baixar CV",
     "scroll": "ROLE",
-    "now": "Agora: construindo sistemas escaláveis @ Intelie by Viasat"
+    "now": "Agora: construindo sistemas escaláveis @ Intelie"
   },
   "role": {
     "0": "Arquiteto Backend",

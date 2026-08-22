@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "Я инженер-программист с серьёзным опытом в full-stack разработке, специализирующийся на бэкенд-архитектуре и масштабируемости систем. Я увлечён модернизацией устаревших систем и проектированием решений, повышающих операционную эффективность.",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "Я инженер-программист, специализирующийся на full-stack разработке и архитектуре систем, с солидным опытом с 2017 года в разработке масштабируемых высокопроизводительных решений для нефтегазового и логистического секторов.\nЯ обладаю продвинутой экспертизой в Java (Spring Boot), JavaScript/TypeScript (Node, React) и SQL. Мой опыт включает модернизацию устаревших систем и проектирование микросервисных архитектур с использованием таких технологий, как Docker, Kubernetes и PostgreSQL, для создания надёжных и эффективных сред.",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "Инженер-программист среднего уровня",
   "Senior Software Engineer": "Старший инженер-программист",
   "Junior Software Engineer": "Младший инженер-программист",
@@ -141,7 +141,7 @@
     "viewProjects": "Смотреть проекты →",
     "downloadCV": "Скачать резюме",
     "scroll": "ПРОКРУТИТЕ",
-    "now": "Сейчас: создаю масштабируемые системы @ Intelie by Viasat"
+    "now": "Сейчас: создаю масштабируемые системы @ Intelie"
   },
   "role": {
     "0": "Бэкенд-архитектор",

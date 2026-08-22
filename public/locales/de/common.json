@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "Ich bin Software-Ingenieur mit fundierter Erfahrung in der Full-Stack-Entwicklung, spezialisiert auf Backend-Architektur und Systemskalierbarkeit. Ich bin leidenschaftlich daran interessiert, Altsysteme zu modernisieren und Lösungen zu entwerfen, die die operative Effizienz steigern.",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "Ich bin Software-Ingenieur, spezialisiert auf Full-Stack-Entwicklung und Systemarchitektur, mit fundierter Erfahrung seit 2017 in der Entwicklung skalierbarer, leistungsstarker Lösungen für die Öl- und Gas- sowie Logistikbranche.\nIch verfüge über fortgeschrittene Kenntnisse in Java (Spring Boot), JavaScript/TypeScript (Node, React) und SQL. Meine Erfahrung umfasst die Modernisierung von Altsystemen und den Entwurf von Microservices-Architekturen unter Einsatz von Technologien wie Docker, Kubernetes und PostgreSQL, um robuste und effiziente Umgebungen zu schaffen.",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "Software-Ingenieur (Mid-Level)",
   "Senior Software Engineer": "Senior Software-Ingenieur",
   "Junior Software Engineer": "Junior Software-Ingenieur",
@@ -141,7 +141,7 @@
     "viewProjects": "Projekte ansehen →",
     "downloadCV": "Lebenslauf herunterladen",
     "scroll": "SCROLLEN",
-    "now": "Jetzt: baue skalierbare Systeme @ Intelie by Viasat"
+    "now": "Jetzt: baue skalierbare Systeme @ Intelie"
   },
   "role": {
     "0": "Backend-Architekt",

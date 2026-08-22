@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "我是一名软件工程师，拥有扎实的全栈开发背景，专注于后端架构和系统可扩展性。我热衷于现代化遗留系统，并设计能够提升运营效率的解决方案。",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "我是一名软件工程师，专注于全栈开发和系统架构，自2017年以来一直在为石油天然气和物流行业开发可扩展的高性能解决方案。\n我在 Java（Spring Boot）、JavaScript/TypeScript（Node、React）和 SQL 方面拥有丰富的专业知识。我的经验包括现代化遗留系统和设计微服务架构，利用 Docker、Kubernetes 和 PostgreSQL 等技术构建稳健高效的环境。",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "中级软件工程师",
   "Senior Software Engineer": "高级软件工程师",
   "Junior Software Engineer": "初级软件工程师",
@@ -141,7 +141,7 @@
     "viewProjects": "查看项目 →",
     "downloadCV": "下载简历",
     "scroll": "滚动",
-    "now": "现在：在 Intelie by Viasat 构建可扩展系统"
+    "now": "现在：在 Intelie 构建可扩展系统"
   },
   "role": {
     "0": "后端架构师",

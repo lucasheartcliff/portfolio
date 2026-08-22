@@ -1,7 +1,7 @@
 {
   "I am a Software Engineer with a strong background in Full-Stack development, specializing in Backend Architecture and system scalability. I am passionate about modernizing legacy systems and designing solutions that drive operational efficiency.": "私はフルスタック開発に強みを持つソフトウェアエンジニアで、バックエンドアーキテクチャとシステムのスケーラビリティを専門としています。レガシーシステムの近代化や、業務効率を高めるソリューションの設計に情熱を注いでいます。",
   "I am a Software Engineer specializing in Full-Stack development and System Architecture, with solid experience since 2017 developing scalable, high-performance solutions for the oil & gas and logistics sectors.\nI have advanced expertise in Java (Spring Boot), JavaScript/TypeScript (Node, React), and SQL. My experience includes modernizing legacy systems and designing microservices architectures, leveraging technologies like Docker, Kubernetes, and PostgreSQL to build robust and efficient environments.": "私はフルスタック開発とシステムアーキテクチャを専門とするソフトウェアエンジニアで、2017年から石油・ガスおよび物流分野向けにスケーラブルで高性能なソリューションを開発してきた確かな経験があります。\nJava（Spring Boot）、JavaScript/TypeScript（Node、React）、SQLに関する高度な専門知識を持っています。レガシーシステムの近代化やマイクロサービスアーキテクチャの設計にも携わり、Docker、Kubernetes、PostgreSQLなどの技術を活用して堅牢で効率的な環境を構築してきました。",
-  "Intelie by Viasat": "Intelie by Viasat",
+  "Intelie": "Intelie",
   "Mid-level Software Engineer": "ミドルレベルソフトウェアエンジニア",
   "Senior Software Engineer": "シニアソフトウェアエンジニア",
   "Junior Software Engineer": "ジュニアソフトウェアエンジニア",
@@ -141,7 +141,7 @@
     "viewProjects": "プロジェクトを見る →",
     "downloadCV": "履歴書をダウンロード",
     "scroll": "スクロール",
-    "now": "現在：Intelie by Viasatでスケーラブルなシステムを構築中"
+    "now": "現在：Intelieでスケーラブルなシステムを構築中"
   },
   "role": {
     "0": "バックエンドアーキテクト",
