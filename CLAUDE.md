@@ -36,6 +36,8 @@ Commit messages follow Conventional Commits (`@commitlint/config-conventional`).
 - `/api/wakatime/[stat]` — WakaTime stats proxy (languages, coding-time, activity, editors, code-activity)
 - `/api/contact` — Email via nodemailer with rate limiting (1/min per IP)
 
+**Performance constraints (Firefox)**: do not put `backdrop-filter` on `.glass-card` (15 instances over the animated background re-blur every frame in Firefox); only `.glass-nav` keeps a real blur. Orbs in `ReactiveBackground` must animate `translate()` only and must not sit under an `opacity` wrapper. Dot-grid helpers live in `ReactiveBackground/dots.ts`. Guarded by `src/__tests__/styles/glass-performance.test.ts`.
+
 **Animations**: `Reveal` (in `atoms.tsx`) wraps sections with an IntersectionObserver-triggered fade+slide-up. `RotatingRole` (in `Hero.tsx`) animates rotating role titles.
 
 **Legacy code**: `src/components/` also has a handful of top-level components (`ProjectCard`, `ArticleCard`, `Navbar`, `Timeline`, etc.) from an earlier version of the site. Before touching one, confirm it's actually imported from a page — several are orphaned and never render. `ImageLightbox`, `LoadingScreen`, and `ReactiveBackground` are the ones still live outside of `portfolio/*`.
