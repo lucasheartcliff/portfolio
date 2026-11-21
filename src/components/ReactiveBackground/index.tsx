@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-import { Bucket, buildBuckets, effectiveDensity, Rgb } from './dots';
+import type { Bucket, Rgb } from './dots';
+import { buildBuckets, effectiveDensity } from './dots';
 
 interface DotGridProps {
   accent?: string;
@@ -149,6 +150,7 @@ const AmbientOrbs = ({
   };
   return (
     <div
+      data-testid="ambient-orbs"
       className="pointer-events-none fixed inset-0 overflow-hidden"
       style={{ zIndex: 0 }}
     >

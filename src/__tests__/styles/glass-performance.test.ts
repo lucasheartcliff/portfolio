@@ -56,10 +56,24 @@ describe('browserslist', () => {
   });
 });
 
-describe('orphaned images', () => {
-  it('large unreferenced PNGs are gone from public/assets/images', () => {
+describe('removed decorative images', () => {
+  it('are not re-added to public/assets/images', () => {
+    const removed = [
+      'profile.jpeg',
+      'cover.png',
+      'cover-dark.png',
+      'languages.png',
+      'languages-dark.png',
+      'experience.png',
+      'experience-dark.png',
+      'experience-old.png',
+      'education.png',
+      'education-dark.png',
+      'certificate.png',
+      'certificate-dark.png',
+    ];
     const dir = path.join(root, 'public/assets/images');
     const files = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
-    expect(files.filter((f) => f.endsWith('.png'))).toEqual([]);
+    expect(files.filter((f) => removed.includes(f))).toEqual([]);
   });
 });

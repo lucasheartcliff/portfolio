@@ -1,20 +1,21 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { TextEncoder } from 'util';
 
 import ReactiveBackground from '@/components/ReactiveBackground';
 import {
-  COLOR_BUCKETS,
   buildBuckets,
+  COLOR_BUCKETS,
   effectiveDensity,
   PHASE_BUCKETS,
 } from '@/components/ReactiveBackground/dots';
 
 describe('ReactiveBackground orbs', () => {
   it('does not put opacity on the orb group wrapper', () => {
-    const { container } = render(<ReactiveBackground intensity={0.5} />);
-    const wrapper = container.firstElementChild as HTMLElement;
-    expect(wrapper.style.opacity).toBe('');
+    render(<ReactiveBackground intensity={0.5} />);
+    const wrapper = screen.getByTestId('ambient-orbs');
+    expect(wrapper).not.toHaveStyle({ opacity: '0.5' });
+    expect(wrapper.getAttribute('style')).not.toMatch(/opacity/);
   });
 
   it('folds intensity * dim into each orb gradient and the noise layer', () => {
@@ -22,14 +23,14 @@ describe('ReactiveBackground orbs', () => {
     // server-rendered markup instead.
     global.TextEncoder = global.TextEncoder || TextEncoder;
     // eslint-disable-next-line global-require
-    const { renderToStaticMarkup } = require('react-dom/server');
-    const html = renderToStaticMarkup(
+    const { renderToStaticMarkup: toStaticHtml } = require('react-dom/server');
+    const markup = toStaticHtml(
       <ReactiveBackground intensity={0.5} dim={0.5} accent="#ff0000" />
     );
     const alpha = ((0x55 / 255) * 0.25).toFixed(3);
-    expect(html).toContain(`rgba(255, 0, 0, ${alpha})`);
-    expect(html).not.toContain('55, transparent');
-    expect(html).toContain(`opacity:${0.04 * 0.25}`);
+    expect(markup).toContain(`rgba(255, 0, 0, ${alpha})`);
+    expect(markup).not.toContain('55, transparent');
+    expect(markup).toContain(`opacity:${0.04 * 0.25}`);
   });
 });
 
