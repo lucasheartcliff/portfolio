@@ -165,42 +165,6 @@ textarea:focus {
 /* ============================================================
    ANIMATIONS
    ============================================================ */
-@keyframes orbA {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(40px, 60px);
-  }
-}
-@keyframes orbB {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-50px, 40px);
-  }
-}
-@keyframes orbC {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(30px, -40px);
-  }
-}
-.orb-anim-1 {
-  animation: orbA 22s ease-in-out infinite;
-}
-.orb-anim-2 {
-  animation: orbB 28s ease-in-out infinite;
-}
-.orb-anim-3 {
-  animation: orbC 24s ease-in-out infinite;
-}
 @keyframes blink {
   to {
     opacity: 0;
@@ -355,12 +319,6 @@ section[id] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb-anim-1,
-  .orb-anim-2,
-  .orb-anim-3 {
-    animation: none;
-  }
-
   /* Reduced motion also drops the remaining backdrop blurs for a plain
      translucent fill, which is the cheapest thing to composite. */
   .glass-nav,

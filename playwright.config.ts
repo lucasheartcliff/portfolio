@@ -1,6 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig, devices } from '@playwright/test';
 
+const PORT = process.env.PORT || '3000';
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
@@ -8,12 +10,13 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${PORT}`,
     trace: 'on-first-retry',
   },
   projects: [
     {
       name: 'chromium',
+      testIgnore: /perf\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         // Use the browser pre-installed in this environment instead of
@@ -24,6 +27,11 @@ export default defineConfig({
         },
       },
     },
+    {
+      name: 'firefox',
+      testMatch: /perf\.spec\.ts/,
+      use: { ...devices['Desktop Firefox'] },
+    },
   ],
   webServer: {
     // Run against a production build rather than `next dev`: the dev
@@ -31,7 +39,7 @@ export default defineConfig({
     // <nextjs-portal> build-activity indicator that can intercept clicks
     // mid-navigation, causing flaky interactions in these tests.
     command: 'npm run build && npm run start',
-    url: 'http://localhost:3000',
+    url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },

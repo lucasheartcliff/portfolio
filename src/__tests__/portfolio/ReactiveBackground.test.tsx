@@ -34,6 +34,24 @@ describe('ReactiveBackground orbs', () => {
   });
 });
 
+describe('ReactiveBackground perpetual repaint (#79)', () => {
+  it('never starts a requestAnimationFrame loop', () => {
+    const raf = jest.spyOn(window, 'requestAnimationFrame');
+    render(<ReactiveBackground />);
+    expect(raf).not.toHaveBeenCalled();
+    raf.mockRestore();
+  });
+
+  it('orbs use no filter blur or will-change layers', () => {
+    render(<ReactiveBackground />);
+    const orbs = screen.getByTestId('ambient-orbs');
+    const style = orbs.innerHTML;
+    expect(style).not.toMatch(/blur\(/);
+    expect(style).not.toMatch(/will-change/);
+    expect(style).not.toMatch(/orb-anim/);
+  });
+});
+
 describe('dot grid helpers', () => {
   it('keeps the dot count bounded on large viewports', () => {
     const count = (w: number, h: number) => {

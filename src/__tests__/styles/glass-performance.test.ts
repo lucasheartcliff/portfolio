@@ -30,15 +30,9 @@ describe('glass surfaces (Firefox compositing fix, #77)', () => {
     expect(rule('.glass-nav')).toMatch(/backdrop-filter:\s*blur/);
   });
 
-  it('orb keyframes only translate, never scale', () => {
-    ['orbA', 'orbB', 'orbC'].forEach((name) => {
-      const block = new RegExp(
-        `@keyframes ${name}\\s*\\{[\\s\\S]*?\\n\\}`
-      ).exec(css);
-      expect(block).not.toBeNull();
-      expect(block![0]).toMatch(/translate\(/);
-      expect(block![0]).not.toMatch(/scale\(/);
-    });
+  it('has no infinite orb animations (perpetual repaint on Firefox, #79)', () => {
+    expect(css).not.toMatch(/@keyframes orb[ABC]/);
+    expect(css).not.toMatch(/\.orb-anim/);
   });
 
   it('prefers-reduced-motion drops the remaining backdrop-filters', () => {

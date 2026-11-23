@@ -28,7 +28,6 @@ const ReactiveDotGrid = ({
   dim = 1,
 }: DotGridProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rafRef = useRef(0);
   const bucketsRef = useRef<{ bucket: Bucket; path: Path2D }[]>([]);
   const sizeRef = useRef({ w: 0, h: 0, dpr: 1 });
 
@@ -70,15 +69,15 @@ const ReactiveDotGrid = ({
       buildDots();
     };
 
-    resize();
-    window.addEventListener('resize', resize);
-
-    const draw = (time: number) => {
+    // Static render: the old "breathing" sine (1.2 rad/s) was nearly
+    // imperceptible but cost a full-viewport clear + fills every 33ms forever,
+    // and every canvas repaint made Firefox re-blend the layers beneath it.
+    // Per-bucket phase offsets are kept, so the grid still has varied alpha.
+    const draw = () => {
       const { w, h } = sizeRef.current;
       ctx.clearRect(0, 0, w, h);
-
       bucketsRef.current.forEach(({ bucket, path }) => {
-        const breathe = Math.sin(time * 1.2 + bucket.phase) * 0.5 + 0.5;
+        const breathe = Math.sin(bucket.phase) * 0.5 + 0.5;
         ctx.globalAlpha = Math.min(
           1,
           BASE_ALPHA * dim * (0.55 + breathe * 0.45)
@@ -89,38 +88,15 @@ const ReactiveDotGrid = ({
       ctx.globalAlpha = 1;
     };
 
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    if (reduceMotion) {
-      // Static render only: respects the user's preference and skips the
-      // render loop entirely rather than just holding it at a low rate.
-      draw(0);
-      return () => window.removeEventListener('resize', resize);
-    }
-
-    // The breathing effect is a slow sine wave — redrawing the dot grid at a
-    // throttled ~30fps instead of a full 60fps halves this loop's main-thread
-    // cost (canvas 2D drawing isn't compositor-offloaded like CSS transforms
-    // are) without a perceptible difference, which matters most while
-    // scrolling: this fixed, full-viewport canvas competes with the
-    // browser's scroll work on the same thread every frame it redraws.
-    const FRAME_INTERVAL = 1000 / 30;
-    let lastDraw = 0;
-    const tick = (t: number) => {
-      if (t - lastDraw >= FRAME_INTERVAL) {
-        lastDraw = t;
-        draw(t * 0.001);
-      }
-      rafRef.current = requestAnimationFrame(tick);
+    const onResize = () => {
+      resize();
+      draw();
     };
-    rafRef.current = requestAnimationFrame(tick);
 
-    return () => {
-      cancelAnimationFrame(rafRef.current);
-      window.removeEventListener('resize', resize);
-    };
+    resize();
+    draw();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, [accent, accentB, density, dim]);
 
   return (
@@ -156,18 +132,16 @@ const AmbientOrbs = ({
     >
       {/*
       No opacity on this wrapper: group opacity forces a single offscreen
-      surface for all three blurred orbs, so intensity * dim is folded into
+      surface for all three orbs, so intensity * dim is folded into
       each orb's gradient alpha and the noise layer instead.
-      will-change promotes each orb to its own compositor layer up front
-      instead of on first transform (avoiding a jank spike when the
-      animation starts), and the blur radii are deliberately kept modest:
-      filter: blur() forces the browser to rasterize a bitmap larger than
-      the element's own bounds, and these are large (45-60vw), fixed-position,
-      continuously-animated elements — the single most expensive combination
-      to keep composited every frame, on Firefox in particular.
+      No filter: blur() and no will-change: both forced Firefox to rasterize
+      and retain large offscreen surfaces for these 45-60vw fixed orbs and
+      re-blend them under every repaint. The radial-gradient falloff already
+      provides the softness. The orbs are static: even blur-free, the
+      infinite translate keyframes cost ~4x idle fps on Firefox (11 vs 47).
     */}
       <div
-        className="orb-anim-1 absolute rounded-full"
+        className="absolute rounded-full"
         style={{
           width: '55vw',
           height: '55vw',
@@ -175,13 +149,11 @@ const AmbientOrbs = ({
           left: '-10vw',
           background: `radial-gradient(circle at 30% 30%, ${orbFill(
             palette[0]!
-          )}, transparent 65%)`,
-          filter: 'blur(45px)',
-          willChange: 'transform',
+          )}, transparent 72%)`,
         }}
       />
       <div
-        className="orb-anim-2 absolute rounded-full"
+        className="absolute rounded-full"
         style={{
           width: '60vw',
           height: '60vw',
@@ -189,13 +161,11 @@ const AmbientOrbs = ({
           right: '-20vw',
           background: `radial-gradient(circle at 50% 50%, ${orbFill(
             palette[1]!
-          )}, transparent 65%)`,
-          filter: 'blur(50px)',
-          willChange: 'transform',
+          )}, transparent 72%)`,
         }}
       />
       <div
-        className="orb-anim-3 absolute rounded-full"
+        className="absolute rounded-full"
         style={{
           width: '45vw',
           height: '45vw',
@@ -203,9 +173,7 @@ const AmbientOrbs = ({
           left: '20vw',
           background: `radial-gradient(circle at 50% 50%, ${orbFill(
             palette[2]!
-          )}, transparent 65%)`,
-          filter: 'blur(45px)',
-          willChange: 'transform',
+          )}, transparent 72%)`,
         }}
       />
       <div
@@ -228,7 +196,7 @@ interface Props {
   dim?: number;
 }
 
-/** Fixed animated background: ambient orbs + breathing dot grid + readability overlay. */
+/** Fixed animated background: ambient orbs + static dot grid + readability overlay. */
 export default function ReactiveBackground({
   accent = '#1d6df7',
   accentB = '#8b5cf6',
