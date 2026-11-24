@@ -1,0 +1,19 @@
+{
+  "name": "perf-lab",
+  "private": true,
+  "type": "module",
+  "description": "A/B benchmark of background animation approaches (issue #83). Standalone: not part of the site build.",
+  "scripts": {
+    "build": "node build.mjs",
+    "bench": "node bench.mjs"
+  },
+  "dependencies": {
+    "@firecms/neat": "1.1.1",
+    "@paper-design/shaders": "0.0.82",
+    "@playwright/test": "1.61.0",
+    "@tsparticles/engine": "4.6.0",
+    "@tsparticles/slim": "4.6.0",
+    "esbuild": "0.28.2",
+    "gradient-gl": "2.3.0"
+  }
+}

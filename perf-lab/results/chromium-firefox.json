@@ -1,0 +1,338 @@
+{
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "repeats": 3,
+  "idleMs": 5000,
+  "scrollMs": 4000,
+  "versions": {
+    "chromium": "149.0.7827.55",
+    "firefox": "151.0"
+  },
+  "sizes": {
+    "a0-main-current": {
+      "raw": 2611,
+      "gzip": 1272
+    },
+    "a1-static-pr78": {
+      "raw": 2514,
+      "gzip": 1226
+    },
+    "b1-custom-css": {
+      "raw": 2514,
+      "gzip": 1226
+    },
+    "b2-custom-webgl": {
+      "raw": 2533,
+      "gzip": 1343
+    },
+    "l1-tsparticles": {
+      "raw": 186458,
+      "gzip": 55759
+    },
+    "l2-paper-mesh": {
+      "raw": 23876,
+      "gzip": 7664
+    },
+    "l2b-paper-mesh-dpr1": {
+      "raw": 23850,
+      "gzip": 7669
+    },
+    "l3-neat": {
+      "raw": 97627,
+      "gzip": 28687
+    },
+    "l4-gradient-gl": {
+      "raw": 13269,
+      "gzip": 5560
+    },
+    "none": {
+      "raw": 61,
+      "gzip": 77
+    }
+  },
+  "errors": {},
+  "results": {
+    "chromium|a0-main-current": {
+      "idle": {
+        "fps": 11,
+        "p50": 99.9,
+        "p95": 100.1,
+        "jank100": 4
+      },
+      "scroll": {
+        "fps": 9.6,
+        "p50": 100,
+        "p95": 183.4,
+        "jank100": 11
+      }
+    },
+    "firefox|a0-main-current": {
+      "idle": {
+        "fps": 26.3,
+        "p50": 33.4,
+        "p95": 83.1,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 22.2,
+        "p50": 33.5,
+        "p95": 99.3,
+        "jank100": 3
+      }
+    },
+    "chromium|a1-static-pr78": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.7,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.7,
+        "jank100": 0
+      }
+    },
+    "firefox|a1-static-pr78": {
+      "idle": {
+        "fps": 60.2,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60.2,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      }
+    },
+    "chromium|b1-custom-css": {
+      "idle": {
+        "fps": 50,
+        "p50": 16.7,
+        "p95": 33.4,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 48.8,
+        "p50": 16.7,
+        "p95": 33.4,
+        "jank100": 0
+      }
+    },
+    "firefox|b1-custom-css": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 55.7,
+        "p50": 16.4,
+        "p95": 33.3,
+        "jank100": 0
+      }
+    },
+    "chromium|b2-custom-webgl": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.7,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 59.8,
+        "p50": 16.7,
+        "p95": 16.7,
+        "jank100": 0
+      }
+    },
+    "firefox|b2-custom-webgl": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.5,
+        "p95": 17.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 59.7,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      }
+    },
+    "chromium|l1-tsparticles": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.8,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.8,
+        "jank100": 0
+      }
+    },
+    "firefox|l1-tsparticles": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 59.5,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      }
+    },
+    "chromium|l2-paper-mesh": {
+      "idle": {
+        "fps": 4.9,
+        "p50": 216.6,
+        "p95": 216.8,
+        "jank100": 25
+      },
+      "scroll": {
+        "fps": 4.7,
+        "p50": 216.6,
+        "p95": 233.4,
+        "jank100": 19
+      }
+    },
+    "firefox|l2-paper-mesh": {
+      "idle": {
+        "fps": 21.8,
+        "p50": 50,
+        "p95": 67.2,
+        "jank100": 1
+      },
+      "scroll": {
+        "fps": 22,
+        "p50": 50,
+        "p95": 66.9,
+        "jank100": 0
+      }
+    },
+    "chromium|l2b-paper-mesh-dpr1": {
+      "idle": {
+        "fps": 20.7,
+        "p50": 50,
+        "p95": 50.1,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 20.7,
+        "p50": 50,
+        "p95": 66.5,
+        "jank100": 0
+      }
+    },
+    "firefox|l2b-paper-mesh-dpr1": {
+      "idle": {
+        "fps": 56.6,
+        "p50": 16.7,
+        "p95": 33.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 56.8,
+        "p50": 16.7,
+        "p95": 32.9,
+        "jank100": 0
+      }
+    },
+    "chromium|l3-neat": {
+      "idle": {
+        "fps": 20.5,
+        "p50": 50,
+        "p95": 50.1,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 20.1,
+        "p50": 50,
+        "p95": 66.7,
+        "jank100": 0
+      }
+    },
+    "firefox|l3-neat": {
+      "idle": {
+        "fps": 30.9,
+        "p50": 33.3,
+        "p95": 50.6,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 30.4,
+        "p50": 33.3,
+        "p95": 50.6,
+        "jank100": 0
+      }
+    },
+    "chromium|l4-gradient-gl": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.8,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.8,
+        "jank100": 0
+      }
+    },
+    "firefox|l4-gradient-gl": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      }
+    },
+    "chromium|none": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.8,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60,
+        "p50": 16.7,
+        "p95": 16.7,
+        "jank100": 0
+      }
+    },
+    "firefox|none": {
+      "idle": {
+        "fps": 60,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      },
+      "scroll": {
+        "fps": 60,
+        "p50": 16.4,
+        "p95": 17.3,
+        "jank100": 0
+      }
+    }
+  }
+}
