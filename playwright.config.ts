@@ -18,6 +18,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: /perf\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         // Use the browser pre-installed in this environment instead of
@@ -27,6 +28,11 @@ export default defineConfig({
             process.env.PLAYWRIGHT_CHROMIUM_PATH || '/opt/pw-browsers/chromium',
         },
       },
+    },
+    {
+      name: 'firefox',
+      testMatch: /perf\.spec\.ts/,
+      use: { ...devices['Desktop Firefox'] },
     },
   ],
   webServer: {

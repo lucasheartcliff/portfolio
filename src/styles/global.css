@@ -108,9 +108,10 @@ a {
    GLASS SURFACES
    ============================================================ */
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  /* No backdrop-filter: 15 of them over the animated background forced
+     Firefox to re-blur every frame. A static fill stands in for the blur. */
+  background-image: var(--glass-bg);
+  background-color: color-mix(in srgb, var(--bg-base) 55%, transparent);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   box-shadow: var(--glass-shadow);
@@ -151,6 +152,7 @@ a {
   background: var(--glass-bg),
     radial-gradient(ellipse at top right, var(--accent), transparent 60%);
   background-blend-mode: overlay, normal;
+  background-color: color-mix(in srgb, var(--bg-base) 55%, transparent);
 }
 
 /* Form focus */
@@ -163,42 +165,6 @@ textarea:focus {
 /* ============================================================
    ANIMATIONS
    ============================================================ */
-@keyframes orbA {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(40px, 60px) scale(1.08);
-  }
-}
-@keyframes orbB {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-50px, 40px) scale(1.1);
-  }
-}
-@keyframes orbC {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(30px, -40px) scale(1.06);
-  }
-}
-.orb-anim-1 {
-  animation: orbA 22s ease-in-out infinite;
-}
-.orb-anim-2 {
-  animation: orbB 28s ease-in-out infinite;
-}
-.orb-anim-3 {
-  animation: orbC 24s ease-in-out infinite;
-}
 @keyframes blink {
   to {
     opacity: 0;
@@ -378,9 +344,14 @@ section[id] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb-anim-1,
-  .orb-anim-2,
-  .orb-anim-3 {
-    animation: none;
+  /* Reduced motion also drops the remaining backdrop blurs for a plain
+     translucent fill, which is the cheapest thing to composite. */
+  .glass-nav,
+  .glass-btn {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .glass-nav {
+    background-color: color-mix(in srgb, var(--bg-base) 82%, transparent);
   }
 }

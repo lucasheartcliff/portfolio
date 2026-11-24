@@ -119,19 +119,7 @@ public/assets/jsons/profile.json
 
 ### Images
 
-Replace the following files in `public/assets/images/`:
-
-| File | Purpose | Recommended Size |
-|------|---------|-----------------|
-| `profile.jpeg` | Profile photo (About section) | 320×320px, square |
-| `cover.png` | Hero illustration (light mode) | 512×480px |
-| `cover-dark.png` | Hero illustration (dark mode) | 512×480px |
-| `languages.png` / `languages-dark.png` | Languages section decoration | 576×576px |
-| `experience.png` / `experience-dark.png` | Experience section decoration | 576×576px |
-| `education.png` / `education-dark.png` | Education section decoration | 576×576px |
-| `certificate.png` / `certificate-dark.png` | Certifications section decoration | 576×448px |
-
-> Decorative images are hidden on mobile viewports and displayed alongside their respective sections on `md:` breakpoints and above.
+The site no longer uses per-section decorative images (the former `profile.jpeg`, `cover*.png`, `languages*.png`, `experience*.png`, `education*.png` and `certificate*.png` were removed). There is nothing to replace in `public/assets/images/` for these sections; the background is rendered by `ReactiveBackground` (animated orbs and dot grid).
 
 ### Resume PDF
 

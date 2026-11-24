@@ -130,10 +130,19 @@ Targets are defined by the [`browserslist`](package.json) config and enforced at
 | Browser | Notes |
 |---------|-------|
 | Chrome / Edge (Chromium) | ✅ Supported — primary development and testing target |
-| Firefox (desktop) | ⚠️ **Not officially supported for now** — noticeable scroll/animation jank (likely `backdrop-filter`/`filter: blur()` compositing cost on the animated background and glass-card surfaces) that hasn't been resolved yet |
-| Safari (macOS / iOS) | ⚠️ **Not officially supported for now** — not verified against real hardware; excluded alongside Firefox out of caution rather than a confirmed issue |
+| Firefox (desktop) | ⚠️ Targeted again — the scroll/animation jank was a compositing problem and a fix has landed (see below); Firefox Profiler validation is still pending |
+| Safari (macOS / iOS) | ⚠️ Not verified against real hardware, but no longer excluded from the `browserslist` targets |
 
-Firefox and Safari are explicitly excluded from the `browserslist` targets while this is being worked on, alongside Internet Explorer 11 and Opera Mini. This is a temporary state, not a permanent decision — revisit once the Firefox performance issue is diagnosed and fixed.
+**Firefox jank — root cause and fix.** The cost was never payload size. 18 `backdrop-filter` surfaces (15 `.glass-card`, 2 `.glass-nav`, 1 `.glass-btn`) sat on top of a background that never stops animating (3 blurred orbs animating `scale()`, plus a canvas of ~2,900 dots redrawn at 30 fps), so Firefox re-read and re-blurred every glass backdrop each frame, even at rest. The fix ([#77](https://github.com/lucasheartcliff/portfolio/issues/77)):
+
+- Orbs animate `translate()` only (no `scale()`), and carry `intensity * dim` in their own gradient alpha instead of a group `opacity` wrapper.
+- `.glass-card` uses a static translucent `background-color` instead of `backdrop-filter`; the real blur remains only on `.glass-nav`.
+- The dot grid is bucketed by colour and breathing phase (one `Path2D` fill per bucket, colours precomputed), and its spacing scales with viewport area so the dot count stays bounded on large screens.
+- `prefers-reduced-motion` also drops the remaining `backdrop-filter`s.
+
+Firefox Profiler before/after numbers are still pending a manual run; Lighthouse CI is Chrome-only and does not cover this.
+
+To measure the background's cost (and attribute it to individual layers) there is a frame-timing harness, `e2e/perf/firefox-frame-timing.mjs`. Against a running production server it samples `requestAnimationFrame` deltas at idle and while scrolling in headless Firefox (1920x1080) and reports fps, p50/p95 and long frames per variant, where each variant is a runtime ablation (orbs hidden, `backdrop-filter` off, `prefers-reduced-motion`, ...). Run `npm run build && npm start`, then `node e2e/perf/firefox-frame-timing.mjs http://localhost:3000 /en/`; see the file header for the environment variables (`VARIANTS`, `REPEATS`, `OUT`, `MAX_IDLE_P50_MS`). Headless Firefox renders in software, so compare variants by ratio rather than reading absolute fps. The CI guard remains `e2e/perf.spec.ts`.
 
 ---
 
