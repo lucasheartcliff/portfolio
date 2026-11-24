@@ -142,6 +142,8 @@ Targets are defined by the [`browserslist`](package.json) config and enforced at
 
 Firefox Profiler before/after numbers are still pending a manual run; Lighthouse CI is Chrome-only and does not cover this.
 
+To measure the background's cost (and attribute it to individual layers) there is a frame-timing harness, `e2e/perf/firefox-frame-timing.mjs`. Against a running production server it samples `requestAnimationFrame` deltas at idle and while scrolling in headless Firefox (1920x1080) and reports fps, p50/p95 and long frames per variant, where each variant is a runtime ablation (orbs hidden, `backdrop-filter` off, `prefers-reduced-motion`, ...). Run `npm run build && npm start`, then `node e2e/perf/firefox-frame-timing.mjs http://localhost:3000 /en/`; see the file header for the environment variables (`VARIANTS`, `REPEATS`, `OUT`, `MAX_IDLE_P50_MS`). Headless Firefox renders in software, so compare variants by ratio rather than reading absolute fps. The CI guard remains `e2e/perf.spec.ts`.
+
 ---
 
 ## Project Structure
