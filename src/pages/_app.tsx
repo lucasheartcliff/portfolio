@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
+import { fontRootCss } from '@/styles/fonts';
 import { getEnvProperties } from '@/utils';
 
 const AppShell = ({ Component, pageProps }: AppProps) => {
@@ -31,6 +32,9 @@ const AppShell = ({ Component, pageProps }: AppProps) => {
       }}
     >
       <div>
+        <style jsx global>
+          {fontRootCss}
+        </style>
         <Component {...pageProps} />
         {loading && <LoadingScreen />}
         <Analytics />

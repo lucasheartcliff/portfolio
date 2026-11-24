@@ -17,7 +17,7 @@ export const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-// Applied to <html> (see _document.tsx) so the variables resolve for `body`
-// too; on a nested wrapper, `body { font-family: var(--font-…) }` is invalid
-// and falls back to the browser's default serif.
-export const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
+// next/font only emits its CSS when imported from _app or a page — importing
+// it from _document ships no @font-face at all. _app copies the generated
+// family names onto :root so `body` (outside any wrapper) can resolve them.
+export const fontRootCss = `:root{--font-space-grotesk:${spaceGrotesk.style.fontFamily};--font-jetbrains-mono:${jetbrainsMono.style.fontFamily}}`;
