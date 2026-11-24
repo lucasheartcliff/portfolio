@@ -9,10 +9,7 @@ import React, { useEffect } from 'react';
 
 import LoadingScreen from '@/components/LoadingScreen';
 import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
-import { jetbrainsMono, spaceGrotesk } from '@/styles/fonts';
 import { getEnvProperties } from '@/utils';
-
-const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
 
 const AppShell = ({ Component, pageProps }: AppProps) => {
   const { theme: activeTheme } = useTheme();
@@ -33,7 +30,7 @@ const AppShell = ({ Component, pageProps }: AppProps) => {
             : theme.darkAlgorithm,
       }}
     >
-      <div className={fontVariables}>
+      <div>
         <Component {...pageProps} />
         {loading && <LoadingScreen />}
         <Analytics />

@@ -16,3 +16,8 @@ export const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains-mono',
   display: 'swap',
 });
+
+// Applied to <html> (see _document.tsx) so the variables resolve for `body`
+// too; on a nested wrapper, `body { font-family: var(--font-…) }` is invalid
+// and falls back to the browser's default serif.
+export const fontVariables = `${spaceGrotesk.variable} ${jetbrainsMono.variable}`;

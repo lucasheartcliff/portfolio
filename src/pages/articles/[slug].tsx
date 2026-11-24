@@ -4,9 +4,16 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 import { ClickableImage } from '@/components/ImageLightbox';
-import { ACCENT, ACCENT_B, Glass, Reveal } from '@/components/portfolio/atoms';
+import {
+  ACCENT,
+  ACCENT_B,
+  Glass,
+  Reveal,
+  Tag as TagChip,
+} from '@/components/portfolio/atoms';
 import ThemeToggle from '@/components/portfolio/ThemeToggle';
 import ReactiveBackground from '@/components/ReactiveBackground';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -110,6 +117,11 @@ const markdownComponents = {
   h6: heading(6),
   img: ({ src, alt }: { src?: string; alt?: string }) => (
     <ClickableImage src={src} alt={alt} />
+  ),
+  table: ({ children }: { children?: React.ReactNode }) => (
+    <div className="table-scroll" data-testid="article-table">
+      <table>{children}</table>
+    </div>
   ),
   pre: ({ children }: { children?: React.ReactNode }) => (
     <CodeBlock>{children}</CodeBlock>
@@ -750,11 +762,19 @@ export default function ArticlePage() {
             </h1>
           </Reveal>
 
-          {article.description && (
+          {tags.length > 0 && (
             <Reveal delay={180}>
-              <p className="max-w-2xl text-[16px] leading-relaxed text-soft sm:text-[18px]">
-                {article.description}
-              </p>
+              <ul
+                data-testid="article-tags"
+                className="flex flex-wrap gap-2"
+                aria-label="Tags"
+              >
+                {tags.map((tag) => (
+                  <li key={tag}>
+                    <TagChip>{tag}</TagChip>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           )}
 
@@ -797,7 +817,10 @@ export default function ArticlePage() {
           className="prose-body mx-auto max-w-3xl px-5 py-12 sm:px-6 sm:py-16"
           style={{ fontSize: `${fontSize}px`, lineHeight: 1.75 }}
         >
-          <ReactMarkdown components={markdownComponents}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
             {article.body_markdown}
           </ReactMarkdown>
         </article>
