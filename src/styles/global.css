@@ -347,6 +347,11 @@ section[id] {
   font-style: italic;
   color: var(--text-strong);
 }
+/* The article container already pads the top; a leading block's own margin
+   would stack on it and open a large gap under the author header. */
+.prose-body > :first-child {
+  margin-top: 0;
+}
 .prose-body img {
   border-radius: 12px;
   margin: 1.5em 0;
