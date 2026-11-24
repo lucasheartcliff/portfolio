@@ -24,10 +24,23 @@ jest.mock('next/router', () => ({
 // tests need to verify is that the page wires the right data into it, so a
 // plain-text stand-in is enough.
 jest.mock('react-markdown', () => {
-  return function MockReactMarkdown({ children }: { children: string }) {
-    return <div>{children}</div>;
+  return function MockReactMarkdown({
+    children,
+    remarkPlugins,
+  }: {
+    children: string;
+    remarkPlugins?: unknown[];
+  }) {
+    return (
+      <div data-testid="markdown" data-plugins={remarkPlugins?.length ?? 0}>
+        {children}
+      </div>
+    );
   };
 });
+
+// remark-gfm is ESM-only too; the page only needs to hand it to react-markdown.
+jest.mock('remark-gfm', () => ({ __esModule: true, default: () => {} }));
 
 const fullArticle: DevtoArticleFull = {
   type_of: 'article',
@@ -110,5 +123,50 @@ describe('ArticlePage', () => {
     expect(
       screen.getAllByLabelText(/switch to (light|dark) theme/i).length
     ).toBeGreaterThan(0);
+  });
+
+  it('enables GFM so markdown tables render', async () => {
+    mockFetchWith({ ok: true, json: async () => fullArticle } as Response);
+    render(
+      <ThemeProvider>
+        <ArticlePage />
+      </ThemeProvider>
+    );
+    expect(await screen.findByTestId('markdown')).toHaveAttribute(
+      'data-plugins',
+      '1'
+    );
+  });
+
+  it('shows the article tags in the header instead of the description', async () => {
+    const tagged = {
+      ...fullArticle,
+      tag_list: 'rust, tauri',
+      tags: ['rust', 'tauri'],
+    };
+    mockFetchWith({ ok: true, json: async () => tagged } as Response);
+    render(
+      <ThemeProvider>
+        <ArticlePage />
+      </ThemeProvider>
+    );
+    const list = await screen.findByTestId('article-tags');
+    expect(list).toHaveTextContent('rust');
+    expect(list).toHaveTextContent('tauri');
+    expect(
+      screen.queryByText('A deep dive into flow control')
+    ).not.toBeInTheDocument();
+  });
+
+  it('omits the tag list when the article has no tags', async () => {
+    const untagged = { ...fullArticle, tag_list: '', tags: [] };
+    mockFetchWith({ ok: true, json: async () => untagged } as Response);
+    render(
+      <ThemeProvider>
+        <ArticlePage />
+      </ThemeProvider>
+    );
+    await screen.findByTestId('markdown');
+    expect(screen.queryByTestId('article-tags')).not.toBeInTheDocument();
   });
 });

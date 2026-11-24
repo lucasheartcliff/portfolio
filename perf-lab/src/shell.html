@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{NAME}}</title>
+<style>
+  :root { --bg-base: #0b1020; --text: #cbd5e1; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: var(--bg-base); color: var(--text); font: 17px/1.75 system-ui, sans-serif; }
+  /* Same readability overlay as the site: constant across variants. */
+  #bg-overlay { position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: .85;
+    background: radial-gradient(ellipse at top, transparent 0%, var(--bg-base) 100%); }
+  #bg-root { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  /* Fixed nav with backdrop-filter, as on the site after #78: scroll has to
+     composite it over whatever background is under test. */
+  nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 10; padding: 12px 28px;
+    border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  main { position: relative; z-index: 3; max-width: 760px; margin: 0 auto; padding: 140px 24px 200px; }
+  h1 { font-size: 56px; line-height: 1.05; margin: 0 0 24px; color: #f1f5f9; }
+  h2 { margin: 56px 0 12px; color: #f1f5f9; }
+  .card { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); border-radius: 16px; padding: 20px; margin: 24px 0; }
+</style>
+</head>
+<body>
+<div id="bg-root"></div>
+<div id="bg-overlay"></div>
+<nav>lucasheartcliff &nbsp; About &nbsp; Projects &nbsp; Writing &nbsp; Contact</nav>
+<main>
+  <h1>Background benchmark</h1>
+  <div id="content"></div>
+</main>
+<script>
+  // Long, scrollable content identical for every variant.
+  const c = document.getElementById('content');
+  for (let i = 0; i < 14; i += 1) {
+    c.insertAdjacentHTML('beforeend',
+      '<h2>Section ' + (i + 1) + '</h2>' +
+      '<p>Software engineering across backend systems, architecture and performance. '.repeat(4) + '</p>' +
+      '<div class="card"><strong>Card ' + (i + 1) + '</strong><p>Translucent surface over the background. '.repeat(3) + '</p></div>');
+  }
+</script>
+<script src="./{{NAME}}.js"></script>
+</body>
+</html>

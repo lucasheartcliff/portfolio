@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = process.env.PORT || '3000';
+const port = process.env.PORT || '3000';
 
 export default defineConfig({
   testDir: './e2e',
@@ -10,7 +10,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'list',
   use: {
-    baseURL: `http://localhost:${PORT}`,
+    baseURL: `http://localhost:${port}`,
+    headless: true,
+    video: 'on',
     trace: 'on-first-retry',
   },
   projects: [
@@ -38,8 +40,8 @@ export default defineConfig({
     // server's on-demand route compilation shows a floating
     // <nextjs-portal> build-activity indicator that can intercept clicks
     // mid-navigation, causing flaky interactions in these tests.
-    command: 'npm run build && npm run start',
-    url: `http://localhost:${PORT}`,
+    command: `npm run build && npm run start -- -p ${port}`,
+    url: `http://localhost:${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },
