@@ -32,9 +32,9 @@ Commit messages follow Conventional Commits (`@commitlint/config-conventional`).
 
 **API routes**:
 - `/api/articles` — Dev.to articles proxy (shows drafts in dev)
-- `/api/github/repos` — Pinned GitHub repos proxy
+- `/api/github/repos` — Pinned GitHub repos via GitHub GraphQL (needs `GITHUB_TOKEN`)
 - `/api/wakatime/[stat]` — WakaTime stats proxy (languages, coding-time, activity, editors, code-activity)
-- `/api/contact` — Email via nodemailer with rate limiting (1/min per IP)
+- `/api/contact` — Email via Resend (`resend` SDK) with in-memory rate limiting (1/min per IP)
 
 **Performance constraints (Firefox)**: do not put `backdrop-filter` on `.glass-card` (15 instances over the animated background re-blur every frame in Firefox); only `.glass-nav` keeps a real blur. Orbs in `ReactiveBackground` must animate `translate()` only and must not sit under an `opacity` wrapper. Dot-grid helpers live in `ReactiveBackground/dots.ts`. Guarded by `src/__tests__/styles/glass-performance.test.ts`.
 
@@ -49,9 +49,12 @@ Commit messages follow Conventional Commits (`@commitlint/config-conventional`).
 
 ## Environment Variables
 
-Public: `NEXT_PUBLIC_URL`, `NEXT_PUBLIC_ANALYTICS_ID`, `NEXT_PUBLIC_DEVTO_USERNAME`
-Server-only: `DEVTO_API_KEY`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_EMAIL`, `GITHUB_API_URL`, `GITHUB_PINNED_API_URL`, `GITHUB_BASE_URL`, `WAKATIME_LANGUAGES_URL`, `WAKATIME_CODING_TIME_URL`, `WAKATIME_ACTIVITY_URL`, `WAKATIME_EDITORS_URL`, `WAKATIME_CODE_ACTIVITY_URL`
+Public: `NEXT_PUBLIC_URL`, `NEXT_PUBLIC_ANALYTICS_ID`, `NEXT_PUBLIC_DEVTO_USERNAME`, `NEXT_PUBLIC_GITHUB_USERNAME`
+Server-only: `DEVTO_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM`, `CONTACT_EMAIL`, `GITHUB_TOKEN`, `GITHUB_API_URL`, `GITHUB_BASE_URL`, `WAKATIME_LANGUAGES_URL`, `WAKATIME_CODING_TIME_URL`, `WAKATIME_ACTIVITY_URL`, `WAKATIME_EDITORS_URL`, `WAKATIME_CODE_ACTIVITY_URL`
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/deploy.yml`): test → Docker build → push to GHCR → deploy via SSH. Triggers on push to `main` or `next` branches.
+GitHub Actions in `.github/workflows/`, all triggered on push and pull request to `main` or `next`:
+- `test.yml`: lint + Jest, plus a Firefox Playwright perf job.
+- `lighthouse.yml`: Lighthouse CI.
+- `deploy.yml`: lint + test, then (push only) Docker build → push to GHCR → deploy via SSH.
