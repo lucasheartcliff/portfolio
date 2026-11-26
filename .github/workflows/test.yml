@@ -15,22 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
+      - uses: asdf-vm/actions/install@v3
+      - run: corepack enable
       - run: yarn install --frozen-lockfile
       - run: yarn lint
+      - run: yarn check-types
       - run: yarn test --passWithNoTests
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: asdf-vm/actions/install@v3
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --project=chromium
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-videos
+          path: test-results/
+          retention-days: 7
+          if-no-files-found: ignore
 
   firefox-perf:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
+      - uses: asdf-vm/actions/install@v3
+      - run: corepack enable
       - run: yarn install --frozen-lockfile
       - run: npx playwright install --with-deps firefox
       - run: npx playwright test --project=firefox

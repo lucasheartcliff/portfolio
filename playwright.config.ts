@@ -23,10 +23,14 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         // Use the browser pre-installed in this environment instead of
         // downloading one — see PLAYWRIGHT_BROWSERS_PATH in the environment.
-        launchOptions: {
-          executablePath:
-            process.env.PLAYWRIGHT_CHROMIUM_PATH || '/opt/pw-browsers/chromium',
-        },
+        // In CI the browser comes from `playwright install`.
+        launchOptions: process.env.CI
+          ? {}
+          : {
+              executablePath:
+                process.env.PLAYWRIGHT_CHROMIUM_PATH ||
+                '/opt/pw-browsers/chromium',
+            },
       },
     },
     {

@@ -1,12 +1,14 @@
+# NODE_VERSION comes from .tool-versions: docker build --build-arg NODE_VERSION=$(scripts/node-version.sh) .
+ARG NODE_VERSION
 # Stage 1: Dependencies
-FROM node:18-alpine AS deps
+FROM node:${NODE_VERSION}-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production=false
 
 # Stage 2: Build
-FROM node:18-alpine AS builder
+FROM node:${NODE_VERSION}-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -26,7 +28,7 @@ ENV NEXT_PUBLIC_DEVTO_USERNAME=$NEXT_PUBLIC_DEVTO_USERNAME
 RUN yarn build
 
 # Stage 3: Runner
-FROM node:18-alpine AS runner
+FROM node:${NODE_VERSION}-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
