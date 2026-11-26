@@ -19,12 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: yarn
+      - uses: asdf-vm/actions/install@v3
+      - run: corepack enable
       - run: yarn install --frozen-lockfile
       - run: yarn lint
+      - run: yarn check-types
       - run: yarn test --passWithNoTests
 
   build-and-push:
@@ -36,6 +35,10 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Read Node version from .tool-versions
+        id: versions
+        run: echo "node=$(scripts/node-version.sh)" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -63,6 +66,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
+            NODE_VERSION=${{ steps.versions.outputs.node }}
             NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL || 'https://lucasheartcliff.com.br' }}
             NEXT_PUBLIC_ANALYTICS_ID=${{ vars.NEXT_PUBLIC_ANALYTICS_ID }}
             NEXT_PUBLIC_DEVTO_USERNAME=${{ vars.NEXT_PUBLIC_DEVTO_USERNAME || 'lucasheartcliff' }}

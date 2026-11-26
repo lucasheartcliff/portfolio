@@ -281,7 +281,7 @@ Multi-stage build for minimal image size:
 ### Manual Docker Build
 
 ```bash
-docker build -t portfolio .
+docker build --build-arg NODE_VERSION=$(scripts/node-version.sh) -t portfolio .
 docker run -p 3000:3000 --env-file .env.local portfolio
 ```
 

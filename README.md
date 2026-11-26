@@ -267,7 +267,7 @@ This builds and starts both the Next.js app and an Nginx reverse proxy. The app 
 For manual builds:
 
 ```bash
-docker build -t portfolio .
+docker build --build-arg NODE_VERSION=$(scripts/node-version.sh) -t portfolio .
 docker run -p 3000:3000 --env-file .env.local portfolio
 ```
 

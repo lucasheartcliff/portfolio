@@ -3,6 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        # keep in sync with .tool-versions (or export NODE_VERSION=$(scripts/node-version.sh))
+        NODE_VERSION: ${NODE_VERSION:-18.20.8}
     restart: unless-stopped
     env_file:
       - local.env.local
